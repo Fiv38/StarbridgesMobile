@@ -71,8 +71,8 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         });*/
-        mUsernameView.setText("dhaba.widhikari");
-        mPasswordView.setText("Intelcorei3550#");
+        mUsernameView.setText("");
+        mPasswordView.setText("");
 
         Button mSignInButton = (Button) findViewById(R.id.btn_sign_in);
         mSignInButton.setOnClickListener(new OnClickListener() {
