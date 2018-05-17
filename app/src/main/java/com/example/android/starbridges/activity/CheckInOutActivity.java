@@ -136,8 +136,8 @@ public class CheckInOutActivity extends AppCompatActivity {
                     String lastLogType="";
                     if(data.getReturnValue().size()>0)
                     {
-                        int dataSize=data.getReturnValue().size()-1;
-                        lastLogType=data.getReturnValue().get(dataSize).getLogType();
+//                        int dataSize=data.getReturnValue().size()-1;
+                        luiastLogType=data.getReturnValue().get(0).getLogType();
                     }
                     if (lastLogType.equals("Check In") ) {
                         mShowDetail.setText("Check Out");
