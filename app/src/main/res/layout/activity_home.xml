@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     tools:context="com.example.android.starbridges.activity.HomeActivity"
     tools:layout_editor_absoluteY="81dp"
-    tools:layout_editor_absoluteX="0dp">
+    tools:layout_editor_absoluteX="0dp"
+    android:background="@drawable/bg1080x1920"
+    >
 
 
     <LinearLayout
