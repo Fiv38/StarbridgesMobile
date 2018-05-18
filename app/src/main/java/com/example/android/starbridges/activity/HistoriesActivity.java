@@ -58,7 +58,7 @@ public class HistoriesActivity extends AppCompatActivity {
 
 
     public void getAttendaceLog(String DateFrom, String DateTo) {
-        apiInterface = APIClient.getHistory(GlobalVar.getToken()).create(APIInterfaceRest.class);
+        apiInterface = APIClient.getHistory(GlobalVar.getAccessToken()).create(APIInterfaceRest.class);
         progressDialog = new ProgressDialog(HistoriesActivity.this);
         progressDialog.setTitle("Loading");
         progressDialog.show();
@@ -70,7 +70,6 @@ public class HistoriesActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 History data = response.body();
                 if (data != null && data.getIsSucceed()) {
-
                     viewAdapter = new HistoryAdapter(HistoriesActivity.this, data.getReturnValue());
                     recyclerView.setAdapter(viewAdapter);
                 } else {

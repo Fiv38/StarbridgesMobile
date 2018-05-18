@@ -32,7 +32,7 @@ public class ReturnValue implements Serializable, Parcelable
     private String statusCode;
     @SerializedName("LogIn")
     @Expose
-    private Object logIn;
+    private String logIn;
     @SerializedName("LateLogIn")
     @Expose
     private int lateLogIn;
@@ -50,13 +50,13 @@ public class ReturnValue implements Serializable, Parcelable
     private int lateBreakEnd;
     @SerializedName("LogOut")
     @Expose
-    private Object logOut;
+    private String logOut;
     @SerializedName("EarlyLogOut")
     @Expose
     private int earlyLogOut;
     @SerializedName("TotalWorkingHours")
     @Expose
-    private int totalWorkingHours;
+    private float totalWorkingHours;
     @SerializedName("MinPayableDuration")
     @Expose
     private Object minPayableDuration;
@@ -112,7 +112,7 @@ public class ReturnValue implements Serializable, Parcelable
 
     }
     ;
-    private final static long serialVersionUID = 507509051464624693L;
+    private final static long serialVersionUID = 3536311044630205757L;
 
     protected ReturnValue(Parcel in) {
         this.uID = ((String) in.readValue((String.class.getClassLoader())));
@@ -121,15 +121,15 @@ public class ReturnValue implements Serializable, Parcelable
         this.dayType = ((String) in.readValue((String.class.getClassLoader())));
         this.processStep = ((String) in.readValue((String.class.getClassLoader())));
         this.statusCode = ((String) in.readValue((String.class.getClassLoader())));
-        this.logIn = ((Object) in.readValue((Object.class.getClassLoader())));
+        this.logIn = ((String) in.readValue((String.class.getClassLoader())));
         this.lateLogIn = ((int) in.readValue((int.class.getClassLoader())));
         this.breakStart = ((Object) in.readValue((Object.class.getClassLoader())));
         this.earlyBreakStart = ((int) in.readValue((int.class.getClassLoader())));
         this.breakEnd = ((Object) in.readValue((Object.class.getClassLoader())));
         this.lateBreakEnd = ((int) in.readValue((int.class.getClassLoader())));
-        this.logOut = ((Object) in.readValue((Object.class.getClassLoader())));
+        this.logOut = ((String) in.readValue((String.class.getClassLoader())));
         this.earlyLogOut = ((int) in.readValue((int.class.getClassLoader())));
-        this.totalWorkingHours = ((int) in.readValue((int.class.getClassLoader())));
+        this.totalWorkingHours = ((float) in.readValue((float.class.getClassLoader())));
         this.minPayableDuration = ((Object) in.readValue((Object.class.getClassLoader())));
         this.requestedOvertime = ((String) in.readValue((String.class.getClassLoader())));
         this.overtime = ((String) in.readValue((String.class.getClassLoader())));
@@ -183,7 +183,7 @@ public class ReturnValue implements Serializable, Parcelable
      * @param returnAt
      * @param overtime
      */
-    public ReturnValue(String uID, String logDate, String day, String dayType, String processStep, String statusCode, Object logIn, int lateLogIn, Object breakStart, int earlyBreakStart, Object breakEnd, int lateBreakEnd, Object logOut, int earlyLogOut, int totalWorkingHours, Object minPayableDuration, String requestedOvertime, String overtime, int overtimeDuration, String leave, Object leaveAt, Object returnAt, boolean isPaidLeave, boolean isHoliday, boolean isLeaveHalfDay, boolean fullAccess, List<Object> exclusionFields, String accessibilityAttribute) {
+    public ReturnValue(String uID, String logDate, String day, String dayType, String processStep, String statusCode, String logIn, int lateLogIn, Object breakStart, int earlyBreakStart, Object breakEnd, int lateBreakEnd, String logOut, int earlyLogOut, float totalWorkingHours, Object minPayableDuration, String requestedOvertime, String overtime, int overtimeDuration, String leave, Object leaveAt, Object returnAt, boolean isPaidLeave, boolean isHoliday, boolean isLeaveHalfDay, boolean fullAccess, List<Object> exclusionFields, String accessibilityAttribute) {
         super();
         this.uID = uID;
         this.logDate = logDate;
@@ -293,15 +293,15 @@ public class ReturnValue implements Serializable, Parcelable
         return this;
     }
 
-    public Object getLogIn() {
+    public String getLogIn() {
         return logIn;
     }
 
-    public void setLogIn(Object logIn) {
+    public void setLogIn(String logIn) {
         this.logIn = logIn;
     }
 
-    public ReturnValue withLogIn(Object logIn) {
+    public ReturnValue withLogIn(String logIn) {
         this.logIn = logIn;
         return this;
     }
@@ -371,15 +371,15 @@ public class ReturnValue implements Serializable, Parcelable
         return this;
     }
 
-    public Object getLogOut() {
+    public String getLogOut() {
         return logOut;
     }
 
-    public void setLogOut(Object logOut) {
+    public void setLogOut(String logOut) {
         this.logOut = logOut;
     }
 
-    public ReturnValue withLogOut(Object logOut) {
+    public ReturnValue withLogOut(String logOut) {
         this.logOut = logOut;
         return this;
     }
@@ -397,15 +397,15 @@ public class ReturnValue implements Serializable, Parcelable
         return this;
     }
 
-    public int getTotalWorkingHours() {
+    public float getTotalWorkingHours() {
         return totalWorkingHours;
     }
 
-    public void setTotalWorkingHours(int totalWorkingHours) {
+    public void setTotalWorkingHours(float totalWorkingHours) {
         this.totalWorkingHours = totalWorkingHours;
     }
 
-    public ReturnValue withTotalWorkingHours(int totalWorkingHours) {
+    public ReturnValue withTotalWorkingHours(float totalWorkingHours) {
         this.totalWorkingHours = totalWorkingHours;
         return this;
     }

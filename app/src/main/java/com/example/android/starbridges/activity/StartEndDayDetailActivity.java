@@ -77,7 +77,7 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         sDate = intent.getStringExtra("date");
         sTime = intent.getStringExtra("time");
-        sUsername = GlobalVar.getUsername();
+        sUsername = GlobalVar.getLoginName();
         sLogType=intent.getStringExtra("logType");
         client = LocationServices.getFusedLocationProviderClient(this);
         getLocation();
@@ -191,7 +191,7 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
         returnValue.setName("");
         listReturnValue.add(returnValue);
 
-        apiInterface = APIClient.getLocationValue(GlobalVar.getToken()).create(APIInterfaceRest.class);
+        apiInterface = APIClient.getLocationValue(GlobalVar.getAccessToken()).create(APIInterfaceRest.class);
         apiInterface.postLocation(" ").enqueue(new Callback<OLocation>() {
             @Override
             public void onResponse(Call<OLocation> call, Response<OLocation> response) {
@@ -227,7 +227,7 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
 
     public void callInputAbsence() {
         // get token
-        apiInterface = APIClient.inputAbsence(GlobalVar.getToken()).create(APIInterfaceRest.class);
+        apiInterface = APIClient.inputAbsence(GlobalVar.getAccessToken()).create(APIInterfaceRest.class);
         progressDialog = new ProgressDialog(StartEndDayDetailActivity.this);
         progressDialog.setTitle("Loading");
         progressDialog.show();
