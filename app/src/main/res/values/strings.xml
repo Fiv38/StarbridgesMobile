@@ -29,4 +29,6 @@
     <string name="forgot_password">Forgot Password?</string>
     <string name="desc_logo_starbridge">logo starbridge</string>
     <string name="login_footer2">TextView</string>
+    <string name="txt_name_correction">Name</string>
+    <string name="txt_nik_correction">NIK</string>
 </resources>

@@ -19,7 +19,7 @@ private TextView mUsernameView;
         setContentView(R.layout.activity_home);
 
         mUsernameView=(TextView) findViewById(R.id.lbl_username);
-        username = GlobalVar.getUsername();
+        username = GlobalVar.getFullName();
         mUsernameView.setText("Hello,\n"+username);
 
 

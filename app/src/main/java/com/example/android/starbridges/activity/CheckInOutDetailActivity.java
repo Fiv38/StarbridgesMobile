@@ -98,7 +98,7 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         sDate = intent.getStringExtra("date");
         sTime = intent.getStringExtra("time");
-        sUsername = GlobalVar.getUsername();
+        sUsername = GlobalVar.getLoginName();
         sLogType=intent.getStringExtra("logType");
         checkStartDay=intent.getBooleanExtra("checkStartDay",false);
 
@@ -250,7 +250,7 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
         returnValue.setName("");
         listReturnValue.add(returnValue);
 
-        apiInterface = APIClient.getLocationValue(GlobalVar.getToken()).create(APIInterfaceRest.class);
+        apiInterface = APIClient.getLocationValue(GlobalVar.getAccessToken()).create(APIInterfaceRest.class);
         apiInterface.postLocation(" ").enqueue(new Callback<OLocation>() {
             @Override
             public void onResponse(Call<OLocation> call, Response<OLocation> response) {
@@ -283,7 +283,7 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
         // get token
 
 
-        apiInterface = APIClient.inputAbsence(GlobalVar.getToken()).create(APIInterfaceRest.class);
+        apiInterface = APIClient.inputAbsence(GlobalVar.getAccessToken()).create(APIInterfaceRest.class);
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Loading");
         progressDialog.show();

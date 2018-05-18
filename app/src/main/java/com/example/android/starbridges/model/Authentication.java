@@ -14,6 +14,7 @@ import java.io.Serializable;
 
 public class Authentication implements Serializable, Parcelable
 {
+
     @SerializedName("access_token")
     @Expose
     private String accessToken;
@@ -26,9 +27,9 @@ public class Authentication implements Serializable, Parcelable
     @SerializedName("as:client_id")
     @Expose
     private String asClientId;
-    @SerializedName("userName")
+    @SerializedName("loginName")
     @Expose
-    private String userName;
+    private String loginName;
     @SerializedName("fullName")
     @Expose
     private String fullName;
@@ -57,14 +58,14 @@ public class Authentication implements Serializable, Parcelable
 
     }
             ;
-    private final static long serialVersionUID = -2275292401821803935L;
+    private final static long serialVersionUID = -2448867980350548784L;
 
     protected Authentication(Parcel in) {
         this.accessToken = ((String) in.readValue((String.class.getClassLoader())));
         this.tokenType = ((String) in.readValue((String.class.getClassLoader())));
         this.expiresIn = ((int) in.readValue((int.class.getClassLoader())));
         this.asClientId = ((String) in.readValue((String.class.getClassLoader())));
-        this.userName = ((String) in.readValue((String.class.getClassLoader())));
+        this.loginName = ((String) in.readValue((String.class.getClassLoader())));
         this.fullName = ((String) in.readValue((String.class.getClassLoader())));
         this.nik = ((String) in.readValue((String.class.getClassLoader())));
         this.issued = ((String) in.readValue((String.class.getClassLoader())));
@@ -85,18 +86,18 @@ public class Authentication implements Serializable, Parcelable
      * @param accessToken
      * @param expiresIn
      * @param issued
-     * @param userName
      * @param fullName
      * @param nik
+     * @param loginName
      * @param asClientId
      */
-    public Authentication(String accessToken, String tokenType, int expiresIn, String asClientId, String userName, String fullName, String nik, String issued, String expires) {
+    public Authentication(String accessToken, String tokenType, int expiresIn, String asClientId, String loginName, String fullName, String nik, String issued, String expires) {
         super();
         this.accessToken = accessToken;
         this.tokenType = tokenType;
         this.expiresIn = expiresIn;
         this.asClientId = asClientId;
-        this.userName = userName;
+        this.loginName = loginName;
         this.fullName = fullName;
         this.nik = nik;
         this.issued = issued;
@@ -155,16 +156,16 @@ public class Authentication implements Serializable, Parcelable
         return this;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getLoginName() {
+        return loginName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
     }
 
-    public Authentication withUserName(String userName) {
-        this.userName = userName;
+    public Authentication withLoginName(String loginName) {
+        this.loginName = loginName;
         return this;
     }
 
@@ -225,7 +226,7 @@ public class Authentication implements Serializable, Parcelable
         dest.writeValue(tokenType);
         dest.writeValue(expiresIn);
         dest.writeValue(asClientId);
-        dest.writeValue(userName);
+        dest.writeValue(loginName);
         dest.writeValue(fullName);
         dest.writeValue(nik);
         dest.writeValue(issued);

@@ -197,8 +197,11 @@ public class LoginActivity extends AppCompatActivity {
                     if (response.message().equals("OK")) {
                         showProgress(false);
                         Intent home = new Intent(LoginActivity.this, HomeActivity.class);
-                        GlobalVar.setToken(response.body().getTokenType()+" "+ response.body().getAccessToken());
-                        GlobalVar.setUsername(response.body().getUserName());
+                        GlobalVar.setAccessToken(response.body().getTokenType()+" "+ response.body().getAccessToken());
+                        GlobalVar.setFullName(response.body().getFullName());
+                        GlobalVar.setNik(response.body().getNik());
+                        GlobalVar.setLoginName(response.body().getLoginName());
+                        GlobalVar.setTokenType(response.body().getTokenType());
 
                         startActivity(home);
                         finish();

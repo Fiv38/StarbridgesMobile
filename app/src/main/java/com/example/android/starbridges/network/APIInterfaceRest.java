@@ -2,6 +2,7 @@ package com.example.android.starbridges.network;
 
 import com.example.android.starbridges.model.Attendence;
 import com.example.android.starbridges.model.Authentication;
+import com.example.android.starbridges.model.ListAttendaceCorrection.ListAttendanceCorrection;
 import com.example.android.starbridges.model.OLocation.OLocation;
 import com.example.android.starbridges.model.OPost;
 import com.example.android.starbridges.model.history.History;
@@ -50,4 +51,8 @@ public interface APIInterfaceRest {
     @FormUrlEncoded
     @POST("api/Attendance/History")
     Call<History> getHistory(@Field("DateFrom") String DateFrom, @Field("DateTo") String DateTo);
+
+    @FormUrlEncoded
+    @POST("api/AttendanceCorrection/ListAttendanceCorrection")
+    Call<ListAttendanceCorrection> getListAttendanceCorrection(@Field("DateFrom") String DateFrom, @Field("DateTo") String DateTo);
 }
