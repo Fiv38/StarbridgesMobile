@@ -1,5 +1,6 @@
 package com.example.android.starbridges.activity;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -68,7 +69,7 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
     private EditText mEventView, mDateView, mTimeView, mLocationNameView, mNotesView;
     private Spinner mLocationSpinner;
     private Button mSubmit;
-    private String sLocationID, sUsername, sLongitude, sLatitude, sDate, sTime,sLogType,sPhoto;
+    private String sLocationID, sUsername, sLongitude, sLatitude, sDate, sTime, sLogType, sPhoto;
     private APIInterfaceRest apiInterface;
     private ProgressDialog progressDialog;
     private boolean checkStartDay;
@@ -99,8 +100,8 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
         sDate = intent.getStringExtra("date");
         sTime = intent.getStringExtra("time");
         sUsername = GlobalVar.getUsername();
-        sLogType=intent.getStringExtra("logType");
-        checkStartDay=intent.getBooleanExtra("checkStartDay",false);
+        sLogType = intent.getStringExtra("logType");
+        checkStartDay = intent.getBooleanExtra("checkStartDay", false);
 
         mDateView.setText(sDate);
         mTimeView.setText(sTime);
@@ -109,19 +110,17 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
         mLocationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i>0)
-                {
-                    final ReturnValue returnValue1=(ReturnValue)mLocationSpinner.getItemAtPosition(i);
+                if (i > 0) {
+                    final ReturnValue returnValue1 = (ReturnValue) mLocationSpinner.getItemAtPosition(i);
                     //Log.d("LocationIdnya", returnValue1.getID());
-                    sLocationID=returnValue1.getID();
+                    sLocationID = returnValue1.getID();
                 }
 
                 setEnableSpinnerAndEditTextLocation();
 
-                try{
+                try {
                     getInternetTime();
-                }catch (Exception e)
-                {
+                } catch (Exception e) {
 
                 }
 
@@ -186,22 +185,27 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
 
 
     public void getLocation() {
-        client.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                    sLatitude=String.valueOf(location.getLatitude());
-                    sLongitude=String.valueOf(location.getLongitude());
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            client.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    if (location != null) {
+                        sLatitude = String.valueOf(location.getLatitude());
+                        sLongitude = String.valueOf(location.getLongitude());
 
-                    if (sLogType.equals("Check In")) {
-                        dispatchTakePictureIntent();
-                    } else {
-                        sPhoto=null;
-                        callInputAbsence();
+                        if (sLogType.equals("Check In")) {
+                            dispatchTakePictureIntent();
+                        } else {
+                            sPhoto = null;
+                            callInputAbsence();
+                        }
                     }
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(CheckInOutDetailActivity.this,"Gagal dapat lokasi",Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void dispatchTakePictureIntent() {
@@ -258,7 +262,11 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
 
                     List<ReturnValue> LocItems = response.body().getReturnValue();
-                    listReturnValue.addAll(LocItems);
+                    if (LocItems!= null){
+                        listReturnValue.addAll(LocItems);
+                    } else{
+                        Toast.makeText(CheckInOutDetailActivity.this, "spinner Tidak dapat data",Toast.LENGTH_LONG).show();
+                    }
 
                     ArrayAdapter<ReturnValue> adapter = new ArrayAdapter<ReturnValue>(CheckInOutDetailActivity.this,
                             android.R.layout.simple_spinner_item, listReturnValue);

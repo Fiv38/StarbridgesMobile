@@ -151,8 +151,8 @@ public class CheckInOutActivity extends AppCompatActivity {
                     recyclerView.setAdapter(viewAdapter);
                 } else {
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Toast.makeText(CheckInOutActivity.this, jObjError.toString(), Toast.LENGTH_LONG).show();
+                        //JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        Toast.makeText(CheckInOutActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
                         Toast.makeText(CheckInOutActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                     }

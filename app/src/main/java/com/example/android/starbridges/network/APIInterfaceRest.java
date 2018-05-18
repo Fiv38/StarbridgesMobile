@@ -4,11 +4,13 @@ import com.example.android.starbridges.model.Attendence;
 import com.example.android.starbridges.model.Authentication;
 import com.example.android.starbridges.model.OLocation.OLocation;
 import com.example.android.starbridges.model.OPost;
+import com.example.android.starbridges.model.getimage.GetImage;
 import com.example.android.starbridges.model.history.History;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 /**
@@ -50,4 +52,8 @@ public interface APIInterfaceRest {
     @FormUrlEncoded
     @POST("api/Attendance/History")
     Call<History> getHistory(@Field("DateFrom") String DateFrom, @Field("DateTo") String DateTo);
+
+    //@FormUrlEncoded
+    @GET("api/Attendance/GetImage")
+    Call<GetImage> getImage();
 }

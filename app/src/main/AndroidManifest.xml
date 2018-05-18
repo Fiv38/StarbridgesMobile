@@ -5,10 +5,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
-    <uses-feature
-        android:name="android.hardware.camera"
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera"
         android:required="true" />
+
 
     <application
         android:allowBackup="true"
@@ -20,44 +20,66 @@
         <activity
             android:name=".activity.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.RegisterActivity" />
+        <activity android:name=".activity.RegisterActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.HomeActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.CheckInOutActivity"
-            android:parentActivityName=".activity.HomeActivity" />
+            android:parentActivityName=".activity.HomeActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.CheckInOutDetailActivity"
             android:parentActivityName=".activity.CheckInOutActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             />
         <activity
             android:name=".activity.StartEndDayActivity"
-            android:parentActivityName=".activity.HomeActivity" />
+            android:parentActivityName=".activity.HomeActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.StartEndDayDetailActivity"
             android:parentActivityName=".activity.StartEndDayActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             />
         <activity
             android:name=".activity.HistoriesActivity"
-            android:parentActivityName=".activity.HistoryFilterActivity" />
+            android:parentActivityName=".activity.HistoryFilterActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.HistoryFilterActivity"
-            android:parentActivityName=".activity.HomeActivity" />
+            android:parentActivityName=".activity.HomeActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity android:name=".activity.CorrectionActivity"
             android:parentActivityName=".activity.HomeActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             />
         <activity android:name=".activity.CorrectionDetailActivity"
             android:parentActivityName=".activity.HomeActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             ></activity>
     </application>
 

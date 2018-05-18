@@ -30,6 +30,7 @@ import com.example.android.starbridges.network.APIClient;
 import com.example.android.starbridges.network.APIInterfaceRest;
 import com.example.android.starbridges.utility.GlobalVar;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.text.SimpleDateFormat;
@@ -78,16 +79,13 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
         sTime = intent.getStringExtra("time");
         sUsername = GlobalVar.getUsername();
         sLogType=intent.getStringExtra("logType");
-
+        client = LocationServices.getFusedLocationProviderClient(this);
+        getLocation();
 
         mDateView.setText(sDate);
         mTimeView.setText(sTime);
         initSpinnerLoc();
 
-        if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_ACCESS_LOCATION);
-        }
 
         mLocationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -128,6 +126,25 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
     }
 
 
+    void getLocation() {
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_ACCESS_LOCATION);
+        }
+
+        client.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    sLatitude = String.valueOf(location.getLatitude());
+                    sLongitude = String.valueOf(location.getLongitude());
+
+                }
+            }
+        });
+
+
+    }
 
     public void SubmitData() {
         callInputAbsence();
@@ -140,35 +157,27 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
         switch (requestCode) {
             case REQUEST_ACCESS_LOCATION:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    LocationManager mgr = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-                    List<String> providers = mgr.getAllProviders();
-                    if (providers != null && providers.contains(LocationManager.NETWORK_PROVIDER)) {
-                        Location loc = mgr.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        if (loc != null) {
-                            sLatitude=String.valueOf(loc.getLatitude());
-                            sLongitude=String.valueOf(loc.getLongitude());
-                        }
-                    }
+                    getLocation();
                 } else {
-                    Toast.makeText(this, "Need your location!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Unable to get location", Toast.LENGTH_SHORT).show();
                 }
 
                 break;
         }
     }
 
-    public void getLocation() {
-        client.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                    sLatitude=String.valueOf(location.getLatitude());
-                    sLongitude=String.valueOf(location.getLongitude());
-
-                }
-            }
-        });
-    }
+//    public void getLocation() {
+//        client.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+//            @Override
+//            public void onSuccess(Location location) {
+//                if (location != null) {
+//                    sLatitude=String.valueOf(location.getLatitude());
+//                    sLongitude=String.valueOf(location.getLongitude());
+//
+//                }
+//            }
+//        });
+//    }
 
 
     public void initSpinnerLoc() {
@@ -190,7 +199,11 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
 
                     List<ReturnValue> LocItems = response.body().getReturnValue();
-                    listReturnValue.addAll(LocItems);
+                    if (LocItems!= null){
+                        listReturnValue.addAll(LocItems);
+                    } else{
+                        Toast.makeText(StartEndDayDetailActivity.this, "spinner Tidak dapat data",Toast.LENGTH_LONG).show();
+                    }
 
                     ArrayAdapter<ReturnValue> adapter = new ArrayAdapter<ReturnValue>(StartEndDayDetailActivity.this,
                             android.R.layout.simple_spinner_item, listReturnValue);

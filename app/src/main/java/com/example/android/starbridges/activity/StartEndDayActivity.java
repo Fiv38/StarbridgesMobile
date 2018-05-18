@@ -119,8 +119,8 @@ public class StartEndDayActivity extends AppCompatActivity {
                     recyclerView.setAdapter(viewAdapter);
                 } else {
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Toast.makeText(StartEndDayActivity.this, jObjError.toString(), Toast.LENGTH_LONG).show();
+                        //JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        Toast.makeText(StartEndDayActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
                         Toast.makeText(StartEndDayActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                     }

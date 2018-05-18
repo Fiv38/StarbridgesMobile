@@ -25,5 +25,15 @@ public class GlobalVar {
 
     public static String username;
 
+    public static String getFullname() {
+        return fullname;
+    }
+
+    public static void setFullname(String fullname) {
+        GlobalVar.fullname = fullname;
+    }
+
+    public static String fullname;
+
 
 }

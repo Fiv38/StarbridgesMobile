@@ -23,14 +23,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="32dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/profile_image"
             android:layout_width="194dp"
             android:layout_height="158dp"
             android:src="@drawable/empty_avatar"
-            app:civ_border_width="2dp"
-            app:civ_border_color="#FF000000"/>
+            app:civ_border_color="@android:color/background_light"
+            app:civ_border_width="2dp" />
 
         <TextView
             android:id="@+id/lbl_username"
@@ -40,6 +39,7 @@
             android:layout_weight="1"
             android:gravity="center|left"
             android:text="Hello,"
+            android:textColor="@android:color/background_light"
             android:textSize="24sp" />
 
     </LinearLayout>
@@ -62,9 +62,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:drawableTop="@drawable/ic_day_in_out"
+            android:drawableTop="@drawable/ic_attendance"
+            android:onClick="showStartEndDate"
             android:text="@string/start_end_date"
-            android:onClick="showStartEndDate"/>
+            android:textColor="@android:color/background_light"/>
 
         <Button
             android:id="@+id/btn_check_in_out"
@@ -74,7 +75,8 @@
             android:background="@android:color/transparent"
             android:drawableTop="@drawable/ic_check_in_out"
             android:text="@string/check_in_out"
-            android:onClick="showCheckInOut"/>
+            android:onClick="showCheckInOut"
+            android:textColor="@android:color/background_light"/>
 
         <Button
             android:id="@+id/btn_history"
@@ -82,9 +84,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/histories"
-            android:drawableTop="@drawable/ic_history"
+            android:drawableTop="@drawable/ic_histories"
             android:background="@android:color/transparent"
-            android:onClick="showHistory"/>
+            android:onClick="showHistory"
+            android:textColor="@android:color/background_light"/>
     </LinearLayout>
 
     <LinearLayout
@@ -106,7 +109,8 @@
             android:layout_weight="1"
             android:text="@string/overtime"
             android:drawableTop="@drawable/ic_overtime"
-            android:background="@android:color/transparent"/>
+            android:background="@android:color/transparent"
+            android:textColor="@android:color/background_light"/>
 
         <Button
             android:id="@+id/btn_correction"
@@ -117,6 +121,7 @@
             android:drawableTop="@drawable/ic_correction"
             android:background="@android:color/transparent"
             android:onClick="showCorrection"
+            android:textColor="@android:color/background_light"
             />
 
         <Button
@@ -126,7 +131,8 @@
             android:layout_weight="1"
             android:text="@string/loan"
             android:drawableTop="@drawable/ic_loan"
-            android:background="@android:color/transparent"/>
+            android:background="@android:color/transparent"
+            android:textColor="@android:color/background_light"/>
     </LinearLayout>
 
     <LinearLayout
@@ -148,7 +154,8 @@
             android:layout_weight="1"
             android:text="@string/leave_request"
             android:drawableTop="@drawable/ic_leave"
-            android:background="@android:color/transparent"/>
+            android:background="@android:color/transparent"
+            android:textColor="@android:color/background_light"/>
 
         <Button
             android:id="@+id/btn_cancelation"
@@ -157,7 +164,8 @@
             android:layout_weight="1"
             android:text="@string/leave_cancelation"
             android:drawableTop="@drawable/ic_cancelation"
-            android:background="@android:color/transparent"/>
+            android:background="@android:color/transparent"
+            android:textColor="@android:color/background_light"/>
 
         <Button
             android:id="@+id/btn_medical"
@@ -166,7 +174,8 @@
             android:layout_weight="1"
             android:text="@string/medical"
             android:drawableTop="@drawable/ic_medical"
-            android:background="@android:color/transparent"/>
+            android:background="@android:color/transparent"
+            android:textColor="@android:color/background_light"/>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
