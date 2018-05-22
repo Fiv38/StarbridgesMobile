@@ -2,7 +2,7 @@ package com.example.android.starbridges.network;
 
 import com.example.android.starbridges.model.Attendence;
 import com.example.android.starbridges.model.Authentication;
-import com.example.android.starbridges.model.ListAttendaceCorrection.ListAttendanceCorrection;
+import com.example.android.starbridges.model.ListAttendanceCorrection.ListAttendanceCorrection;
 import com.example.android.starbridges.model.OLocation.OLocation;
 import com.example.android.starbridges.model.OPost;
 import com.example.android.starbridges.model.getimage.GetImage;
@@ -27,9 +27,9 @@ public interface APIInterfaceRest {
     @POST("api/Attendance/RegisterIMEI")
     Call<OPost> postRegisterImei(@Field("username") String username, @Field("password") String password, @Field("IMEI") String imei);
 
-    @FormUrlEncoded
-    @POST("api/Attendance/GetLocations")
-    Call<OLocation> postLocation(@Field("emptyBody") String emptyBody);
+    //@FormUrlEncoded
+    @GET("api/Attendance/GetLocations")
+    Call<OLocation> postLocation();
 
     @FormUrlEncoded
     @POST("api/Attendance/Absence")

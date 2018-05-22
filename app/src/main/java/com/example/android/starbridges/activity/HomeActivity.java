@@ -18,6 +18,10 @@ import com.example.android.starbridges.model.getimage.GetImage;
 import com.example.android.starbridges.network.APIClient;
 import com.example.android.starbridges.network.APIInterfaceRest;
 import com.example.android.starbridges.utility.GlobalVar;
+import com.example.android.starbridges.utility.SessionManagement;
+import com.google.android.gms.cast.framework.SessionManager;
+
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -29,21 +33,33 @@ public class HomeActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     APIInterfaceRest apiInterface;
     CircleImageView imageView;
-private TextView mUsernameView;
+    private TextView mUsernameView;
+    SessionManagement session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         imageView = (CircleImageView)findViewById(R.id.profile_image);
-        mUsernameView=(TextView) findViewById(R.id.lbl_username);
-        username = GlobalVar.getUsername();
+        session = new SessionManagement(getApplicationContext());
+
+        HashMap<String, String> user = session.getUserDetails();
+        String token_sp = user.get(SessionManagement.KEY_TOKEN);
+        String loginName_sp = user.get(SessionManagement.KEY_LOGINNAME);
+        String fullName_sp = user.get(SessionManagement.KEY_FULLNAME);
+        GlobalVar.setToken(token_sp);
+        GlobalVar.setLoginName(loginName_sp);
+        GlobalVar.setFullname(fullName_sp);
+        username = GlobalVar.getLoginName();
         fullname = GlobalVar.getFullname();
+        mUsernameView=(TextView) findViewById(R.id.lbl_username);
         mUsernameView.setText("Hello,\n"+fullname);
 
 loadingImage();
     }
 
     void loadingImage(){
+
+
         apiInterface = APIClient.getImage(GlobalVar.getToken()).create(APIInterfaceRest.class);
         progressDialog = new ProgressDialog(HomeActivity.this);
         progressDialog.setTitle("Loading");

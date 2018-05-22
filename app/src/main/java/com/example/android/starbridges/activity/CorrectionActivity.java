@@ -11,13 +11,16 @@ import android.widget.Toast;
 
 import com.example.android.starbridges.R;
 import com.example.android.starbridges.adapter.CorrectionAdapter;
-import com.example.android.starbridges.model.ListAttendaceCorrection.ListAttendanceCorrection;
+import com.example.android.starbridges.model.ListAttendanceCorrection.ListAttendanceCorrection;
 import com.example.android.starbridges.network.APIClient;
 import com.example.android.starbridges.network.APIInterfaceRest;
 import com.example.android.starbridges.utility.GlobalVar;
+import com.example.android.starbridges.utility.SessionManagement;
 
 import org.json.JSONObject;
 
+
+import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,6 +34,7 @@ public class CorrectionActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
     private CorrectionAdapter viewAdapter;
+    SessionManagement session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +49,17 @@ public class CorrectionActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        txtNameCorrection.setText(GlobalVar.getFullName());
+
+        session = new SessionManagement(getApplicationContext());
+        HashMap<String, String> user = session.getUserDetails();
+        String token_sp = user.get(SessionManagement.KEY_TOKEN);
+        String fullName_sp = user.get(SessionManagement.KEY_FULLNAME);
+        String nik_sp = user.get(SessionManagement.KEY_NIK);
+        GlobalVar.setToken(token_sp);
+        GlobalVar.setFullname(fullName_sp);
+        GlobalVar.setNik(nik_sp);
+
+        txtNameCorrection.setText(GlobalVar.getFullname());
         txtNIKCorrection.setText(GlobalVar.getNik());
 
         getAttendaceCorrectionLog("2018-04-01T00:00:00", "2018-04-30T00:00:00");
@@ -57,7 +71,7 @@ public class CorrectionActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(CorrectionActivity.this);
         progressDialog.setTitle("Loading");
         progressDialog.show();
-        final APIInterfaceRest apiInterface = APIClient.getListAttendanceCorrection(GlobalVar.getAccessToken()).create(APIInterfaceRest.class);
+        final APIInterfaceRest apiInterface = APIClient.getListAttendanceCorrection(GlobalVar.getToken()).create(APIInterfaceRest.class);
         Call<ListAttendanceCorrection> call3 = apiInterface.getListAttendanceCorrection(dateFrom, dateTo);
         call3.enqueue(new Callback<ListAttendanceCorrection>() {
             @Override

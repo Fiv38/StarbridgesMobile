@@ -112,7 +112,7 @@ public class CheckInOutActivity extends AppCompatActivity {
     }
 
     public void getAttendaceLog(String DateFrom, String DateTo) {
-        apiInterface = APIClient.getHistory(GlobalVar.getAccessToken()).create(APIInterfaceRest.class);
+        apiInterface = APIClient.getHistory(GlobalVar.getToken()).create(APIInterfaceRest.class);
         progressDialog = new ProgressDialog(CheckInOutActivity.this);
         progressDialog.setTitle("Loading");
         progressDialog.show();

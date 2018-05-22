@@ -19,10 +19,12 @@ import com.example.android.starbridges.model.history.ReturnValue;
 import com.example.android.starbridges.network.APIClient;
 import com.example.android.starbridges.network.APIInterfaceRest;
 import com.example.android.starbridges.utility.GlobalVar;
+import com.example.android.starbridges.utility.SessionManagement;
 
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -35,6 +37,7 @@ public class HistoriesActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private List<ReturnValue> value;
     private HistoryAdapter viewAdapter;
+    SessionManagement session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,10 @@ public class HistoriesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_histories);
 
         setTitle("History");
+        session = new SessionManagement(getApplicationContext());
+        HashMap<String, String> user = session.getUserDetails();
+        String token_sp = user.get(SessionManagement.KEY_TOKEN);
+        GlobalVar.setToken(token_sp);
 
         Intent intent = getIntent();
         final String sDateFrom = intent.getStringExtra("from");
@@ -58,7 +65,7 @@ public class HistoriesActivity extends AppCompatActivity {
 
 
     public void getAttendaceLog(String DateFrom, String DateTo) {
-        apiInterface = APIClient.getHistory(GlobalVar.getAccessToken()).create(APIInterfaceRest.class);
+        apiInterface = APIClient.getHistory(GlobalVar.getToken()).create(APIInterfaceRest.class);
         progressDialog = new ProgressDialog(HistoriesActivity.this);
         progressDialog.setTitle("Loading");
         progressDialog.show();

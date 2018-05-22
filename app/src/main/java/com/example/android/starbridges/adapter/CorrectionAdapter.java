@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.android.starbridges.R;
 import com.example.android.starbridges.activity.CorrectionDetailActivity;
-import com.example.android.starbridges.model.ListAttendaceCorrection.ReturnValue;
+import com.example.android.starbridges.model.ListAttendanceCorrection.ReturnValue;
 
 import java.util.List;
 
