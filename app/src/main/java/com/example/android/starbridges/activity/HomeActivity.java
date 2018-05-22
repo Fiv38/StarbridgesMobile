@@ -2,6 +2,7 @@ package com.example.android.starbridges.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 
 import android.graphics.Bitmap;
@@ -17,6 +18,7 @@ import com.example.android.starbridges.R;
 import com.example.android.starbridges.model.getimage.GetImage;
 import com.example.android.starbridges.network.APIClient;
 import com.example.android.starbridges.network.APIInterfaceRest;
+import com.example.android.starbridges.utility.AlertDialogManager;
 import com.example.android.starbridges.utility.GlobalVar;
 import com.example.android.starbridges.utility.SessionManagement;
 import com.google.android.gms.cast.framework.SessionManager;
@@ -35,6 +37,7 @@ public class HomeActivity extends AppCompatActivity {
     CircleImageView imageView;
     private TextView mUsernameView;
     SessionManagement session;
+    AlertDialogManager alertDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,6 +121,7 @@ loadingImage();
         startActivity(correction);
     }
     public void signOut(View view){
+        //alertDialog.showAlertDialog(this, "Warning","Are You Sure to Sign Out?",false);
         session.logoutUser();
         finish();
     }

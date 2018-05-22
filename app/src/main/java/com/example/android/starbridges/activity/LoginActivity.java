@@ -128,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER) && hasGPSDevice(LoginActivity.this)) {
             Log.e("Starbridges", "Gps already enabled");
-            Toast.makeText(LoginActivity.this, "Gps not enabled", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(LoginActivity.this, "Gps not enabled", Toast.LENGTH_SHORT).show();
             enableLoc();
         } else {
             Log.e("Starbridges", "Gps already enabled");
