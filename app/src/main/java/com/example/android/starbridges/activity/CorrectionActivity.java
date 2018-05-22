@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,9 @@ import org.json.JSONObject;
 
 
 import java.util.HashMap;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -56,13 +60,30 @@ public class CorrectionActivity extends AppCompatActivity {
         String fullName_sp = user.get(SessionManagement.KEY_FULLNAME);
         String nik_sp = user.get(SessionManagement.KEY_NIK);
         GlobalVar.setToken(token_sp);
-        GlobalVar.setNik(nik_sp);
+        GlobalVar.setFullname(fullName_sp);
+        GlobalVar.setNIK(nik_sp);
 
         txtNameCorrection.setText(GlobalVar.getFullname());
-        txtNIKCorrection.setText(GlobalVar.getNik());
+        txtNIKCorrection.setText(GlobalVar.getNIK());
 
-        getAttendaceCorrectionLog("2018-04-01T00:00:00", "2018-04-30T00:00:00");
+        Calendar aCalendar = Calendar.getInstance();
+        // add -1 month to current month
+        aCalendar.add(Calendar.MONTH, -1);
+        // set DATE to 1, so first date of previous month
+        aCalendar.set(Calendar.DATE, 1);
+
+        Date firstDateOfPreviousMonth = aCalendar.getTime();
+
+        // set actual maximum date of previous month
+        aCalendar.set(Calendar.DATE,     aCalendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        //read it
+        Date lastDateOfPreviousMonth = aCalendar.getTime();
+
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+
+        getAttendaceCorrectionLog(sdf.format(firstDateOfPreviousMonth), sdf.format(lastDateOfPreviousMonth));
     }
+
 
 
     public void getAttendaceCorrectionLog(String dateFrom, String dateTo) {
@@ -94,9 +115,14 @@ public class CorrectionActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ListAttendanceCorrection> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Maaf koneksi bermasalah", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Something went wrong...Please try again!", Toast.LENGTH_LONG).show();
                 call.cancel();
             }
         });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_correction, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }

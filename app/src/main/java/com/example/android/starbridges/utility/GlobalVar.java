@@ -35,15 +35,15 @@ public class GlobalVar {
 
     public static String fullname;
 
-    public static String getNik() {
-        return nik;
+    public static String getNIK() {
+        return nIK;
     }
 
-    public static void setNik(String nik) {
-        GlobalVar.nik = nik;
+    public static void setNIK(String nIK) {
+        GlobalVar.nIK = nIK;
     }
 
-    public static String nik;
+    public static String nIK;
 
     public static String getEmployeeID() {
         return employee_id;
@@ -54,6 +54,5 @@ public class GlobalVar {
     }
 
     public static String employee_id;
-
 
 }

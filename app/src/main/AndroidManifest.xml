@@ -79,16 +79,11 @@
         <activity
             android:name=".activity.CorrectionDetailActivity"
             android:configChanges="orientation"
-            android:parentActivityName=".activity.HomeActivity"
+            android:parentActivityName=".activity.CorrectionActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.OvertimeActivity"></activity>
-
-        <receiver android:enabled="true" android:name=".receiver.TimeChangedReceiver">
-        <intent-filter>
-            <action android:name="android.intent.action.DATE_CHANGED"/>
-            <action android:name="android.intent.action.TIME_SET"/>
-        </intent-filter>
-        </receiver>
+        <activity android:name=".activity.DraftCorrectionActivity" />
+        <activity android:name=".activity.DraftDetailCorrectionActivity" />
+        <activity android:name=".activity.DraftCorrectionListActivity"></activity>
     </application>
 
 </manifest>

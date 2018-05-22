@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
         android:layout_width="342dp"
-        android:layout_height="132dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         app:cardBackgroundColor="@android:color/transparent"
@@ -15,7 +16,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="131dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
@@ -31,54 +32,13 @@
                     android:text="Log Date" />
 
                 <TextView
-                    android:id="@+id/txtLogDateCorrection"
+                    android:id="@+id/txtLogDateCorrectionDraft"
                     android:layout_width="20dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="0dp"
                     android:layout_weight="1"
                     android:text="log_date" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Status" />
-
-                <TextView
-                    android:id="@+id/txtStatusCorrection"
-                    android:layout_width="20dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="No Update" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Day" />
-
-                <TextView
-                    android:id="@+id/txtDayCorrection"
-                    android:layout_width="20dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Monday" />
             </LinearLayout>
 
             <LinearLayout
@@ -91,10 +51,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Day Type" />
+                    android:text="Log In" />
 
                 <TextView
-                    android:id="@+id/txtDayTypeCorrection"
+                    android:id="@+id/txtLogInCorrectionDraft"
                     android:layout_width="20dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -111,25 +71,48 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Status Code" />
+                    android:text="Log Out" />
 
                 <TextView
-                    android:id="@+id/txtStatusCodeCorrection"
+                    android:id="@+id/txtLogOutCorrectionDraft"
                     android:layout_width="20dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="TextView" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btnDetailCorrection"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:layout_gravity="center_vertical|center_horizontal"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/rounded_btn"
-                android:text="Detail"
-                android:textColor="@android:color/background_light" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="39dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnDetailCorrectionDraft"
+                    android:layout_width="20dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:layout_marginTop="3dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_btn"
+                    android:text="Detail"
+                    android:textColor="@android:color/background_light" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/btnDeleteCorrectionDraft"
+                    android:layout_width="20dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:layout_marginTop="3dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_btn_red"
+                    android:text="Delete"
+                    android:textColor="@android:color/background_light" />
+            </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 

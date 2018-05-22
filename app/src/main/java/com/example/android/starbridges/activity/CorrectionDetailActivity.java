@@ -1,45 +1,515 @@
 package com.example.android.starbridges.activity;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.android.starbridges.R;
+import com.example.android.starbridges.model.CorrectionDetail.CorrectionDetail;
+import com.example.android.starbridges.model.CorrectionDetail.ReturnValue;
+import com.example.android.starbridges.model.OLocation.OLocation;
+import com.example.android.starbridges.model.MessageReturn.MessageReturn;
+import com.example.android.starbridges.network.APIClient;
+import com.example.android.starbridges.network.APIInterfaceRest;
+import com.example.android.starbridges.utility.GlobalVar;
+import com.google.gson.Gson;
 
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CorrectionDetailActivity extends AppCompatActivity {
 
-    EditText txtBreakStartCDetails;
+    TextView txtLogDateCDetails, txtShiftCDetails;
+    EditText txtLogInCDetails,txtBreakStartCDetails,txtBreakEndCDetails, txtLocationCDetails;
+    EditText txtLogOutCDetails, txtOverTimeInCDetails, txtOverTimeOutCDetails, txtNotesCDetails;
+    Spinner spnLocationCDetails;
+    String uid, locationId;
+    ProgressDialog progressDialog;
+    ReturnValue valueCorrectionDetail;
+    Button btnSubmitCDetails, btnSaveCDetails, btnCancelCDetails;
+    APIInterfaceRest apiInterface;
+    List<com.example.android.starbridges.model.OLocation.ReturnValue> locItems;
+    List<com.example.android.starbridges.model.OLocation.ReturnValue> listReturnValue;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_correction_detail);
 
-        txtBreakStartCDetails=(EditText)findViewById(R.id.txtBreakStartCDetails);
+        setTitle("Detail Correction");
 
-        txtBreakStartCDetails.setOnClickListener(new View.OnClickListener() {
+        final Intent intent = getIntent();
+        uid = intent.getStringExtra("uid");
+
+        txtLogDateCDetails=(TextView)findViewById(R.id.txtLogDateCDetails);
+        txtShiftCDetails=(TextView)findViewById(R.id.txtShiftCDetails);
+
+        txtLogInCDetails=(EditText)findViewById(R.id.txtLogInCDetails);
+        txtLogInCDetails.setFocusable(false);
+        txtLogInCDetails.setClickable(true);
+        txtLogInCDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Calendar mcurrentTime = Calendar.getInstance();
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mcurrentTime.get(Calendar.MINUTE);
-                int second = mcurrentTime.get(Calendar.SECOND);
+                Calendar mTime = Calendar.getInstance();
+                int hour = mTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mTime.get(Calendar.MINUTE);
 
                 TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(CorrectionDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        txtBreakStartCDetails.setText( selectedHour + ":" + selectedMinute);
-                    }
-                }, hour, minute, true);
+                try{
+                    mTimePicker = new TimePickerDialog(CorrectionDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                            txtLogInCDetails.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+                        }
+                    }, Integer.parseInt(txtLogInCDetails.getText().toString().substring(0,2)) , Integer.parseInt(txtLogInCDetails.getText().toString().substring(3,5)), true);
+                } catch (Exception e)
+                {
+                    mTimePicker = new TimePickerDialog(CorrectionDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                            txtLogInCDetails.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+                        }
+                    }, hour, minute, true);
+                }
+
                 mTimePicker.setTitle("Select Time");
                 mTimePicker.show();
             }
         });
+
+        txtBreakEndCDetails=(EditText)findViewById(R.id.txtBreakEndDetails);
+        txtBreakEndCDetails.setFocusable(false);
+        txtBreakEndCDetails.setClickable(true);
+        txtBreakEndCDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar mTime = Calendar.getInstance();
+                int hour = mTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mTime.get(Calendar.MINUTE);
+
+                TimePickerDialog mTimePicker;
+                try{
+                    mTimePicker = new TimePickerDialog(CorrectionDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                            txtBreakEndCDetails.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+                        }
+                    }, Integer.parseInt(txtBreakEndCDetails.getText().toString().substring(0,2)) , Integer.parseInt(txtBreakEndCDetails.getText().toString().substring(3,5)), true);
+                } catch (Exception e)
+                {
+                    mTimePicker = new TimePickerDialog(CorrectionDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                            txtBreakEndCDetails.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+                        }
+                    }, hour, minute, true);
+                }
+
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
+            }
+        });
+
+        txtLocationCDetails=(EditText)findViewById(R.id.txtLocationCDetails);
+
+        txtLogOutCDetails=(EditText)findViewById(R.id.txtLogOutCDetails);
+        txtLogOutCDetails.setFocusable(false);
+        txtLogOutCDetails.setClickable(true);
+        txtLogOutCDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar mTime = Calendar.getInstance();
+                int hour = mTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mTime.get(Calendar.MINUTE);
+
+                TimePickerDialog mTimePicker;
+                try{
+                    mTimePicker = new TimePickerDialog(CorrectionDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                            txtLogOutCDetails.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+                        }
+                    }, Integer.parseInt(txtLogOutCDetails.getText().toString().substring(0,2)) , Integer.parseInt(txtLogOutCDetails.getText().toString().substring(3,5)), true);
+                } catch (Exception e)
+                {
+                    mTimePicker = new TimePickerDialog(CorrectionDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                            txtLogOutCDetails.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+                        }
+                    }, hour, minute, true);
+                }
+
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
+            }
+        });
+
+        txtOverTimeInCDetails=(EditText)findViewById(R.id.txtOverTimeInCDetails);
+        txtOverTimeInCDetails.setFocusable(false);
+        txtOverTimeInCDetails.setClickable(true);
+        txtOverTimeInCDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar mTime = Calendar.getInstance();
+                int hour = mTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mTime.get(Calendar.MINUTE);
+
+                TimePickerDialog mTimePicker;
+                try{
+                    mTimePicker = new TimePickerDialog(CorrectionDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                            txtOverTimeInCDetails.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+                        }
+                    }, Integer.parseInt(txtOverTimeInCDetails.getText().toString().substring(0,2)) , Integer.parseInt(txtOverTimeInCDetails.getText().toString().substring(3,5)), true);
+                } catch (Exception e)
+                {
+                    mTimePicker = new TimePickerDialog(CorrectionDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                            txtOverTimeInCDetails.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+                        }
+                    }, hour, minute, true);
+                }
+
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
+            }
+        });
+
+        txtOverTimeOutCDetails=(EditText)findViewById(R.id.txtOverTimeOutCDetails);
+        txtOverTimeOutCDetails.setFocusable(false);
+        txtOverTimeOutCDetails.setClickable(true);
+        txtOverTimeOutCDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar mTime = Calendar.getInstance();
+                int hour = mTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mTime.get(Calendar.MINUTE);
+
+                TimePickerDialog mTimePicker;
+                try{
+                    mTimePicker = new TimePickerDialog(CorrectionDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                            txtOverTimeOutCDetails.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+                        }
+                    }, Integer.parseInt(txtOverTimeOutCDetails.getText().toString().substring(0,2)) , Integer.parseInt(txtOverTimeOutCDetails.getText().toString().substring(3,5)), true);
+                } catch (Exception e)
+                {
+                    mTimePicker = new TimePickerDialog(CorrectionDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                            txtOverTimeOutCDetails.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+                        }
+                    }, hour, minute, true);
+                }
+
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
+            }
+        });
+
+        spnLocationCDetails=(Spinner)findViewById(R.id.spnLocationCDetails);
+//        spnLocationCDetails.setFocusable(false);
+//        spnLocationCDetails.setClickable(true);
+
+        txtBreakStartCDetails=(EditText)findViewById(R.id.txtBreakStartCDetails);
+        txtBreakStartCDetails.setFocusable(false);
+        txtBreakStartCDetails.setClickable(true);
+        txtBreakStartCDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            Calendar mTime = Calendar.getInstance();
+            int hour = mTime.get(Calendar.HOUR_OF_DAY);
+            int minute = mTime.get(Calendar.MINUTE);
+
+            TimePickerDialog mTimePicker;
+            try
+            {
+                mTimePicker = new TimePickerDialog(CorrectionDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        txtBreakStartCDetails.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+                    }
+                }, Integer.parseInt(txtBreakStartCDetails.getText().toString().substring(0,2)) , Integer.parseInt(txtBreakStartCDetails.getText().toString().substring(3,5)), true);
+            }
+            catch (Exception e)
+            {
+                mTimePicker = new TimePickerDialog(CorrectionDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        txtBreakStartCDetails.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+                    }
+                }, hour, minute, true);
+            }
+
+            mTimePicker.setTitle("Select Time");
+            mTimePicker.show();
+            }
+        });
+
+
+        txtNotesCDetails=(EditText)findViewById(R.id.txtNotesCDetails);
+
+        btnCancelCDetails=(Button)findViewById(R.id.btnCancelCDetails);
+        btnSaveCDetails=(Button)findViewById(R.id.btnSaveCDetails);
+        btnSubmitCDetails=(Button)findViewById(R.id.btnSubmitCDetails);
+
+
+
+        btnCancelCDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(CorrectionDetailActivity.this);
+                alert.setTitle("Confirmation");
+                alert.setTitle("This information will not be saved");
+                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                });
+
+                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                alert.show();
+            }
+        });
+
+        btnSaveCDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(CorrectionDetailActivity.this);
+                alert.setTitle("Confirmation");
+                alert.setTitle("This information will be saved as draft");
+                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        saveSubmitAttendanceCorrection("Save");
+                    }
+                });
+
+                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                alert.show();
+            }
+        });
+
+        btnSubmitCDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(CorrectionDetailActivity.this);
+                alert.setTitle("Confirmation");
+                alert.setTitle("This information will be send and wait for approval");
+                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        saveSubmitAttendanceCorrection("Submit");
+                    }
+                });
+
+                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                alert.show();
+            }
+        });
+
+        getAttendaceCorrection(uid);
+
+    }
+
+    public void getAttendaceCorrection(String uid) {
+
+        progressDialog = new ProgressDialog(CorrectionDetailActivity.this);
+        progressDialog.setTitle("Loading");
+        progressDialog.show();
+
+        final APIInterfaceRest apiInterface = APIClient.getDetailAttendanceCorrection(GlobalVar.getToken()).create(APIInterfaceRest.class);
+        Call<CorrectionDetail> call3 = apiInterface.getDetailAttendanceCorrection(uid);
+
+        call3.enqueue(new Callback<CorrectionDetail>() {
+            @Override
+            public void onResponse(Call<CorrectionDetail> call, Response<CorrectionDetail> response) {
+                CorrectionDetail data = response.body();
+                if (data != null && data.isIsSucceed()) {
+                    valueCorrectionDetail=data.getReturnValue();
+                    locationId=valueCorrectionDetail.getLocationID();
+
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        Toast.makeText(CorrectionDetailActivity.this, jObjError.toString(), Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        Toast.makeText(CorrectionDetailActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+                setText(valueCorrectionDetail);
+                initSpinnerLoc();
+            }
+
+            @Override
+            public void onFailure(Call<CorrectionDetail> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Something went wrong...Please try again!", Toast.LENGTH_LONG).show();
+                initSpinnerLoc();
+                call.cancel();
+            }
+        });
+
+    }
+
+    public void saveSubmitAttendanceCorrection(String saveOrSubmit) {
+
+        progressDialog = new ProgressDialog(CorrectionDetailActivity.this);
+        progressDialog.setTitle("Loading");
+        progressDialog.show();
+
+        valueCorrectionDetail.setID("");
+        valueCorrectionDetail.setActualLogIn(txtLogInCDetails.getText().toString());
+        valueCorrectionDetail.setActualBreakEnd(txtBreakEndCDetails.getText().toString());
+        valueCorrectionDetail.setLocationID(txtLocationCDetails.getText().toString());
+        valueCorrectionDetail.setActualLogOut(txtLogOutCDetails.getText().toString());
+        valueCorrectionDetail.setActualOvertimeIn(txtOverTimeInCDetails.getText().toString());
+        valueCorrectionDetail.setActualOvertimeOut(txtOverTimeOutCDetails.getText().toString());
+        valueCorrectionDetail.setActualBreakStart(txtBreakStartCDetails.getText().toString());
+        valueCorrectionDetail.setNotes(txtNotesCDetails.getText().toString());
+
+        final APIInterfaceRest apiInterface = APIClient.asveSubmitAttendanceCorrection(GlobalVar.getToken()).create(APIInterfaceRest.class);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),new Gson().toJson(valueCorrectionDetail).toString());
+        Call<MessageReturn> call3 = apiInterface.saveSubmitAttendanceCorrection(saveOrSubmit, body);
+
+        call3.enqueue(new Callback<MessageReturn>() {
+            @Override
+            public void onResponse(Call<MessageReturn> call, Response<MessageReturn> response) {
+                progressDialog.dismiss();
+                MessageReturn data = response.body();
+                if (data != null) {
+                    Toast.makeText(getApplicationContext(), data.getMessage(), Toast.LENGTH_LONG).show();
+
+                }
+                else
+                    Toast.makeText(getApplicationContext(), "no data", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(CorrectionDetailActivity.this, CorrectionActivity.class);
+                startActivity(intent);
+
+            }
+
+            @Override
+            public void onFailure(Call<MessageReturn> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(getApplicationContext(), "Something went wrong...Please try again!", Toast.LENGTH_LONG).show();
+                call.cancel();
+            }
+        });
+
+    }
+
+    public void setText(ReturnValue valueCorrectionDetail)
+    {
+        txtLogDateCDetails.setText(valueCorrectionDetail.getLogDate());
+        txtShiftCDetails.setText(valueCorrectionDetail.getShift());
+        txtLogInCDetails.setText(valueCorrectionDetail.getActualLogIn() == null ? "": valueCorrectionDetail.getActualLogIn().substring(11,16));
+        txtBreakEndCDetails.setText(valueCorrectionDetail.getActualBreakEnd() == null? "":valueCorrectionDetail.getActualBreakEnd().substring(11,16));
+        txtLogOutCDetails.setText(valueCorrectionDetail.getActualLogOut() == null? "":valueCorrectionDetail.getActualLogOut().substring(11,16));
+        txtOverTimeInCDetails.setText(valueCorrectionDetail.getActualOvertimeIn() == null? "":valueCorrectionDetail.getActualOvertimeIn().substring(11,16));
+        txtOverTimeOutCDetails.setText(valueCorrectionDetail.getActualOvertimeOut() == null? "":valueCorrectionDetail.getActualOvertimeOut().substring(11,16));
+        //spnLocationCDraftDetails=(Spinner)findViewById(R.id.spnLocationCDraftDetails);
+        txtBreakStartCDetails.setText(valueCorrectionDetail.getActualBreakStart() == null? "":valueCorrectionDetail.getActualBreakEnd().substring(11,16));
+        txtNotesCDetails.setText(valueCorrectionDetail.getNotes() == null? "":valueCorrectionDetail.getNotes());
+
+
+        progressDialog.dismiss();
+    }
+
+    public void initSpinnerLoc() {
+        listReturnValue= new ArrayList<>();
+        com.example.android.starbridges.model.OLocation.ReturnValue returnValue=new com.example.android.starbridges.model.OLocation.ReturnValue();
+        returnValue.setID("");
+        returnValue.setAddress("");
+        returnValue.setCode("");
+        returnValue.setDescription("");
+        returnValue.setName("");
+        listReturnValue.add(returnValue);
+
+        apiInterface = APIClient.getLocationValue(GlobalVar.getToken()).create(APIInterfaceRest.class);
+        apiInterface.getLocation().enqueue(new Callback<OLocation>() {
+            @Override
+            public void onResponse(Call<OLocation> call, Response<OLocation> response) {
+
+                if (response.isSuccessful()) {
+
+                    locItems = response.body().getReturnValue();
+                    listReturnValue.addAll(locItems);
+
+                    setupSpinner();
+
+                } else {
+
+                    Toast.makeText(CorrectionDetailActivity.this, "Failed to get data", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OLocation> call, Throwable t) {
+                Toast.makeText(CorrectionDetailActivity.this, "Something went wrong...Please try again!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+    }
+
+    public void setupSpinner()
+    {
+        int spinnerIdSelected=0;
+        if(locationId!=null)
+        {
+            for(com.example.android.starbridges.model.OLocation.ReturnValue x: listReturnValue)
+            {
+                if(x.getID().equals(locationId))
+                    break;
+                spinnerIdSelected++;
+            }
+        }
+
+        ArrayAdapter<com.example.android.starbridges.model.OLocation.ReturnValue> adapter = new ArrayAdapter<com.example.android.starbridges.model.OLocation.ReturnValue>(CorrectionDetailActivity.this,
+                android.R.layout.simple_spinner_item, listReturnValue);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnLocationCDetails.setAdapter(adapter);
+
+        spnLocationCDetails.setSelection(spinnerIdSelected);
     }
 }

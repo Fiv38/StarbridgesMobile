@@ -40,7 +40,7 @@ public class CorrectionAdapter extends RecyclerView.Adapter<CorrectionAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        ReturnValue value = corrections.get(position);
+        final ReturnValue value = corrections.get(position);
 
         holder.txtStatusCodeCorrection.setText(value.getStatusCode());
         holder.txtDayTypeCorrection.setText(value.getDayType());
@@ -52,6 +52,7 @@ public class CorrectionAdapter extends RecyclerView.Adapter<CorrectionAdapter.Vi
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(context, CorrectionDetailActivity.class);
+                intent.putExtra("uid", value.getUID());
                 context.startActivity(intent);
             }
         });
@@ -84,8 +85,8 @@ public class CorrectionAdapter extends RecyclerView.Adapter<CorrectionAdapter.Vi
 
         @Override
         public void onClick(View v) {
-            final Intent intent=new Intent(context, CorrectionDetailActivity.class);
-            context.startActivity(intent);
+//            final Intent intent=new Intent(context, CorrectionDetailActivity.class);
+//            context.startActivity(intent);
 
 //
 //            Intent i = new Intent(context, UpdateActivity.class);
