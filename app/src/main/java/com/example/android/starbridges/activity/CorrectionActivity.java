@@ -120,9 +120,5 @@ public class CorrectionActivity extends AppCompatActivity {
             }
         });
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_correction, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
+
 }
