@@ -56,7 +56,6 @@ public class CorrectionActivity extends AppCompatActivity {
         String fullName_sp = user.get(SessionManagement.KEY_FULLNAME);
         String nik_sp = user.get(SessionManagement.KEY_NIK);
         GlobalVar.setToken(token_sp);
-        GlobalVar.setFullname(fullName_sp);
         GlobalVar.setNik(nik_sp);
 
         txtNameCorrection.setText(GlobalVar.getFullname());

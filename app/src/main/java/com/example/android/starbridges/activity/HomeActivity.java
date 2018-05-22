@@ -117,5 +117,9 @@ loadingImage();
         Intent correction = new Intent(this, CorrectionActivity.class);
         startActivity(correction);
     }
+    public void signOut(View view){
+        session.logoutUser();
+        finish();
+    }
 
 }

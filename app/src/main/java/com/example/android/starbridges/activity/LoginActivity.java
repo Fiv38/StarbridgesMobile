@@ -316,9 +316,9 @@ public class LoginActivity extends AppCompatActivity {
                         String token_sp = response.body().getTokenType()+" "+ response.body().getAccessToken();
                         String expires_sp = response.body().getExpires();
                         String nik_sp = response.body().getNik();
-                        //String employee_id_sp =
+                        String employee_id_sp = response.body().getEmployeeID();
 
-                        session.createLoginSession(loginName_sp,fullName_sp,token_sp,expires_sp, nik_sp);
+                        session.createLoginSession(loginName_sp,fullName_sp,token_sp,expires_sp, nik_sp, employee_id_sp);
 
                         GlobalVar.setToken(token_sp);
                         GlobalVar.setLoginName(loginName_sp);

@@ -45,5 +45,15 @@ public class GlobalVar {
 
     public static String nik;
 
+    public static String getEmployeeID() {
+        return employee_id;
+    }
+
+    public static void setEmployee_id(String employee_id) {
+        GlobalVar.employee_id = employee_id;
+    }
+
+    public static String employee_id;
+
 
 }
