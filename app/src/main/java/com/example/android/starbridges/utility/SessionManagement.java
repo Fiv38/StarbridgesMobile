@@ -123,6 +123,10 @@ public class SessionManagement {
     // Get Login State
     public boolean isLoggedIn() {
 
+
+
+
+
         return pref.getBoolean(IS_LOGIN, false);
     }
 
