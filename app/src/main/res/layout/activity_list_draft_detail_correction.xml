@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.CorrectionDetailActivity">
+    tools:context=".activity.DraftDetailCorrectionActivity">
 
     <TextView
         android:id="@+id/textView"
@@ -26,7 +26,7 @@
         android:text="Shift" />
 
     <TextView
-        android:id="@+id/txtLogDateCDetails"
+        android:id="@+id/txtLogDateCDraftDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -34,10 +34,10 @@
         android:layout_marginStart="140dp" />
 
     <TextView
-        android:id="@+id/txtShiftCDetails"
+        android:id="@+id/txtShiftCDraftDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/txtLogDateCDetails"
+        android:layout_alignStart="@+id/txtLogDateCDraftDetails"
         android:layout_alignTop="@+id/textView4" />
 
     <LinearLayout
@@ -61,7 +61,7 @@
                 android:text="Log In" />
 
             <EditText
-                android:id="@+id/txtLogInCDetails"
+                android:id="@+id/txtLogInCDraftDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -84,7 +84,7 @@
                 android:text="Break Start" />
 
             <EditText
-                android:id="@+id/txtBreakStartCDetails"
+                android:id="@+id/txtBreakStartCDraftDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -126,7 +126,7 @@
                 android:text="Log Out" />
 
             <EditText
-                android:id="@+id/txtLogOutCDetails"
+                android:id="@+id/txtLogOutCDraftDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -147,7 +147,7 @@
                 android:text="Overtime In" />
 
             <EditText
-                android:id="@+id/txtOverTimeInCDetails"
+                android:id="@+id/txtOverTimeInCDraftDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -169,7 +169,7 @@
                 android:text="Overtime Out" />
 
             <EditText
-                android:id="@+id/txtOverTimeOutCDetails"
+                android:id="@+id/txtOverTimeOutCDraftDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -190,7 +190,7 @@
                 android:text="Location" />
 
             <Spinner
-                android:id="@+id/spnLocationCDetails"
+                android:id="@+id/spnLocationCDraftDetails"
                 android:layout_width="181dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
@@ -209,7 +209,7 @@
                 android:text="Location" />
 
             <EditText
-                android:id="@+id/txtLocationCDetails"
+                android:id="@+id/txtLocationCDraftDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -230,7 +230,7 @@
                 android:text="Notes" />
 
             <EditText
-                android:id="@+id/txtNotesCDetails"
+                android:id="@+id/txtNotesCDraftDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -250,21 +250,21 @@
                 android:layout_weight="1" />
 
             <Button
-                android:id="@+id/btnSubmitCDetails"
+                android:id="@+id/btnSubmitCDraftDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Submit" />
 
             <Button
-                android:id="@+id/btnSaveCDetails"
+                android:id="@+id/btnSaveCDraftDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Save" />
 
             <Button
-                android:id="@+id/btnCancelCDetails"
+                android:id="@+id/btnCancelCDraftDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

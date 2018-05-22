@@ -1,15 +1,14 @@
 
-package com.example.android.starbridges.model.ListAttendaceCorrection;
+package com.example.android.starbridges.model.CorrectionDetail;
 
 import java.io.Serializable;
-import java.util.List;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.Parcelable.Creator;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ListAttendanceCorrection implements Serializable, Parcelable
+public class CorrectionDetail implements Serializable, Parcelable
 {
 
     @SerializedName("CustomField")
@@ -17,34 +16,34 @@ public class ListAttendanceCorrection implements Serializable, Parcelable
     private CustomField customField;
     @SerializedName("ReturnValue")
     @Expose
-    private List<ReturnValue> returnValue = null;
+    private ReturnValue returnValue;
     @SerializedName("isSucceed")
     @Expose
     private boolean isSucceed;
     @SerializedName("message")
     @Expose
     private String message;
-    public final static Parcelable.Creator<ListAttendanceCorrection> CREATOR = new Creator<ListAttendanceCorrection>() {
+    public final static Creator<CorrectionDetail> CREATOR = new Creator<CorrectionDetail>() {
 
 
         @SuppressWarnings({
             "unchecked"
         })
-        public ListAttendanceCorrection createFromParcel(Parcel in) {
-            return new ListAttendanceCorrection(in);
+        public CorrectionDetail createFromParcel(Parcel in) {
+            return new CorrectionDetail(in);
         }
 
-        public ListAttendanceCorrection[] newArray(int size) {
-            return (new ListAttendanceCorrection[size]);
+        public CorrectionDetail[] newArray(int size) {
+            return (new CorrectionDetail[size]);
         }
 
     }
     ;
-    private final static long serialVersionUID = -4841643344840622019L;
+    private final static long serialVersionUID = 5128576540819386234L;
 
-    protected ListAttendanceCorrection(Parcel in) {
+    protected CorrectionDetail(Parcel in) {
         this.customField = ((CustomField) in.readValue((CustomField.class.getClassLoader())));
-        in.readList(this.returnValue, (com.example.android.starbridges.model.ListAttendaceCorrection.ReturnValue.class.getClassLoader()));
+        this.returnValue = ((ReturnValue) in.readValue((ReturnValue.class.getClassLoader())));
         this.isSucceed = ((boolean) in.readValue((boolean.class.getClassLoader())));
         this.message = ((String) in.readValue((String.class.getClassLoader())));
     }
@@ -53,7 +52,7 @@ public class ListAttendanceCorrection implements Serializable, Parcelable
      * No args constructor for use in serialization
      * 
      */
-    public ListAttendanceCorrection() {
+    public CorrectionDetail() {
     }
 
     /**
@@ -63,7 +62,7 @@ public class ListAttendanceCorrection implements Serializable, Parcelable
      * @param customField
      * @param returnValue
      */
-    public ListAttendanceCorrection(CustomField customField, List<ReturnValue> returnValue, boolean isSucceed, String message) {
+    public CorrectionDetail(CustomField customField, ReturnValue returnValue, boolean isSucceed, String message) {
         super();
         this.customField = customField;
         this.returnValue = returnValue;
@@ -79,20 +78,20 @@ public class ListAttendanceCorrection implements Serializable, Parcelable
         this.customField = customField;
     }
 
-    public ListAttendanceCorrection withCustomField(CustomField customField) {
+    public CorrectionDetail withCustomField(CustomField customField) {
         this.customField = customField;
         return this;
     }
 
-    public List<ReturnValue> getReturnValue() {
+    public ReturnValue getReturnValue() {
         return returnValue;
     }
 
-    public void setReturnValue(List<ReturnValue> returnValue) {
+    public void setReturnValue(ReturnValue returnValue) {
         this.returnValue = returnValue;
     }
 
-    public ListAttendanceCorrection withReturnValue(List<ReturnValue> returnValue) {
+    public CorrectionDetail withReturnValue(ReturnValue returnValue) {
         this.returnValue = returnValue;
         return this;
     }
@@ -105,7 +104,7 @@ public class ListAttendanceCorrection implements Serializable, Parcelable
         this.isSucceed = isSucceed;
     }
 
-    public ListAttendanceCorrection withIsSucceed(boolean isSucceed) {
+    public CorrectionDetail withIsSucceed(boolean isSucceed) {
         this.isSucceed = isSucceed;
         return this;
     }
@@ -118,14 +117,14 @@ public class ListAttendanceCorrection implements Serializable, Parcelable
         this.message = message;
     }
 
-    public ListAttendanceCorrection withMessage(String message) {
+    public CorrectionDetail withMessage(String message) {
         this.message = message;
         return this;
     }
 
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(customField);
-        dest.writeList(returnValue);
+        dest.writeValue(returnValue);
         dest.writeValue(isSucceed);
         dest.writeValue(message);
     }

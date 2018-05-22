@@ -15,11 +15,11 @@ public class GlobalVar {
 
     public static String token;
 
-    public static String getUsername() {
+    public static String loginName() {
         return username;
     }
 
-    public static void setUsername(String username) {
+    public static void setLoginName(String username) {
         GlobalVar.username = username;
     }
 
@@ -35,5 +35,14 @@ public class GlobalVar {
 
     public static String fullname;
 
+    public static String getNIK() {
+        return nIK;
+    }
+
+    public static void setNIK(String nIK) {
+        GlobalVar.nIK = nIK;
+    }
+
+    public static String nIK;
 
 }

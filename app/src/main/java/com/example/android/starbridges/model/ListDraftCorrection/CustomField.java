@@ -1,5 +1,5 @@
 
-package com.example.android.starbridges.model.ListAttendaceCorrection;
+package com.example.android.starbridges.model.ListDraftCorrection;
 
 import java.io.Serializable;
 import android.os.Parcel;
@@ -9,7 +9,7 @@ import android.os.Parcelable.Creator;
 public class CustomField implements Serializable, Parcelable
 {
 
-    public final static Parcelable.Creator<CustomField> CREATOR = new Creator<CustomField>() {
+    public final static Creator<CustomField> CREATOR = new Creator<CustomField>() {
 
 
         @SuppressWarnings({
@@ -25,7 +25,7 @@ public class CustomField implements Serializable, Parcelable
 
     }
     ;
-    private final static long serialVersionUID = -6973252542594142631L;
+    private final static long serialVersionUID = -2356725876821883213L;
 
     protected CustomField(Parcel in) {
     }
