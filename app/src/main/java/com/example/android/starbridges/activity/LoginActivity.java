@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.support.annotation.NonNull;
@@ -34,6 +35,7 @@ import com.example.android.starbridges.model.RegIMEI;
 import com.example.android.starbridges.network.APIClient;
 import com.example.android.starbridges.network.APIInterfaceRest;
 import com.example.android.starbridges.utility.GlobalVar;
+import com.example.android.starbridges.utility.SessionManagement;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -45,6 +47,10 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Callback;
@@ -56,9 +62,6 @@ import retrofit2.Response;
  */
 public class LoginActivity extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_READ_PHONE_STATE = 1000;
-    public static final String EXTRA_IMEI ="activityLogin.extra.IMEI";
-    public static final String EXTRA_ACCESS_TOKEN ="activityLogin.extra.access_token";
-    public static final String EXTRA_TOKEN_TYPE ="activityLogin.extra.token_type";
     //private UserLoginTask mAuthTask = null;
 
     // UI references.
@@ -67,10 +70,13 @@ public class LoginActivity extends AppCompatActivity {
     private View mProgressView;
     private View mLoginFormView;
     private String IMEI;
+    //Location references
     protected static final String TAG = "LocationOnOff";
     final static int REQUEST_LOCATION = 199;
-
     private GoogleApiClient googleApiClient;
+    SessionManagement session;
+    SharedPreferences pref;
+
 
 
     @Override
@@ -80,21 +86,14 @@ public class LoginActivity extends AppCompatActivity {
         this.setFinishOnTouchOutside(true);
         // Set up the login form.
         mUsernameView = (EditText) findViewById(R.id.txt_username);
-
         mPasswordView = (EditText) findViewById(R.id.txt_password);
-       /* mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });*/
+
+        session = new SessionManagement(getApplicationContext());
+
         mUsernameView.setText("");
         mPasswordView.setText("");
         checkIMEIPermission();
+
 
         Button mSignInButton = (Button) findViewById(R.id.btn_sign_in);
         mSignInButton.setOnClickListener(new OnClickListener() {
@@ -128,16 +127,22 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER) && hasGPSDevice(LoginActivity.this)) {
-            Log.e("keshav", "Gps already enabled");
+            Log.e("Starbridges", "Gps already enabled");
             Toast.makeText(LoginActivity.this, "Gps not enabled", Toast.LENGTH_SHORT).show();
             enableLoc();
         } else {
-            Log.e("keshav", "Gps already enabled");
+            Log.e("Starbridges", "Gps already enabled");
             Toast.makeText(LoginActivity.this, "Gps already enabled", Toast.LENGTH_SHORT).show();
         }
 
+        if (session.isLoggedIn()){
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+            finish();
+        }
 
-    }
+        }
+
 
     private boolean hasGPSDevice(Context context) {
         final LocationManager mgr = (LocationManager) context
@@ -280,19 +285,17 @@ public class LoginActivity extends AppCompatActivity {
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
+            if (TextUtils.isEmpty(username)) {
+                mUsernameView.setError(getString(R.string.error_field_required));
+                focusView = mUsernameView;
+                cancel = true;
+        }
+
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            cancel = true;
+                mPasswordView.setError(getString(R.string.error_invalid_password));
+                focusView = mPasswordView;
+                cancel = true;
         }
-
-        // Check for a valid username.
-        if (TextUtils.isEmpty(username)) {
-            mUsernameView.setError(getString(R.string.error_field_required));
-            focusView = mUsernameView;
-            cancel = true;
-        }
-
         if (cancel) {
             focusView.requestFocus();
         } else {
@@ -307,15 +310,25 @@ public class LoginActivity extends AppCompatActivity {
                     if (response.message().equals("OK")) {
                         showProgress(false);
                         Intent home = new Intent(LoginActivity.this, HomeActivity.class);
-                        GlobalVar.setToken(response.body().getTokenType()+" "+ response.body().getAccessToken());
-                        GlobalVar.setUsername(response.body().getLoginName());
-                        GlobalVar.setFullname(response.body().getFullName());
+
+                        String loginName_sp = response.body().getLoginName();
+                        String fullName_sp = response.body().getFullName();
+                        String token_sp = response.body().getTokenType()+" "+ response.body().getAccessToken();
+                        String expires_sp = response.body().getExpires();
+                        String nik_sp = response.body().getNik();
+                        //String employee_id_sp =
+
+                        session.createLoginSession(loginName_sp,fullName_sp,token_sp,expires_sp, nik_sp);
+
+                        GlobalVar.setToken(token_sp);
+                        GlobalVar.setLoginName(loginName_sp);
+                        GlobalVar.setFullname(fullName_sp);
 
                         startActivity(home);
                         finish();
                     } else {
                         showProgress(false);
-                        Toast.makeText(LoginActivity.this, "Invalid Username or Password", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Invalid Username", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -330,8 +343,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
+
+        if (password.length()<4){
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -399,10 +415,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
+
 
 }
 

@@ -29,12 +29,14 @@ import com.example.android.starbridges.model.OLocation.ReturnValue;
 import com.example.android.starbridges.network.APIClient;
 import com.example.android.starbridges.network.APIInterfaceRest;
 import com.example.android.starbridges.utility.GlobalVar;
+import com.example.android.starbridges.utility.SessionManagement;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -52,6 +54,7 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
     private String sLocationID, sUsername, sLongitude, sLatitude, sDate, sTime,sLogType;
     private APIInterfaceRest apiInterface;
     private ProgressDialog progressDialog;
+    SessionManagement session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,9 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
                 SubmitData();
             }
         });
+//        HashMap<String, String> user = session.getUserDetails();
+//        String token_sp = user.get(SessionManagement.KEY_TOKEN);
+//        GlobalVar.setToken(token_sp);
 
         Intent intent = getIntent();
         sDate = intent.getStringExtra("date");
@@ -85,6 +91,7 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
         mDateView.setText(sDate);
         mTimeView.setText(sTime);
         initSpinnerLoc();
+
 
 
         mLocationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -191,8 +198,8 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
         returnValue.setName("");
         listReturnValue.add(returnValue);
 
-        apiInterface = APIClient.getLocationValue(GlobalVar.getAccessToken()).create(APIInterfaceRest.class);
-        apiInterface.postLocation(" ").enqueue(new Callback<OLocation>() {
+        apiInterface = APIClient.getLocationValue(GlobalVar.getToken()).create(APIInterfaceRest.class);
+        apiInterface.postLocation().enqueue(new Callback<OLocation>() {
             @Override
             public void onResponse(Call<OLocation> call, Response<OLocation> response) {
 
@@ -227,7 +234,7 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
 
     public void callInputAbsence() {
         // get token
-        apiInterface = APIClient.inputAbsence(GlobalVar.getAccessToken()).create(APIInterfaceRest.class);
+        apiInterface = APIClient.inputAbsence(GlobalVar.getToken()).create(APIInterfaceRest.class);
         progressDialog = new ProgressDialog(StartEndDayDetailActivity.this);
         progressDialog.setTitle("Loading");
         progressDialog.show();

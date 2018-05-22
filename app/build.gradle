@@ -42,6 +42,4 @@ dependencies {
     implementation 'commons-net:commons-net:3.3'
     implementation 'com.android.support:multidex:1.0.3'
 
-
-
 }

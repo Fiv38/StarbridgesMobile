@@ -32,6 +32,9 @@ public class Authentication implements Serializable, Parcelable
     @SerializedName("nik")
     @Expose
     private String nik;
+    @SerializedName("employeeID")
+    @Expose
+    private String employeeID;
     @SerializedName(".issued")
     @Expose
     private String issued;
@@ -64,6 +67,7 @@ public class Authentication implements Serializable, Parcelable
         this.loginName = ((String) in.readValue((String.class.getClassLoader())));
         this.fullName = ((String) in.readValue((String.class.getClassLoader())));
         this.nik = ((String) in.readValue((String.class.getClassLoader())));
+        this.employeeID = ((String) in.readValue((String.class.getClassLoader())));
         this.issued = ((String) in.readValue((String.class.getClassLoader())));
         this.expires = ((String) in.readValue((String.class.getClassLoader())));
     }
@@ -87,7 +91,7 @@ public class Authentication implements Serializable, Parcelable
      * @param loginName
      * @param asClientId
      */
-    public Authentication(String accessToken, String tokenType, int expiresIn, String asClientId, String loginName, String fullName, String nik, String issued, String expires) {
+    public Authentication(String accessToken, String tokenType, int expiresIn, String asClientId, String loginName, String fullName, String nik, String employeeID, String issued, String expires) {
         super();
         this.accessToken = accessToken;
         this.tokenType = tokenType;
@@ -96,6 +100,7 @@ public class Authentication implements Serializable, Parcelable
         this.loginName = loginName;
         this.fullName = fullName;
         this.nik = nik;
+        this.employeeID = employeeID;
         this.issued = issued;
         this.expires = expires;
     }
@@ -191,6 +196,18 @@ public class Authentication implements Serializable, Parcelable
         return this;
     }
 
+    public String getEmployeeID() {
+        return employeeID;
+    }
+
+    public void setEmployeeID(String employeeID) {
+        this.employeeID = employeeID;
+    }
+
+    public Authentication withEmployeeID(String employeeID) {
+        this.employeeID = employeeID;
+        return this;
+    }
     public String getIssued() {
         return issued;
     }

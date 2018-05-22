@@ -16,8 +16,8 @@
     <string name="header_login">TIME AND ATTENDANCE</string>
     <string name="sub_header_login">APPLICATION</string>
     <string name="action_register">Register</string>
-    <string name="start_end_date">Start/End\nDate</string>
-    <string name="check_in_out">Check\nIn/Out</string>
+    <string name="start_end_date">Check/in\nOut</string>
+    <string name="check_in_out">Out Of\nOffice</string>
     <string name="histories">Histories</string>
     <string name="medical">Medical</string>
     <string name="leave_cancelation">Leave\nCancelation</string>
