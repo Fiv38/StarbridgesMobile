@@ -82,8 +82,16 @@
             android:parentActivityName=".activity.CorrectionActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activity.DraftCorrectionActivity" />
-        <activity android:name=".activity.DraftDetailCorrectionActivity" />
-        <activity android:name=".activity.DraftCorrectionListActivity"></activity>
+        <activity android:name=".activity.DraftDetailCorrectionActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".activity.DraftCorrectionListActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.DraftCorrectionListActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".activity.CorrectionActivity"
+            android:screenOrientation="portrait"
+            ></activity>
     </application>
 
 </manifest>

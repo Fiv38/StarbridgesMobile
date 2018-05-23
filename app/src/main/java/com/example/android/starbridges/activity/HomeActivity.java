@@ -49,7 +49,7 @@ public class HomeActivity extends AppCompatActivity {
         GlobalVar.setToken(token_sp);
         GlobalVar.setLoginName(loginName_sp);
         GlobalVar.setFullname(fullName_sp);
-        username = GlobalVar.getLoginName();
+        username = GlobalVar.loginName();
         fullname = GlobalVar.getFullname();
         mUsernameView=(TextView) findViewById(R.id.lbl_username);
         mUsernameView.setText("Hello,\n"+fullname);
@@ -116,6 +116,10 @@ loadingImage();
     public void showCorrection(View view){
         Intent correction = new Intent(this, CorrectionActivity.class);
         startActivity(correction);
+    }
+    public void signOut(View view){
+        session.logoutUser();
+        finish();
     }
 
 }

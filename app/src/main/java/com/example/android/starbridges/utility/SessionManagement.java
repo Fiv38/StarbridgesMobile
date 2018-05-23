@@ -35,6 +35,7 @@ public class SessionManagement {
     public static final String KEY_TOKEN = "token";
     public static final String KEY_EXPIRES = "expires";
     public static final String KEY_NIK = "nik";
+    public static final String KEY_EMPLOYEE_ID = "employeeId";
 
     // Constructor
     public SessionManagement(Context context){
@@ -46,7 +47,7 @@ public class SessionManagement {
     /**
      * Create login session
      * */
-    public void createLoginSession(String loginName, String fullName,String token, String expires, String nik){
+    public void createLoginSession(String loginName, String fullName,String token, String expires, String nik, String employeeId){
 
         editor.putBoolean(IS_LOGIN, true);
 
@@ -55,6 +56,7 @@ public class SessionManagement {
         editor.putString(KEY_TOKEN, token);
         editor.putString(KEY_EXPIRES, expires);
         editor.putString(KEY_NIK, nik);
+        editor.putString(KEY_EMPLOYEE_ID, employeeId);
         editor.commit();
     }
 
@@ -102,8 +104,6 @@ public class SessionManagement {
         editor.clear();
         editor.commit();
         Intent i = new Intent(_context, LoginActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         _context.startActivity(i);
     }
 

@@ -33,9 +33,8 @@ public interface APIInterfaceRest {
     @POST("api/Attendance/RegisterIMEI")
     Call<OPost> postRegisterImei(@Field("username") String username, @Field("password") String password, @Field("IMEI") String imei);
 
-    @FormUrlEncoded
-    @POST("api/Attendance/GetLocations")
-    Call<OLocation> postLocation(@Field("emptyBody") String emptyBody);
+    @GET("api/Attendance/GetLocations")
+    Call<OLocation> postLocation();
 
     @FormUrlEncoded
     @POST("api/Attendance/Absence")
@@ -54,7 +53,9 @@ public interface APIInterfaceRest {
             @Field("LogType") String logType,
             @Field("Photo") String photo,
             @Field("Event") String event,
-            @Field("Notes") String notes);
+            @Field("Notes") String notes,
+            @Field("GMT") int gmt)
+            ;
 
     @FormUrlEncoded
     @POST("api/Attendance/History")

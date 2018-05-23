@@ -18,6 +18,7 @@ import com.example.android.starbridges.model.ListAttendanceCorrection.ListAttend
 import com.example.android.starbridges.network.APIClient;
 import com.example.android.starbridges.network.APIInterfaceRest;
 import com.example.android.starbridges.utility.GlobalVar;
+import com.example.android.starbridges.utility.SessionManagement;
 
 import org.json.JSONObject;
 
@@ -25,6 +26,7 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,6 +40,7 @@ public class CorrectionActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
     private CorrectionAdapter viewAdapter;
+    SessionManagement session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,15 @@ public class CorrectionActivity extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        session = new SessionManagement(getApplicationContext());
+        HashMap<String, String> user = session.getUserDetails();
+        String token_sp = user.get(SessionManagement.KEY_TOKEN);
+        String fullName_sp = user.get(SessionManagement.KEY_FULLNAME);
+        String nik_sp = user.get(SessionManagement.KEY_NIK);
+        GlobalVar.setToken(token_sp);
+        GlobalVar.setFullname(fullName_sp);
+        GlobalVar.setNIK(nik_sp);
 
         txtNameCorrection.setText(GlobalVar.getFullname());
         txtNIKCorrection.setText(GlobalVar.getNIK());
