@@ -15,15 +15,15 @@ public class GlobalVar {
 
     public static String token;
 
-    public static String loginName() {
-        return username;
+    public static String getLoginName() {
+        return loginname;
     }
 
-    public static void setLoginName(String username) {
-        GlobalVar.username = username;
+    public static void setLoginName(String loginname) {
+        GlobalVar.loginname = loginname;
     }
 
-    public static String username;
+    public static String loginname;
 
     public static String getFullname() {
         return fullname;
@@ -45,15 +45,14 @@ public class GlobalVar {
 
     public static String nIK;
 
-    public static String getEmployeeId() {
-        return employeeId;
+    public static String getEmployeeID() {
+        return employee_id;
     }
 
-    public static void setEmployeeId(String employeeId) {
-        GlobalVar.employeeId = employeeId;
+    public static void setEmployee_id(String employee_id) {
+        GlobalVar.employee_id = employee_id;
     }
 
-    public static String employeeId;
-
+    public static String employee_id;
 
 }

@@ -35,7 +35,7 @@ public class SessionManagement {
     public static final String KEY_TOKEN = "token";
     public static final String KEY_EXPIRES = "expires";
     public static final String KEY_NIK = "nik";
-    public static final String KEY_EMPLOYEE_ID = "employeeId";
+    public static final String KEY_EMPLOYEE_ID = "employee_id";
 
     // Constructor
     public SessionManagement(Context context){
@@ -47,7 +47,7 @@ public class SessionManagement {
     /**
      * Create login session
      * */
-    public void createLoginSession(String loginName, String fullName,String token, String expires, String nik, String employeeId){
+    public void createLoginSession(String loginName, String fullName,String token, String expires, String nik, String employee_id){
 
         editor.putBoolean(IS_LOGIN, true);
 
@@ -56,7 +56,7 @@ public class SessionManagement {
         editor.putString(KEY_TOKEN, token);
         editor.putString(KEY_EXPIRES, expires);
         editor.putString(KEY_NIK, nik);
-        editor.putString(KEY_EMPLOYEE_ID, employeeId);
+        editor.putString(KEY_EMPLOYEE_ID, employee_id);
         editor.commit();
     }
 
@@ -91,6 +91,7 @@ public class SessionManagement {
         user.put(KEY_TOKEN, pref.getString(KEY_TOKEN, null));
         user.put(KEY_EXPIRES, pref.getString(KEY_EXPIRES, null));
         user.put(KEY_NIK, pref.getString(KEY_NIK, null));
+        user.put(KEY_EMPLOYEE_ID, pref.getString(KEY_EMPLOYEE_ID, null));
 
         // return user
         return user;
@@ -104,6 +105,8 @@ public class SessionManagement {
         editor.clear();
         editor.commit();
         Intent i = new Intent(_context, LoginActivity.class);
+//        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         _context.startActivity(i);
     }
 
@@ -112,6 +115,10 @@ public class SessionManagement {
      * **/
     // Get Login State
     public boolean isLoggedIn() {
+
+
+
+
 
         return pref.getBoolean(IS_LOGIN, false);
     }
