@@ -49,7 +49,7 @@ public class HomeActivity extends AppCompatActivity {
         GlobalVar.setToken(token_sp);
         GlobalVar.setLoginName(loginName_sp);
         GlobalVar.setFullname(fullName_sp);
-        username = GlobalVar.loginName();
+        username = GlobalVar.getLoginName();
         fullname = GlobalVar.getFullname();
         mUsernameView=(TextView) findViewById(R.id.lbl_username);
         mUsernameView.setText("Hello,\n"+fullname);
