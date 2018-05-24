@@ -75,23 +75,29 @@
             android:name=".activity.CorrectionActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.HomeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
         <activity
             android:name=".activity.CorrectionDetailActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.CorrectionActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activity.DraftCorrectionActivity" />
-        <activity android:name=".activity.DraftDetailCorrectionActivity"
+        <activity
+            android:name=".activity.DraftDetailCorrectionActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.DraftCorrectionListActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".activity.DraftCorrectionListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DraftCorrectionListActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.CorrectionActivity"
-            android:screenOrientation="portrait"
-            ></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.OvertimeDetailActivity" />
+        <activity
+            android:name=".DraftActivity"
+            android:label="@string/title_activity_draft"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

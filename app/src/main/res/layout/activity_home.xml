@@ -108,6 +108,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/overtime"
+            android:onClick="showOvertime"
             android:drawableTop="@drawable/ic_overtime"
             android:background="@android:color/transparent"
             android:textColor="@android:color/background_light"/>

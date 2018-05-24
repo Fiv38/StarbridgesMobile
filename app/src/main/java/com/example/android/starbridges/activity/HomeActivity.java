@@ -122,4 +122,10 @@ loadingImage();
         finish();
     }
 
+    public void showOvertime(View view){
+        Intent overtime = new Intent(this, OvertimeDetailActivity.class);
+        startActivity(overtime);
+
+    }
+
 }

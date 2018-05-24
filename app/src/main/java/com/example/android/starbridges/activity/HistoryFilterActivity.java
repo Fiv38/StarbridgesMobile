@@ -19,7 +19,7 @@ import com.example.android.starbridges.R;
 public class HistoryFilterActivity extends AppCompatActivity {
     private EditText mFromDate, mToDate;
     private Button mShowHistory;
-    private String sFrom, sTo;
+    //private String sFrom, sTo;
     Calendar myCalendar = Calendar.getInstance();
 
     DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {

@@ -32,4 +32,5 @@
     <string name="login_footer2">TextView</string>
     <string name="txt_name_correction">Name</string>
     <string name="txt_nik_correction">NIK</string>
+    <string name="title_activity_draft">DraftActivity</string>
 </resources>

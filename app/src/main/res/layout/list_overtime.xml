@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="10dp">
+
+    <!--Decision Number-->
+    <TextView
+        android:id="@+id/decisionNumberLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:text="Decision Number" />
+
+    <TextView
+        android:id="@+id/decisionNumberView"
+        android:layout_width="220dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/decisionNumberLbl"
+        android:layout_alignParentRight="true"
+        android:text="Ovt0001" />
+
+    <!-- Date -->
+    <TextView
+        android:id="@+id/DateLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/requestTypeLbl"
+        android:text="Date" />
+
+    <TextView
+        android:id="@+id/DateView"
+        android:layout_width="220dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/DateLbl"
+        android:layout_alignParentRight="true"
+        android:text="20 Jul 2018" />
+
+
+    <!-- Start -->
+    <TextView
+        android:id="@+id/StartLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/DateLbl"
+        android:text="Start" />
+
+    <TextView
+        android:id="@+id/StartView"
+        android:layout_width="220dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/StartLbl"
+        android:layout_alignParentRight="true"
+        android:text="21:00" />
+
+    <!-- End -->
+    <TextView
+        android:id="@+id/EndLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/StartLbl"
+        android:text="End" />
+
+    <TextView
+        android:id="@+id/EndView"
+        android:layout_width="220dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/EndLbl"
+        android:layout_alignParentRight="true"
+        android:text="22:00" />
+
+
+    <!-- Approved Date -->
+    <TextView
+        android:id="@+id/approvedDateLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/notesLbl"
+        android:text="Approved Date" />
+
+    <TextView
+        android:id="@+id/approvedDateView"
+        android:layout_width="220dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/approvedDateLbl"
+        android:layout_alignParentRight="true"
+        android:text="20 Jul 2018" />
+
+</LinearLayout>
