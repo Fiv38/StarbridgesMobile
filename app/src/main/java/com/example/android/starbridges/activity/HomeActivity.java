@@ -209,4 +209,10 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(shiftExchange);
     }
 
+    public void showOvertime(View view){
+        Intent overtime = new Intent(this, OvertimeDetailActivity.class);
+        startActivity(overtime);
+
+    }
+
 }
