@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="10dp">
+
+    <TextView
+        android:id="@+id/decisionNumberLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:text="Decision Number" />
+
+    <TextView
+        android:id="@+id/decisionNumberView"
+        android:layout_width="220dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/decisionNumberLbl"
+        android:layout_alignParentRight="true"
+        android:text="1 Jan 18" />
+
+    <TextView
+        android:id="@+id/requestTypeLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/decisionNumberLbl"
+        android:text="Request Type" />
+
+    <TextView
+        android:id="@+id/requestTypeView"
+        android:layout_width="220dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/requestTypeLbl"
+        android:layout_alignParentRight="true"
+        android:text="Cuti Biasa" />
+
+    <!-- Leave -->
+    <TextView
+        android:id="@+id/leaveLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/requestTypeLbl"
+        android:text="Day" />
+
+    <TextView
+        android:id="@+id/leaveView"
+        android:layout_width="220dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/leaveLbl"
+        android:layout_alignParentRight="true"
+        android:text="20 Jul 2018 - 21 Jul 2018" />
+
+
+    <!-- Unit Reduce -->
+    <TextView
+        android:id="@+id/unitReduceLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/leaveLbl"
+        android:text="Unit Reduce" />
+
+    <TextView
+        android:id="@+id/unitReduceView"
+        android:layout_width="220dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/unitReduceLbl"
+        android:layout_alignParentRight="true"
+        android:text="1" />
+
+    <!-- Notes -->
+    <TextView
+        android:id="@+id/notesLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/unitReduceLbl"
+        android:text="Notes" />
+
+    <TextView
+        android:id="@+id/notesView"
+        android:layout_width="220dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/notesLbl"
+        android:layout_alignParentRight="true"
+        android:text="Pulang Kampung" />
+
+
+    <!-- Approved Date -->
+    <TextView
+        android:id="@+id/approvedDateLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/notesLbl"
+        android:text="Approved Date" />
+
+    <TextView
+        android:id="@+id/approvedDateView"
+        android:layout_width="220dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/approvedDateLbl"
+        android:layout_alignParentRight="true"
+        android:text="19 Jul 2018" />
+
+</LinearLayout>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="10dp">
+
+    <!-- check box -->
+    <CheckBox
+        android:id="@+id/checkBox_overtime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <!-- Request Type -->
+
+    <TextView
+        android:id="@+id/DateDraftLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:text="Date" />
+
+    <TextView
+        android:id="@+id/DateDraftView"
+        android:layout_width="220dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/decisionNumberLbl"
+        android:layout_alignParentRight="true"
+        android:text="20 Mei 2018" />
+
+
+    <!-- Leave -->
+    <TextView
+        android:id="@+id/StartDraftLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/decisionNumberLbl"
+        android:text="Start" />
+
+    <TextView
+        android:id="@+id/StartDraftView"
+        android:layout_width="220dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/requestTypeLbl"
+        android:layout_alignParentRight="true"
+        android:text="21:30" />
+
+
+    <!-- Unit Reduce -->
+    <TextView
+        android:id="@+id/EndDraftLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/leaveLbl"
+        android:text="End" />
+
+    <TextView
+        android:id="@+id/EndDraftView"
+        android:layout_width="220dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/unitReduceLbl"
+        android:layout_alignParentRight="true"
+        android:text="23:00" />
+
+    <Button
+        android:id="@+id/btnEditDraft"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Edit"/>
+
+</LinearLayout>

@@ -23,6 +23,7 @@
     <string name="leave_cancelation">Leave\nCancelation</string>
     <string name="leave_request">Leave\nRequest</string>
     <string name="loan">Loan</string>
+    <string name="sign_out">Sign Out</string>
     <string name="correction">Correction</string>
     <string name="overtime">Overtime</string>
     <string name="login_footer">Copyrigth 2017 PT Indocyber Global Teknologi\nAll Right Reserved</string>
@@ -31,4 +32,6 @@
     <string name="login_footer2">TextView</string>
     <string name="txt_name_correction">Name</string>
     <string name="txt_nik_correction">NIK</string>
+    <string name="title_activity_draft">DraftActivity</string>
+    <string name="date_picker">datePicker</string>
 </resources>

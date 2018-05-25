@@ -13,6 +13,9 @@ import com.example.android.starbridges.R;
 import com.example.android.starbridges.activity.CorrectionDetailActivity;
 import com.example.android.starbridges.model.ListAttendanceCorrection.ReturnValue;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class CorrectionAdapter extends RecyclerView.Adapter<CorrectionAdapter.ViewHolder> {
@@ -42,10 +45,22 @@ public class CorrectionAdapter extends RecyclerView.Adapter<CorrectionAdapter.Vi
     public void onBindViewHolder(ViewHolder holder, int position) {
         final ReturnValue value = corrections.get(position);
 
-        holder.txtStatusCodeCorrection.setText(value.getStatusCode());
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat sdf = new SimpleDateFormat("d MMMM yyyy");
+        String dateResult = "";
+        try{
+            Date result =  df.parse(value.getLogDate());
+            dateResult=sdf.format(result);
+        }catch (Exception e)
+        {
+
+        }
+
+
         holder.txtDayTypeCorrection.setText(value.getDayType());
-        holder.txtLogDateCorrection.setText(value.getLogDate());
+//        holder.txtLogDateCorrection.setText(value.getLogDate());
         holder.txtStatusCorrection.setText(value.getStatusCode());
+        holder.txtLogDateCorrection.setText(dateResult);
         holder.txtDayCorrection.setText(value.getDay());
 
         holder.btnDetailCorrection.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +90,6 @@ public class CorrectionAdapter extends RecyclerView.Adapter<CorrectionAdapter.Vi
             txtStatusCorrection=(TextView)itemView.findViewById(R.id.txtStatusCorrection);
             txtLogDateCorrection=(TextView)itemView.findViewById(R.id.txtLogDateCorrection);
             txtDayTypeCorrection=(TextView)itemView.findViewById(R.id.txtDayTypeCorrection);
-            txtStatusCodeCorrection=(TextView)itemView.findViewById(R.id.txtStatusCodeCorrection);
             btnDetailCorrection=(Button)itemView.findViewById(R.id.btnDetailCorrection);
 
 

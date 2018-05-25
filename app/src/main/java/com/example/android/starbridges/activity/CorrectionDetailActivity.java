@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,8 +29,11 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.RequestBody;
@@ -43,7 +47,7 @@ public class CorrectionDetailActivity extends AppCompatActivity {
     EditText txtLogInCDetails,txtBreakStartCDetails,txtBreakEndCDetails, txtLocationCDetails;
     EditText txtLogOutCDetails, txtOverTimeInCDetails, txtOverTimeOutCDetails, txtNotesCDetails;
     Spinner spnLocationCDetails;
-    String uid, locationId;
+    String uid, locationId, locationIdSpinner;
     ProgressDialog progressDialog;
     ReturnValue valueCorrectionDetail;
     Button btnSubmitCDetails, btnSaveCDetails, btnCancelCDetails;
@@ -131,7 +135,6 @@ public class CorrectionDetailActivity extends AppCompatActivity {
             }
         });
 
-        txtLocationCDetails=(EditText)findViewById(R.id.txtLocationCDetails);
 
         txtLogOutCDetails=(EditText)findViewById(R.id.txtLogOutCDetails);
         txtLogOutCDetails.setFocusable(false);
@@ -349,6 +352,30 @@ public class CorrectionDetailActivity extends AppCompatActivity {
             }
         });
 
+        spnLocationCDetails.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i>0)
+                {
+                    final com.example.android.starbridges.model.OLocation.ReturnValue returnValue1=(com.example.android.starbridges.model.OLocation.ReturnValue)spnLocationCDetails.getItemAtPosition(i);
+                    //Log.d("LocationIdnya", returnValue1.getID());
+                    locationIdSpinner=returnValue1.getID();
+                }
+
+
+                try{
+                }catch (Exception e)
+                {
+
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
         getAttendaceCorrection(uid);
 
     }
@@ -401,12 +428,12 @@ public class CorrectionDetailActivity extends AppCompatActivity {
         valueCorrectionDetail.setID("");
         valueCorrectionDetail.setActualLogIn(txtLogInCDetails.getText().toString());
         valueCorrectionDetail.setActualBreakEnd(txtBreakEndCDetails.getText().toString());
-        valueCorrectionDetail.setLocationID(txtLocationCDetails.getText().toString());
         valueCorrectionDetail.setActualLogOut(txtLogOutCDetails.getText().toString());
         valueCorrectionDetail.setActualOvertimeIn(txtOverTimeInCDetails.getText().toString());
         valueCorrectionDetail.setActualOvertimeOut(txtOverTimeOutCDetails.getText().toString());
         valueCorrectionDetail.setActualBreakStart(txtBreakStartCDetails.getText().toString());
         valueCorrectionDetail.setNotes(txtNotesCDetails.getText().toString());
+        valueCorrectionDetail.setLocationID(locationIdSpinner);
 
         final APIInterfaceRest apiInterface = APIClient.asveSubmitAttendanceCorrection(GlobalVar.getToken()).create(APIInterfaceRest.class);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),new Gson().toJson(valueCorrectionDetail).toString());
@@ -440,7 +467,19 @@ public class CorrectionDetailActivity extends AppCompatActivity {
 
     public void setText(ReturnValue valueCorrectionDetail)
     {
-        txtLogDateCDetails.setText(valueCorrectionDetail.getLogDate());
+
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat sdf = new SimpleDateFormat("d MMMM yyyy");
+        String dateResult = "";
+        try{
+            Date result =  df.parse(valueCorrectionDetail.getLogDate());
+            dateResult=sdf.format(result);
+        }catch (Exception e)
+        {
+
+        }
+
+        txtLogDateCDetails.setText(dateResult);
         txtShiftCDetails.setText(valueCorrectionDetail.getShift());
         txtLogInCDetails.setText(valueCorrectionDetail.getActualLogIn() == null ? "": valueCorrectionDetail.getActualLogIn().substring(11,16));
         txtBreakEndCDetails.setText(valueCorrectionDetail.getActualBreakEnd() == null? "":valueCorrectionDetail.getActualBreakEnd().substring(11,16));
@@ -448,7 +487,7 @@ public class CorrectionDetailActivity extends AppCompatActivity {
         txtOverTimeInCDetails.setText(valueCorrectionDetail.getActualOvertimeIn() == null? "":valueCorrectionDetail.getActualOvertimeIn().substring(11,16));
         txtOverTimeOutCDetails.setText(valueCorrectionDetail.getActualOvertimeOut() == null? "":valueCorrectionDetail.getActualOvertimeOut().substring(11,16));
         //spnLocationCDraftDetails=(Spinner)findViewById(R.id.spnLocationCDraftDetails);
-        txtBreakStartCDetails.setText(valueCorrectionDetail.getActualBreakStart() == null? "":valueCorrectionDetail.getActualBreakEnd().substring(11,16));
+        txtBreakStartCDetails.setText(valueCorrectionDetail.getActualBreakStart() == null? "":valueCorrectionDetail.getActualBreakStart().substring(11,16));
         txtNotesCDetails.setText(valueCorrectionDetail.getNotes() == null? "":valueCorrectionDetail.getNotes());
 
 

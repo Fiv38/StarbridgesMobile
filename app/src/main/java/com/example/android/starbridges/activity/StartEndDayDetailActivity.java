@@ -38,6 +38,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -54,7 +55,9 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
     private String sLocationID, sUsername, sLongitude, sLatitude, sDate, sTime,sLogType;
     private APIInterfaceRest apiInterface;
     private ProgressDialog progressDialog;
-    SessionManagement session;
+    String sLocationName;
+    String sLocationAddress;
+    int timeZoneOffset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,14 +79,15 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
                 SubmitData();
             }
         });
-//        HashMap<String, String> user = session.getUserDetails();
-//        String token_sp = user.get(SessionManagement.KEY_TOKEN);
-//        GlobalVar.setToken(token_sp);
+
+        TimeZone timezone = TimeZone.getDefault();
+        //String TimeZoneName = timezone.getDisplayName();
+        timeZoneOffset = timezone.getRawOffset()/(60 * 60 * 1000);
 
         Intent intent = getIntent();
         sDate = intent.getStringExtra("date");
         sTime = intent.getStringExtra("time");
-        sUsername = GlobalVar.getLoginName();
+        sUsername = GlobalVar.loginName();
         sLogType=intent.getStringExtra("logType");
         client = LocationServices.getFusedLocationProviderClient(this);
         getLocation();
@@ -102,6 +106,8 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
                     final ReturnValue returnValue1=(ReturnValue)mLocationSpinner.getItemAtPosition(i);
                     //Log.d("LocationIdnya", returnValue1.getID());
                     sLocationID=returnValue1.getID();
+                    sLocationName=returnValue1.getName();
+                    sLocationAddress=returnValue1.getAddress();
                 }
 
                 setEnableSpinnerAndEditTextLocation();
@@ -249,12 +255,18 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
         String sEmployeeID = null;
         String sBussinessGroupID = null;
         String sBeaconID = null;
-        String sLocationName = mLocationNameView.getText().toString();
-        String sLocationAddress = null;
         String sPhoto = null;
 
+        if(mLocationNameView.isEnabled())
+        {
+            sLocationName = mLocationNameView.getText().toString();
+            sLocationAddress = null;
+            sLocationID=null;
+        }
+
+
         // khusus logType di hardcode -> LogType -> Start Day
-        Call<Attendence> call3 = apiInterface.inputAbsence(sUsername, sEmployeeID, sBussinessGroupID, dateString, sTime, sBeaconID, sLocationID, sLocationName, sLocationAddress, sLongitude, sLatitude, sLogType, sPhoto, sNotes, sEvent);
+        Call<Attendence> call3 = apiInterface.inputAbsence(sUsername, sEmployeeID, sBussinessGroupID, dateString, sTime, sBeaconID, sLocationID, sLocationName, sLocationAddress, sLongitude, sLatitude, sLogType, sPhoto, sNotes, sEvent, timeZoneOffset);
         call3.enqueue(new Callback<Attendence>() {
             @Override
             public void onResponse(Call<Attendence> call, Response<Attendence> response) {
@@ -264,6 +276,9 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
                 if (data != null && data.getIsSucceed()) {
                     Toast.makeText(StartEndDayDetailActivity.this, "Data Submitted", Toast.LENGTH_LONG).show();
                     finish();
+                }else if(data != null && data.getMessage() =="Please Check Your Time And Date Settings"){
+                    Toast.makeText(StartEndDayDetailActivity.this, data.getMessage(), Toast.LENGTH_LONG).show();
+
                 } else {
                     try {
                         //JSONObject jObjError = new JSONObject(response.errorBody().string());
@@ -282,6 +297,7 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
                 call.cancel();
             }
         });
+
     }
 
     public void setEnableSpinnerAndEditTextLocation()

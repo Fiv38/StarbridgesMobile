@@ -1,5 +1,6 @@
 package com.example.android.starbridges.activity;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +10,10 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +37,7 @@ import com.example.android.starbridges.model.OLocation.ReturnValue;
 import com.example.android.starbridges.network.APIClient;
 import com.example.android.starbridges.network.APIInterfaceRest;
 import com.example.android.starbridges.utility.GlobalVar;
+import com.example.android.starbridges.utility.SessionManagement;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -51,8 +56,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -61,19 +68,23 @@ import retrofit2.Response;
 public class CheckInOutDetailActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_ACCESS_LOCATION = 101;
-
+    private static final int MY_CAMERA_REQUEST_CODE = 100;
     private FusedLocationProviderClient client;
     private LocationManager locationManager;
 
     private EditText mEventView, mDateView, mTimeView, mLocationNameView, mNotesView;
     private Spinner mLocationSpinner;
     private Button mSubmit;
-    private String sLocationID, sUsername, sLongitude, sLatitude, sDate, sTime,sLogType,sPhoto;
+    private String sLocationID, sUsername, sLongitude, sLatitude, sDate, sTime, sLogType, sPhoto;
     private APIInterfaceRest apiInterface;
     private ProgressDialog progressDialog;
     private boolean checkStartDay;
-    private String sLocationName, sLocationAddress;
+    SessionManagement session;
+    int timeZoneOffset;
+    String sLocationName;
+    String sLocationAddress;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +98,16 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
         mLocationNameView = (EditText) findViewById(R.id.txt_location_name);
         mNotesView = (EditText) findViewById(R.id.txt_notes);
 
+        session = new SessionManagement(getApplicationContext());
+        HashMap<String, String> user = session.getUserDetails();
+        String token_sp = user.get(SessionManagement.KEY_TOKEN);
+        String loginName = user.get(SessionManagement.KEY_LOGINNAME);
+        String employeeId = user.get(SessionManagement.KEY_EMPLOYEE_ID);
+        GlobalVar.setToken(token_sp);
+        GlobalVar.setLoginName(loginName);
+        GlobalVar.setEmployeeId(employeeId);
+
+
         client = LocationServices.getFusedLocationProviderClient(this);
         mSubmit = (Button) findViewById(R.id.btn_submit);
         mSubmit.setOnClickListener(new View.OnClickListener() {
@@ -96,12 +117,17 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
             }
         });
 
+
+
         Intent intent = getIntent();
         sDate = intent.getStringExtra("date");
         sTime = intent.getStringExtra("time");
-        sUsername = GlobalVar.getUsername();
-        sLogType=intent.getStringExtra("logType");
-        checkStartDay=intent.getBooleanExtra("checkStartDay",false);
+        sUsername = GlobalVar.loginName();
+        sLogType = intent.getStringExtra("logType");
+        checkStartDay = intent.getBooleanExtra("checkStartDay", false);
+        TimeZone timezone = TimeZone.getDefault();
+        timeZoneOffset = timezone.getRawOffset()/(60 * 60 * 1000);
+
 
         mDateView.setText(sDate);
         mTimeView.setText(sTime);
@@ -110,23 +136,21 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
         mLocationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i>0)
-                {
-                    final ReturnValue returnValue1=(ReturnValue)mLocationSpinner.getItemAtPosition(i);
+                if (i > 0) {
+                    final ReturnValue returnValue1 = (ReturnValue) mLocationSpinner.getItemAtPosition(i);
                     //Log.d("LocationIdnya", returnValue1.getID());
-                    sLocationID=returnValue1.getID();
+                    sLocationID = returnValue1.getID();
                     sLocationName=returnValue1.getName();
                     sLocationAddress=returnValue1.getAddress();
                 }
 
                 setEnableSpinnerAndEditTextLocation();
 
-                try{
-                    getInternetTime();
-                }catch (Exception e)
-                {
-
-                }
+//                try {
+//                    getInternetTime();
+//                } catch (Exception e) {
+//
+//                }
 
             }
 
@@ -136,10 +160,7 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
             }
         });
 
-        if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_ACCESS_LOCATION);
-        }
 
         mLocationNameView.addTextChangedListener(new TextWatcher() {
             @Override
@@ -157,57 +178,102 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
                 setEnableSpinnerAndEditTextLocation();
             }
         });
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, MY_CAMERA_REQUEST_CODE);
+        }
+        getLocation();
+
+//        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+//            requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_REQUEST_CODE);
+//        }
+
     }
 
-    public void getInternetTime() throws IOException {
-        String timeServer = "time-a.nist.gov";
-
-        NTPUDPClient timeClient = new NTPUDPClient();
-        timeClient.open();
-        timeClient.setSoTimeout(5000);
-        InetAddress inetAddress = InetAddress.getByName(timeServer);
-        TimeInfo timeInfo = timeClient.getTime(inetAddress);
-        long returnTime = timeInfo.getReturnTime();
-
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(returnTime);
-    }
+//    public void getInternetTime() throws IOException {
+//        String timeServer = "time-a.nist.gov";
+//
+//        NTPUDPClient timeClient = new NTPUDPClient();
+//        timeClient.open();
+//        timeClient.setSoTimeout(5000);
+//        InetAddress inetAddress = InetAddress.getByName(timeServer);
+//        TimeInfo timeInfo = timeClient.getTime(inetAddress);
+//        long returnTime = timeInfo.getReturnTime();
+//
+//        Calendar cal = Calendar.getInstance();
+//        cal.setTimeInMillis(returnTime);
+//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_ACCESS_LOCATION:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    getLocation();
-                } else {
-                    Toast.makeText(this, "Need your location!", Toast.LENGTH_SHORT).show();
-                }
+//        switch (requestCode) {
+//            case REQUEST_ACCESS_LOCATION:
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    //getLocation();
+//                } else {
+//                    Toast.makeText(this, "Need your location!", Toast.LENGTH_SHORT).show();
+//                }
+//
+//
+//            case MY_CAMERA_REQUEST_CODE:
+//                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//
+//                    Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
+//
+//                } else {
+//
+//                    Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show();
+//                }
+//                break;
+//        }
 
-                break;
+        if (requestCode == REQUEST_ACCESS_LOCATION){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //getLocation();
+            } else {
+                Toast.makeText(this, "Need your location!", Toast.LENGTH_SHORT).show();
+            }
+        }else if (requestCode == MY_CAMERA_REQUEST_CODE){
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
+                //dispatchTakePictureIntent();
+
+            } else {
+
+                Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show();
+            }
         }
+
     }
 
 
     public void getLocation() {
-        client.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                    sLatitude=String.valueOf(location.getLatitude());
-                    sLongitude=String.valueOf(location.getLongitude());
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-                    if (sLogType.equals("Check In")) {
-                        dispatchTakePictureIntent();
-                    } else {
-                        sPhoto=null;
-                        callInputAbsence();
-                    }
-                }
-            }
-        });
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_ACCESS_LOCATION);
+        }
+//        client.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+//            @Override
+//            public void onSuccess(Location location) {
+//                if (location != null) {
+//                    sLatitude=String.valueOf(location.getLatitude());
+//                    sLongitude=String.valueOf(location.getLongitude());
+//
+////                    if (sLogType.equals("Check In")) {
+////                        dispatchTakePictureIntent();
+////                    } else {
+////                        sPhoto=null;
+////                        callInputAbsence();
+////                    }
+//                }
+//            }
+//        });
+
     }
 
     private void dispatchTakePictureIntent() {
+
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
@@ -239,7 +305,34 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
 
     public void SubmitData() {
 
-        getLocation();
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_ACCESS_LOCATION);
+        }
+        client.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    sLatitude=String.valueOf(location.getLatitude());
+                    sLongitude=String.valueOf(location.getLongitude());
+
+//                    if (sLogType.equals("Check In")) {
+//                        dispatchTakePictureIntent();
+//                    } else {
+//                        sPhoto=null;
+//                        callInputAbsence();
+//                    }
+                }
+            }
+        });
+
+        if (sLogType.equals("Check In")) {
+            dispatchTakePictureIntent();
+        } else {
+            sPhoto=null;
+            callInputAbsence();
+        }
+
 
 
     }
@@ -254,14 +347,18 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
         listReturnValue.add(returnValue);
 
         apiInterface = APIClient.getLocationValue(GlobalVar.getToken()).create(APIInterfaceRest.class);
-        apiInterface.postLocation(" ").enqueue(new Callback<OLocation>() {
+        apiInterface.postLocation().enqueue(new Callback<OLocation>() {
             @Override
             public void onResponse(Call<OLocation> call, Response<OLocation> response) {
 
                 if (response.isSuccessful()) {
 
                     List<ReturnValue> LocItems = response.body().getReturnValue();
-                    listReturnValue.addAll(LocItems);
+                    if (LocItems!= null){
+                        listReturnValue.addAll(LocItems);
+                    } else{
+                        Toast.makeText(CheckInOutDetailActivity.this, "spinner Tidak dapat data",Toast.LENGTH_LONG).show();
+                    }
 
                     ArrayAdapter<ReturnValue> adapter = new ArrayAdapter<ReturnValue>(CheckInOutDetailActivity.this,
                             android.R.layout.simple_spinner_item, listReturnValue);
@@ -283,8 +380,6 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
     }
 
     public void callInputAbsence() {
-        // get token
-
 
         apiInterface = APIClient.inputAbsence(GlobalVar.getToken()).create(APIInterfaceRest.class);
         progressDialog = new ProgressDialog(this);
@@ -304,10 +399,11 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
 
         if(mLocationNameView.isEnabled())
         {
-            sLocationName = mLocationNameView.getText().toString();
             sLocationID=null;
+            sLocationName = mLocationNameView.getText().toString();
             sLocationAddress=null;
         }
+
 
         SimpleDateFormat timeFmt = new SimpleDateFormat("HH:mm:ss");
         Calendar todaysTime = new GregorianCalendar();
@@ -324,7 +420,7 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
 
             }
 
-            Call<Attendence> call3 = apiInterface.inputAbsence(sUsername, sEmployeeID, sBussinessGroupID, dateString, sTime, sBeaconID, sLocationID, sLocationName, sLocationAddress, sLongitude, sLatitude, "Start Day", null, sNotes, sEvent);
+            Call<Attendence> call3 = apiInterface.inputAbsence(sUsername, sEmployeeID, sBussinessGroupID, dateString, sTime, sBeaconID, sLocationID, sLocationName, sLocationAddress, sLongitude, sLatitude, "Start Day", null, sNotes, sEvent,timeZoneOffset);
             call3.enqueue(new Callback<Attendence>() {
                 @Override
                 public void onResponse(Call<Attendence> call, Response<Attendence> response) {
@@ -332,6 +428,9 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
 
                     if (data != null && data.getIsSucceed()) {
                         Toast.makeText(CheckInOutDetailActivity.this, "Start Day", Toast.LENGTH_LONG).show();
+                    }else if(data != null && data.getMessage() =="Please Check Your Time And Date Settings"){
+                        Toast.makeText(CheckInOutDetailActivity.this, data.getMessage(), Toast.LENGTH_LONG).show();
+
                     } else {
                         try {
                             //JSONObject jObjError = new JSONObject(response.errorBody().string());
@@ -357,7 +456,7 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
 
 
         // khusus logType di hardcode -> LogType -> Start Day
-        Call<Attendence> call3 = apiInterface.inputAbsence(sUsername, sEmployeeID, sBussinessGroupID, dateString, sTime, sBeaconID, sLocationID, sLocationName, sLocationAddress, sLongitude, sLatitude, sLogType, sPhoto, sNotes, sEvent);
+        Call<Attendence> call3 = apiInterface.inputAbsence(sUsername, sEmployeeID, sBussinessGroupID, dateString, sTime, sBeaconID, sLocationID, sLocationName, sLocationAddress, sLongitude, sLatitude, sLogType, sPhoto, sNotes, sEvent, timeZoneOffset);
         call3.enqueue(new Callback<Attendence>() {
             @Override
             public void onResponse(Call<Attendence> call, Response<Attendence> response) {
@@ -367,7 +466,10 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
                 if (data != null && data.getIsSucceed()) {
                     Toast.makeText(CheckInOutDetailActivity.this, "Data Submitted", Toast.LENGTH_LONG).show();
                     finish();
-                } else {
+                } else if(data != null && data.getMessage() =="Please Check Your Time And Date Settings"){
+                    Toast.makeText(CheckInOutDetailActivity.this, data.getMessage(), Toast.LENGTH_LONG).show();
+
+                }else {
                     try {
                         //JSONObject jObjError = new JSONObject(response.errorBody().string());
                         Toast.makeText(CheckInOutDetailActivity.this, "Failed to Submit", Toast.LENGTH_LONG).show();
@@ -407,4 +509,5 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
             mLocationSpinner.setEnabled(false);
 
     }
+
 }

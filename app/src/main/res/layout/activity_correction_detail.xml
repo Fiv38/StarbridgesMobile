@@ -45,6 +45,8 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="70dp"
         android:orientation="vertical">
 
@@ -55,7 +57,7 @@
 
             <TextView
                 android:id="@+id/textView10"
-                android:layout_width="wrap_content"
+                android:layout_width="16dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Log In" />
@@ -66,7 +68,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textSize="10dp" />
 
         </LinearLayout>
 
@@ -78,7 +81,7 @@
 
             <TextView
                 android:id="@+id/textView11"
-                android:layout_width="wrap_content"
+                android:layout_width="16dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Break Start" />
@@ -89,6 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
+                android:textSize="10dp"
                 android:inputType="textPersonName" />
         </LinearLayout>
 
@@ -99,7 +103,7 @@
 
             <TextView
                 android:id="@+id/textView12"
-                android:layout_width="wrap_content"
+                android:layout_width="16dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Break End" />
@@ -110,6 +114,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
+                android:textSize="10dp"
                 android:inputType="textPersonName" />
         </LinearLayout>
 
@@ -120,7 +125,7 @@
 
             <TextView
                 android:id="@+id/textView13"
-                android:layout_width="wrap_content"
+                android:layout_width="16dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Log Out" />
@@ -131,6 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
+                android:textSize="10dp"
                 android:inputType="textPersonName" />
         </LinearLayout>
 
@@ -141,7 +147,7 @@
 
             <TextView
                 android:id="@+id/textView6"
-                android:layout_width="wrap_content"
+                android:layout_width="16dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Overtime In" />
@@ -152,6 +158,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
+                android:textSize="10dp"
                 android:inputType="textPersonName" />
 
         </LinearLayout>
@@ -163,7 +170,7 @@
 
             <TextView
                 android:id="@+id/textView8"
-                android:layout_width="wrap_content"
+                android:layout_width="16dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Overtime Out" />
@@ -174,6 +181,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
+                android:textSize="10dp"
                 android:inputType="textPersonName" />
         </LinearLayout>
 
@@ -184,14 +192,14 @@
 
             <TextView
                 android:id="@+id/textView14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="Location" />
 
             <Spinner
                 android:id="@+id/spnLocationCDetails"
-                android:layout_width="181dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
         </LinearLayout>
@@ -202,29 +210,8 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Location" />
-
-            <EditText
-                android:id="@+id/txtLocationCDetails"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
                 android:id="@+id/textView16"
-                android:layout_width="wrap_content"
+                android:layout_width="16dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Notes" />
@@ -235,40 +222,48 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
+                android:textSize="10dp"
                 android:inputType="textPersonName" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView17"
-                android:layout_width="wrap_content"
+                android:layout_width="143dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
             <Button
                 android:id="@+id/btnSubmitCDetails"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="31dp"
                 android:layout_weight="1"
-                android:text="Submit" />
+                android:background="@drawable/rounded_btn_green"
+                android:text="Submit"
+                android:textColor="@android:color/background_light" />
 
             <Button
                 android:id="@+id/btnSaveCDetails"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_weight="1"
-                android:text="Save" />
+                android:background="@drawable/rounded_btn"
+                android:text="Save"
+                android:textColor="@android:color/background_light" />
 
             <Button
                 android:id="@+id/btnCancelCDetails"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="29dp"
                 android:layout_weight="1"
-                android:text="Cancel" />
+                android:background="@drawable/rounded_btn_red"
+                android:text="Cancel"
+                android:textColor="@android:color/background_light" />
         </LinearLayout>
     </LinearLayout>
 

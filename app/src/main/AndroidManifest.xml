@@ -82,8 +82,38 @@
             android:parentActivityName=".activity.CorrectionActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activity.DraftCorrectionActivity" />
-        <activity android:name=".activity.DraftDetailCorrectionActivity" />
-        <activity android:name=".activity.DraftCorrectionListActivity"></activity>
+        <activity
+            android:name=".activity.DraftDetailCorrectionActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".activity.DraftCorrectionListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DraftCorrectionListActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".activity.CorrectionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.OvertimeDetailActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".activity.DraftOvertimeActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.OvertimeActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ListDraftOvertimeActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.LeaveRequestActivity" />
+        <activity android:name=".activity.LeaveRequestDetailActivity" />
+        <activity android:name=".activity.ListDraftLeaveRequestActivity"></activity>
+        <activity android:name=".activity.LeaveCancelationActivity" />
+        <activity android:name=".activity.LeaveCancelationDetailActivity"></activity>
     </application>
 
 </manifest>

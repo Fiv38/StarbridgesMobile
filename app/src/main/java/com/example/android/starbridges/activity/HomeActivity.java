@@ -1,6 +1,5 @@
 package com.example.android.starbridges.activity;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 
@@ -19,7 +18,6 @@ import com.example.android.starbridges.network.APIClient;
 import com.example.android.starbridges.network.APIInterfaceRest;
 import com.example.android.starbridges.utility.GlobalVar;
 import com.example.android.starbridges.utility.SessionManagement;
-import com.google.android.gms.cast.framework.SessionManager;
 
 import java.util.HashMap;
 
@@ -49,7 +47,7 @@ public class HomeActivity extends AppCompatActivity {
         GlobalVar.setToken(token_sp);
         GlobalVar.setLoginName(loginName_sp);
         GlobalVar.setFullname(fullName_sp);
-        username = GlobalVar.getLoginName();
+        username = GlobalVar.loginName();
         fullname = GlobalVar.getFullname();
         mUsernameView=(TextView) findViewById(R.id.lbl_username);
         mUsernameView.setText("Hello,\n"+fullname);
@@ -116,6 +114,26 @@ loadingImage();
     public void showCorrection(View view){
         Intent correction = new Intent(this, CorrectionActivity.class);
         startActivity(correction);
+    }
+    public void signOut(View view){
+        session.logoutUser();
+        finish();
+    }
+
+    public void showOvertime(View view){
+        Intent overtime = new Intent(this, OvertimeActivity.class);
+        startActivity(overtime);
+
+    }
+
+    public void showCancelation(View view){
+        Intent cancelation = new Intent(this, LeaveCancelationActivity.class);
+        startActivity(cancelation);
+    }
+
+    public void showLeaveRequest(View view) {
+        Intent leaveRequest = new Intent(this, LeaveRequestActivity.class);
+        startActivity(leaveRequest);
     }
 
 }
