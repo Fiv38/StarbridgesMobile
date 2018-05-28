@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -24,6 +25,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.android.starbridges.R;
@@ -64,7 +66,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private EditText startDate, endDate, notes;
     private Spinner spinnerRequestType, spinnerBalanceType;
-    private ImageView imageView;
+    private ImageView imageView, imgStartDate, imgEndDate, imgStartTime, imgEndTime;
 
     Calendar myCalendar = Calendar.getInstance();
     Button saveBtn, submitBtn, uploadBtn;
@@ -165,29 +167,122 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         uploadBtn = (Button) findViewById(R.id.btnUpload);
         imageView = (ImageView) findViewById(R.id.imageView);
 
+        imgStartDate = (ImageView) findViewById(R.id.imgCalendarStartDate);
+        imgEndDate = (ImageView) findViewById(R.id.imgCalendarEndDate);
+        imgStartTime = (ImageView) findViewById(R.id.imgStartTime);
+        imgEndTime = (ImageView) findViewById(R.id.imgEndTime);
+
         // get session
         session = new SessionManagement(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         String employeeID = user.get(SessionManagement.KEY_EMPLOYEE_ID);
         GlobalVar.setEmployeeId(employeeID);
 
-        startDate.setOnClickListener(new View.OnClickListener() {
+        imgStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 new DatePickerDialog(LeaveRequestDetailActivity.this, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
-        endDate.setOnClickListener(new View.OnClickListener() {
+        imgStartTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar mTime = Calendar.getInstance();
+                int hour = mTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mTime.get(Calendar.MINUTE);
+
+                TimePickerDialog mTimePicker;
+                try{
+                    mTimePicker = new TimePickerDialog(LeaveRequestDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                            //startDate.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+                            leaveAt = String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0');
+                            //startDate.setText();
+                            Toast.makeText(LeaveRequestDetailActivity.this, "" + leaveAt, Toast.LENGTH_LONG).show();
+                        }
+                    }, Integer.parseInt(startLeave.substring(0,2)) , Integer.parseInt(startLeave.substring(3,5)), true);
+                } catch (Exception e)
+                {
+                    mTimePicker = new TimePickerDialog(LeaveRequestDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                            //startDate.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+                            leaveAt = String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0');
+                            Toast.makeText(LeaveRequestDetailActivity.this, "kedua : " + leaveAt, Toast.LENGTH_LONG).show();
+                        }
+                    }, hour, minute, true);
+                }
+
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
+            }
+        });
+
+        imgEndDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(LeaveRequestDetailActivity.this, date2, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        imgEndTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar mTime = Calendar.getInstance();
+                int hour = mTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mTime.get(Calendar.MINUTE);
+
+                TimePickerDialog mTimePicker;
+                try{
+                    mTimePicker = new TimePickerDialog(LeaveRequestDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                            //startDate.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+                            returnAt = String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0');
+                            //startDate.setText();
+                            Toast.makeText(LeaveRequestDetailActivity.this, "" + leaveAt, Toast.LENGTH_LONG).show();
+                        }
+                    }, Integer.parseInt(startLeave.substring(0,2)) , Integer.parseInt(startLeave.substring(3,5)), true);
+                } catch (Exception e)
+                {
+                    mTimePicker = new TimePickerDialog(LeaveRequestDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                            //startDate.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+                            returnAt = String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0');
+                            Toast.makeText(LeaveRequestDetailActivity.this, "kedua : " + leaveAt, Toast.LENGTH_LONG).show();
+                        }
+                    }, hour, minute, true);
+                }
+
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
+            }
+        });
+
+        /*startDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(LeaveRequestDetailActivity.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });*/
+
+        /*endDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new DatePickerDialog(LeaveRequestDetailActivity.this, date2, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
-        });
+        });*/
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -316,8 +411,10 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
             totalUnitReduce = "";
             startLeave = startDate.getText().toString();
             endLeave = endDate.getText().toString();
-            leaveAt = "";
-            returnAt = "";
+            if(leaveAt == null)
+                leaveAt = "" ;
+            if(returnAt == null)
+                returnAt = "";
             minIntervalViolation = true;
             unitLimitViolation = true;
             occurenceViolation = true;
@@ -415,10 +512,10 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                     alert.setTitle("Request Confirmation");
                     alert.setMessage(
                             "Request Type : \n" + requestConfirmation.getLeaveRequestType() +
-                                    "Leave : \n" + requestConfirmation.getLeaveAt() + " - " + requestConfirmation.getReturnAt() +
-                                    "Total Unit : \n" + requestConfirmation.getTotalUnit() +
-                                    "Unit Reduce : \n" + requestConfirmation.getTotalUnitReduce() +
-                                    "Notes : \n" + requestConfirmation.getNotes()
+                                    "\nLeave : \n" + requestConfirmation.getLeaveAt() + " - " + requestConfirmation.getReturnAt() +
+                                    "\nTotal Unit : \n" + requestConfirmation.getTotalUnit() +
+                                    "\nUnit Reduce : \n" + requestConfirmation.getTotalUnitReduce() +
+                                    "\nNotes : \n" + requestConfirmation.getNotes()
                     );
                     alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
