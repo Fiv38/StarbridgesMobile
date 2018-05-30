@@ -817,6 +817,30 @@ public class APIClient {
         return retrofit;
     }
 
+    public static Retrofit getClient(final String token){
+        Interceptor interceptor = new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request newRequest = chain
+                        .request()
+                        .newBuilder()
+                        .addHeader("Authorization", token)
+                        .build();
+                return chain.proceed(newRequest);
+            }
+        };
+
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(APIClient.BASE_URL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        return retrofit;
+    }
+
 }
 
 

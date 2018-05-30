@@ -14,11 +14,14 @@ import com.example.android.starbridges.model.ListOvertime.Overtime;
 import com.example.android.starbridges.model.OLocation.OLocation;
 import com.example.android.starbridges.model.OPost;
 import com.example.android.starbridges.model.MessageReturn.MessageReturn;
-import com.example.android.starbridges.model.SaveSubmitLeaveCancelation.SaveSubmitLeaveCancelation;
 import com.example.android.starbridges.model.balanceType.BalanceType;
 import com.example.android.starbridges.model.deleteleaverequest.DeleteLeaveRequest;
 import com.example.android.starbridges.model.editleaverequest.EditLeaveRequest;
+import com.example.android.starbridges.model.getclaimpolicy.GetClaimPolicy;
+import com.example.android.starbridges.model.getemployeefamily.GetEmployeeFamily;
 import com.example.android.starbridges.model.getimage.GetImage;
+import com.example.android.starbridges.model.getmedicalpolicy.GetMedicalPolicy;
+import com.example.android.starbridges.model.getmedicalsupport.GetMedicalSupport;
 import com.example.android.starbridges.model.history.History;
 import com.example.android.starbridges.model.leaverequest.LeaveRequest;
 import com.example.android.starbridges.model.listdraftleaverequest.ListDraftLeaveRequest;
@@ -275,4 +278,16 @@ public interface APIInterfaceRest {
 
     @POST("api/LeaveCancelation/DetailRequestConfirmation")
     Call<MessageReturn> detailRequestConfirmationCancelation(@Body RequestBody body, @Query("TransactionStatusSaveOrSubmit") String transactionStatusSaveOrSubmit);
+
+    @GET("api/MedicalClaim/GetMedicalSupport")
+    Call<GetMedicalSupport> getMedicalSupport();
+
+    @POST("api/MedicalClaim/GetMedicalPolicy")
+    Call<GetMedicalPolicy> getMedicalPolicy(@Query("MedicalSupportID") String medicalSupportID);
+
+    @GET("api/MedicalClaim/GetEmployeeFamily")
+    Call<GetEmployeeFamily> getEmployeeFamily(@Query("MedicalSupportID") String medicalSupportID);
+
+    @POST("api/MedicalClaim/GetClaimPolicy")
+    Call<GetClaimPolicy> getClaimPolicy(@Query("MedicalPolicyID") String medicalPolicyID);
 }

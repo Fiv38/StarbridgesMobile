@@ -93,12 +93,6 @@ public class LeaveRequestActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-//    private List<LeaveRequestTbl> generateData(){
-//        List<LeaveRequestTbl> items = SQLite.select().from(LeaveRequestTbl.class).queryList();
-//
-//        return items;
-//    }
-
     public void getListLeaveRequest() {
         apiInterface = APIClient.getListLeaveRequest(GlobalVar.getToken()).create(APIInterfaceRest.class);
         progressDialog = new ProgressDialog(LeaveRequestActivity.this);
