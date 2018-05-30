@@ -8,7 +8,9 @@ import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +21,11 @@ import com.example.android.starbridges.network.APIInterfaceRest;
 import com.example.android.starbridges.utility.GlobalVar;
 import com.example.android.starbridges.utility.SessionManagement;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -33,6 +39,7 @@ public class HomeActivity extends AppCompatActivity {
     CircleImageView imageView;
     private TextView mUsernameView;
     SessionManagement session;
+    Button btnSignOut;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,10 +47,31 @@ public class HomeActivity extends AppCompatActivity {
         imageView = (CircleImageView)findViewById(R.id.profile_image);
         session = new SessionManagement(getApplicationContext());
 
+        btnSignOut=(Button)findViewById(R.id.btn_signout);
+
         HashMap<String, String> user = session.getUserDetails();
         String token_sp = user.get(SessionManagement.KEY_TOKEN);
         String loginName_sp = user.get(SessionManagement.KEY_LOGINNAME);
         String fullName_sp = user.get(SessionManagement.KEY_FULLNAME);
+        String tokenExpiredDate=user.get(SessionManagement.KEY_EXPIRES);
+
+                //Thu, 31 May 2018 01:34:37 GMT
+        DateFormat df = new SimpleDateFormat("EEE, dd MMMM yyyy kk:mm:ss z", Locale.ENGLISH);
+        Date tokenExpired;
+        try{
+            tokenExpired =  df.parse(tokenExpiredDate);
+            if(tokenExpired.compareTo(new Date()) < 0)
+            {
+                btnSignOut.performClick();
+            }
+        } catch (Exception e)
+        {
+            Log.d("error parse", "error parse");
+        }
+
+
+
+
         GlobalVar.setToken(token_sp);
         GlobalVar.setLoginName(loginName_sp);
         GlobalVar.setFullname(fullName_sp);

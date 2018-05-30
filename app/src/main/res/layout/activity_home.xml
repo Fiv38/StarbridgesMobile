@@ -198,8 +198,8 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:drawableTop="@drawable/common_full_open_on_phone"
-            android:text="@string/sign_out"
             android:onClick="signOut"
+            android:text="@string/sign_out"
             android:textColor="@android:color/background_light" />
         <Button
             android:id="@+id/btn_prepare2"

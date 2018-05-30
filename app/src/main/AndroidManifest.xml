@@ -111,9 +111,10 @@
             android:screenOrientation="portrait" />
         <activity android:name=".activity.LeaveRequestActivity" />
         <activity android:name=".activity.LeaveRequestDetailActivity" />
-        <activity android:name=".activity.ListDraftLeaveRequestActivity"></activity>
+        <activity android:name=".activity.ListDraftLeaveRequestActivity" />
         <activity android:name=".activity.LeaveCancelationActivity" />
-        <activity android:name=".activity.LeaveCancelationDetailActivity"></activity>
+        <activity android:name=".activity.LeaveCancelationDetailActivity" />
+        <activity android:name=".activity.ListDraftLeaveCancelationActivity"></activity>
     </application>
 
 </manifest>

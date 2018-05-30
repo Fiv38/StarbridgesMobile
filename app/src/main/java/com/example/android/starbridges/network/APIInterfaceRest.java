@@ -4,14 +4,17 @@ import com.example.android.starbridges.model.Attendence;
 import com.example.android.starbridges.model.Authentication;
 import com.example.android.starbridges.model.CorrectionDetail.CorrectionDetail;
 import com.example.android.starbridges.model.DecisionNumber.DecisionNumber;
+import com.example.android.starbridges.model.EditLeaveCancelation.EditLeaveCancelation;
 import com.example.android.starbridges.model.ListAttendanceCorrection.ListAttendanceCorrection;
 import com.example.android.starbridges.model.ListDraftCorrection.ListDraftCorrection;
+import com.example.android.starbridges.model.ListDraftLeaveCancelation.ListDraftLeaveCancelation;
 import com.example.android.starbridges.model.ListDraftOvertime.ListDraftOvertime;
 import com.example.android.starbridges.model.ListLeaveCancelation.ListLeaveCancelation;
 import com.example.android.starbridges.model.ListOvertime.Overtime;
 import com.example.android.starbridges.model.OLocation.OLocation;
 import com.example.android.starbridges.model.OPost;
 import com.example.android.starbridges.model.MessageReturn.MessageReturn;
+import com.example.android.starbridges.model.SaveSubmitLeaveCancelation.SaveSubmitLeaveCancelation;
 import com.example.android.starbridges.model.balanceType.BalanceType;
 import com.example.android.starbridges.model.deleteleaverequest.DeleteLeaveRequest;
 import com.example.android.starbridges.model.editleaverequest.EditLeaveRequest;
@@ -257,4 +260,19 @@ public interface APIInterfaceRest {
             @Field("FullAccess") Boolean FullAccess,
             @Field("ExclusionFields") List<String> ExclusionFields,
             @Field("AccessibilityAttribute") String AccessibilityAttribute);
+
+    @GET("api/LeaveCancelation/ListDraft")
+    Call<ListDraftLeaveCancelation> getListDraftLeaveCancelation();
+
+    @POST("api/LeaveCancelation/SaveDetail")
+    Call<MessageReturn> saveLeaveCancelation(@Body RequestBody body, @Query("TransactionStatusSaveOrSubmit") String transactionStatusSaveOrSubmit);
+
+    @POST("api/LeaveCancelation/EditDraft")
+    Call<EditLeaveCancelation> editDraftLeaveCancelation(@Query("id") String id);
+
+    @POST("api/LeaveCancelation/DeleteDraft")
+    Call<MessageReturn> deleteDraftCancelation(@Body RequestBody body);
+
+    @POST("api/LeaveCancelation/DetailRequestConfirmation")
+    Call<MessageReturn> detailRequestConfirmationCancelation(@Body RequestBody body, @Query("TransactionStatusSaveOrSubmit") String transactionStatusSaveOrSubmit);
 }

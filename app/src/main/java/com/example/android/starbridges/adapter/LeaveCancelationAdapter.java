@@ -78,8 +78,8 @@ public class LeaveCancelationAdapter extends ArrayAdapter<com.example.android.st
 
         holder.txtDecisionNumberCancelation.setText(lstorder.get(position).getDecisionNumber());
         holder.txtRequestTypeCancelation.setText(lstorder.get(position).getRequestType());
-        holder.txtCancelationCancelation.setText(lstorder.get(position).getCancelFrom()+"-"+lstorder.get(position).getCancelTo());
-        holder.txtLeaveCancelation.setText(lstorder.get(position).getRequestFrom()+"-"+lstorder.get(position).getRequestTo());
+        holder.txtCancelationCancelation.setText( dateFormat(lstorder.get(position).getCancelFrom()) +"-"+ dateFormat(lstorder.get(position).getCancelTo()) );
+        holder.txtLeaveCancelation.setText( dateFormat(lstorder.get(position).getRequestFrom()) +"-"+ dateFormat(lstorder.get(position).getRequestTo()) );
         holder.txtAdditionalUnitCancelation.setText(lstorder.get(position).getAdditionalUnit()+"");
         holder.txtNotesCancelation.setText(lstorder.get(position).getNotes());
 
@@ -114,5 +114,20 @@ public class LeaveCancelationAdapter extends ArrayAdapter<com.example.android.st
   */
     }
 
+    public String dateFormat(String dateString)
+    {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+        DateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");
+        Date date1;
+        String result;
+        try{
+            date1=df.parse(dateString);
+            result=sdf.format(date1);
+        }catch (Exception e)
+        {
+            result="";
+        }
+        return result;
+    }
 
 }
