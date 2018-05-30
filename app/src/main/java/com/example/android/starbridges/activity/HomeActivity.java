@@ -136,4 +136,9 @@ loadingImage();
         startActivity(leaveRequest);
     }
 
+    public void showMedicalClaim(View view){
+        Intent medicalClaim = new Intent(this, MedicalClaimActivity.class);
+        startActivity(medicalClaim);
+    }
+
 }

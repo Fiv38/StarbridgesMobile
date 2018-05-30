@@ -419,7 +419,8 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
             unitLimitViolation = true;
             occurenceViolation = true;
             notesStr = notes.getText().toString();
-            attachmentFile = "";
+            if(attachmentFile == null)
+                attachmentFile = "";
             attachmentID = "";
             decisionNumber = "";
             transactionStatusID = "";
@@ -503,7 +504,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                     submitType = requestConfirmation.getSubmitType();
                     message = requestConfirmation.getMessage();
                     transactionStatusSaveOrSubmit = requestConfirmation.getTransactionStatusSaveOrSubmit(); //(sudah diinisialisasi di btn listener)
-                    //photo = requestConfirmation.getPhoto();
+                    photo = requestConfirmation.getPhoto();
                     fullAccess = requestConfirmation.getFullAccess();
                     exclusionFields = requestConfirmation.getExclusionFields();
                     accessibilityAttribute = requestConfirmation.getAccessibilityAttribute();
@@ -622,8 +623,8 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                     notes.setText(notesStr);
 
                     // load Image if exist
-                    if(photo != null) {
-                        byte[] decodedString = Base64.decode(photo, Base64.DEFAULT);
+                    if(attachmentFile != null) {
+                        byte[] decodedString = Base64.decode(attachmentFile, Base64.DEFAULT);
                         Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                         imageView.setImageBitmap(bitmap);
                     }
@@ -870,7 +871,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 
                imageView.setImageBitmap(selectedImage);
-               photo = encodeImage(selectedImage);
+               attachmentFile = encodeImage(selectedImage);
            }catch (FileNotFoundException e){
                e.printStackTrace();
                Toast.makeText(LeaveRequestDetailActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
