@@ -76,7 +76,7 @@
         android:textColor="@android:color/white" />
 
     <ImageView
-        android:id="@+id/imageViewReimburseDetail"
+        android:id="@+id/imgReimburseDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

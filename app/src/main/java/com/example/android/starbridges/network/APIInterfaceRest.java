@@ -302,4 +302,10 @@ public interface APIInterfaceRest {
 
     @GET("api/Reimbursement/ListDraft")
     Call<ListDraftReimbursement> getListDraftReimbursement();
+
+    @POST("api/Reimbursement/SaveDetail")
+    Call<MessageReturn> saveDetailReimbursement(@Body RequestBody body, @Query("transactionStatus") String transactionStatus);
+
+    @POST("api/Reimbursement/DeleteDraft")
+    Call<MessageReturn> deleteDraftReimbursement(@Body RequestBody body);
 }

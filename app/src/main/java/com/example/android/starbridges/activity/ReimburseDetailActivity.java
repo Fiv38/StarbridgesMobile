@@ -1,9 +1,16 @@
 package com.example.android.starbridges.activity;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -13,34 +20,48 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.android.starbridges.R;
+import com.example.android.starbridges.model.MessageReturn.MessageReturn;
 import com.example.android.starbridges.model.ReimbursementType.ReimbursementType;
 import com.example.android.starbridges.model.ReimbursementType.ReturnValue;
 import com.example.android.starbridges.network.APIClient;
 import com.example.android.starbridges.network.APIInterfaceRest;
 import com.example.android.starbridges.utility.GlobalVar;
 
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ReimburseDetailActivity extends AppCompatActivity {
 
+    private static final int PICK_IMAGE = 999;
+
     EditText txtDescriptionReimburseDetail, txtAmountReimburseDetail, txtTransactionDateReimburseDetail;
     Spinner spnTypeReimburseDetail;
 
     Button btnUploadReimburseDetail, btnSubmitReimburseDetail, btnSaveReimburseDetail, btnCancelReimburseDetail;
 
-    ImageView imgTransactionDateReimburseDetail;
+    ImageView imgTransactionDateReimburseDetail, imgReimburseDetail;
 
     APIInterfaceRest apiInterface;
+    ProgressDialog progressDialog;
 
     List<com.example.android.starbridges.model.ReimbursementType.ReturnValue> lstReimbursementType;
+
+    List<Object> exclusiveFields;
 
     Calendar myCalendar = Calendar.getInstance();
     DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -52,6 +73,9 @@ public class ReimburseDetailActivity extends AppCompatActivity {
             updateLabel();
         }
     };
+
+    String photo;
+    int reimbursementTypeID;
 
     private void updateLabel() {
         String myFormat = "dd/MM/yyyy"; //In which you need put here
@@ -74,6 +98,7 @@ public class ReimburseDetailActivity extends AppCompatActivity {
         btnSaveReimburseDetail=(Button)findViewById(R.id.btnSaveReimburseDetail);
         btnCancelReimburseDetail=(Button)findViewById(R.id.btnCancelReimburseDetail);
         imgTransactionDateReimburseDetail=(ImageView)findViewById(R.id.imgTransactionDateReimburseDetail);
+        imgReimburseDetail=(ImageView)findViewById(R.id.imgReimburseDetail);
 
         imgTransactionDateReimburseDetail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +109,70 @@ public class ReimburseDetailActivity extends AppCompatActivity {
             }
         });
 
+        btnUploadReimburseDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+            }
+        });
+
+        spnTypeReimburseDetail.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                ReturnValue reimbusementType=(ReturnValue)spnTypeReimburseDetail.getItemAtPosition(i);
+
+                reimbursementTypeID=reimbusementType.getValue();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        btnSaveReimburseDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveReimbursement();
+            }
+        });
+
         initSpinner();
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            try {
+                final Uri imageUri = data.getData();
+                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+
+                imgReimburseDetail.setImageBitmap(selectedImage);
+                photo = encodeImage(selectedImage);
+            }catch (FileNotFoundException e){
+                e.printStackTrace();
+                Toast.makeText(ReimburseDetailActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
+            }
+        }else{
+            Toast.makeText(ReimburseDetailActivity.this, "You haven't picked Image",Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private String encodeImage(Bitmap bm) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String encImage = Base64.encodeToString(b, Base64.DEFAULT);
+
+        return encImage;
     }
 
     public void initSpinner()
@@ -126,6 +214,81 @@ public class ReimburseDetailActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, lstReimbursementType);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnTypeReimburseDetail.setAdapter(adapter);
+
+    }
+
+    public void saveReimbursement() {
+
+        progressDialog = new ProgressDialog(ReimburseDetailActivity.this);
+        progressDialog.setTitle("Loading");
+        progressDialog.show();
+
+        JSONObject paramObject= new JSONObject();
+        try {
+
+            paramObject.put("ID",null);
+            paramObject.put("EmployeeID",GlobalVar.getEmployeeId());
+            paramObject.put("Description",txtDescriptionReimburseDetail.getText().toString());
+            paramObject.put("Amount",txtAmountReimburseDetail.getText().toString());
+            paramObject.put("ReimbursementTypeID",reimbursementTypeID);
+            paramObject.put("IsPreProcess",false);
+
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+            DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String transactionDate = "";
+            Date convertTransactionDate;
+            try{
+                convertTransactionDate =  sdf.parse(txtTransactionDateReimburseDetail.getText().toString());
+                transactionDate=df.format(convertTransactionDate);
+            }catch (Exception e)
+            {
+
+            }
+
+            paramObject.put("TransactionDate",transactionDate);
+            paramObject.put("TransactionStatusID",10);
+            paramObject.put("DecisionNumber",null);
+            paramObject.put("AttachmentFile",photo);
+            paramObject.put("AttachmentID",null);
+            paramObject.put("Message",null);
+            paramObject.put("FullAccess",true);
+            paramObject.put("ExclusiveFields",exclusiveFields);
+            paramObject.put("FullAccess",true);
+            paramObject.put("AccessibilityAttribute","");
+
+        }catch (Exception e)
+        {
+
+        }
+
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),paramObject.toString());
+        final APIInterfaceRest apiInterface = APIClient.saveLeaveCancelation(GlobalVar.getToken()).create(APIInterfaceRest.class);
+        Call<MessageReturn> call3 = apiInterface.saveDetailReimbursement(body, "Save");
+
+        call3.enqueue(new Callback<MessageReturn>() {
+            @Override
+            public void onResponse(Call<MessageReturn> call, Response<MessageReturn> response) {
+                progressDialog.dismiss();
+                MessageReturn data = response.body();
+                if (data != null) {
+                    Toast.makeText(getApplicationContext(), data.getMessage(), Toast.LENGTH_LONG).show();
+
+                }
+                else
+                    Toast.makeText(getApplicationContext(), "no data", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(ReimburseDetailActivity.this, ReimburseActivity.class);
+                startActivity(intent);
+
+            }
+
+            @Override
+            public void onFailure(Call<MessageReturn> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(getApplicationContext(), "Something went wrong...Please try again!", Toast.LENGTH_LONG).show();
+                call.cancel();
+            }
+        });
+
 
     }
 

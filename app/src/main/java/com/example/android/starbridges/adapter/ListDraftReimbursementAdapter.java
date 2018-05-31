@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.android.starbridges.R;
 import com.example.android.starbridges.activity.LeaveCancelationDetailActivity;
+import com.example.android.starbridges.activity.ReimburseDetailActivity;
 import com.example.android.starbridges.model.ListDraftReimbursement.ReturnValue;
 
 import java.text.DateFormat;
@@ -24,14 +25,14 @@ import java.util.List;
 
 public class ListDraftReimbursementAdapter extends ArrayAdapter<ReturnValue> {
     private final Context context;
-    private final List<ReturnValue> draftLeaveCancelationList;
+    private final List<ReturnValue> draftLeaveReimbursement;
     public static List<String> listID = new ArrayList<>();
 
-    public ListDraftReimbursementAdapter(Context context, List<ReturnValue> draftLeaveCancelationList){
-        super(context, R.layout.list_draft_leave_cancelation, draftLeaveCancelationList);
+    public ListDraftReimbursementAdapter(Context context, List<ReturnValue> draftLeaveReimbursement){
+        super(context, R.layout.list_draft_leave_cancelation, draftLeaveReimbursement);
 
         this.context = context;
-        this.draftLeaveCancelationList = draftLeaveCancelationList;
+        this.draftLeaveReimbursement = draftLeaveReimbursement;
     }
 
     @NonNull
@@ -51,16 +52,16 @@ public class ListDraftReimbursementAdapter extends ArrayAdapter<ReturnValue> {
         Button btnEditDraft = (Button) rowView.findViewById(R.id.btnEditDraft);
         CheckBox chcDraftReimburse = (CheckBox) rowView.findViewById(R.id.chcDraftReimburse);
 
-        txtDesciptionDraftReimburse.setText(draftLeaveCancelationList.get(position).getDescription());
-        txtAmountDraftReimburse.setText( draftLeaveCancelationList.get(position).getAmount());
-        txtTypeDraftReimburse.setText( draftLeaveCancelationList.get(position).getType());
-        txtTransactionDateDraftReimburse.setText(dateFormat(draftLeaveCancelationList.get(position).getTransactionDate()) );
+        txtDesciptionDraftReimburse.setText(draftLeaveReimbursement.get(position).getDescription());
+        txtAmountDraftReimburse.setText( draftLeaveReimbursement.get(position).getAmount());
+        txtTypeDraftReimburse.setText( draftLeaveReimbursement.get(position).getType());
+        txtTransactionDateDraftReimburse.setText(dateFormat(draftLeaveReimbursement.get(position).getTransactionDate()) );
 
         btnEditDraft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), LeaveCancelationDetailActivity.class);
-                intent.putExtra("id", draftLeaveCancelationList.get(position).getID());
+                Intent intent = new Intent(getContext(), ReimburseDetailActivity.class);
+                intent.putExtra("id", draftLeaveReimbursement.get(position).getID());
                 context.startActivity(intent);
             }
         });
@@ -69,9 +70,9 @@ public class ListDraftReimbursementAdapter extends ArrayAdapter<ReturnValue> {
             @Override
             public void onClick(View v) {
                 if(((CompoundButton) v).isChecked())
-                    listID.add(draftLeaveCancelationList.get(position).getID()); // add to cb array
+                    listID.add(draftLeaveReimbursement.get(position).getID()); // add to cb array
                 else
-                    listID.remove(draftLeaveCancelationList.get(position).getID());
+                    listID.remove(draftLeaveReimbursement.get(position).getID());
             }
         });
 
