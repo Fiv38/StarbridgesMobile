@@ -193,6 +193,17 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         <Button
+            android:id="@+id/btn_reimburse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="showReimburse"
+            android:drawableTop="@drawable/common_full_open_on_phone"
+            android:background="@android:color/transparent"
+            android:text="@string/sign_out"
+            android:textColor="@android:color/background_light" />
+
+        <Button
             android:id="@+id/btn_signout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -202,13 +213,7 @@
             android:onClick="signOut"
             android:text="@string/sign_out"
             android:textColor="@android:color/background_light" />
-        <Button
-            android:id="@+id/btn_prepare2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:textColor="@android:color/background_light" />
+
         <Button
             android:id="@+id/btn_prepare1"
             android:layout_width="wrap_content"

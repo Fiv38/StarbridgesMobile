@@ -9,11 +9,14 @@ import com.example.android.starbridges.model.ListAttendanceCorrection.ListAttend
 import com.example.android.starbridges.model.ListDraftCorrection.ListDraftCorrection;
 import com.example.android.starbridges.model.ListDraftLeaveCancelation.ListDraftLeaveCancelation;
 import com.example.android.starbridges.model.ListDraftOvertime.ListDraftOvertime;
+import com.example.android.starbridges.model.ListDraftReimbursement.ListDraftReimbursement;
 import com.example.android.starbridges.model.ListLeaveCancelation.ListLeaveCancelation;
 import com.example.android.starbridges.model.ListOvertime.Overtime;
 import com.example.android.starbridges.model.OLocation.OLocation;
 import com.example.android.starbridges.model.OPost;
 import com.example.android.starbridges.model.MessageReturn.MessageReturn;
+import com.example.android.starbridges.model.Reimbursement.Reimbursement;
+import com.example.android.starbridges.model.ReimbursementType.ReimbursementType;
 import com.example.android.starbridges.model.balanceType.BalanceType;
 import com.example.android.starbridges.model.deleteleaverequest.DeleteLeaveRequest;
 import com.example.android.starbridges.model.editleaverequest.EditLeaveRequest;
@@ -290,4 +293,13 @@ public interface APIInterfaceRest {
 
     @POST("api/MedicalClaim/GetClaimPolicy")
     Call<GetClaimPolicy> getClaimPolicy(@Query("MedicalPolicyID") String medicalPolicyID);
+
+    @GET("api/Reimbursement/ListReimbursement")
+    Call<Reimbursement> getReimburse();
+
+    @GET("api/Reimbursement/GetReimbursementType")
+    Call<ReimbursementType> getReimbursementType();
+
+    @GET("api/Reimbursement/ListDraft")
+    Call<ListDraftReimbursement> getListDraftReimbursement();
 }

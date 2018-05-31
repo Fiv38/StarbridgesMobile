@@ -169,4 +169,9 @@ loadingImage();
         startActivity(medicalClaim);
     }
 
+    public void showReimburse(View view){
+        Intent reimburse = new Intent(this, ReimburseActivity.class);
+        startActivity(reimburse);
+    }
+
 }

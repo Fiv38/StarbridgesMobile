@@ -111,12 +111,15 @@
             android:screenOrientation="portrait" />
         <activity android:name=".activity.LeaveRequestActivity" />
         <activity android:name=".activity.LeaveRequestDetailActivity" />
-        <activity android:name=".activity.ListDraftLeaveRequestActivity"></activity>
+        <activity android:name=".activity.ListDraftLeaveRequestActivity" />
         <activity android:name=".activity.LeaveCancelationActivity" />
-        <activity android:name=".activity.LeaveCancelationDetailActivity"></activity>
-        <activity android:name=".activity.ListDraftLeaveCancelationActivity"></activity>
+        <activity android:name=".activity.LeaveCancelationDetailActivity" />
+        <activity android:name=".activity.ListDraftLeaveCancelationActivity" />
         <activity android:name=".activity.MedicalClaimActivity" />
-        <activity android:name=".activity.MedicalClaimDetailActivity"></activity>
+        <activity android:name=".activity.MedicalClaimDetailActivity" />
+        <activity android:name=".activity.ReimburseActivity" />
+        <activity android:name=".activity.ListDraftReimburseActivity" />
+        <activity android:name=".activity.ReimburseDetailActivity"></activity>
     </application>
 
 </manifest>

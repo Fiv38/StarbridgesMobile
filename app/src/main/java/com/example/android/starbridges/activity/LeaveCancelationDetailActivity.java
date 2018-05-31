@@ -57,7 +57,6 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
 
     Spinner spnDecisionNumberCancelDetail;
     EditText txtLeaveFromCancelDetail, txtLeaveToCancelDetail, txtCancelFromCancelDetail, txtCancelToCancelDetail, txtNotesCancelDetail;
-    EditText txtCancelFromTimeCancelDetail, txtCancelToTimeCancelDetail;
     Button btnUploadCancelDetail, btnSubmitCancelDetail, btnSaveCancelDetail, btnCancelCancelDetail;
     List<ReturnValue> listDecisionNumber;
     APIInterfaceRest apiInterface;

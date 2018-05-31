@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="10dp">
+
+    <!-- check box -->
+    <CheckBox
+        android:id="@+id/chcDraftReimburse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Request Type -->
+
+    <TextView
+        android:id="@+id/DateDraftLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:text="Description" />
+
+    <TextView
+        android:id="@+id/txtDesciptionDraftReimburse"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/decisionNumberLbl"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="40dp"
+        android:text="20 Mei 2018"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+
+    <!-- Leave -->
+    <TextView
+        android:id="@+id/StartDraftLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/decisionNumberLbl"
+        android:text="Amount" />
+
+    <TextView
+        android:id="@+id/txtAmountDraftReimburse"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/requestTypeLbl"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="40dp"
+        android:text="21:30"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+
+    <!-- Unit Reduce -->
+    <TextView
+        android:id="@+id/EndDraftLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/leaveLbl"
+        android:text="Type" />
+
+    <TextView
+        android:id="@+id/txtTypeDraftReimburse"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/unitReduceLbl"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="40dp"
+        android:text="23:00"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+    <!-- Unit Reduce -->
+    <TextView
+        android:id="@+id/lblTransactionDate"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/leaveLbl"
+        android:text="Transaction Date" />
+
+    <TextView
+        android:id="@+id/txtTransactionDateDraftReimburse"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/unitReduceLbl"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="40dp"
+        android:text="23:00"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnEditDraft"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Edit" />
+
+</LinearLayout>
