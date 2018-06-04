@@ -6,8 +6,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.Parcelable.Creator;
 
-import com.example.android.starbridges.model.CustomField;
-import com.example.android.starbridges.model.ReturnValue;
+import com.example.android.starbridges.model.EditReimbursement.CustomField;
+import com.example.android.starbridges.model.EditReimbursement.ReturnValue;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -16,7 +16,7 @@ public class EditReimbursement implements Serializable, Parcelable
 
     @SerializedName("CustomField")
     @Expose
-    private com.example.android.starbridges.model.CustomField customField;
+    private com.example.android.starbridges.model.EditReimbursement.CustomField customField;
     @SerializedName("ReturnValue")
     @Expose
     private ReturnValue returnValue;
@@ -45,7 +45,7 @@ public class EditReimbursement implements Serializable, Parcelable
     private final static long serialVersionUID = 7589364499994741052L;
 
     protected EditReimbursement(Parcel in) {
-        this.customField = ((com.example.android.starbridges.model.CustomField) in.readValue((com.example.android.starbridges.model.CustomField.class.getClassLoader())));
+        this.customField = ((com.example.android.starbridges.model.EditReimbursement.CustomField) in.readValue((com.example.android.starbridges.model.EditReimbursement.CustomField.class.getClassLoader())));
         this.returnValue = ((ReturnValue) in.readValue((ReturnValue.class.getClassLoader())));
         this.isSucceed = ((boolean) in.readValue((boolean.class.getClassLoader())));
         this.message = ((String) in.readValue((String.class.getClassLoader())));
@@ -65,7 +65,7 @@ public class EditReimbursement implements Serializable, Parcelable
      * @param customField
      * @param returnValue
      */
-    public EditReimbursement(com.example.android.starbridges.model.CustomField customField, ReturnValue returnValue, boolean isSucceed, String message) {
+    public EditReimbursement(com.example.android.starbridges.model.EditReimbursement.CustomField customField, ReturnValue returnValue, boolean isSucceed, String message) {
         super();
         this.customField = customField;
         this.returnValue = returnValue;
@@ -73,11 +73,11 @@ public class EditReimbursement implements Serializable, Parcelable
         this.message = message;
     }
 
-    public com.example.android.starbridges.model.CustomField getCustomField() {
+    public com.example.android.starbridges.model.EditReimbursement.CustomField getCustomField() {
         return customField;
     }
 
-    public void setCustomField(com.example.android.starbridges.model.CustomField customField) {
+    public void setCustomField(com.example.android.starbridges.model.EditReimbursement.CustomField customField) {
         this.customField = customField;
     }
 

@@ -5,6 +5,7 @@ import com.example.android.starbridges.model.Authentication;
 import com.example.android.starbridges.model.CorrectionDetail.CorrectionDetail;
 import com.example.android.starbridges.model.DecisionNumber.DecisionNumber;
 import com.example.android.starbridges.model.EditLeaveCancelation.EditLeaveCancelation;
+import com.example.android.starbridges.model.EditReimbursement.EditReimbursement;
 import com.example.android.starbridges.model.ListAttendanceCorrection.ListAttendanceCorrection;
 import com.example.android.starbridges.model.ListDraftCorrection.ListDraftCorrection;
 import com.example.android.starbridges.model.ListDraftLeaveCancelation.ListDraftLeaveCancelation;
@@ -304,8 +305,11 @@ public interface APIInterfaceRest {
     Call<ListDraftReimbursement> getListDraftReimbursement();
 
     @POST("api/Reimbursement/SaveDetail")
-    Call<MessageReturn> saveDetailReimbursement(@Body RequestBody body, @Query("transactionStatus") String transactionStatus);
+    Call<MessageReturn> saveSubmitDetailReimbursement(@Body RequestBody body, @Query("transactionStatus") String transactionStatus);
 
     @POST("api/Reimbursement/DeleteDraft")
     Call<MessageReturn> deleteDraftReimbursement(@Body RequestBody body);
+
+    @POST("api/Reimbursement/EditDraft")
+    Call<EditReimbursement> editDraftReimbursement(@Query("id") String id);
 }

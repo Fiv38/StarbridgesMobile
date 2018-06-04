@@ -71,8 +71,8 @@ public class ReimburseAdapter extends ArrayAdapter<ReturnValue> {
         holder.txtDescriptionReimburse.setText(lstorder.get(position).getDescription());
         holder.txtAmountReimburse.setText( lstorder.get(position).getAmount() );
         holder.txtTypeReimburse.setText( lstorder.get(position).getType() );
-        holder.txtTransactionDateReimburse.setText(lstorder.get(position).getTransactionDate());
-        holder.txtApprovedDateReimburse.setText(lstorder.get(position).getApprovedDate()+"");
+        holder.txtTransactionDateReimburse.setText(dateFormat(lstorder.get(position).getTransactionDate()));
+        holder.txtApprovedDateReimburse.setText( dateFormat(lstorder.get(position).getApprovedDate()+""));
 
         return convertView;
     }

@@ -639,12 +639,6 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
 
     public void getData(String id)
     {
-        listDecisionNumber= new ArrayList<>();
-        ReturnValue returnValue=new ReturnValue();
-        returnValue.setID("");
-        returnValue.setDecisionNumber("");
-        listDecisionNumber.add(returnValue);
-
         apiInterface = APIClient.editDraftLeaveCancelation(GlobalVar.getToken()).create(APIInterfaceRest.class);
         apiInterface.editDraftLeaveCancelation(id).enqueue(new Callback<EditLeaveCancelation>() {
             @Override

@@ -109,17 +109,61 @@
             android:name=".activity.ListDraftOvertimeActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.LeaveRequestActivity" />
-        <activity android:name=".activity.LeaveRequestDetailActivity" />
-        <activity android:name=".activity.ListDraftLeaveRequestActivity" />
-        <activity android:name=".activity.LeaveCancelationActivity" />
-        <activity android:name=".activity.LeaveCancelationDetailActivity" />
-        <activity android:name=".activity.ListDraftLeaveCancelationActivity" />
-        <activity android:name=".activity.MedicalClaimActivity" />
-        <activity android:name=".activity.MedicalClaimDetailActivity" />
-        <activity android:name=".activity.ReimburseActivity" />
-        <activity android:name=".activity.ListDraftReimburseActivity" />
-        <activity android:name=".activity.ReimburseDetailActivity"></activity>
+        <activity android:name=".activity.LeaveRequestActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".activity.HomeActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.LeaveRequestDetailActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".activity.LeaveRequestActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.ListDraftLeaveRequestActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".activity.LeaveRequestActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.LeaveCancelationActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".activity.HomeActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.LeaveCancelationDetailActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".activity.LeaveCancelationActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.ListDraftLeaveCancelationActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".activity.LeaveCancelationActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.MedicalClaimActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".activity.HomeActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.MedicalClaimDetailActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".activity.MedicalClaimActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.ReimburseActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".activity.HomeActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.ListDraftReimburseActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".activity.ReimburseActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.ReimburseDetailActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".activity.ReimburseActivity"
+            android:screenOrientation="portrait"
+            ></activity>
     </application>
 
 </manifest>

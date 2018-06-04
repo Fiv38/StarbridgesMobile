@@ -41,6 +41,7 @@ public class ListDraftReimburseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_draft_reimburse);
 
+        setTitle("Reimbursement");
         getListDraftReimbursement();
     }
 

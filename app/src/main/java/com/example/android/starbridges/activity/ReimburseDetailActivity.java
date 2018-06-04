@@ -1,7 +1,9 @@
 package com.example.android.starbridges.activity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.android.starbridges.R;
+import com.example.android.starbridges.model.EditReimbursement.EditReimbursement;
 import com.example.android.starbridges.model.MessageReturn.MessageReturn;
 import com.example.android.starbridges.model.ReimbursementType.ReimbursementType;
 import com.example.android.starbridges.model.ReimbursementType.ReturnValue;
@@ -33,6 +36,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -77,6 +81,8 @@ public class ReimburseDetailActivity extends AppCompatActivity {
     String photo;
     int reimbursementTypeID;
 
+    com.example.android.starbridges.model.EditReimbursement.ReturnValue editReimbursement;
+
     private void updateLabel() {
         String myFormat = "dd/MM/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -88,6 +94,7 @@ public class ReimburseDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reimburse_detail);
+        setTitle("Reimbursement");
 
         txtDescriptionReimburseDetail=(EditText)findViewById(R.id.txtDescriptionReimburseDetail);
         txtAmountReimburseDetail=(EditText)findViewById(R.id.txtAmountReimburseDetail);
@@ -108,6 +115,15 @@ public class ReimburseDetailActivity extends AppCompatActivity {
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
+
+        final Intent intent = getIntent();
+        String id = intent.getStringExtra("id");
+        if(id!=null)
+        {
+            getData(id);
+        }
+        else
+            initSpinner();
 
         btnUploadReimburseDetail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,13 +152,182 @@ public class ReimburseDetailActivity extends AppCompatActivity {
         btnSaveReimburseDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveReimbursement();
+                AlertDialog.Builder alert = new AlertDialog.Builder(ReimburseDetailActivity.this);
+                alert.setTitle("Reimbursement Confirmation");
+                alert.setMessage("Description\n" +
+                        "\t"+txtDescriptionReimburseDetail.getText().toString()+"" +
+                        "\nAmount\n" +
+                        "\t"+numberFormat(txtAmountReimburseDetail.getText().toString()+"")  +
+                        "\nType\n" +
+                        "\t"+spnTypeReimburseDetail.getSelectedItem().toString()+"" +
+                        "\nTransaction Date\n" +
+                        "\t"+dateFormat2(txtTransactionDateReimburseDetail.getText().toString())+"\n\n" +
+                        "This information will be saved in draft");
+                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        saveSubmitReimbursement("Save");
+                    }
+                });
+
+                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                alert.show();
+
+
             }
         });
 
-        initSpinner();
+        btnSubmitReimburseDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(ReimburseDetailActivity.this);
+                alert.setTitle("Reimbursement Confirmation");
+                alert.setMessage("Description\n" +
+                        "\t"+txtDescriptionReimburseDetail.getText().toString()+"" +
+                        "\nAmount\n" +
+                        "\t"+ numberFormat(txtAmountReimburseDetail.getText().toString()+"")  +
+                        "\nType\n" +
+                        "\t"+spnTypeReimburseDetail.getSelectedItem().toString()+"" +
+                        "\nTransaction Date\n" +
+                        "\t"+dateFormat2(txtTransactionDateReimburseDetail.getText().toString())+"\n\n" );
+                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        saveSubmitReimbursement("Submit");
+                    }
+                });
 
+                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
+                    }
+                });
+                alert.show();
+            }
+        });
+
+        btnCancelReimburseDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(ReimburseDetailActivity.this);
+                alert.setTitle("Reimbursement Confirmation");
+                alert.setMessage("Description\n" +
+                        "\t"+txtDescriptionReimburseDetail.getText().toString()+"" +
+                        "\nAmount\n" +
+                        "\t"+numberFormat(txtAmountReimburseDetail.getText().toString()+"")  +
+                        "\nType\n" +
+                        "\t"+spnTypeReimburseDetail.getSelectedItem().toString()+"" +
+                        "\nTransaction Date\n" +
+                        "\t"+dateFormat2(txtTransactionDateReimburseDetail.getText().toString())+"\n\n" +
+                        "Your information will not be saved");
+                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                });
+
+                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                alert.show();
+            }
+        });
+
+    }
+
+    public void getData(String id)
+    {
+        progressDialog = new ProgressDialog(ReimburseDetailActivity.this);
+        progressDialog.setTitle("Loading");
+        progressDialog.show();
+
+        lstReimbursementType= new ArrayList<>();
+        com.example.android.starbridges.model.ReimbursementType.ReturnValue returnValue=new com.example.android.starbridges.model.ReimbursementType.ReturnValue();
+        returnValue.setValue(0);
+        returnValue.setText("");
+        lstReimbursementType.add(returnValue);
+
+        apiInterface = APIClient.editDraftLeaveCancelation(GlobalVar.getToken()).create(APIInterfaceRest.class);
+        apiInterface.editDraftReimbursement(id).enqueue(new Callback<EditReimbursement>() {
+            @Override
+            public void onResponse(Call<EditReimbursement> call, Response<EditReimbursement> response) {
+
+                if (response.body().isIsSucceed()) {
+                    editReimbursement= response.body().getReturnValue();
+
+                    txtDescriptionReimburseDetail.setText(editReimbursement.getDescription());
+                    txtAmountReimburseDetail.setText(editReimbursement.getAmount()+"");
+                    txtTransactionDateReimburseDetail.setText(dateFormat(editReimbursement.getTransactionDate()) );
+
+                    photo=editReimbursement.getAttachmentFile();
+
+                    reimbursementTypeID=editReimbursement.getReimbursementTypeID();
+
+                    if(photo != null) {
+                        byte[] decodedString = Base64.decode(photo, Base64.DEFAULT);
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                        imgReimburseDetail.setImageBitmap(bitmap);
+                    }
+
+                    initSpinner();
+
+                } else {
+
+                    Toast.makeText(ReimburseDetailActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<EditReimbursement> call, Throwable t) {
+                Toast.makeText(ReimburseDetailActivity.this, "Something went wrong...Please try again!", Toast.LENGTH_SHORT).show();
+                initSpinner();
+                progressDialog.dismiss();
+            }
+        });
+    }
+    public String dateFormat(String dateString)
+    {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+        DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date date1;
+        String result;
+        try{
+            date1=df.parse(dateString);
+            result=sdf.format(date1);
+        }catch (Exception e)
+        {
+            result="";
+        }
+        return result;
+    }
+
+    public String dateFormat2(String dateString)
+    {
+        DateFormat df = new SimpleDateFormat("dd MMMM yyyy");
+        DateFormat sdf = new SimpleDateFormat("dd/MM/yyy");
+
+        String dateResult="";
+
+        Date convertDate;
+        try{
+            convertDate =  sdf.parse(dateString.toString());
+            dateResult=df.format(convertDate);
+        }catch (Exception e)
+        {
+
+        }
+        return dateResult;
     }
 
     @Override
@@ -215,9 +400,20 @@ public class ReimburseDetailActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnTypeReimburseDetail.setAdapter(adapter);
 
+        if(editReimbursement!=null)
+        {
+            int counter=0;
+            for(com.example.android.starbridges.model.ReimbursementType.ReturnValue reimbursementType:lstReimbursementType)
+            {
+                if(reimbursementType.getValue()==editReimbursement.getReimbursementTypeID()) break;
+                counter++;
+            }
+            spnTypeReimburseDetail.setSelection(counter);
+        }
+
     }
 
-    public void saveReimbursement() {
+    public void saveSubmitReimbursement(String transactionStatus) {
 
         progressDialog = new ProgressDialog(ReimburseDetailActivity.this);
         progressDialog.setTitle("Loading");
@@ -263,7 +459,7 @@ public class ReimburseDetailActivity extends AppCompatActivity {
 
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),paramObject.toString());
         final APIInterfaceRest apiInterface = APIClient.saveLeaveCancelation(GlobalVar.getToken()).create(APIInterfaceRest.class);
-        Call<MessageReturn> call3 = apiInterface.saveDetailReimbursement(body, "Save");
+        Call<MessageReturn> call3 = apiInterface.saveSubmitDetailReimbursement(body, transactionStatus);
 
         call3.enqueue(new Callback<MessageReturn>() {
             @Override
@@ -290,6 +486,13 @@ public class ReimburseDetailActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    public String numberFormat(String number)
+    {
+        NumberFormat format = NumberFormat.getInstance(Locale.GERMAN);
+        String result = format.format(Integer.parseInt(number));
+        return result;
     }
 
 }

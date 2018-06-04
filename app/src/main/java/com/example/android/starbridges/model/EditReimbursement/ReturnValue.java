@@ -38,13 +38,13 @@ public class ReturnValue implements Serializable, Parcelable
     private int transactionStatusID;
     @SerializedName("DecisionNumber")
     @Expose
-    private String decisionNumber;
+    private Object decisionNumber;
     @SerializedName("AttachmentFile")
     @Expose
-    private Object attachmentFile;
+    private String attachmentFile;
     @SerializedName("AttachmentID")
     @Expose
-    private Object attachmentID;
+    private int attachmentID;
     @SerializedName("Message")
     @Expose
     private Object message;
@@ -57,11 +57,11 @@ public class ReturnValue implements Serializable, Parcelable
     @SerializedName("AccessibilityAttribute")
     @Expose
     private String accessibilityAttribute;
-    public final static Creator<ReturnValue> CREATOR = new Creator<ReturnValue>() {
+    public final static Parcelable.Creator<ReturnValue> CREATOR = new Creator<ReturnValue>() {
 
 
         @SuppressWarnings({
-            "unchecked"
+                "unchecked"
         })
         public ReturnValue createFromParcel(Parcel in) {
             return new ReturnValue(in);
@@ -72,8 +72,8 @@ public class ReturnValue implements Serializable, Parcelable
         }
 
     }
-    ;
-    private final static long serialVersionUID = -4725922101336877419L;
+            ;
+    private final static long serialVersionUID = -8660486444560975562L;
 
     protected ReturnValue(Parcel in) {
         this.iD = ((String) in.readValue((String.class.getClassLoader())));
@@ -84,24 +84,24 @@ public class ReturnValue implements Serializable, Parcelable
         this.isPreProcess = ((boolean) in.readValue((boolean.class.getClassLoader())));
         this.transactionDate = ((String) in.readValue((String.class.getClassLoader())));
         this.transactionStatusID = ((int) in.readValue((int.class.getClassLoader())));
-        this.decisionNumber = ((String) in.readValue((String.class.getClassLoader())));
-        this.attachmentFile = ((Object) in.readValue((Object.class.getClassLoader())));
-        this.attachmentID = ((Object) in.readValue((Object.class.getClassLoader())));
+        this.decisionNumber = ((Object) in.readValue((Object.class.getClassLoader())));
+        this.attachmentFile = ((String) in.readValue((String.class.getClassLoader())));
+        this.attachmentID = ((int) in.readValue((int.class.getClassLoader())));
         this.message = ((Object) in.readValue((Object.class.getClassLoader())));
         this.fullAccess = ((boolean) in.readValue((boolean.class.getClassLoader())));
-        in.readList(this.exclusionFields, (Object.class.getClassLoader()));
+        in.readList(this.exclusionFields, (java.lang.Object.class.getClassLoader()));
         this.accessibilityAttribute = ((String) in.readValue((String.class.getClassLoader())));
     }
 
     /**
      * No args constructor for use in serialization
-     * 
+     *
      */
     public ReturnValue() {
     }
 
     /**
-     * 
+     *
      * @param accessibilityAttribute
      * @param employeeID
      * @param reimbursementTypeID
@@ -118,7 +118,7 @@ public class ReturnValue implements Serializable, Parcelable
      * @param attachmentID
      * @param transactionStatusID
      */
-    public ReturnValue(String iD, String employeeID, String description, int amount, int reimbursementTypeID, boolean isPreProcess, String transactionDate, int transactionStatusID, String decisionNumber, Object attachmentFile, Object attachmentID, Object message, boolean fullAccess, List<Object> exclusionFields, String accessibilityAttribute) {
+    public ReturnValue(String iD, String employeeID, String description, int amount, int reimbursementTypeID, boolean isPreProcess, String transactionDate, int transactionStatusID, Object decisionNumber, String attachmentFile, int attachmentID, Object message, boolean fullAccess, List<Object> exclusionFields, String accessibilityAttribute) {
         super();
         this.iD = iD;
         this.employeeID = employeeID;
@@ -241,41 +241,41 @@ public class ReturnValue implements Serializable, Parcelable
         return this;
     }
 
-    public String getDecisionNumber() {
+    public Object getDecisionNumber() {
         return decisionNumber;
     }
 
-    public void setDecisionNumber(String decisionNumber) {
+    public void setDecisionNumber(Object decisionNumber) {
         this.decisionNumber = decisionNumber;
     }
 
-    public ReturnValue withDecisionNumber(String decisionNumber) {
+    public ReturnValue withDecisionNumber(Object decisionNumber) {
         this.decisionNumber = decisionNumber;
         return this;
     }
 
-    public Object getAttachmentFile() {
+    public String getAttachmentFile() {
         return attachmentFile;
     }
 
-    public void setAttachmentFile(Object attachmentFile) {
+    public void setAttachmentFile(String attachmentFile) {
         this.attachmentFile = attachmentFile;
     }
 
-    public ReturnValue withAttachmentFile(Object attachmentFile) {
+    public ReturnValue withAttachmentFile(String attachmentFile) {
         this.attachmentFile = attachmentFile;
         return this;
     }
 
-    public Object getAttachmentID() {
+    public int getAttachmentID() {
         return attachmentID;
     }
 
-    public void setAttachmentID(Object attachmentID) {
+    public void setAttachmentID(int attachmentID) {
         this.attachmentID = attachmentID;
     }
 
-    public ReturnValue withAttachmentID(Object attachmentID) {
+    public ReturnValue withAttachmentID(int attachmentID) {
         this.attachmentID = attachmentID;
         return this;
     }
