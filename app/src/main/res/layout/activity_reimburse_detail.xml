@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="10dp"
     tools:context=".activity.ReimburseDetailActivity">
 
     <TextView
@@ -29,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="numberSigned" />
 
     <TextView
         android:layout_width="match_parent"
@@ -81,7 +82,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="5dp"
-        android:background="@color/cardview_shadow_start_color" />
+        android:adjustViewBounds="true"
+        android:background="@color/cardview_shadow_start_color"
+        android:maxHeight="200dp" />
 
     <LinearLayout
         android:layout_width="match_parent"

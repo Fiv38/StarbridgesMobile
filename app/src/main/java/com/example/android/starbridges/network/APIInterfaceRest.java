@@ -16,6 +16,7 @@ import com.example.android.starbridges.model.ListOvertime.Overtime;
 import com.example.android.starbridges.model.OLocation.OLocation;
 import com.example.android.starbridges.model.OPost;
 import com.example.android.starbridges.model.MessageReturn.MessageReturn;
+import com.example.android.starbridges.model.PersonalOvertime.PersonalOvertime;
 import com.example.android.starbridges.model.Reimbursement.Reimbursement;
 import com.example.android.starbridges.model.ReimbursementType.ReimbursementType;
 import com.example.android.starbridges.model.balanceType.BalanceType;
@@ -312,4 +313,12 @@ public interface APIInterfaceRest {
 
     @POST("api/Reimbursement/EditDraft")
     Call<EditReimbursement> editDraftReimbursement(@Query("id") String id);
+
+    @GET("api/OvertimeRequest/GetPersonalOvertime")
+    Call<PersonalOvertime> getPersonalOvertime();
+
+    @POST("api/OvertimeRequest/SaveDetail")
+    Call<MessageReturn> saveDetailOvertime(@Body RequestBody body);
+
+
 }

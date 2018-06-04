@@ -15,8 +15,11 @@ import com.example.android.starbridges.model.ListOvertime.Overtime;
 import com.example.android.starbridges.network.APIClient;
 import com.example.android.starbridges.network.APIInterfaceRest;
 import com.example.android.starbridges.utility.GlobalVar;
+import com.example.android.starbridges.utility.SessionManagement;
 
 import org.json.JSONObject;
+
+import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +36,8 @@ public class OvertimeActivity extends AppCompatActivity {
     APIInterfaceRest apiInterface;
     ProgressDialog progressDialog;
 
+    SessionManagement session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +52,17 @@ public class OvertimeActivity extends AppCompatActivity {
 
         // set listadapter
         //listView.setAdapter(adapter);
+
+        session = new SessionManagement(getApplicationContext());
+        HashMap<String, String> user = session.getUserDetails();
+        String token_sp = user.get(SessionManagement.KEY_TOKEN);
+        String fullName_sp = user.get(SessionManagement.KEY_FULLNAME);
+        String nik_sp = user.get(SessionManagement.KEY_NIK);
+        String employee_sp=user.get(SessionManagement.KEY_EMPLOYEE_ID);
+        GlobalVar.setToken(token_sp);
+        GlobalVar.setFullname(fullName_sp);
+        GlobalVar.setNIK(nik_sp);
+        GlobalVar.setEmployeeId(employee_sp);
 
         getListLeaveRequest();
     }

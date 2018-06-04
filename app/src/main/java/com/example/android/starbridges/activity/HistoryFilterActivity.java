@@ -11,6 +11,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.text.SimpleDateFormat;
 
@@ -76,8 +77,24 @@ public class HistoryFilterActivity extends AppCompatActivity {
                 ShowHistory();
             }
         });
-        mFromDate.setText("05/01/2018");
-        mToDate.setText("05/15/2018");
+
+        Calendar aCalendar = Calendar.getInstance();
+        // add -1 month to current month
+        // set DATE to 1, so first date of previous month
+        aCalendar.set(Calendar.DATE, 1);
+
+        Date firstDateOfMonth = aCalendar.getTime();
+
+        // set actual maximum date of previous month
+        aCalendar.set(Calendar.DATE,     aCalendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        //read it
+        Date dateOfMonth = aCalendar.getTime();
+
+        SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy");
+
+
+        mFromDate.setText(sdf.format(firstDateOfMonth));
+        mToDate.setText(sdf.format(dateOfMonth));
     }
 
     private void ShowHistory() {

@@ -70,7 +70,7 @@ public class ListDraftLeaveRequestAdapter extends ArrayAdapter<ReturnValue> {
             @Override
             public void onClick(View v) {
                 if(((CompoundButton) v).isChecked())
-                    listID.add(draftLeaveRequestList.get(position).getID()); // add to cb array
+                    listID.add( draftLeaveRequestList.get(position).getID()); // add to cb array
                 else
                     listID.remove(draftLeaveRequestList.get(position).getID());
             }

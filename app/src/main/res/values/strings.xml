@@ -34,4 +34,5 @@
     <string name="txt_nik_correction">NIK</string>
     <string name="title_activity_draft">DraftActivity</string>
     <string name="date_picker">datePicker</string>
+    <string name="reimbursement">REIMBURSE</string>
 </resources>

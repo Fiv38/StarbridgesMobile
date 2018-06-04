@@ -16,7 +16,10 @@ import com.example.android.starbridges.R;
 import com.example.android.starbridges.activity.OvertimeDetailActivity;
 import com.example.android.starbridges.model.ListDraftOvertime.ReturnValue;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ListDraftOvertimeAdapter extends ArrayAdapter<ReturnValue> {
@@ -46,9 +49,9 @@ public class ListDraftOvertimeAdapter extends ArrayAdapter<ReturnValue> {
         Button btnEdit = (Button) rowView.findViewById(R.id.btnEditDraft);
         CheckBox checkBox = (CheckBox) rowView.findViewById(R.id.checkBox_overtime);
 
-        dateDraft.setText(draftOvertimeList.get(position).getOvertimeDate());
-        startDraft.setText(draftOvertimeList.get(position).getStart());
-        endDraft.setText(draftOvertimeList.get(position).getEnd());
+        dateDraft.setText(dateFormat(draftOvertimeList.get(position).getOvertimeDate()) );
+        startDraft.setText(draftOvertimeList.get(position).getStart().substring(11,16));
+        endDraft.setText(draftOvertimeList.get(position).getEnd().substring(11,16));
 
 
         btnEdit.setOnClickListener(new View.OnClickListener() {
@@ -70,5 +73,23 @@ public class ListDraftOvertimeAdapter extends ArrayAdapter<ReturnValue> {
         });
         // return rowView
         return rowView;
+    }
+
+    public String dateFormat(String dateTime)
+    {
+
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+        DateFormat sdf = new SimpleDateFormat("d MMMM yyyy");
+        String date = "";
+        Date convertDate;
+        try{
+            convertDate =  df.parse(dateTime);
+            date=sdf.format(convertDate);
+        }catch (Exception e)
+        {
+
+        }
+
+        return date;
     }
 }
