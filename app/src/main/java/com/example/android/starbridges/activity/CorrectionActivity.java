@@ -69,20 +69,24 @@ public class CorrectionActivity extends AppCompatActivity {
 
         Calendar aCalendar = Calendar.getInstance();
         // add -1 month to current month
-        aCalendar.add(Calendar.MONTH, -1);
+//        aCalendar.add(Calendar.MONTH, -1);
+        aCalendar.add(Calendar.MONTH, -aCalendar.getTime().getMonth());
         // set DATE to 1, so first date of previous month
         aCalendar.set(Calendar.DATE, 1);
 
-        Date firstDateOfPreviousMonth = aCalendar.getTime();
+        Date firstDateOfThisYear=aCalendar.getTime();
+//        Date firstDateOfPreviousMonth = aCalendar.getTime();
 
         // set actual maximum date of previous month
         aCalendar.set(Calendar.DATE,     aCalendar.getActualMaximum(Calendar.DAY_OF_MONTH));
         //read it
         Date lastDateOfPreviousMonth = aCalendar.getTime();
 
+        Date today= new Date();
+
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 
-        getAttendaceCorrectionLog(sdf.format(firstDateOfPreviousMonth), sdf.format(lastDateOfPreviousMonth));
+        getAttendaceCorrectionLog(sdf.format(firstDateOfThisYear), sdf.format(today));
     }
 
 

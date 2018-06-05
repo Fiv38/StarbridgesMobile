@@ -190,7 +190,7 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
                 String cancelFrom="";
                 String cancelTo="";
 
-                Date convertDateLeaveFrom, convertDateLeaveTo, convertDateCancelFrom, convertDateCancelTo;
+                Date convertDateLeaveFrom, convertDateLeaveTo, convertDateCancelFrom=new Date(), convertDateCancelTo=new Date();
                 try{
                     convertDateLeaveFrom =  sdf.parse(txtLeaveFromCancelDetail.getText().toString());
                     leaveFrom=df.format(convertDateLeaveFrom);
@@ -205,34 +205,38 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
 
                 }
 
-                AlertDialog.Builder alert = new AlertDialog.Builder(LeaveCancelationDetailActivity.this);
-                alert.setTitle("Request Confirmation");
-                alert.setMessage("Request Type\n" +
-                        "\t"+requestType+"" +
-                        "\nLeave\n" +
-                        "\t"+ leaveFrom +" - "+leaveTo+"" +
-                        "\nCancelation\n" +
-                        "\t"+cancelFrom+" - "+cancelTo+"" +
-                        "\nNotes\n" +
-                        "\t"+txtNotesCancelDetail.getText().toString()+"\n\n" +
-                        "This information will be saved in draft");
-                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        saveLeaveCollection();
-                    }
-                });
+                if(convertDateCancelFrom.compareTo(convertDateCancelTo)>0)
+                {
+                    Toast.makeText(LeaveCancelationDetailActivity.this, "Cancel To must bigger than Cancel From", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(LeaveCancelationDetailActivity.this);
+                    alert.setTitle("Request Confirmation");
+                    alert.setMessage("Request Type\n" +
+                            "\t"+requestType+"" +
+                            "\nLeave\n" +
+                            "\t"+ leaveFrom +" - "+leaveTo+"" +
+                            "\nCancelation\n" +
+                            "\t"+cancelFrom+" - "+cancelTo+"" +
+                            "\nNotes\n" +
+                            "\t"+txtNotesCancelDetail.getText().toString()+"\n\n" +
+                            "This information will be saved in draft");
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            saveLeaveCollection();
+                        }
+                    });
 
-                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-                    }
-                });
-                alert.show();
-
-
-
+                        }
+                    });
+                    alert.show();
+                }
             }
         });
 
@@ -246,7 +250,7 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
                 String cancelFrom="";
                 String cancelTo="";
 
-                Date convertDateLeaveFrom, convertDateLeaveTo, convertDateCancelFrom, convertDateCancelTo;
+                Date convertDateLeaveFrom, convertDateLeaveTo, convertDateCancelFrom=new Date(), convertDateCancelTo=new Date();
                 try{
                     convertDateLeaveFrom =  sdf.parse(txtLeaveFromCancelDetail.getText().toString());
                     leaveFrom=df.format(convertDateLeaveFrom);
@@ -261,31 +265,38 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
 
                 }
 
-                AlertDialog.Builder alert = new AlertDialog.Builder(LeaveCancelationDetailActivity.this);
-                alert.setTitle("Request Confirmation");
-                alert.setMessage("Request Type\n" +
-                        "\t"+requestType+"" +
-                        "\nLeave\n" +
-                        "\t"+ leaveFrom +" - "+leaveTo+"" +
-                        "\nCancelation\n" +
-                        "\t"+cancelFrom+" - "+cancelTo+"" +
-                        "\nNotes\n" +
-                        "\t"+txtNotesCancelDetail.getText().toString());
-                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        submitLeaveCollection();
-                    }
-                });
+                if(convertDateCancelFrom.compareTo(convertDateCancelTo)>0)
+                {
+                    Toast.makeText(LeaveCancelationDetailActivity.this, "Cancel To must bigger than Cancel From", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(LeaveCancelationDetailActivity.this);
+                    alert.setTitle("Request Confirmation");
+                    alert.setMessage("Request Type\n" +
+                            "\t"+requestType+"" +
+                            "\nLeave\n" +
+                            "\t"+ leaveFrom +" - "+leaveTo+"" +
+                            "\nCancelation\n" +
+                            "\t"+cancelFrom+" - "+cancelTo+"" +
+                            "\nNotes\n" +
+                            "\t"+txtNotesCancelDetail.getText().toString());
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            submitLeaveCollection();
+                        }
+                    });
 
-                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-                    }
-                });
-                alert.show();
+                        }
+                    });
+                    alert.show();
 
+                }
             }
         });
 
