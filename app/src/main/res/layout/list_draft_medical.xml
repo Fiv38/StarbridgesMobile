@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="10dp">
+
+    <!-- check box -->
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <!-- Policy -->
+
+    <TextView
+        android:id="@+id/policyLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:text="Policy : " />
+
+    <TextView
+        android:id="@+id/policyView"
+        android:layout_width="220dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_height="wrap_content"
+        android:text="Rawat Jalan Karyawan" />
+
+
+    <!-- Family -->
+    <TextView
+        android:id="@+id/familyLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:text="Family : " />
+
+    <TextView
+        android:id="@+id/familyView"
+        android:layout_width="220dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_height="wrap_content"
+        android:text="N/A" />
+
+
+    <!-- Claim -->
+    <TextView
+        android:id="@+id/claimLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:text="Claim : " />
+
+    <TextView
+        android:id="@+id/claimView"
+        android:layout_width="220dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_height="wrap_content"
+        android:text="3000000" />
+
+    <!-- Reimbursement -->
+    <TextView
+        android:id="@+id/reimbursementLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:text="Reimbursement : " />
+
+    <TextView
+        android:id="@+id/reimbursementView"
+        android:layout_width="220dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_height="wrap_content"
+        android:text="2400000" />
+
+    <Button
+        android:id="@+id/btnEditDraft"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:background="@android:color/holo_blue_light"
+        android:text="Edit"/>
+
+</LinearLayout>

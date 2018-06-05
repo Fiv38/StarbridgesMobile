@@ -115,7 +115,8 @@
         <activity android:name=".activity.LeaveCancelationActivity" />
         <activity android:name=".activity.LeaveCancelationDetailActivity" />
         <activity android:name=".activity.MedicalClaimActivity" />
-        <activity android:name=".activity.MedicalClaimDetailActivity"></activity>
+        <activity android:name=".activity.MedicalClaimDetailActivity" />
+        <activity android:name=".activity.ListDraftMedicalActivity"></activity>
     </application>
 
 </manifest>

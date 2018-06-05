@@ -37,6 +37,7 @@ public class SessionManagement {
     public static final String KEY_NIK = "nik";
     public static final String KEY_EMPLOYEE_ID = "employeeId";
 
+
     // Constructor
     public SessionManagement(Context context){
         this._context = context;

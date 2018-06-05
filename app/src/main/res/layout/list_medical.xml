@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="10dp">
+
+    <!-- Decision Number -->
+    <TextView
+        android:id="@+id/decisionNumberLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:text="Decision Number" />
+
+    <TextView
+        android:id="@+id/decisionNumberView"
+        android:layout_width="220dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/decisionNumberLbl"
+        android:layout_alignParentRight="true"
+        android:text="1 Jan 18" />
+
+    <!-- Policy -->
+    <TextView
+        android:id="@+id/policyLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:text="Policy : " />
+
+    <TextView
+        android:id="@+id/policyView"
+        android:layout_width="220dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_height="wrap_content"
+        android:text="Rawat Jalan Karyawan" />
+
+    <!-- Family -->
+    <TextView
+        android:id="@+id/familyLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:text="Family : " />
+
+    <TextView
+        android:id="@+id/familyView"
+        android:layout_width="220dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_height="wrap_content"
+        android:text="N/A" />
+
+    <!-- Remaining Balance -->
+    <TextView
+        android:id="@+id/remainingBalanceLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:text="Remaining Balance : " />
+
+    <TextView
+        android:id="@+id/remainingBalanceView"
+        android:layout_width="220dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_height="wrap_content"
+        android:text="9000000" />
+
+    <!-- Claim -->
+    <TextView
+        android:id="@+id/claimLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:text="Claim : " />
+
+    <TextView
+        android:id="@+id/claimView"
+        android:layout_width="220dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_height="wrap_content"
+        android:text="3000000" />
+
+    <!-- Reimbursement -->
+    <TextView
+        android:id="@+id/reimbursementLbl"
+        android:layout_width="150dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:text="Reimbursement : " />
+
+    <TextView
+        android:id="@+id/reimbursementView"
+        android:layout_width="220dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_height="wrap_content"
+        android:text="2400000" />
+
+
+
+</LinearLayout>

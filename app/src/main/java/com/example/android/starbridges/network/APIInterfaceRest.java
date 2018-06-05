@@ -14,7 +14,9 @@ import com.example.android.starbridges.model.OPost;
 import com.example.android.starbridges.model.MessageReturn.MessageReturn;
 import com.example.android.starbridges.model.balanceType.BalanceType;
 import com.example.android.starbridges.model.deleteleaverequest.DeleteLeaveRequest;
+import com.example.android.starbridges.model.deletemedical.DeleteMedical;
 import com.example.android.starbridges.model.editleaverequest.EditLeaveRequest;
+import com.example.android.starbridges.model.editmedical.EditMedical;
 import com.example.android.starbridges.model.getclaimpolicy.GetClaimPolicy;
 import com.example.android.starbridges.model.getemployeefamily.GetEmployeeFamily;
 import com.example.android.starbridges.model.getimage.GetImage;
@@ -23,6 +25,10 @@ import com.example.android.starbridges.model.getmedicalsupport.GetMedicalSupport
 import com.example.android.starbridges.model.history.History;
 import com.example.android.starbridges.model.leaverequest.LeaveRequest;
 import com.example.android.starbridges.model.listdraftleaverequest.ListDraftLeaveRequest;
+import com.example.android.starbridges.model.listdraftmedical.ListDraftMedical;
+import com.example.android.starbridges.model.listmedicalclaim.ListMedicalClaim;
+import com.example.android.starbridges.model.medicalrequestconfirmation.MedicalRequestConfirmation;
+import com.example.android.starbridges.model.medicalsavedetail.MedicalSaveDetail;
 import com.example.android.starbridges.model.requestconfirmation.RequestConfirmation;
 import com.example.android.starbridges.model.requesttype.RequestType;
 import com.example.android.starbridges.model.saveLeaveRequest.SaveLeaveRequest;
@@ -262,6 +268,10 @@ public interface APIInterfaceRest {
             @Field("ExclusionFields") List<String> ExclusionFields,
             @Field("AccessibilityAttribute") String AccessibilityAttribute);
 
+    //@FormUrlEncoded
+    @GET("api/MedicalClaim/ListMedicalClaim")
+    Call<ListMedicalClaim> getListMedicalClaim();
+
     @GET("api/MedicalClaim/GetMedicalSupport")
     Call<GetMedicalSupport> getMedicalSupport();
 
@@ -273,5 +283,76 @@ public interface APIInterfaceRest {
 
     @POST("api/MedicalClaim/GetClaimPolicy")
     Call<GetClaimPolicy> getClaimPolicy(@Query("MedicalPolicyID") String medicalPolicyID);
+
+    //@FormUrlEncoded
+    @GET("api/MedicalClaim/ListDraft")
+    Call<ListDraftMedical> getListDraftMedical();
+
+    //@FormUrlEncoded
+    @POST("api/MedicalClaim/EditDraft")
+    Call<EditMedical> editMedical(@Query("id") String id);
+
+    //@FormUrlEncoded
+    @POST("api/MedicalClaim/DeleteDraft")
+    Call<DeleteMedical> deleteMedical(@Body RequestBody body);
+
+    @FormUrlEncoded
+    @POST("api/MedicalClaim/DetailRequestConfirmation")
+    Call<MedicalRequestConfirmation> medicalRequestConfirmation(
+            @Query("transactionStatus") String transactionStatus,
+
+            @Field("EmployeeID") String EmployeeID,
+            @Field("ID") String ID,
+            @Field("MedicalSupportID") String MedicalSupportID,
+            @Field("MedicalSupportName") String MedicalSupportName,
+            @Field("MedicalPolicyID") String MedicalPolicyID,
+            @Field("PolicyTypeID") String PolicyTypeID,
+            @Field("MedicalPolicyName") String MedicalPolicyName,
+            @Field("RemainingBalance") String RemainingBalance,
+            @Field("EmployeeFamilyID") String EmployeeFamilyID,
+            @Field("EmployeeFamilyName") String EmployeeFamilyName,
+            @Field("MedicalClaimPolicyID") String MedicalClaimPolicyID,
+            @Field("TotalClaim") String TotalClaim,
+            @Field("TotalReimbursement") String TotalReimbursement,
+            @Field("AttachmentFile") String AttachmentFile,
+            @Field("AttachmentID") String AttachmentID,
+            @Field("ReceiptDate") String ReceiptDate,
+            @Field("DecisionNumber") String DecisionNumber,
+            @Field("TransactionStatusID") String TransactionStatusID,
+            @Field("ApprovedDate") String ApprovedDate,
+            @Field("Claim") String Claim,
+            @Field("TransactionStatusSaveOrSubmit") String TransactionStatusSaveOrSubmit,
+            @Field("FullAccess") String FullAccess,
+            @Field("ExclusionFields") List<String> ExclusionFields,
+            @Field("AccessibilityAttribute") String AccessibilityAttribute);
+
+    @FormUrlEncoded
+    @POST("api/MedicalClaim/SaveDetail")
+    Call<MedicalSaveDetail> medicalSaveDetail(
+            @Field("EmployeeID") String EmployeeID,
+            @Field("ID") String ID,
+            @Field("MedicalSupportID") String MedicalSupportID,
+            @Field("MedicalSupportName") String MedicalSupportName,
+            @Field("MedicalPolicyID") String MedicalPolicyID,
+            @Field("PolicyTypeID") String PolicyTypeID,
+            @Field("MedicalPolicyName") String MedicalPolicyName,
+            @Field("RemainingBalance") String RemainingBalance,
+            @Field("EmployeeFamilyID") String EmployeeFamilyID,
+            @Field("EmployeeFamilyName") String EmployeeFamilyName,
+            @Field("MedicalClaimPolicyID") String MedicalClaimPolicyID,
+            @Field("TotalClaim") String TotalClaim,
+            @Field("TotalReimbursement") String TotalReimbursement,
+            @Field("AttachmentFile") String AttachmentFile,
+            @Field("AttachmentID") String AttachmentID,
+            @Field("ReceiptDate") String ReceiptDate,
+            @Field("DecisionNumber") String DecisionNumber,
+            @Field("TransactionStatusID") String TransactionStatusID,
+            @Field("ApprovedDate") String ApprovedDate,
+            @Field("Claim") String Claim,
+            @Field("TransactionStatusSaveOrSubmit") String TransactionStatusSaveOrSubmit,
+            @Field("FullAccess") String FullAccess,
+            @Field("ExclusionFields") List<String> ExclusionFields,
+            @Field("AccessibilityAttribute") String AccessibilityAttribute);
+
 
 }
