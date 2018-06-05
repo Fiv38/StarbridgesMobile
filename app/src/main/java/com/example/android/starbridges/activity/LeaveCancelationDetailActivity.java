@@ -206,7 +206,7 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
                 }
 
                 AlertDialog.Builder alert = new AlertDialog.Builder(LeaveCancelationDetailActivity.this);
-                alert.setTitle("Cancel Confirmation");
+                alert.setTitle("Request Confirmation");
                 alert.setMessage("Request Type\n" +
                         "\t"+requestType+"" +
                         "\nLeave\n" +
@@ -262,7 +262,7 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
                 }
 
                 AlertDialog.Builder alert = new AlertDialog.Builder(LeaveCancelationDetailActivity.this);
-                alert.setTitle("Cancel Confirmation");
+                alert.setTitle("Request Confirmation");
                 alert.setMessage("Request Type\n" +
                         "\t"+requestType+"" +
                         "\nLeave\n" +
@@ -639,6 +639,10 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
 
     public void getData(String id)
     {
+        progressDialog = new ProgressDialog(LeaveCancelationDetailActivity.this);
+        progressDialog.setTitle("Loading");
+        progressDialog.show();
+
         apiInterface = APIClient.editDraftLeaveCancelation(GlobalVar.getToken()).create(APIInterfaceRest.class);
         apiInterface.editDraftLeaveCancelation(id).enqueue(new Callback<EditLeaveCancelation>() {
             @Override
@@ -667,10 +671,12 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
 
                     Toast.makeText(LeaveCancelationDetailActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }
+                progressDialog.dismiss();
             }
 
             @Override
             public void onFailure(Call<EditLeaveCancelation> call, Throwable t) {
+                progressDialog.dismiss();
                 Toast.makeText(LeaveCancelationDetailActivity.this, "Something went wrong...Please try again!", Toast.LENGTH_SHORT).show();
                 initSpinner();
             }

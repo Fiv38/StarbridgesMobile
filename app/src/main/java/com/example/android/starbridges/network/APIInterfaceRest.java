@@ -5,6 +5,7 @@ import com.example.android.starbridges.model.Authentication;
 import com.example.android.starbridges.model.CorrectionDetail.CorrectionDetail;
 import com.example.android.starbridges.model.DecisionNumber.DecisionNumber;
 import com.example.android.starbridges.model.EditLeaveCancelation.EditLeaveCancelation;
+import com.example.android.starbridges.model.EditOvertime.EditOvertime;
 import com.example.android.starbridges.model.EditReimbursement.EditReimbursement;
 import com.example.android.starbridges.model.ListAttendanceCorrection.ListAttendanceCorrection;
 import com.example.android.starbridges.model.ListDraftCorrection.ListDraftCorrection;
@@ -19,6 +20,7 @@ import com.example.android.starbridges.model.MessageReturn.MessageReturn;
 import com.example.android.starbridges.model.PersonalOvertime.PersonalOvertime;
 import com.example.android.starbridges.model.Reimbursement.Reimbursement;
 import com.example.android.starbridges.model.ReimbursementType.ReimbursementType;
+import com.example.android.starbridges.model.SubmitOvertime.SubmitOvertime;
 import com.example.android.starbridges.model.balanceType.BalanceType;
 import com.example.android.starbridges.model.deleteleaverequest.DeleteLeaveRequest;
 import com.example.android.starbridges.model.editleaverequest.EditLeaveRequest;
@@ -319,6 +321,15 @@ public interface APIInterfaceRest {
 
     @POST("api/OvertimeRequest/SaveDetail")
     Call<MessageReturn> saveDetailOvertime(@Body RequestBody body);
+
+    @POST("api/OvertimeRequest/EditDraft")
+    Call<EditOvertime> editOvertime(@Query("id") String id);
+
+    @POST("api/OvertimeRequest/DetailRequestConfirmation")
+    Call<SubmitOvertime> submitOvertime(@Body RequestBody body, @Query("transactionStatus") String transactionStatus);
+
+    @POST("api/OvertimeRequest/DeleteDraft")
+    Call<MessageReturn> deleteDraftOvertime(@Body RequestBody body);
 
 
 }

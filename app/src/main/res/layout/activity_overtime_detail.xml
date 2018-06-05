@@ -114,11 +114,11 @@
             android:text="Notes" />
 
         <EditText
+            android:id="@+id/txtNotesOvertimeDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:padding="10sp"
-             />
+            android:padding="10sp" />
 
         <!--<EditText-->
             <!--android:layout_width="match_parent"-->

@@ -58,6 +58,8 @@ public class ListDraftLeaveCancelationAdapter extends ArrayAdapter<ReturnValue> 
         txtAdditionalUnitDraftCancelation.setText(draftLeaveCancelationList.get(position).getAdditionalBalance()+"");
         txtNotesDraftCancelation.setText(draftLeaveCancelationList.get(position).getNotes());
 
+        chcDraftCancelation.setChecked(draftLeaveCancelationList.get(position).getSelected());
+
         btnEditDraftCanceltion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,9 +73,16 @@ public class ListDraftLeaveCancelationAdapter extends ArrayAdapter<ReturnValue> 
             @Override
             public void onClick(View v) {
                 if(((CompoundButton) v).isChecked())
+                {
                     listID.add(draftLeaveCancelationList.get(position).getID()); // add to cb array
+                    draftLeaveCancelationList.get(position).setSelected(true);
+                }
                 else
+                {
                     listID.remove(draftLeaveCancelationList.get(position).getID());
+                    draftLeaveCancelationList.get(position).setSelected(false);
+                }
+
             }
         });
 

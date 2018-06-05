@@ -13,6 +13,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.example.android.starbridges.R;
+import com.example.android.starbridges.activity.ListDraftOvertimeActivity;
 import com.example.android.starbridges.activity.OvertimeDetailActivity;
 import com.example.android.starbridges.model.ListDraftOvertime.ReturnValue;
 
@@ -26,6 +27,7 @@ public class ListDraftOvertimeAdapter extends ArrayAdapter<ReturnValue> {
     private final Context context;
     private final List<ReturnValue> draftOvertimeList;
     public static List<String> listID = new ArrayList<>();
+
     public ListDraftOvertimeAdapter(Context context, List<ReturnValue> draftOvertimeList){
         super(context, R.layout.list_draft_overtime, draftOvertimeList);
 
@@ -49,6 +51,8 @@ public class ListDraftOvertimeAdapter extends ArrayAdapter<ReturnValue> {
         Button btnEdit = (Button) rowView.findViewById(R.id.btnEditDraft);
         CheckBox checkBox = (CheckBox) rowView.findViewById(R.id.checkBox_overtime);
 
+        checkBox.setChecked(draftOvertimeList.get(position).getSelected());
+
         dateDraft.setText(dateFormat(draftOvertimeList.get(position).getOvertimeDate()) );
         startDraft.setText(draftOvertimeList.get(position).getStart().substring(11,16));
         endDraft.setText(draftOvertimeList.get(position).getEnd().substring(11,16));
@@ -58,7 +62,7 @@ public class ListDraftOvertimeAdapter extends ArrayAdapter<ReturnValue> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), OvertimeDetailActivity.class);
-                intent.putExtra("ID", draftOvertimeList.get(position).getID());
+                intent.putExtra("id", draftOvertimeList.get(position).getID());
                 context.startActivity(intent);
             }
         });
@@ -66,9 +70,16 @@ public class ListDraftOvertimeAdapter extends ArrayAdapter<ReturnValue> {
             @Override
             public void onClick(View v) {
                 if(((CompoundButton) v).isChecked())
+                {
                     listID.add(draftOvertimeList.get(position).getID()); // add to cb array
+                    draftOvertimeList.get(position).setSelected(true);
+                }
                 else
+                {
                     listID.remove(draftOvertimeList.get(position).getID());
+                    draftOvertimeList.get(position).setSelected(false);
+                }
+
             }
         });
         // return rowView

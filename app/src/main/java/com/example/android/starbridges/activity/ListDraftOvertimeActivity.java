@@ -10,12 +10,17 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.android.starbridges.R;
+import com.example.android.starbridges.adapter.ListDraftLeaveCancelationAdapter;
 import com.example.android.starbridges.adapter.ListDraftOvertimeAdapter;
 import com.example.android.starbridges.model.ListDraftOvertime.ListDraftOvertime;
+import com.example.android.starbridges.model.MessageReturn.MessageReturn;
 import com.example.android.starbridges.network.APIClient;
 import com.example.android.starbridges.network.APIInterfaceRest;
 import com.example.android.starbridges.utility.GlobalVar;
 
+import org.json.JSONObject;
+
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,7 +42,7 @@ public class ListDraftOvertimeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_draft_overtime);
 
-        getListDraftLeaveRequest();
+        getListDraftOvertime();
 
     }
 
@@ -65,55 +70,17 @@ public class ListDraftOvertimeActivity extends AppCompatActivity {
             String listid = ListDraftOvertimeAdapter.listID.toString();
 
             //Toast.makeText(ListDraftLeaveRequestActivity.this, "List : " + listid, Toast.LENGTH_SHORT).show();
-            //deleteCheckedDraft(listid);
+            deleteDraftOvertime(listid);
 
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
-//    public void deleteCheckedDraft(String listid){
-//        apiInterface = APIClient.deleteLeaveRequest(GlobalVar.getToken()).create(APIInterfaceRest.class);
-//        progressDialog = new ProgressDialog(ListDraftLeaveRequestActivity.this);
-//        progressDialog.setTitle("Loading");
-//        progressDialog.show();
-//
-//        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), listid);
-//        Call<DeleteLeaveRequest> call3 = apiInterface.deleteLeaveRequst(body);
-//        call3.enqueue(new Callback<DeleteLeaveRequest>() {
-//            @Override
-//            public void onResponse(Call<DeleteLeaveRequest> call, Response<DeleteLeaveRequest> response) {
-//                progressDialog.dismiss();
-//                DeleteLeaveRequest data = response.body();
-//
-//                if (data != null && data.getIsSucceed()) {
-//                    Toast.makeText(ListDraftLeaveRequestActivity.this, data.getMessage(), Toast.LENGTH_LONG).show();
-//
-//                    // delete list id on checkbox
-//                    ListDraftLeaveRequestAdapter.listID.clear();
-//
-//                    // call list draft
-//                    getListDraftLeaveRequest();
-//                } else {
-//                    try {
-//                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-//                        Toast.makeText(ListDraftLeaveRequestActivity.this, jObjError.toString(), Toast.LENGTH_LONG).show();
-//                    } catch (Exception e) {
-//                        Toast.makeText(ListDraftLeaveRequestActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<DeleteLeaveRequest> call, Throwable t) {
-//                progressDialog.dismiss();
-//                Toast.makeText(getApplicationContext(), "Maaf koneksi bermasalah", Toast.LENGTH_LONG).show();
-//                call.cancel();
-//            }
-//        });
-//    }
 
-    public void getListDraftLeaveRequest(){
+
+
+
+    public void getListDraftOvertime(){
         apiInterface = APIClient.getListDraftOvertime(GlobalVar.getToken()).create(APIInterfaceRest.class);
         progressDialog = new ProgressDialog(ListDraftOvertimeActivity.this);
         progressDialog.setTitle("Loading");
@@ -153,6 +120,48 @@ public class ListDraftOvertimeActivity extends AppCompatActivity {
             public void onFailure(Call<ListDraftOvertime> call, Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(), "Maaf koneksi bermasalah", Toast.LENGTH_LONG).show();
+                call.cancel();
+            }
+        });
+    }
+
+    public void deleteDraftOvertime(String listid){
+        apiInterface = APIClient.deleteDraftCancelation(GlobalVar.getToken()).create(APIInterfaceRest.class);
+        progressDialog = new ProgressDialog(ListDraftOvertimeActivity.this);
+        progressDialog.setTitle("Loading");
+        progressDialog.show();
+
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), listid);
+        Call<MessageReturn> call3 = apiInterface.deleteDraftOvertime(body);
+        call3.enqueue(new Callback<MessageReturn>() {
+            @Override
+            public void onResponse(Call<MessageReturn> call, Response<MessageReturn> response) {
+                progressDialog.dismiss();
+                MessageReturn data = response.body();
+
+                if (data != null && data.isIsSucceed()) {
+                    Toast.makeText(ListDraftOvertimeActivity.this, data.getMessage(), Toast.LENGTH_LONG).show();
+
+                    // delete list id on checkbox
+                    ListDraftLeaveCancelationAdapter.listID.clear();
+
+                    // call list draft
+                    getListDraftOvertime();
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        Toast.makeText(ListDraftOvertimeActivity.this, jObjError.toString(), Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        Toast.makeText(ListDraftOvertimeActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<MessageReturn> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(getApplicationContext(), "Something were wrong, please try again later", Toast.LENGTH_LONG).show();
                 call.cancel();
             }
         });

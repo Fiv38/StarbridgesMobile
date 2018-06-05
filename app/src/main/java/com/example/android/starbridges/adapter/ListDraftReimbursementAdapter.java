@@ -57,6 +57,8 @@ public class ListDraftReimbursementAdapter extends ArrayAdapter<ReturnValue> {
         txtTypeDraftReimburse.setText( draftLeaveReimbursement.get(position).getType());
         txtTransactionDateDraftReimburse.setText(dateFormat(draftLeaveReimbursement.get(position).getTransactionDate()) );
 
+        chcDraftReimburse.setChecked(draftLeaveReimbursement.get(position).getSelected());
+
         btnEditDraft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,9 +72,16 @@ public class ListDraftReimbursementAdapter extends ArrayAdapter<ReturnValue> {
             @Override
             public void onClick(View v) {
                 if(((CompoundButton) v).isChecked())
+                {
                     listID.add(draftLeaveReimbursement.get(position).getID()); // add to cb array
+                    draftLeaveReimbursement.get(position).setSelected(true);
+                }
                 else
+                {
                     listID.remove(draftLeaveReimbursement.get(position).getID());
+                    draftLeaveReimbursement.get(position).setSelected(false);
+                }
+
             }
         });
 
