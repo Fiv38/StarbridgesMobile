@@ -11,212 +11,227 @@
     >
 
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="164dp"
-        android:orientation="horizontal"
-        android:id="@+id/linearLayout5"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/profile_image"
-            android:layout_width="194dp"
-            android:layout_height="158dp"
-            android:src="@drawable/empty_avatar"
-            app:civ_border_color="@android:color/background_light"
-            app:civ_border_width="2dp" />
-
-        <TextView
-            android:id="@+id/lbl_username"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center|left"
-            android:text="Hello,"
-            android:textColor="@android:color/background_light"
-            android:textSize="24sp" />
+            android:orientation="vertical" >
 
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="32dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="232dp"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="40dp"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
-        app:layout_constraintEnd_toEndOf="parent">
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/profile_image"
+                    android:layout_width="194dp"
+                    android:layout_height="158dp"
+                    android:src="@drawable/empty_avatar"
+                    app:civ_border_color="@android:color/background_light"
+                    app:civ_border_width="2dp" />
 
-        <Button
-            android:id="@+id/btn_start_in_out"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:drawableTop="@drawable/ic_attendance"
-            android:onClick="showStartEndDate"
-            android:text="@string/start_end_date"
-            android:textColor="@android:color/background_light"/>
+                <TextView
+                    android:id="@+id/lbl_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:text="Hello,"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="24sp" />
 
-        <Button
-            android:id="@+id/btn_check_in_out"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:drawableTop="@drawable/ic_out_of_office"
-            android:text="@string/check_in_out"
-            android:onClick="showCheckInOut"
-            android:textColor="@android:color/background_light"/>
+            </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_history"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/histories"
-            android:drawableTop="@drawable/ic_histories"
-            android:background="@android:color/transparent"
-            android:onClick="showHistory"
-            android:textColor="@android:color/background_light"/>
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="232dp">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteX="0dp"
-        android:id="@+id/linearLayout2"
-        tools:layout_editor_absoluteY="288dp"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent">
+                <Button
+                    android:id="@+id/btn_start_in_out"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:drawableTop="@drawable/ic_attendance"
+                    android:onClick="showStartEndDate"
+                    android:text="@string/start_end_date"
+                    android:textColor="@android:color/background_light" />
 
-        <Button
-            android:id="@+id/btn_overtime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/overtime"
-            android:onClick="showOvertime"
-            android:drawableTop="@drawable/ic_overtime"
-            android:background="@android:color/transparent"
-            android:textColor="@android:color/background_light"/>
+                <Button
+                    android:id="@+id/btn_check_in_out"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:drawableTop="@drawable/ic_out_of_office"
+                    android:onClick="showCheckInOut"
+                    android:text="@string/check_in_out"
+                    android:textColor="@android:color/background_light" />
 
-        <Button
-            android:id="@+id/btn_correction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/correction"
-            android:drawableTop="@drawable/ic_correction"
-            android:background="@android:color/transparent"
-            android:onClick="showCorrection"
-            android:textColor="@android:color/background_light"
-            />
+                <Button
+                    android:id="@+id/btn_history"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:drawableTop="@drawable/ic_histories"
+                    android:onClick="showHistory"
+                    android:text="@string/histories"
+                    android:textColor="@android:color/background_light" />
+            </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_loan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/loan"
-            android:drawableTop="@drawable/ic_loan"
-            android:background="@android:color/transparent"
-            android:textColor="@android:color/background_light"/>
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="288dp">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteX="0dp"
-        android:id="@+id/linearLayout4"
-        tools:layout_editor_absoluteY="344dp"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintEnd_toEndOf="parent">
+                <Button
+                    android:id="@+id/btn_overtime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:drawableTop="@drawable/ic_overtime"
+                    android:onClick="showOvertime"
+                    android:text="@string/overtime"
+                    android:textColor="@android:color/background_light" />
 
-        <Button
-            android:id="@+id/btn_leave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/leave_request"
-            android:onClick="showLeaveRequest"
-            android:drawableTop="@drawable/ic_leave_req"
-            android:background="@android:color/transparent"
-            android:textColor="@android:color/background_light"/>
+                <Button
+                    android:id="@+id/btn_correction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:drawableTop="@drawable/ic_correction"
+                    android:onClick="showCorrection"
+                    android:text="@string/correction"
+                    android:textColor="@android:color/background_light" />
 
-        <Button
-            android:id="@+id/btn_cancelation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/leave_cancelation"
-            android:onClick="showCancelation"
-            android:drawableTop="@drawable/ic_leave_cancel"
-            android:background="@android:color/transparent"
-            android:textColor="@android:color/background_light"/>
+                <Button
+                    android:id="@+id/btn_loan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:drawableTop="@drawable/ic_loan"
+                    android:text="@string/loan"
+                    android:textColor="@android:color/background_light" />
+            </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_medical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/medical"
-            android:onClick="showMedicalClaim"
-            android:drawableTop="@drawable/ic_medical"
-            android:background="@android:color/transparent"
-            android:textColor="@android:color/background_light"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/linearLayout6"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="132dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="344dp">
 
-        <Button
-            android:id="@+id/btn_signout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:drawableTop="@drawable/common_full_open_on_phone"
-            android:text="@string/sign_out"
-            android:onClick="signOut"
-            android:textColor="@android:color/background_light" />
-        <Button
-            android:id="@+id/btn_prepare2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:textColor="@android:color/background_light" />
-        <Button
-            android:id="@+id/btn_prepare1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:textColor="@android:color/background_light" />
+                <Button
+                    android:id="@+id/btn_leave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:drawableTop="@drawable/ic_leave_req"
+                    android:onClick="showLeaveRequest"
+                    android:text="@string/leave_request"
+                    android:textColor="@android:color/background_light" />
 
-    </LinearLayout>
+                <Button
+                    android:id="@+id/btn_cancelation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:drawableTop="@drawable/ic_leave_cancel"
+                    android:onClick="showCancelation"
+                    android:text="@string/leave_cancelation"
+                    android:textColor="@android:color/background_light" />
+
+                <Button
+                    android:id="@+id/btn_medical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:drawableTop="@drawable/ic_medical"
+                    android:text="@string/medical"
+                    android:textColor="@android:color/background_light" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+                <Button
+                    android:id="@+id/btn_reimburse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:drawableTop="@drawable/common_full_open_on_phone"
+                    android:onClick="showReimburse"
+                    android:text="@string/reimbursement"
+                    android:textColor="@android:color/background_light" />
+
+                <Button
+                    android:id="@+id/btn_signout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:drawableTop="@drawable/common_full_open_on_phone"
+                    android:onClick="signOut"
+                    android:text="@string/sign_out"
+                    android:textColor="@android:color/background_light" />
+
+                <Button
+                    android:id="@+id/btn_prepare1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:textColor="@android:color/background_light" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

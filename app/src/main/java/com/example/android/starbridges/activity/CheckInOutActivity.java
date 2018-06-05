@@ -2,7 +2,10 @@ package com.example.android.starbridges.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -58,6 +61,16 @@ public class CheckInOutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_check_in_out);
 
         this.setTitle("Attendance");
+
+        /*
+        if(detectFakeGPS()==true)
+        {
+            Toast.makeText(CheckInOutActivity.this, "You are using fake gps", Toast.LENGTH_LONG).show();
+        }
+        else
+            Toast.makeText(CheckInOutActivity.this, "GPS true", Toast.LENGTH_LONG).show();
+            */
+
         long date = System.currentTimeMillis();
         mDateView = (TextView) findViewById(R.id.txt_date);
         mTimeView = (TextClock) findViewById(R.id.txt_time);
@@ -86,7 +99,19 @@ public class CheckInOutActivity extends AppCompatActivity {
 
     }
 
+    public boolean detectFakeGPS()
+    {
+//        if (Settings.Secure.getString(getContentResolver(),
+//                Settings.Secure.ALLOW_MOCK_LOCATION).equals("0"))
+//            return false;
+//        else return true;
+        Location location = new Location(LocationManager.NETWORK_PROVIDER);
 
+        String debug =LocationManager.NETWORK_PROVIDER;
+        if(location.isFromMockProvider()) return true;
+        else return false;
+
+    }
 
     @Override
     protected void onResume() {

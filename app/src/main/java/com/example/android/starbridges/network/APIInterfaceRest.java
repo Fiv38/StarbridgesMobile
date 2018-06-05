@@ -4,14 +4,23 @@ import com.example.android.starbridges.model.Attendence;
 import com.example.android.starbridges.model.Authentication;
 import com.example.android.starbridges.model.CorrectionDetail.CorrectionDetail;
 import com.example.android.starbridges.model.DecisionNumber.DecisionNumber;
+import com.example.android.starbridges.model.EditLeaveCancelation.EditLeaveCancelation;
+import com.example.android.starbridges.model.EditOvertime.EditOvertime;
+import com.example.android.starbridges.model.EditReimbursement.EditReimbursement;
 import com.example.android.starbridges.model.ListAttendanceCorrection.ListAttendanceCorrection;
 import com.example.android.starbridges.model.ListDraftCorrection.ListDraftCorrection;
+import com.example.android.starbridges.model.ListDraftLeaveCancelation.ListDraftLeaveCancelation;
 import com.example.android.starbridges.model.ListDraftOvertime.ListDraftOvertime;
+import com.example.android.starbridges.model.ListDraftReimbursement.ListDraftReimbursement;
 import com.example.android.starbridges.model.ListLeaveCancelation.ListLeaveCancelation;
 import com.example.android.starbridges.model.ListOvertime.Overtime;
 import com.example.android.starbridges.model.OLocation.OLocation;
 import com.example.android.starbridges.model.OPost;
 import com.example.android.starbridges.model.MessageReturn.MessageReturn;
+import com.example.android.starbridges.model.PersonalOvertime.PersonalOvertime;
+import com.example.android.starbridges.model.Reimbursement.Reimbursement;
+import com.example.android.starbridges.model.ReimbursementType.ReimbursementType;
+import com.example.android.starbridges.model.SubmitOvertime.SubmitOvertime;
 import com.example.android.starbridges.model.balanceType.BalanceType;
 import com.example.android.starbridges.model.deleteleaverequest.DeleteLeaveRequest;
 import com.example.android.starbridges.model.deletemedical.DeleteMedical;
@@ -268,10 +277,6 @@ public interface APIInterfaceRest {
             @Field("ExclusionFields") List<String> ExclusionFields,
             @Field("AccessibilityAttribute") String AccessibilityAttribute);
 
-    //@FormUrlEncoded
-    @GET("api/MedicalClaim/ListMedicalClaim")
-    Call<ListMedicalClaim> getListMedicalClaim();
-
     @GET("api/MedicalClaim/GetMedicalSupport")
     Call<GetMedicalSupport> getMedicalSupport();
 
@@ -283,6 +288,10 @@ public interface APIInterfaceRest {
 
     @POST("api/MedicalClaim/GetClaimPolicy")
     Call<GetClaimPolicy> getClaimPolicy(@Query("MedicalPolicyID") String medicalPolicyID);
+
+    //@FormUrlEncoded
+    @GET("api/MedicalClaim/ListMedicalClaim")
+    Call<ListMedicalClaim> getListMedicalClaim();
 
     //@FormUrlEncoded
     @GET("api/MedicalClaim/ListDraft")
@@ -355,4 +364,51 @@ public interface APIInterfaceRest {
             @Field("AccessibilityAttribute") String AccessibilityAttribute);
 
 
+    @GET("api/Reimbursement/ListReimbursement")
+    Call<Reimbursement> getReimburse();
+
+    @GET("api/Reimbursement/GetReimbursementType")
+    Call<ReimbursementType> getReimbursementType();
+
+    @GET("api/Reimbursement/ListDraft")
+    Call<ListDraftReimbursement> getListDraftReimbursement();
+
+    @POST("api/Reimbursement/SaveDetail")
+    Call<MessageReturn> saveSubmitDetailReimbursement(@Body RequestBody body, @Query("transactionStatus") String transactionStatus);
+
+    @POST("api/Reimbursement/DeleteDraft")
+    Call<MessageReturn> deleteDraftReimbursement(@Body RequestBody body);
+
+    @POST("api/Reimbursement/EditDraft")
+    Call<EditReimbursement> editDraftReimbursement(@Query("id") String id);
+
+    @GET("api/OvertimeRequest/GetPersonalOvertime")
+    Call<PersonalOvertime> getPersonalOvertime();
+
+    @POST("api/OvertimeRequest/SaveDetail")
+    Call<MessageReturn> saveDetailOvertime(@Body RequestBody body);
+
+    @POST("api/OvertimeRequest/EditDraft")
+    Call<EditOvertime> editOvertime(@Query("id") String id);
+
+    @POST("api/OvertimeRequest/DetailRequestConfirmation")
+    Call<SubmitOvertime> submitOvertime(@Body RequestBody body, @Query("transactionStatus") String transactionStatus);
+
+    @POST("api/OvertimeRequest/DeleteDraft")
+    Call<MessageReturn> deleteDraftOvertime(@Body RequestBody body);
+
+    @GET("api/LeaveCancelation/ListDraft")
+    Call<ListDraftLeaveCancelation> getListDraftLeaveCancelation();
+
+    @POST("api/LeaveCancelation/SaveDetail")
+    Call<MessageReturn> saveLeaveCancelation(@Body RequestBody body, @Query("TransactionStatusSaveOrSubmit") String transactionStatusSaveOrSubmit);
+
+    @POST("api/LeaveCancelation/EditDraft")
+    Call<EditLeaveCancelation> editDraftLeaveCancelation(@Query("id") String id);
+
+    @POST("api/LeaveCancelation/DeleteDraft")
+    Call<MessageReturn> deleteDraftCancelation(@Body RequestBody body);
+
+    @POST("api/LeaveCancelation/DetailRequestConfirmation")
+    Call<MessageReturn> detailRequestConfirmationCancelation(@Body RequestBody body, @Query("TransactionStatusSaveOrSubmit") String transactionStatusSaveOrSubmit);
 }

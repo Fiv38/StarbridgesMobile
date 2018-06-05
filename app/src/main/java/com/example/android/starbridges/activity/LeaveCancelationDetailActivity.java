@@ -1,27 +1,43 @@
 package com.example.android.starbridges.activity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.android.starbridges.R;
 import com.example.android.starbridges.model.DecisionNumber.DecisionNumber;
 import com.example.android.starbridges.model.DecisionNumber.ReturnValue;
+import com.example.android.starbridges.model.EditLeaveCancelation.EditLeaveCancelation;
+import com.example.android.starbridges.model.MessageReturn.MessageReturn;
 import com.example.android.starbridges.network.APIClient;
 import com.example.android.starbridges.network.APIInterfaceRest;
 import com.example.android.starbridges.utility.DatePickerFragment;
 import com.example.android.starbridges.utility.GlobalVar;
 import com.example.android.starbridges.utility.SessionManagement;
 
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,11 +46,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LeaveCancelationDetailActivity extends AppCompatActivity {
+
+    private static final int PICK_IMAGE = 999;
 
     Spinner spnDecisionNumberCancelDetail;
     EditText txtLeaveFromCancelDetail, txtLeaveToCancelDetail, txtCancelFromCancelDetail, txtCancelToCancelDetail, txtNotesCancelDetail;
@@ -42,10 +61,19 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
     List<ReturnValue> listDecisionNumber;
     APIInterfaceRest apiInterface;
     SessionManagement session;
+    ImageView imgCancelDetail, imgCancelFromDateCancelDetail, imgCancelFromTimeCancelDetail, imgCancelToDateCancelDetail, imgCancelToTimeCancelDetail;
+    ProgressDialog progressDialog;
 
+
+    String requestType, leaveRequestTransactionID, accessibilityAttribute, photo, id;
+    List<Object> exclusiveFields;
+    boolean fullAccess;
+    int leaveRequestRuleID;
     final Calendar myCalendar = Calendar.getInstance();
 
     Date dateLeaveFrom, dateLeaveTo;
+
+    com.example.android.starbridges.model.EditLeaveCancelation.ReturnValue editLeaveCancelation;
 
     DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
         @Override
@@ -60,6 +88,7 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leave_cancelation_detail);
+        setTitle("Leave Cancelation");
 
         session = new SessionManagement(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
@@ -73,6 +102,15 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
         GlobalVar.setEmployeeId(employee_sp);
 
 
+        final Intent intent = getIntent();
+        id = intent.getStringExtra("id");
+        if(id!=null)
+        {
+            getData(id);
+        }
+        else
+            initSpinner();
+
         spnDecisionNumberCancelDetail=(Spinner)findViewById(R.id.spnDecisionNumberCancelDetail);
         txtLeaveFromCancelDetail=(EditText)findViewById(R.id.txtLeaveFromCancelDetail);
         txtLeaveToCancelDetail=(EditText)findViewById(R.id.txtLeaveToCancelDetail);
@@ -85,12 +123,13 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
         btnSaveCancelDetail=(Button)findViewById(R.id.btnSaveCancelDetail);
         btnCancelCancelDetail=(Button)findViewById(R.id.btnCancelCancelDetail);
 
+        imgCancelDetail=(ImageView)findViewById(R.id.imgCancelDetail);
+        imgCancelFromDateCancelDetail=(ImageView)findViewById(R.id.imgCancelFromDateCancelDetail);
+        imgCancelToDateCancelDetail=(ImageView)findViewById(R.id.imgCancelToDateCancelDetail);
 
-
-        txtCancelFromCancelDetail.setOnClickListener(new View.OnClickListener() {
+        imgCancelFromDateCancelDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 int daysBetween=getTimeRemaining(dateLeaveFrom, dateLeaveTo);
 
                 DialogFragment newFragment = new DatePickerFragment(txtCancelFromCancelDetail, dateLeaveFrom, daysBetween);
@@ -98,7 +137,29 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
             }
         });
 
-        txtCancelToCancelDetail.setOnClickListener(new View.OnClickListener() {
+        btnCancelCancelDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(LeaveCancelationDetailActivity.this);
+                alert.setTitle("This information will not be saved");
+                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                });
+
+                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                alert.show();
+            }
+        });
+
+        imgCancelToDateCancelDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int daysBetween=getTimeRemaining(dateLeaveFrom, dateLeaveTo);
@@ -108,7 +169,136 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
             }
         });
 
-        initSpinner();
+        btnUploadCancelDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+                //dispatchTakePictureIntent();
+            }
+        });
+
+        btnSaveCancelDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DateFormat df = new SimpleDateFormat("dd MMMM yyyy");
+                DateFormat sdf = new SimpleDateFormat("dd/MM/yyy");
+                String leaveFrom = "";
+                String leaveTo = "";
+                String cancelFrom="";
+                String cancelTo="";
+
+                Date convertDateLeaveFrom, convertDateLeaveTo, convertDateCancelFrom=new Date(), convertDateCancelTo=new Date();
+                try{
+                    convertDateLeaveFrom =  sdf.parse(txtLeaveFromCancelDetail.getText().toString());
+                    leaveFrom=df.format(convertDateLeaveFrom);
+                    convertDateLeaveTo =  sdf.parse(txtLeaveToCancelDetail.getText().toString());
+                    leaveTo=df.format(convertDateLeaveTo);
+                    convertDateCancelFrom=sdf.parse(txtCancelFromCancelDetail.getText().toString());
+                    cancelFrom=df.format(convertDateCancelFrom);
+                    convertDateCancelTo=sdf.parse(txtCancelToCancelDetail.getText().toString());
+                    cancelTo=df.format(convertDateCancelTo);
+                }catch (Exception e)
+                {
+
+                }
+
+                if(convertDateCancelFrom.compareTo(convertDateCancelTo)>0)
+                {
+                    Toast.makeText(LeaveCancelationDetailActivity.this, "Cancel To must bigger than Cancel From", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(LeaveCancelationDetailActivity.this);
+                    alert.setTitle("Request Confirmation");
+                    alert.setMessage("Request Type\n" +
+                            "\t"+requestType+"" +
+                            "\nLeave\n" +
+                            "\t"+ leaveFrom +" - "+leaveTo+"" +
+                            "\nCancelation\n" +
+                            "\t"+cancelFrom+" - "+cancelTo+"" +
+                            "\nNotes\n" +
+                            "\t"+txtNotesCancelDetail.getText().toString()+"\n\n" +
+                            "This information will be saved in draft");
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            saveLeaveCollection();
+                        }
+                    });
+
+                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                    alert.show();
+                }
+            }
+        });
+
+        btnSubmitCancelDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DateFormat df = new SimpleDateFormat("dd MMMM yyyy");
+                DateFormat sdf = new SimpleDateFormat("dd/MM/yyy");
+                String leaveFrom = "";
+                String leaveTo = "";
+                String cancelFrom="";
+                String cancelTo="";
+
+                Date convertDateLeaveFrom, convertDateLeaveTo, convertDateCancelFrom=new Date(), convertDateCancelTo=new Date();
+                try{
+                    convertDateLeaveFrom =  sdf.parse(txtLeaveFromCancelDetail.getText().toString());
+                    leaveFrom=df.format(convertDateLeaveFrom);
+                    convertDateLeaveTo =  sdf.parse(txtLeaveToCancelDetail.getText().toString());
+                    leaveTo=df.format(convertDateLeaveTo);
+                    convertDateCancelFrom=sdf.parse(txtCancelFromCancelDetail.getText().toString());
+                    cancelFrom=df.format(convertDateCancelFrom);
+                    convertDateCancelTo=sdf.parse(txtCancelToCancelDetail.getText().toString());
+                    cancelTo=df.format(convertDateCancelTo);
+                }catch (Exception e)
+                {
+
+                }
+
+                if(convertDateCancelFrom.compareTo(convertDateCancelTo)>0)
+                {
+                    Toast.makeText(LeaveCancelationDetailActivity.this, "Cancel To must bigger than Cancel From", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(LeaveCancelationDetailActivity.this);
+                    alert.setTitle("Request Confirmation");
+                    alert.setMessage("Request Type\n" +
+                            "\t"+requestType+"" +
+                            "\nLeave\n" +
+                            "\t"+ leaveFrom +" - "+leaveTo+"" +
+                            "\nCancelation\n" +
+                            "\t"+cancelFrom+" - "+cancelTo+"" +
+                            "\nNotes\n" +
+                            "\t"+txtNotesCancelDetail.getText().toString());
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            submitLeaveCollection();
+                        }
+                    });
+
+                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                    alert.show();
+
+                }
+            }
+        });
 
         spnDecisionNumberCancelDetail.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -116,8 +306,16 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
                 //final com.example.android.starbridges.model.OLocation.ReturnValue returnValue1=(com.example.android.starbridges.model.OLocation.ReturnValue)spnLocationCDraftDetails.getItemAtPosition(i);
                 ReturnValue decisionNumber=(ReturnValue)spnDecisionNumberCancelDetail.getItemAtPosition(i);
 
+                requestType=decisionNumber.getRequestType();
+                leaveRequestRuleID=decisionNumber.getLeaveRequestRuleID();
+                leaveRequestTransactionID=decisionNumber.getID();
+                fullAccess=decisionNumber.isFullAccess();
+                exclusiveFields=decisionNumber.getExclusionFields();
+                accessibilityAttribute=decisionNumber.getAccessibilityAttribute();
+
                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
                 DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
                 String leaveFrom = "";
                 String leaveTo = "";
                 try{
@@ -203,17 +401,314 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, listDecisionNumber);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnDecisionNumberCancelDetail.setAdapter(adapter);
+
+        if(editLeaveCancelation!=null)
+        {
+            int counter=0;
+            for(ReturnValue decisionNumber:listDecisionNumber)
+            {
+                if(editLeaveCancelation.getLeaveRequestTransactionID().equals(decisionNumber.getID())) break;
+                counter++;
+            }
+            spnDecisionNumberCancelDetail.setSelection(counter);
+        }
     }
 
     public void processDatePickerResult(int year, int month, int day, EditText editText){
-        String month_String = Integer.toString(month+1);
-        String day_string = Integer.toString(day);
+        String month_String;
+        if(Integer.toString(month+1).length()<2) month_String = "0" + Integer.toString(month+1);
+        else month_String = Integer.toString(month+1);
+
+        String day_string;
+        if(Integer.toString(day).length()<2) day_string = "0" + Integer.toString(day);
+        else day_string =  Integer.toString(day);
         String year_string = Integer.toString(year);
         String dateMessage = (day_string+"/"+month_String+"/"+year_string);
-        Toast.makeText(this,getString(R.string.date_picker)+dateMessage,Toast.LENGTH_LONG).show();
         editText.setText(dateMessage);
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            try {
+                final Uri imageUri = data.getData();
+                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+
+                imgCancelDetail.setImageBitmap(selectedImage);
+                photo = encodeImage(selectedImage);
+            }catch (FileNotFoundException e){
+                e.printStackTrace();
+                Toast.makeText(LeaveCancelationDetailActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
+            }
+        }else{
+            Toast.makeText(LeaveCancelationDetailActivity.this, "You haven't picked Image",Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private String encodeImage(Bitmap bm) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String encImage = Base64.encodeToString(b, Base64.DEFAULT);
+
+        return encImage;
+    }
+
+    public void saveLeaveCollection() {
+
+        progressDialog = new ProgressDialog(LeaveCancelationDetailActivity.this);
+        progressDialog.setTitle("Loading");
+        progressDialog.show();
+
+        JSONObject paramObject= new JSONObject();
+        try {
+
+            paramObject.put("ID","");
+            paramObject.put("EmployeeID",GlobalVar.getEmployeeId());
+            paramObject.put("RequestorID",3);
+            paramObject.put("LeaveRequestDecisionNumber",spnDecisionNumberCancelDetail.getSelectedItem().toString());
+            paramObject.put("LeaveRequestTransactionID",leaveRequestTransactionID);
+            paramObject.put("LeaveRequestType",requestType);
+            paramObject.put("LeaveRequestRuleID", leaveRequestRuleID);
+
+
+            Date date=new Date();
+            String patternSQLServer = "yyyy-MM-dd'T'HH:mm:ss.sssssZ";
+            SimpleDateFormat formatTimeSQLServer = new SimpleDateFormat(patternSQLServer);
+
+            paramObject.put("RequestDate",formatTimeSQLServer.format(date).toString());
+
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+            DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String leaveFrom = "";
+            String leaveTo = "";
+            String cancelFrom="";
+            String cancelTo="";
+            Date convertDateLeaveFrom, convertDateLeaveTo, convertDateCancelFrom, convertDateCancelTo;
+            try{
+                convertDateLeaveFrom =  sdf.parse(txtLeaveFromCancelDetail.getText().toString());
+                leaveFrom=df.format(convertDateLeaveFrom);
+                convertDateLeaveTo =  sdf.parse(txtLeaveToCancelDetail.getText().toString());
+                leaveTo=df.format(convertDateLeaveTo);
+                convertDateCancelFrom=sdf.parse(txtCancelFromCancelDetail.getText().toString());
+                cancelFrom=df.format(convertDateCancelFrom);
+                convertDateCancelTo=sdf.parse(txtCancelToCancelDetail.getText().toString());
+                cancelTo=df.format(convertDateCancelTo);
+            }catch (Exception e)
+            {
+
+            }
+            paramObject.put("LeaveFrom",leaveFrom);
+            paramObject.put("LeaveTo",leaveTo);
+            paramObject.put("CancelFrom",cancelFrom);
+            paramObject.put("CancelTo", cancelTo);
+            paramObject.put("Notes", txtNotesCancelDetail.getText().toString());
+            paramObject.put("AttachmentFile", photo);
+            paramObject.put("AttachmentID", null);
+            paramObject.put("AdditionalBalance", null);
+            paramObject.put("TransactionStatusID", null);
+            paramObject.put("TotalUnitReduce", 17);
+            paramObject.put("TransactionStatusSaveOrSubmit", "Save");
+            paramObject.put("FullAccess", fullAccess);
+            paramObject.put("ExclusiveFields", exclusiveFields);
+            paramObject.put("AccessibilityAttribute", accessibilityAttribute);
+
+        }catch (Exception e)
+        {
+
+        }
+
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),paramObject.toString());
+        final APIInterfaceRest apiInterface = APIClient.saveLeaveCancelation(GlobalVar.getToken()).create(APIInterfaceRest.class);
+        Call<MessageReturn> call3 = apiInterface.saveLeaveCancelation(body, "Save");
+
+        call3.enqueue(new Callback<MessageReturn>() {
+            @Override
+            public void onResponse(Call<MessageReturn> call, Response<MessageReturn> response) {
+                progressDialog.dismiss();
+                MessageReturn data = response.body();
+                if (data != null) {
+                    Toast.makeText(getApplicationContext(), data.getMessage(), Toast.LENGTH_LONG).show();
+
+                }
+                else
+                    Toast.makeText(getApplicationContext(), "no data", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(LeaveCancelationDetailActivity.this, LeaveCancelationActivity.class);
+                startActivity(intent);
+
+            }
+
+            @Override
+            public void onFailure(Call<MessageReturn> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(getApplicationContext(), "Something went wrong...Please try again!", Toast.LENGTH_LONG).show();
+                call.cancel();
+            }
+        });
+
+
+    }
+
+    public void submitLeaveCollection() {
+
+        progressDialog = new ProgressDialog(LeaveCancelationDetailActivity.this);
+        progressDialog.setTitle("Loading");
+        progressDialog.show();
+
+        JSONObject paramObject= new JSONObject();
+        try {
+
+            paramObject.put("ID","");
+            paramObject.put("EmployeeID",GlobalVar.getEmployeeId());
+            paramObject.put("RequestorID",3);
+            paramObject.put("LeaveRequestDecisionNumber",spnDecisionNumberCancelDetail.getSelectedItem().toString());
+            paramObject.put("LeaveRequestTransactionID",leaveRequestTransactionID);
+            paramObject.put("LeaveRequestType",requestType);
+            paramObject.put("LeaveRequestRuleID", leaveRequestRuleID);
+
+
+            Date date=new Date();
+            String patternSQLServer = "yyyy-MM-dd'T'HH:mm:ss.sssssZ";
+            SimpleDateFormat formatTimeSQLServer = new SimpleDateFormat(patternSQLServer);
+
+            paramObject.put("RequestDate",formatTimeSQLServer.format(date).toString());
+
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+            DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String leaveFrom = "";
+            String leaveTo = "";
+            String cancelFrom="";
+            String cancelTo="";
+            Date convertDateLeaveFrom, convertDateLeaveTo, convertDateCancelFrom, convertDateCancelTo;
+            try{
+                convertDateLeaveFrom =  sdf.parse(txtLeaveFromCancelDetail.getText().toString());
+                leaveFrom=df.format(convertDateLeaveFrom);
+                convertDateLeaveTo =  sdf.parse(txtLeaveToCancelDetail.getText().toString());
+                leaveTo=df.format(convertDateLeaveTo);
+                convertDateCancelFrom=sdf.parse(txtCancelFromCancelDetail.getText().toString());
+                cancelFrom=df.format(convertDateCancelFrom);
+                convertDateCancelTo=sdf.parse(txtCancelToCancelDetail.getText().toString());
+                cancelTo=df.format(convertDateCancelTo);
+            }catch (Exception e)
+            {
+
+            }
+            paramObject.put("LeaveFrom",leaveFrom);
+            paramObject.put("LeaveTo",leaveTo);
+            paramObject.put("CancelFrom",cancelFrom);
+            paramObject.put("CancelTo", cancelTo);
+            paramObject.put("Notes", txtNotesCancelDetail.getText().toString());
+            paramObject.put("AttachmentFile", photo);
+            paramObject.put("AttachmentID", null);
+            paramObject.put("AdditionalBalance", null);
+            paramObject.put("TransactionStatusID", null);
+            paramObject.put("TotalUnitReduce", 17);
+            paramObject.put("TransactionStatusSaveOrSubmit", "Submit");
+            paramObject.put("FullAccess", fullAccess);
+            paramObject.put("ExclusiveFields", exclusiveFields);
+            paramObject.put("AccessibilityAttribute", accessibilityAttribute);
+
+        }catch (Exception e)
+        {
+
+        }
+
+       RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),paramObject.toString());
+        final APIInterfaceRest apiInterface = APIClient.detailRequestConfirmationCancelation(GlobalVar.getToken()).create(APIInterfaceRest.class);
+        Call<MessageReturn> call3 = apiInterface.detailRequestConfirmationCancelation(body, "Submit");
+
+        call3.enqueue(new Callback<MessageReturn>() {
+            @Override
+            public void onResponse(Call<MessageReturn> call, Response<MessageReturn> response) {
+                progressDialog.dismiss();
+                MessageReturn data = response.body();
+                if (data != null) {
+                    Toast.makeText(getApplicationContext(), data.getMessage(), Toast.LENGTH_LONG).show();
+
+                }
+                else
+                    Toast.makeText(getApplicationContext(), "no data", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(LeaveCancelationDetailActivity.this, LeaveCancelationActivity.class);
+                startActivity(intent);
+
+            }
+
+            @Override
+            public void onFailure(Call<MessageReturn> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(getApplicationContext(), "Something went wrong...Please try again!", Toast.LENGTH_LONG).show();
+                call.cancel();
+            }
+        });
+
+
+    }
+
+    public void getData(String id)
+    {
+        progressDialog = new ProgressDialog(LeaveCancelationDetailActivity.this);
+        progressDialog.setTitle("Loading");
+        progressDialog.show();
+
+        apiInterface = APIClient.editDraftLeaveCancelation(GlobalVar.getToken()).create(APIInterfaceRest.class);
+        apiInterface.editDraftLeaveCancelation(id).enqueue(new Callback<EditLeaveCancelation>() {
+            @Override
+            public void onResponse(Call<EditLeaveCancelation> call, Response<EditLeaveCancelation> response) {
+
+                if (response.body().isIsSucceed()) {
+                    editLeaveCancelation= response.body().getReturnValue();
+
+                    txtLeaveFromCancelDetail.setText(dateFormat(editLeaveCancelation.getLeaveFrom())  );
+                    txtLeaveToCancelDetail.setText(dateFormat(editLeaveCancelation.getLeaveTo())  );
+                    txtCancelFromCancelDetail.setText(dateFormat(editLeaveCancelation.getCancelFrom())  );
+                    txtCancelToCancelDetail.setText(dateFormat(editLeaveCancelation.getCancelTo())  );
+                    txtNotesCancelDetail.setText(editLeaveCancelation.getNotes());
+                    photo=editLeaveCancelation.getAttachmentFile();
+
+                    if(photo != null) {
+                        byte[] decodedString = Base64.decode(photo, Base64.DEFAULT);
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                        imgCancelDetail.setImageBitmap(bitmap);
+                    }
+
+                    editLeaveCancelation=response.body().getReturnValue();
+                    initSpinner();
+
+                } else {
+
+                    Toast.makeText(LeaveCancelationDetailActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<EditLeaveCancelation> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(LeaveCancelationDetailActivity.this, "Something went wrong...Please try again!", Toast.LENGTH_SHORT).show();
+                initSpinner();
+            }
+        });
+    }
+
+    public String dateFormat(String dateString)
+    {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+        DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date date1;
+        String result;
+        try{
+            date1=df.parse(dateString);
+            result=sdf.format(date1);
+        }catch (Exception e)
+        {
+            result="";
+        }
+        return result;
+    }
 
 }
 

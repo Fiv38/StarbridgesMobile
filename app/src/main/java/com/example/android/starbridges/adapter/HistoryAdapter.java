@@ -10,6 +10,9 @@ import android.widget.TextView;
 import com.example.android.starbridges.R;
 import com.example.android.starbridges.model.history.ReturnValue;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,7 +47,20 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
         holder.txtName.setText(value.getLocationName());
         holder.txtLogType.setText(value.getLogType());
-        holder.txtTime.setText(value.getLogTime());
+
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+        DateFormat sdf = new SimpleDateFormat("d MMMM yyyy");
+        String date = "";
+        Date convertDate;
+        try{
+            convertDate =  df.parse(value.getLogDate());
+            date=sdf.format(convertDate);
+        }catch (Exception e)
+        {
+
+        }
+
+        holder.txtTime.setText(date + " - "+ value.getLogTime().substring(11,16));
 
 
     }

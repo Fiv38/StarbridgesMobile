@@ -16,7 +16,7 @@
     <string name="header_login">TIME AND ATTENDANCE</string>
     <string name="sub_header_login">APPLICATION</string>
     <string name="action_register">Register</string>
-    <string name="start_end_date">Check/in\nOut</string>
+    <string name="start_end_date">Attendance</string>
     <string name="check_in_out">Out Of\nOffice</string>
     <string name="histories">Histories</string>
     <string name="medical">Medical</string>
@@ -34,4 +34,5 @@
     <string name="txt_nik_correction">NIK</string>
     <string name="title_activity_draft">DraftActivity</string>
     <string name="date_picker">datePicker</string>
+    <string name="reimbursement">REIMBURSE</string>
 </resources>

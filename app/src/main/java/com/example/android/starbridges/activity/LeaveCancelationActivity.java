@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.android.starbridges.R;
 import com.example.android.starbridges.adapter.CorrectionAdapter;
 import com.example.android.starbridges.adapter.LeaveCancelationAdapter;
+import com.example.android.starbridges.model.ListDraftLeaveCancelation.ListDraftLeaveCancelation;
 import com.example.android.starbridges.model.ListLeaveCancelation.ListLeaveCancelation;
 import com.example.android.starbridges.model.ListLeaveCancelation.ListLeaveCancelation;
 import com.example.android.starbridges.network.APIClient;
@@ -39,6 +40,7 @@ public class LeaveCancelationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leave_cancelation);
+        setTitle("Leave Cancelation");
 
         lstCancelation=(ListView)findViewById(R.id.lstCancelation);
 
@@ -77,8 +79,8 @@ public class LeaveCancelationActivity extends AppCompatActivity {
 
         // save to draft
         if(id == R.id.action_item_two ){
-//            Intent intent = new Intent(LeaveRequestActivity.this, ListDraftLeaveRequestActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(LeaveCancelationActivity.this, ListDraftLeaveCancelationActivity.class);
+            startActivity(intent);
             return true;
         }
 

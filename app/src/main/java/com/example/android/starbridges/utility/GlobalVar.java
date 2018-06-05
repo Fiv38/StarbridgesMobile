@@ -4,7 +4,7 @@ package com.example.android.starbridges.utility;
  * Created by user on 5/14/2018.
  */
 
-public class GlobalVar {
+public class  GlobalVar {
     public static String getToken() {
         return token;
     }

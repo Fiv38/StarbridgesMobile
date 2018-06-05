@@ -672,6 +672,151 @@ public class APIClient {
         return retrofit;
     }
 
+    public static Retrofit getListDraftLeaveCancelation(final String token){
+        Interceptor interceptor = new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request newRequest = chain
+                        .request()
+                        .newBuilder()
+                        .addHeader("Authorization", token)
+                        .build();
+                return chain.proceed(newRequest);
+            }
+        };
+
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+//        GsonBuilder gb = new GsonBuilder();
+//        gb.registerTypeAdapter(String.class, new StringConverter());
+//        gb.serializeNulls();
+//        Gson gson = gb.create();
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(APIClient.BASE_URL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        return retrofit;
+    }
+
+    public static Retrofit saveLeaveCancelation(final String token){
+        Interceptor interceptor = new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request newRequest = chain
+                        .request()
+                        .newBuilder()
+                        .addHeader("Authorization", token)
+                        .build();
+                return chain.proceed(newRequest);
+            }
+        };
+
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+//        GsonBuilder gb = new GsonBuilder();
+//        gb.registerTypeAdapter(String.class, new StringConverter());
+//        gb.serializeNulls();
+//        Gson gson = gb.create();
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(APIClient.BASE_URL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        return retrofit;
+    }
+
+    public static Retrofit editDraftLeaveCancelation(final String token){
+        Interceptor interceptor = new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request newRequest = chain
+                        .request()
+                        .newBuilder()
+                        .addHeader("Authorization", token)
+                        .build();
+                return chain.proceed(newRequest);
+            }
+        };
+
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+//        GsonBuilder gb = new GsonBuilder();
+//        gb.registerTypeAdapter(String.class, new StringConverter());
+//        gb.serializeNulls();
+//        Gson gson = gb.create();
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(APIClient.BASE_URL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        return retrofit;
+    }
+
+    public static Retrofit deleteDraftCancelation(final String token){
+        Interceptor interceptor = new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request newRequest = chain
+                        .request()
+                        .newBuilder()
+                        .addHeader("Authorization", token)
+                        .build();
+                return chain.proceed(newRequest);
+            }
+        };
+
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+//        GsonBuilder gb = new GsonBuilder();
+//        gb.registerTypeAdapter(String.class, new StringConverter());
+//        gb.serializeNulls();
+//        Gson gson = gb.create();
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(APIClient.BASE_URL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        return retrofit;
+    }
+
+    public static Retrofit detailRequestConfirmationCancelation(final String token){
+        Interceptor interceptor = new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request newRequest = chain
+                        .request()
+                        .newBuilder()
+                        .addHeader("Authorization", token)
+                        .build();
+                return chain.proceed(newRequest);
+            }
+        };
+
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+//        GsonBuilder gb = new GsonBuilder();
+//        gb.registerTypeAdapter(String.class, new StringConverter());
+//        gb.serializeNulls();
+//        Gson gson = gb.create();
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(APIClient.BASE_URL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        return retrofit;
+    }
+
     public static Retrofit getClient(final String token){
         Interceptor interceptor = new Interceptor() {
             @Override
@@ -695,6 +840,94 @@ public class APIClient {
 
         return retrofit;
     }
+
+    public static Retrofit getReimburse(final String token){
+        Interceptor interceptor = new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request newRequest = chain
+                        .request()
+                        .newBuilder()
+                        .addHeader("Authorization", token)
+                        .build();
+                return chain.proceed(newRequest);
+            }
+        };
+
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+//        GsonBuilder gb = new GsonBuilder();
+//        gb.registerTypeAdapter(String.class, new StringConverter());
+//        gb.serializeNulls();
+//        Gson gson = gb.create();
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(APIClient.BASE_URL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        return retrofit;
+    }
+
+    public static Retrofit getReimbursementType(final String token){
+        Interceptor interceptor = new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request newRequest = chain
+                        .request()
+                        .newBuilder()
+                        .addHeader("Authorization", token)
+                        .build();
+                return chain.proceed(newRequest);
+            }
+        };
+
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+//        GsonBuilder gb = new GsonBuilder();
+//        gb.registerTypeAdapter(String.class, new StringConverter());
+//        gb.serializeNulls();
+//        Gson gson = gb.create();
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(APIClient.BASE_URL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        return retrofit;
+    }
+
+    public static Retrofit getListDraftReimbursement(final String token){
+        Interceptor interceptor = new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request newRequest = chain
+                        .request()
+                        .newBuilder()
+                        .addHeader("Authorization", token)
+                        .build();
+                return chain.proceed(newRequest);
+            }
+        };
+
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+//        GsonBuilder gb = new GsonBuilder();
+//        gb.registerTypeAdapter(String.class, new StringConverter());
+//        gb.serializeNulls();
+//        Gson gson = gb.create();
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(APIClient.BASE_URL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        return retrofit;
+    }
+
 }
 
 
