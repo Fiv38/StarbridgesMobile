@@ -10,7 +10,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class Authentication implements Serializable, Parcelable
 {
-
     @SerializedName("access_token")
     @Expose
     private String accessToken;
@@ -35,17 +34,23 @@ public class Authentication implements Serializable, Parcelable
     @SerializedName("employeeID")
     @Expose
     private String employeeID;
+    @SerializedName("LocationID")
+    @Expose
+    private String locationID;
+    @SerializedName("Location")
+    @Expose
+    private String location;
     @SerializedName(".issued")
     @Expose
     private String issued;
     @SerializedName(".expires")
     @Expose
     private String expires;
-    public final static Creator<Authentication> CREATOR = new Creator<Authentication>() {
+    public final static Parcelable.Creator<Authentication> CREATOR = new Creator<Authentication>() {
 
 
         @SuppressWarnings({
-            "unchecked"
+                "unchecked"
         })
         public Authentication createFromParcel(Parcel in) {
             return new Authentication(in);
@@ -56,8 +61,8 @@ public class Authentication implements Serializable, Parcelable
         }
 
     }
-    ;
-    private final static long serialVersionUID = -2448867980350548784L;
+            ;
+    private final static long serialVersionUID = 8113504589424797755L;
 
     protected Authentication(Parcel in) {
         this.accessToken = ((String) in.readValue((String.class.getClassLoader())));
@@ -68,30 +73,35 @@ public class Authentication implements Serializable, Parcelable
         this.fullName = ((String) in.readValue((String.class.getClassLoader())));
         this.nik = ((String) in.readValue((String.class.getClassLoader())));
         this.employeeID = ((String) in.readValue((String.class.getClassLoader())));
+        this.locationID = ((String) in.readValue((String.class.getClassLoader())));
+        this.location = ((String) in.readValue((String.class.getClassLoader())));
         this.issued = ((String) in.readValue((String.class.getClassLoader())));
         this.expires = ((String) in.readValue((String.class.getClassLoader())));
     }
 
     /**
      * No args constructor for use in serialization
-     * 
+     *
      */
     public Authentication() {
     }
 
     /**
-     * 
+     *
+     * @param employeeID
      * @param expires
      * @param tokenType
      * @param accessToken
+     * @param location
      * @param expiresIn
      * @param issued
+     * @param locationID
      * @param fullName
      * @param nik
      * @param loginName
      * @param asClientId
      */
-    public Authentication(String accessToken, String tokenType, int expiresIn, String asClientId, String loginName, String fullName, String nik, String employeeID, String issued, String expires) {
+    public Authentication(String accessToken, String tokenType, int expiresIn, String asClientId, String loginName, String fullName, String nik, String employeeID, String locationID, String location, String issued, String expires) {
         super();
         this.accessToken = accessToken;
         this.tokenType = tokenType;
@@ -101,6 +111,8 @@ public class Authentication implements Serializable, Parcelable
         this.fullName = fullName;
         this.nik = nik;
         this.employeeID = employeeID;
+        this.locationID = locationID;
+        this.location = location;
         this.issued = issued;
         this.expires = expires;
     }
@@ -208,6 +220,33 @@ public class Authentication implements Serializable, Parcelable
         this.employeeID = employeeID;
         return this;
     }
+
+    public String getLocationID() {
+        return locationID;
+    }
+
+    public void setLocationID(String locationID) {
+        this.locationID = locationID;
+    }
+
+    public Authentication withLocationID(String locationID) {
+        this.locationID = locationID;
+        return this;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public Authentication withLocation(String location) {
+        this.location = location;
+        return this;
+    }
+
     public String getIssued() {
         return issued;
     }
@@ -242,6 +281,9 @@ public class Authentication implements Serializable, Parcelable
         dest.writeValue(loginName);
         dest.writeValue(fullName);
         dest.writeValue(nik);
+        dest.writeValue(employeeID);
+        dest.writeValue(locationID);
+        dest.writeValue(location);
         dest.writeValue(issued);
         dest.writeValue(expires);
     }
@@ -249,5 +291,4 @@ public class Authentication implements Serializable, Parcelable
     public int describeContents() {
         return  0;
     }
-
 }

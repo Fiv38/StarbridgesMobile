@@ -58,6 +58,8 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
     String sLocationName;
     String sLocationAddress;
     int timeZoneOffset;
+    final List<ReturnValue> listReturnValue= new ArrayList<>();
+    SessionManagement session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,7 +197,6 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
 
     public void initSpinnerLoc() {
 
-        final List<ReturnValue> listReturnValue= new ArrayList<>();
         ReturnValue returnValue=new ReturnValue();
         returnValue.setID("");
         returnValue.setAddress("");
@@ -226,6 +227,16 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
 
                     Toast.makeText(StartEndDayDetailActivity.this, "Failed to get data", Toast.LENGTH_SHORT).show();
                 }
+
+                HashMap<String, String> user = session.getUserDetails();
+                String location=user.get(SessionManagement.KEY_LOCATION);
+                String locationId=user.get(SessionManagement.KEY_LOCATION_ID);
+
+                if(locationId!="" || locationId != null)
+                {
+                    setupSpinner(locationId);
+                }
+                else mLocationNameView.setText(location);
             }
 
 
@@ -236,6 +247,20 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void setupSpinner(String locationId)
+    {
+        int counter=0;
+        for(com.example.android.starbridges.model.OLocation.ReturnValue decisionNumber:listReturnValue)
+        {
+            if(locationId.equals(decisionNumber.getID())) break;
+            counter++;
+        }
+        if(counter >= listReturnValue.size())
+            counter=0;
+
+        mLocationSpinner.setSelection(counter);
     }
 
     public void callInputAbsence() {

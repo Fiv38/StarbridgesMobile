@@ -317,14 +317,18 @@ public class LoginActivity extends AppCompatActivity {
                         String expires_sp = response.body().getExpires();
                         String nik_sp = response.body().getNik();
                         String employee_id= response.body().getEmployeeID();
+                        String locationId=response.body().getLocationID();
+                        String locationName=response.body().getLocation();
                         //String employee_id_sp =
 
-                        session.createLoginSession(loginName_sp,fullName_sp,token_sp,expires_sp, nik_sp, employee_id);
+                        session.createLoginSession(loginName_sp,fullName_sp,token_sp,expires_sp, nik_sp, employee_id, locationName, locationId);
 
                         GlobalVar.setToken(token_sp);
                         GlobalVar.setLoginName(loginName_sp);
                         GlobalVar.setFullname(fullName_sp);
                         GlobalVar.setNIK(nik_sp);
+                        GlobalVar.setLocation(locationName);
+                        GlobalVar.setLocationId(locationId);
 
                         startActivity(home);
                         finish();

@@ -55,5 +55,25 @@ public class  GlobalVar {
 
     public static String employeeId;
 
+    public static String getLocation() {
+        return location;
+    }
+
+    public static void setLocation(String location) {
+        GlobalVar.location = location;
+    }
+
+    public static String location;
+
+    public static String getLocationId() {
+        return locationId;
+    }
+
+    public static void setLocationId(String locationId) {
+        GlobalVar.locationId = locationId;
+    }
+
+    public static String locationId;
+
 
 }

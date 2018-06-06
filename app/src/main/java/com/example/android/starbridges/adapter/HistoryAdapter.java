@@ -1,6 +1,8 @@
 package com.example.android.starbridges.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by user on 5/15/2018.
@@ -84,6 +87,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
         @Override
         public void onClick(View v) {
+
 //
 //            Intent i = new Intent(context, UpdateActivity.class);
 //            i.putExtra("npm", npm);

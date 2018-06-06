@@ -83,6 +83,9 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
     int timeZoneOffset;
     String sLocationName;
     String sLocationAddress;
+    List<ReturnValue> LocItems;
+    final List<ReturnValue> listReturnValue= new ArrayList<>();
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -103,9 +106,13 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
         String token_sp = user.get(SessionManagement.KEY_TOKEN);
         String loginName = user.get(SessionManagement.KEY_LOGINNAME);
         String employeeId = user.get(SessionManagement.KEY_EMPLOYEE_ID);
+
+
+
         GlobalVar.setToken(token_sp);
         GlobalVar.setLoginName(loginName);
         GlobalVar.setEmployeeId(employeeId);
+
 
 
         client = LocationServices.getFusedLocationProviderClient(this);
@@ -337,7 +344,6 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
 
     }
     public void initSpinnerLoc() {
-        final List<ReturnValue> listReturnValue= new ArrayList<>();
         ReturnValue returnValue=new ReturnValue();
         returnValue.setID("");
         returnValue.setAddress("");
@@ -353,7 +359,7 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
 
                 if (response.isSuccessful()) {
 
-                    List<ReturnValue> LocItems = response.body().getReturnValue();
+                    LocItems = response.body().getReturnValue();
                     if (LocItems!= null){
                         listReturnValue.addAll(LocItems);
                     } else{
@@ -368,6 +374,17 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
 
                     Toast.makeText(CheckInOutDetailActivity.this, "Failed to get data", Toast.LENGTH_SHORT).show();
                 }
+
+                HashMap<String, String> user = session.getUserDetails();
+                String location=user.get(SessionManagement.KEY_LOCATION);
+                String locationId=user.get(SessionManagement.KEY_LOCATION_ID);
+
+                if(locationId!="" || locationId != null)
+                {
+                    setupSpinner(locationId);
+                }
+                else mLocationNameView.setText(location);
+
             }
 
             @Override
@@ -377,6 +394,20 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void setupSpinner(String locationId)
+    {
+        int counter=0;
+        for(com.example.android.starbridges.model.OLocation.ReturnValue decisionNumber:listReturnValue)
+        {
+            if(locationId.equals(decisionNumber.getID())) break;
+            counter++;
+        }
+        if(counter >= LocItems.size())
+            counter=0;
+
+        mLocationSpinner.setSelection(counter);
     }
 
     public void callInputAbsence() {

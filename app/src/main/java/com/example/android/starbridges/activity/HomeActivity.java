@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -55,6 +56,8 @@ public class HomeActivity extends AppCompatActivity {
         String loginName_sp = user.get(SessionManagement.KEY_LOGINNAME);
         String fullName_sp = user.get(SessionManagement.KEY_FULLNAME);
         String tokenExpiredDate=user.get(SessionManagement.KEY_EXPIRES);
+        String location=user.get(SessionManagement.KEY_LOCATION);
+        String locationId=user.get(SessionManagement.KEY_LOCATION_ID);
 
                 //Thu, 31 May 2018 01:34:37 GMT
         DateFormat df = new SimpleDateFormat("EEE, dd MMMM yyyy kk:mm:ss z", Locale.ENGLISH);
@@ -76,6 +79,8 @@ public class HomeActivity extends AppCompatActivity {
         GlobalVar.setToken(token_sp);
         GlobalVar.setLoginName(loginName_sp);
         GlobalVar.setFullname(fullName_sp);
+        GlobalVar.setLocation(location);
+        GlobalVar.setLocationId(locationId);
         username = GlobalVar.loginName();
         fullname = GlobalVar.getFullname();
         mUsernameView=(TextView) findViewById(R.id.lbl_username);
