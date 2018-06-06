@@ -38,7 +38,7 @@ public class ReturnValue implements Serializable, Parcelable
     private Integer remainingBalance;
     @SerializedName("EmployeeFamilyID")
     @Expose
-    private Object employeeFamilyID;
+    private Integer employeeFamilyID;
     @SerializedName("EmployeeFamilyName")
     @Expose
     private String employeeFamilyName;
@@ -111,7 +111,7 @@ public class ReturnValue implements Serializable, Parcelable
         this.policyTypeID = ((String) in.readValue((String.class.getClassLoader())));
         this.medicalPolicyName = ((String) in.readValue((String.class.getClassLoader())));
         this.remainingBalance = ((Integer) in.readValue((Integer.class.getClassLoader())));
-        this.employeeFamilyID = ((Object) in.readValue((Object.class.getClassLoader())));
+        this.employeeFamilyID = ((Integer) in.readValue((Integer.class.getClassLoader())));
         this.employeeFamilyName = ((String) in.readValue((String.class.getClassLoader())));
         this.medicalClaimPolicyID = ((Integer) in.readValue((Integer.class.getClassLoader())));
         this.totalClaim = ((Integer) in.readValue((Integer.class.getClassLoader())));
@@ -163,7 +163,7 @@ public class ReturnValue implements Serializable, Parcelable
      * @param transactionStatusID
      * @param employeeFamilyID
      */
-    public ReturnValue(String employeeID, String iD, Integer medicalSupportID, String medicalSupportName, Integer medicalPolicyID, String policyTypeID, String medicalPolicyName, Integer remainingBalance, Object employeeFamilyID, String employeeFamilyName, Integer medicalClaimPolicyID, Integer totalClaim, Integer totalReimbursement, String attachmentFile, Integer attachmentID, String receiptDate, String decisionNumber, Integer transactionStatusID, Object approvedDate, Integer claim, String transactionStatusSaveOrSubmit, Boolean fullAccess, List<String> exclusionFields, String accessibilityAttribute) {
+    public ReturnValue(String employeeID, String iD, Integer medicalSupportID, String medicalSupportName, Integer medicalPolicyID, String policyTypeID, String medicalPolicyName, Integer remainingBalance, Integer employeeFamilyID, String employeeFamilyName, Integer medicalClaimPolicyID, Integer totalClaim, Integer totalReimbursement, String attachmentFile, Integer attachmentID, String receiptDate, String decisionNumber, Integer transactionStatusID, Object approvedDate, Integer claim, String transactionStatusSaveOrSubmit, Boolean fullAccess, List<String> exclusionFields, String accessibilityAttribute) {
         super();
         this.employeeID = employeeID;
         this.iD = iD;
@@ -255,11 +255,11 @@ public class ReturnValue implements Serializable, Parcelable
         this.remainingBalance = remainingBalance;
     }
 
-    public Object getEmployeeFamilyID() {
+    public Integer getEmployeeFamilyID() {
         return employeeFamilyID;
     }
 
-    public void setEmployeeFamilyID(Object employeeFamilyID) {
+    public void setEmployeeFamilyID(Integer employeeFamilyID) {
         this.employeeFamilyID = employeeFamilyID;
     }
 

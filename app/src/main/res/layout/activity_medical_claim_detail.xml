@@ -7,115 +7,127 @@
     android:orientation="vertical"
     tools:context="com.example.android.starbridges.activity.MedicalClaimDetailActivity">
 
-    <TextView
-        android:id="@+id/medicalGradeView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:layout_margin="10dp"
-        android:text="Medical Grade" />
-
-    <!-- Policy -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Policy"/>
-
-    <Spinner
-        android:id="@+id/policyTypeSpinner"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    </Spinner>
-
-    <!-- Family -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Family"/>
-
-    <Spinner
-        android:id="@+id/familyTypeSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </Spinner>
-
-    <!-- Claim policy -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Claim Policy"/>
-
-    <Spinner
-        android:id="@+id/claimPolicyTypeSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </Spinner>
-
-    <!-- Claim -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Claim"/>
-
-    <EditText
-        android:id="@+id/claimEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"/>
-
-    <Button
-        android:id="@+id/btnUpload"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/holo_blue_light"
-        android:text="Upload Attachment"
-        android:textColor="@android:color/white" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="5dp"
-        android:background="@color/cardview_shadow_start_color" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom"
-        android:gravity="bottom"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/medicalGradeView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_margin="10dp"
+            android:text="Medical Grade" />
+
+        <!-- Policy -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Policy"/>
+
+        <Spinner
+            android:id="@+id/policyTypeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </Spinner>
+
+        <!-- Family -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Family"/>
+
+        <Spinner
+            android:id="@+id/familyTypeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </Spinner>
+
+        <!-- Claim policy -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Claim Policy"/>
+
+        <Spinner
+            android:id="@+id/claimPolicyTypeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </Spinner>
+
+        <!-- Claim -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Claim"/>
+
+        <EditText
+            android:id="@+id/claimEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
 
         <Button
-            android:id="@+id/btnSubmit"
-            android:layout_width="wrap_content"
+            android:id="@+id/btnUpload"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="1dp"
-            android:textColor="@android:color/white"
             android:background="@android:color/holo_blue_light"
-            android:text="Submit"/>
+            android:text="Upload Attachment"
+            android:textColor="@android:color/white" />
 
-        <Button
-            android:id="@+id/btnSave"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="1dp"
-            android:textColor="@android:color/white"
-            android:background="@android:color/holo_blue_light"
-            android:text="Save"/>
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:maxHeight="200dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/cardview_shadow_start_color" />
 
-        <Button
-            android:id="@+id/btnCancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="1dp"
-            android:textColor="@android:color/white"
-            android:background="@android:color/holo_blue_light"
-            android:text="Cancel"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:gravity="bottom"
+            android:orientation="horizontal">
 
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:textColor="@android:color/white"
+                android:background="@android:color/holo_blue_light"
+                android:text="Submit"/>
+
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:textColor="@android:color/white"
+                android:background="@android:color/holo_blue_light"
+                android:text="Save"/>
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:textColor="@android:color/white"
+                android:background="@android:color/holo_blue_light"
+                android:text="Cancel"/>
+
+        </LinearLayout>
     </LinearLayout>
+    </ScrollView>
 </LinearLayout>

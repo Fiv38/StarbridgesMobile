@@ -57,6 +57,8 @@ public class ListDraftLeaveRequestAdapter extends ArrayAdapter<ReturnValue> {
         unitReduce.setText(draftLeaveRequestList.get(position).getTotalUnit().toString());
         notes.setText(draftLeaveRequestList.get(position).getNotes());
 
+        checkBox.setChecked(draftLeaveRequestList.get(position).getSelected());
+
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,10 +71,14 @@ public class ListDraftLeaveRequestAdapter extends ArrayAdapter<ReturnValue> {
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(((CompoundButton) v).isChecked())
-                    listID.add( draftLeaveRequestList.get(position).getID()); // add to cb array
-                else
+                if(((CompoundButton) v).isChecked()) {
+                    listID.add(draftLeaveRequestList.get(position).getID()); // add to cb array
+                    draftLeaveRequestList.get(position).setSelected(true);
+                }
+                else {
                     listID.remove(draftLeaveRequestList.get(position).getID());
+                    draftLeaveRequestList.get(position).setSelected(false);
+                }
             }
         });
 
