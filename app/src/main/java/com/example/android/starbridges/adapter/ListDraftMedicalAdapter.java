@@ -61,6 +61,8 @@ public class ListDraftMedicalAdapter extends ArrayAdapter<ReturnValue> {
         claim.setText(draftMedicalList.get(position).getClaim());
         reimbursement.setText(draftMedicalList.get(position).getReimbursement());
 
+        checkBox.setChecked(draftMedicalList.get(position).getSelected());
+
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,10 +75,14 @@ public class ListDraftMedicalAdapter extends ArrayAdapter<ReturnValue> {
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(((CompoundButton) v).isChecked())
+                if(((CompoundButton) v).isChecked()) {
                     listID.add(draftMedicalList.get(position).getID());
-                else
+                    draftMedicalList.get(position).setSelected(true);
+                }
+                else {
                     listID.remove(draftMedicalList.get(position).getID());
+                    draftMedicalList.get(position).setSelected(false);
+                }
             }
         });
 

@@ -51,6 +51,17 @@ public class ReturnValue implements Serializable, Parcelable
     @SerializedName("AccessibilityAttribute")
     @Expose
     private String accessibilityAttribute;
+
+    private boolean isSelected;
+
+    public boolean getSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
     public final static Creator<ReturnValue> CREATOR = new Creator<ReturnValue>() {
 
 

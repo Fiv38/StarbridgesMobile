@@ -60,7 +60,7 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
     private Spinner spinnerMedicalPolicy, spinnerEmployeeFamily, spinnerClaimPolicy;
     private TextView medicalGrade;
     private EditText claimEditText;
-    private Button uploadButton, saveBtn, submitBtn;
+    private Button uploadButton, saveBtn, submitBtn, cancelBtn;
     private ImageView imageView;
 
     // Declare var instance
@@ -132,6 +132,8 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
         uploadButton = (Button) findViewById(R.id.btnUpload);
         imageView = (ImageView) findViewById(R.id.imageView);
         saveBtn = (Button) findViewById(R.id.btnSave);
+        submitBtn = (Button) findViewById(R.id.btnSubmit);
+        cancelBtn = (Button) findViewById(R.id.btnCancel);
 
         claimEditText = (EditText) findViewById(R.id.claimEditText);
 
@@ -248,6 +250,38 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
                 transactionStatus = "Save";
 
                 requestConfirmation();
+            }
+        });
+
+        submitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // set transaction status to Submit
+                transactionStatus = "Submit";
+
+                requestConfirmation();
+            }
+        });
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(MedicalClaimDetailActivity.this);
+                alert.setTitle("This information will not be saved");
+                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                });
+
+                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                alert.show();
             }
         });
     }
@@ -446,6 +480,8 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(MedicalClaimDetailActivity.this, "Failed to get data", Toast.LENGTH_SHORT).show();
                     //finish();
+
+                    setupSpinnerMedicalPolicy();
                 }
             }
 
@@ -494,7 +530,6 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
             }
         }
 
-        //spinnerRequestType.setSelection(spinnerIdSelected);
         spinnerEmployeeFamily.setSelection(spinnerIdSelected);
     }
 
@@ -503,6 +538,7 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
     {
         int spinnerIdSelected = 0;
         String contoh3 = medicalClaimPolicyIDEdit;
+
         if(medicalClaimPolicyIDEdit != "")
         {
             for(com.example.android.starbridges.model.getclaimpolicy.ReturnValue x: listClaimPolicyReturnValue)
@@ -515,6 +551,9 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
                 spinnerIdSelected++;
             }
         }
+
+        if(spinnerIdSelected >= listClaimPolicyReturnValue.size())
+            spinnerIdSelected = 0;
 
         spinnerClaimPolicy.setSelection(spinnerIdSelected);
     }
@@ -671,9 +710,14 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
                         imageView.setImageBitmap(bitmap);
                     }
 
+                    // init spinner medical policy
+                    initSpinnerMedicalPolicy();
+
                 } else {
                     Toast.makeText(MedicalClaimDetailActivity.this, "Failed to get data", Toast.LENGTH_SHORT).show();
                     //finish();
+
+                    initSpinnerMedicalPolicy();
                 }
             }
 
@@ -711,7 +755,7 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
 
                 if (data != null && data.getIsSucceed()) {
 
-                    Toast.makeText(MedicalClaimDetailActivity.this, "Saved Successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MedicalClaimDetailActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
 
                 } else {
                     Toast.makeText(MedicalClaimDetailActivity.this, "Failed to get data", Toast.LENGTH_SHORT).show();

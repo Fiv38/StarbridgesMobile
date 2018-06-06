@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -69,46 +70,48 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
     private ImageView imageView, imgStartDate, imgEndDate, imgStartTime, imgEndTime;
 
     Calendar myCalendar = Calendar.getInstance();
-    Button saveBtn, submitBtn, uploadBtn;
+    Button saveBtn, submitBtn, uploadBtn, cancelBtn;
     String saveStr,submitStr;
 
     Intent intent;
 
     // declare parameter (balikan dari api)
-    String id="";
-    Integer employeeID;
-    String roster;
-    String requestDate;
-    String employeeNIK;
-    String employeeName;
-    Integer leaveRequestRuleID;
-    String leaveRequestType;
-    String employeeLeaveBalanceUID;
-    String currentBalance;
-    String balanceExpireDate;
-    String totalUnit;
-    String totalUnitReduce;
-    String startLeave;
-    String endLeave;
-    String leaveAt;
-    String returnAt;
-    Boolean minIntervalViolation;
-    Boolean unitLimitViolation;
-    Boolean occurenceViolation;
-    String notesStr;
-    String attachmentFile;
-    String attachmentID;
-    String decisionNumber;
-    String transactionStatusID;
-    String approveDate;
-    Boolean isHalfDay;
-    String submitType;
-    String message;
-    String transactionStatusSaveOrSubmit;
-    String photo;
-    Boolean fullAccess;
-    List<String> exclusionFields;
-    String accessibilityAttribute;
+    private String transactionStatus = "";
+
+    private String id = "";
+    private Integer employeeID = 0;
+    private String roster = "";
+    private String requestDate = "";
+    private String employeeNIK = "";
+    private String employeeName = "";
+    private Integer leaveRequestRuleID = 0;
+    private String leaveRequestType = "";
+    private String employeeLeaveBalanceUID = "";
+    private String currentBalance = "";
+    private String balanceExpireDate = "";
+    private String totalUnit = "";
+    private String totalUnitReduce = "";
+    private String startLeave = "";
+    private String endLeave = "";
+    private String leaveAt = "";
+    private String returnAt = "";
+    private Boolean minIntervalViolation = true;
+    private Boolean unitLimitViolation = true;
+    private Boolean occurenceViolation = true;
+    private String notesStr = "";
+    private String attachmentFile = "";
+    private String attachmentID = "";
+    private String decisionNumber = "";
+    private String transactionStatusID = "";
+    private String approveDate = "";
+    private Boolean isHalfDay = true;
+    private String submitType = "";
+    private String message =  "";
+    private String transactionStatusSaveOrSubmit = "";
+    private String photo = "";
+    private Boolean fullAccess = true;
+    private List<String> exclusionFields = new ArrayList<String>();
+    private String accessibilityAttribute = "";
 
     int idRequestType= 0;
     String balanceUID = "";
@@ -165,6 +168,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         saveBtn = (Button) findViewById(R.id.btnSave);
         submitBtn = (Button) findViewById(R.id.btnSubmit);
         uploadBtn = (Button) findViewById(R.id.btnUpload);
+        cancelBtn = (Button) findViewById(R.id.btnCancel);
         imageView = (ImageView) findViewById(R.id.imageView);
 
         imgStartDate = (ImageView) findViewById(R.id.imgCalendarStartDate);
@@ -199,10 +203,10 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                     mTimePicker = new TimePickerDialog(LeaveRequestDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                            //startDate.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
                             leaveAt = String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0');
-                            //startDate.setText();
-                            Toast.makeText(LeaveRequestDetailActivity.this, "" + leaveAt, Toast.LENGTH_LONG).show();
+
+                            startDate.setText(startLeave + " - " + leaveAt);
+                            Toast.makeText(LeaveRequestDetailActivity.this, "pertama1 :" + leaveAt, Toast.LENGTH_LONG).show();
                         }
                     }, Integer.parseInt(startLeave.substring(0,2)) , Integer.parseInt(startLeave.substring(3,5)), true);
                 } catch (Exception e)
@@ -210,9 +214,11 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                     mTimePicker = new TimePickerDialog(LeaveRequestDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                            //startDate.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
                             leaveAt = String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0');
-                            Toast.makeText(LeaveRequestDetailActivity.this, "kedua : " + leaveAt, Toast.LENGTH_LONG).show();
+
+                            startDate.setText(endLeave + " - " + leaveAt);
+
+                            Toast.makeText(LeaveRequestDetailActivity.this, "pertama2 : " + leaveAt, Toast.LENGTH_LONG).show();
                         }
                     }, hour, minute, true);
                 }
@@ -243,10 +249,11 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                     mTimePicker = new TimePickerDialog(LeaveRequestDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                            //startDate.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
                             returnAt = String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0');
-                            //startDate.setText();
-                            Toast.makeText(LeaveRequestDetailActivity.this, "" + leaveAt, Toast.LENGTH_LONG).show();
+
+                            endDate.setText(endLeave + " - " + returnAt);
+
+                            Toast.makeText(LeaveRequestDetailActivity.this, "kedua1 :" + returnAt, Toast.LENGTH_LONG).show();
                         }
                     }, Integer.parseInt(startLeave.substring(0,2)) , Integer.parseInt(startLeave.substring(3,5)), true);
                 } catch (Exception e)
@@ -254,9 +261,11 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                     mTimePicker = new TimePickerDialog(LeaveRequestDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                            //startDate.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
                             returnAt = String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0');
-                            Toast.makeText(LeaveRequestDetailActivity.this, "kedua : " + leaveAt, Toast.LENGTH_LONG).show();
+
+                            endDate.setText(endLeave + " - " + returnAt);
+
+                            Toast.makeText(LeaveRequestDetailActivity.this, "kedua2 : " + returnAt, Toast.LENGTH_LONG).show();
                         }
                     }, hour, minute, true);
                 }
@@ -266,31 +275,12 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
             }
         });
 
-        /*startDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new DatePickerDialog(LeaveRequestDetailActivity.this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });*/
-
-        /*endDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new DatePickerDialog(LeaveRequestDetailActivity.this, date2, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });*/
-
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                // set val "Save" to variable
-                saveStr = "Save";
-                submitStr = "";
+                // set val "Save" to transaction Status
+                transactionStatus = "Save";
 
                 // call method
                 requestConfirmation();
@@ -307,11 +297,32 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // set val "Submit" to variable
-                        saveStr = "";
-                        submitStr = "Submit";
+                        transactionStatus = "Submit";
 
                         //call method
                         requestConfirmation();
+                    }
+                });
+
+                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                alert.show();
+            }
+        });
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(LeaveRequestDetailActivity.this);
+                alert.setTitle("This information will not be saved");
+                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
                     }
                 });
 
@@ -389,79 +400,25 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 
     public void requestConfirmation(){
         // get token
-        apiInterface = APIClient.requestConfirmation(GlobalVar.getToken()).create(APIInterfaceRest.class);
+        apiInterface = APIClient.getClient(GlobalVar.getToken()).create(APIInterfaceRest.class);
         progressDialog = new ProgressDialog(LeaveRequestDetailActivity.this);
         progressDialog.setTitle("Loading");
         progressDialog.show();
 
-        // create new
-        if(intent.getStringExtra("ID") == null) {
-            id = "";
-            employeeID = Integer.parseInt(GlobalVar.getEmployeeId());
-            roster = "";
-            requestDate = "";
-            employeeNIK = GlobalVar.getEmployeeId();
-            employeeName = GlobalVar.getFullname();
-            //leaveRequestRuleID = Integer.parseInt(requestTypeID);
-            //leaveRequestType = requestTypeName;
-            //employeeLeaveBalanceUID = balanceUID;
-            currentBalance = "";
-            balanceExpireDate = "";
-            totalUnit = "";
-            totalUnitReduce = "";
-            startLeave = startDate.getText().toString();
-            endLeave = endDate.getText().toString();
-            if(leaveAt == null)
-                leaveAt = "" ;
-            if(returnAt == null)
-                returnAt = "";
-            minIntervalViolation = true;
-            unitLimitViolation = true;
-            occurenceViolation = true;
-            notesStr = notes.getText().toString();
-            if(attachmentFile == null)
-                attachmentFile = "";
-            attachmentID = "";
-            decisionNumber = "";
-            transactionStatusID = "";
-            approveDate = "";
-            isHalfDay = true;
-            submitType = "";
-            message = notes.getText().toString();
-            //transactionStatusSaveOrSubmit = "Save"; (sudah diinisialisai di listener btn)
-            //photo = "";
-            fullAccess = true;
-            exclusionFields = new ArrayList<String>();
-            accessibilityAttribute = "";
-        }else{
+        employeeID = Integer.parseInt(GlobalVar.getEmployeeId());
+        employeeNIK = GlobalVar.getNIK();
+        employeeName = GlobalVar.getFullname();
 
-            // set text u/ mendapatkan edit terbaru
-            startLeave = startDate.getText().toString();
-            endLeave = endDate.getText().toString();
-            notesStr = notes.getText().toString();
-        }
+        // get message
+        message = notes.getText().toString();
+        notesStr = notes.getText().toString();
 
-        apiInterface = APIClient.requestConfirmation(GlobalVar.getToken()).create(APIInterfaceRest.class);
-        Call<RequestConfirmation> call3;
-
-        if(saveStr != "") {
-            call3 = apiInterface.requestConfirmationSave(
-                    id, employeeID, roster, requestDate, employeeNIK, employeeName, leaveRequestRuleID, leaveRequestType,
+        Call<RequestConfirmation> call3 = apiInterface.requestConfirmation(
+                    transactionStatus, id, employeeID, roster, requestDate, employeeNIK, employeeName, leaveRequestRuleID, leaveRequestType,
                     employeeLeaveBalanceUID, currentBalance, balanceExpireDate, totalUnit, totalUnitReduce, startLeave,
                     endLeave, leaveAt, returnAt, minIntervalViolation, unitLimitViolation, occurenceViolation, notesStr,
                     attachmentFile, attachmentID, decisionNumber, transactionStatusID, approveDate, isHalfDay, submitType,
-                    message, transactionStatusSaveOrSubmit, photo, fullAccess, exclusionFields, accessibilityAttribute
-            );
-        }else{
-            call3 = apiInterface.requestConfirmationSubmit(
-                    id, employeeID, roster, requestDate, employeeNIK, employeeName, leaveRequestRuleID, leaveRequestType,
-                    employeeLeaveBalanceUID, currentBalance, balanceExpireDate, totalUnit, totalUnitReduce, startLeave,
-                    endLeave, leaveAt, returnAt, minIntervalViolation, unitLimitViolation, occurenceViolation, notesStr,
-                    attachmentFile, attachmentID, decisionNumber, transactionStatusID, approveDate, isHalfDay, submitType,
-                    message, transactionStatusSaveOrSubmit, photo, fullAccess, exclusionFields, accessibilityAttribute
-            );
-        }
-
+                    message, transactionStatusSaveOrSubmit, photo, fullAccess, exclusionFields, accessibilityAttribute);
         call3.enqueue(new Callback<RequestConfirmation>() {
 
             @Override
@@ -469,9 +426,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 RequestConfirmation data = response.body();
 
-
                 if (data != null && data.getIsSucceed()) {
-                    //Toast.makeText(LeaveRequestDetailActivity.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
                     requestConfirmation = data.getReturnValue();
 
                     id = requestConfirmation.getID();
@@ -487,8 +442,8 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                     balanceExpireDate = requestConfirmation.getBalanceExpireDate();
                     totalUnit = requestConfirmation.getTotalUnit().toString();
                     totalUnitReduce = requestConfirmation.getTotalUnit().toString();
-                    //startLeave = startDate.getText().toString();
-                    //endLeave = endDate.getText().toString();
+                    startLeave = startDate.getText().toString();
+                    endLeave = endDate.getText().toString();
                     leaveAt = requestConfirmation.getLeaveAt();
                     returnAt = requestConfirmation.getReturnAt();
                     minIntervalViolation = requestConfirmation.getMinIntervalViolation();
@@ -783,16 +738,24 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
     }
 
     private void updateLabel() {
-        String myFormat = "MM/dd/yyyy"; //In which you need put here
+        String myFormat = "dd/MM/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
+        // set text to startLeave
+        startLeave = sdf.format(myCalendar.getTime());
+
+        // set text to comp date
         startDate.setText(sdf.format(myCalendar.getTime()));
     }
 
     private void updateLabel2() {
-        String myFormat = "MM/dd/yyyy"; //In which you need put here
+        String myFormat = "dd/MM/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
+        // set text to endLeave
+        endLeave = sdf.format(myCalendar.getTime());
+
+        // set text to comp date
         endDate.setText(sdf.format(myCalendar.getTime()));
     }
 
@@ -889,6 +852,5 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 
         return encImage;
     }
-
 }
 

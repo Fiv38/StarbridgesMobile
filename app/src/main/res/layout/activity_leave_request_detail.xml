@@ -7,6 +7,13 @@
     android:orientation="vertical"
     tools:context="com.example.android.starbridges.activity.LeaveRequestDetailActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -115,6 +122,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:maxHeight="200dp"
+        android:adjustViewBounds="true"
         android:layout_marginTop="5dp"
         android:background="@color/cardview_shadow_start_color" />
 
@@ -156,5 +165,6 @@
             android:text="Cancel"/>
 
     </LinearLayout>
-
+    </LinearLayout>
+    </ScrollView>
 </LinearLayout>

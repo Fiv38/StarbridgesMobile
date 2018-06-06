@@ -184,6 +184,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
+                    android:onClick="showMedicalClaim"
                     android:drawableTop="@drawable/ic_medical"
                     android:text="@string/medical"
                     android:textColor="@android:color/background_light" />

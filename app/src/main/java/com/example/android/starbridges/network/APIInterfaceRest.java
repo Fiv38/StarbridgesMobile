@@ -202,8 +202,10 @@ public interface APIInterfaceRest {
             @Field("AccessibilityAttribute") String AccessibilityAttribute);
 
     @FormUrlEncoded
-    @POST("api/LeaveRequest/DetailRequestConfirmation?transactionStatus=Save")
-    Call<RequestConfirmation> requestConfirmationSave(
+    @POST("api/LeaveRequest/DetailRequestConfirmation")
+    Call<RequestConfirmation> requestConfirmation(
+            @Query("transactionStatus") String transactionStatus,
+
             @Field("ID") String ID,
             @Field("EmployeeID") Integer EmployeeID,
             @Field("Roster") String Rooster,
