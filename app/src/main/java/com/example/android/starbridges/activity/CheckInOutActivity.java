@@ -1,7 +1,11 @@
 package com.example.android.starbridges.activity;
 
+import android.app.ActivityManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -62,14 +66,14 @@ public class CheckInOutActivity extends AppCompatActivity {
 
         this.setTitle("Attendance");
 
-        /*
-        if(detectFakeGPS()==true)
+
+        if(detectFakeGPS(CheckInOutActivity.this)==true)
         {
             Toast.makeText(CheckInOutActivity.this, "You are using fake gps", Toast.LENGTH_LONG).show();
         }
         else
             Toast.makeText(CheckInOutActivity.this, "GPS true", Toast.LENGTH_LONG).show();
-            */
+
 
         long date = System.currentTimeMillis();
         mDateView = (TextView) findViewById(R.id.txt_date);
@@ -96,10 +100,12 @@ public class CheckInOutActivity extends AppCompatActivity {
             }
         });
 
-
+        ActivityManager actvityManager = (ActivityManager)
+                this.getSystemService( ACTIVITY_SERVICE );
+        List<ActivityManager.RunningAppProcessInfo> procInfos = actvityManager.getRunningAppProcesses();
     }
 
-    public boolean detectFakeGPS()
+    public boolean detectFakeGPS(Context context)
     {
 //        if (Settings.Secure.getString(getContentResolver(),
 //                Settings.Secure.ALLOW_MOCK_LOCATION).equals("0"))
@@ -107,11 +113,21 @@ public class CheckInOutActivity extends AppCompatActivity {
 //        else return true;
         Location location = new Location(LocationManager.NETWORK_PROVIDER);
 
-        String debug =LocationManager.NETWORK_PROVIDER;
-        if(location.isFromMockProvider()) return true;
-        else return false;
+//        String debug =LocationManager.NETWORK_PROVIDER;
+//        if(location.isFromMockProvider()) return true;
+//        else return false;
+        boolean isMock = false;
+        if (android.os.Build.VERSION.SDK_INT >= 18) {
+            isMock = location.isFromMockProvider();
+        } else {
+            isMock = !Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ALLOW_MOCK_LOCATION).equals("0");
+        }
+
+        return isMock;
 
     }
+
+
 
     @Override
     protected void onResume() {

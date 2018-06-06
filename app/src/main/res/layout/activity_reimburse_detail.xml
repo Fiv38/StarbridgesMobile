@@ -8,121 +8,137 @@
     android:padding="10dp"
     tools:context=".activity.ReimburseDetailActivity">
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Description" />
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/txtDescriptionReimburseDetail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Amount" />
-
-    <EditText
-        android:id="@+id/txtAmountReimburseDetail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="numberSigned" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Type" />
-
-    <Spinner
-        android:id="@+id/spnTypeReimburseDetail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Transaction Date" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/txtTransactionDateReimburseDetail"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:focusable="false" />
+            android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imgTransactionDateReimburseDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:src="@drawable/ic_action_calendar" />
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description" />
 
-    <Button
-        android:id="@+id/btnUploadReimburseDetail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/holo_blue_light"
-        android:text="Upload Attachment"
-        android:textColor="@android:color/white" />
+            <EditText
+                android:id="@+id/txtDescriptionReimburseDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
 
-    <ImageView
-        android:id="@+id/imgReimburseDetail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="5dp"
-        android:adjustViewBounds="true"
-        android:background="@color/cardview_shadow_start_color"
-        android:maxHeight="200dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Amount" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom"
-        android:gravity="bottom"
-        android:orientation="horizontal">
+            <EditText
+                android:id="@+id/txtAmountReimburseDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned" />
 
-        <Button
-            android:id="@+id/btnSubmitReimburseDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="1dp"
-            android:layout_weight="1"
-            android:background="@android:color/holo_blue_light"
-            android:text="Submit"
-            android:textColor="@android:color/white" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Type" />
 
-        <Button
-            android:id="@+id/btnSaveReimburseDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="1dp"
-            android:layout_weight="1"
-            android:background="@android:color/holo_blue_light"
-            android:text="Save"
-            android:textColor="@android:color/white" />
+            <Spinner
+                android:id="@+id/spnTypeReimburseDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/btnCancelReimburseDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="1dp"
-            android:layout_weight="1"
-            android:background="@android:color/holo_blue_light"
-            android:text="Cancel"
-            android:textColor="@android:color/white" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Transaction Date" />
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/txtTransactionDateReimburseDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:focusable="false" />
+
+                <ImageView
+                    android:id="@+id/imgTransactionDateReimburseDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:src="@drawable/ic_action_calendar" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnUploadReimburseDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/holo_blue_light"
+                android:text="Upload Attachment"
+                android:textColor="@android:color/white" />
+
+            <ImageView
+                android:id="@+id/imgReimburseDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:adjustViewBounds="true"
+                android:background="@color/cardview_shadow_start_color"
+                android:maxHeight="200dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnSubmitReimburseDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/holo_blue_light"
+                    android:text="Submit"
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/btnSaveReimburseDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/holo_blue_light"
+                    android:text="Save"
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/btnCancelReimburseDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/holo_blue_light"
+                    android:text="Cancel"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
 
 </LinearLayout>

@@ -284,6 +284,7 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
                 alert.show();
             }
         });
+
     }
 
     @Override
@@ -480,8 +481,6 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(MedicalClaimDetailActivity.this, "Failed to get data", Toast.LENGTH_SHORT).show();
                     //finish();
-
-                    setupSpinnerMedicalPolicy();
                 }
             }
 
@@ -530,6 +529,7 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
             }
         }
 
+        //spinnerRequestType.setSelection(spinnerIdSelected);
         spinnerEmployeeFamily.setSelection(spinnerIdSelected);
     }
 
@@ -538,7 +538,6 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
     {
         int spinnerIdSelected = 0;
         String contoh3 = medicalClaimPolicyIDEdit;
-
         if(medicalClaimPolicyIDEdit != "")
         {
             for(com.example.android.starbridges.model.getclaimpolicy.ReturnValue x: listClaimPolicyReturnValue)
@@ -553,7 +552,7 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
         }
 
         if(spinnerIdSelected >= listClaimPolicyReturnValue.size())
-            spinnerIdSelected = 0;
+            spinnerIdSelected=0;
 
         spinnerClaimPolicy.setSelection(spinnerIdSelected);
     }
