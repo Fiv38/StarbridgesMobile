@@ -516,6 +516,9 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
             }
         }
 
+        if(spinnerIdSelected >= listClaimPolicyReturnValue.size())
+            spinnerIdSelected=0;
+
         spinnerClaimPolicy.setSelection(spinnerIdSelected);
     }
 

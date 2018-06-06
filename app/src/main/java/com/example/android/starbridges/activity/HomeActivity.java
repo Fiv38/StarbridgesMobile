@@ -44,6 +44,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         imageView = (CircleImageView)findViewById(R.id.profile_image);
         session = new SessionManagement(getApplicationContext());
 
@@ -80,7 +81,8 @@ public class HomeActivity extends AppCompatActivity {
         mUsernameView=(TextView) findViewById(R.id.lbl_username);
         mUsernameView.setText("Hello,\n"+fullname);
 
-loadingImage();
+        loadingImage();
+
     }
 
     void loadingImage(){
@@ -119,7 +121,7 @@ loadingImage();
 
             @Override
             public void onFailure(Call<GetImage> call, Throwable t) {
-
+                Toast.makeText(HomeActivity.this, "Something went wrong, please try again later", Toast.LENGTH_LONG).show();
             }
         });
         }

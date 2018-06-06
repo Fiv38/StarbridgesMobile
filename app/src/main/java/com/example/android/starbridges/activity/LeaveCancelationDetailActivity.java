@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -126,6 +127,7 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
         imgCancelDetail=(ImageView)findViewById(R.id.imgCancelDetail);
         imgCancelFromDateCancelDetail=(ImageView)findViewById(R.id.imgCancelFromDateCancelDetail);
         imgCancelToDateCancelDetail=(ImageView)findViewById(R.id.imgCancelToDateCancelDetail);
+
 
         imgCancelFromDateCancelDetail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -330,6 +332,17 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
 
                 txtLeaveFromCancelDetail.setText(leaveFrom);
                 txtLeaveToCancelDetail.setText(leaveTo);
+
+                if(txtLeaveFromCancelDetail.getText().toString().matches(""))
+                {
+                    imgCancelFromDateCancelDetail.setEnabled(false);
+                    imgCancelToDateCancelDetail.setEnabled(false);
+                }
+                else
+                {
+                    imgCancelFromDateCancelDetail.setEnabled(true);
+                    imgCancelToDateCancelDetail.setEnabled(true);
+                }
 
             }
 

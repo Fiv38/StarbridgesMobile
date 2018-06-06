@@ -95,8 +95,7 @@
         <activity
             android:name=".activity.OvertimeDetailActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.DraftOvertimeActivity"
             android:configChanges="orientation"
