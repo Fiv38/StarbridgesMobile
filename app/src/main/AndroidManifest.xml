@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -95,6 +96,7 @@
         <activity
             android:name=".activity.OvertimeDetailActivity"
             android:configChanges="orientation"
+            android:parentActivityName=".activity.OvertimeActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.DraftOvertimeActivity"
@@ -103,10 +105,12 @@
         <activity
             android:name=".activity.OvertimeActivity"
             android:configChanges="orientation"
+            android:parentActivityName=".activity.HomeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ListDraftOvertimeActivity"
             android:configChanges="orientation"
+            android:parentActivityName=".activity.OvertimeActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activity.ListDraftMedicalActivity"></activity>
         <activity android:name=".activity.LeaveRequestActivity"

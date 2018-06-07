@@ -228,6 +228,7 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
                     Toast.makeText(StartEndDayDetailActivity.this, "Failed to get data", Toast.LENGTH_SHORT).show();
                 }
 
+                session = new SessionManagement(getApplicationContext());
                 HashMap<String, String> user = session.getUserDetails();
                 String location=user.get(SessionManagement.KEY_LOCATION);
                 String locationId=user.get(SessionManagement.KEY_LOCATION_ID);

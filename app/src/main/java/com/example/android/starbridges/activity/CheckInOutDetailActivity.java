@@ -114,8 +114,6 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
         GlobalVar.setEmployeeId(employeeId);
 
 
-
-        client = LocationServices.getFusedLocationProviderClient(this);
         mSubmit = (Button) findViewById(R.id.btn_submit);
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -312,33 +310,31 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
 
     public void SubmitData() {
 
-        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_ACCESS_LOCATION);
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_ACCESS_LOCATION);
         }
+
+        client = LocationServices.getFusedLocationProviderClient(this);
         client.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
                 if (location != null) {
-                    sLatitude=String.valueOf(location.getLatitude());
-                    sLongitude=String.valueOf(location.getLongitude());
+                    sLatitude = String.valueOf(location.getLatitude());
+                    sLongitude = String.valueOf(location.getLongitude());
 
-//                    if (sLogType.equals("Check In")) {
-//                        dispatchTakePictureIntent();
-//                    } else {
-//                        sPhoto=null;
-//                        callInputAbsence();
-//                    }
+                    if (sLogType.equals("Check In")) {
+                        dispatchTakePictureIntent();
+                    } else {
+                        sPhoto=null;
+                        callInputAbsence();
+                    }
+
                 }
             }
         });
 
-        if (sLogType.equals("Check In")) {
-            dispatchTakePictureIntent();
-        } else {
-            sPhoto=null;
-            callInputAbsence();
-        }
+
 
 
 

@@ -132,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
             enableLoc();
         } else {
             Log.e("Starbridges", "Gps already enabled");
-            Toast.makeText(LoginActivity.this, "Gps already enabled", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(LoginActivity.this, "Gps already enabled", Toast.LENGTH_SHORT).show();
         }
 
         if (session.isLoggedIn()){

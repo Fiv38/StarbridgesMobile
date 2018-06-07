@@ -78,8 +78,8 @@ public class LeaveCancelationAdapter extends ArrayAdapter<com.example.android.st
 
         holder.txtDecisionNumberCancelation.setText(lstorder.get(position).getDecisionNumber());
         holder.txtRequestTypeCancelation.setText(lstorder.get(position).getRequestType());
-        holder.txtCancelationCancelation.setText( dateFormat(lstorder.get(position).getCancelFrom()) +"-"+ dateFormat(lstorder.get(position).getCancelTo()) );
-        holder.txtLeaveCancelation.setText( dateFormat(lstorder.get(position).getRequestFrom()) +"-"+ dateFormat(lstorder.get(position).getRequestTo()) );
+        holder.txtCancelationCancelation.setText( dateFormat(lstorder.get(position).getCancelFrom()) +" - "+ dateFormat(lstorder.get(position).getCancelTo()) );
+        holder.txtLeaveCancelation.setText( dateFormat(lstorder.get(position).getRequestFrom()) +" - "+ dateFormat(lstorder.get(position).getRequestTo()) );
         holder.txtAdditionalUnitCancelation.setText(lstorder.get(position).getAdditionalUnit()+"");
         holder.txtNotesCancelation.setText(lstorder.get(position).getNotes());
 

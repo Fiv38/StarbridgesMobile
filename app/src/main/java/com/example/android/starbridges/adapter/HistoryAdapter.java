@@ -3,6 +3,7 @@ package com.example.android.starbridges.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     TextView txtName, txtLogType,txtTime;
     private Context context;
     private List<ReturnValue> histories;
+    CardView cardHistory;
 
 
     public HistoryAdapter(Context context, List<ReturnValue> histories) {
@@ -45,10 +47,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        ReturnValue value = histories.get(position);
+        final ReturnValue value = histories.get(position);
 
 
-        holder.txtName.setText(value.getLocationName());
+        holder.txtName.setText(value.getLocationName()+"");
         holder.txtLogType.setText(value.getLogType());
 
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
@@ -65,9 +67,32 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
         holder.txtTime.setText(date + " - "+ value.getLogTime().substring(11,16));
 
+        holder.cardHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /*
+                // Create a Uri from an intent string. Use the result to create an Intent.
+                Uri gmmIntentUri = Uri.parse("google.streetview:cbll="+value.getLatitude()+","+value.getLongitude());
+
+                // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+                                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                // Make the Intent explicit by setting the Google Maps package
+                                mapIntent.setPackage("com.google.android.apps.maps");
+
+                // Attempt to start an activity that can handle the Intent
+                context.startActivity(mapIntent);
+                */
+                Uri gmmIntentUri = Uri.parse("http://maps.google.com/maps?q=loc:" + value.getLatitude()+","+value.getLongitude() + " (unknown)");
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                if (mapIntent.resolveActivity(context.getPackageManager()) != null) {
+                    context.startActivity(mapIntent);
+                }
+            }
+        });
+
 
     }
-
     @Override
     public int getItemCount() {
         return histories.size();
@@ -76,12 +101,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView txtName, txtLogType,txtTime;
+        CardView cardHistory;
 
         public ViewHolder(View itemView) {
             super(itemView);
             txtName = (TextView) itemView.findViewById(R.id.text_name);
             txtLogType = (TextView) itemView.findViewById(R.id.text_LogType);
             txtTime = (TextView) itemView.findViewById(R.id.text_time);
+            cardHistory=(CardView)itemView.findViewById(R.id.cardHistory);
             itemView.setOnClickListener(this);
         }
 

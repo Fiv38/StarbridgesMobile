@@ -64,7 +64,7 @@
         android:id="@+id/lbl_location_name_sd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Location" />
+        android:text="Other Location" />
 
     <EditText
         android:id="@+id/txt_location_name_sd"
