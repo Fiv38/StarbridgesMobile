@@ -275,6 +275,10 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
             }
         });
 
+        // set text default date to
+        updateLabel();
+        updateLabel2();
+
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -442,8 +446,8 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                     balanceExpireDate = requestConfirmation.getBalanceExpireDate();
                     totalUnit = requestConfirmation.getTotalUnit().toString();
                     totalUnitReduce = requestConfirmation.getTotalUnit().toString();
-                    startLeave = startDate.getText().toString();
-                    endLeave = endDate.getText().toString();
+                    startLeave = requestConfirmation.getStartLeave().toString();
+                    endLeave = requestConfirmation.getEndLeave().toString();
                     leaveAt = requestConfirmation.getLeaveAt();
                     returnAt = requestConfirmation.getReturnAt();
                     minIntervalViolation = requestConfirmation.getMinIntervalViolation();
@@ -543,10 +547,10 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                     balanceExpireDate = editLeaveRequest.getBalanceExpireDate();
                     totalUnit = editLeaveRequest.getTotalUnit().toString();
                     totalUnitReduce = editLeaveRequest.getTotalUnit().toString();
-                    startLeave = editLeaveRequest.getStartLeave();
-                    endLeave = editLeaveRequest.getEndLeave();
-                    leaveAt = editLeaveRequest.getLeaveAt();
-                    returnAt = editLeaveRequest.getReturnAt();
+                    startLeave = formatDate(editLeaveRequest.getStartLeave());
+                    endLeave = formatDate(editLeaveRequest.getEndLeave());
+                    leaveAt = formatTime(editLeaveRequest.getLeaveAt());
+                    returnAt = formatTime(editLeaveRequest.getReturnAt());
                     minIntervalViolation = editLeaveRequest.getMinIntervalViolation();
                     unitLimitViolation = editLeaveRequest.getUnitLimitViolation();
                     occurenceViolation = editLeaveRequest.getOccurenceViolation();
@@ -566,15 +570,12 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                     accessibilityAttribute = editLeaveRequest.getAccessibilityAttribute();
 
                     // start leave
-                    //String startDateStr = editLeaveRequest.getStartLeave();
-                    startDate.setText(formatDate(startLeave));
+                    startDate.setText(startLeave + " - " + leaveAt);
 
                     // end date
-                    //String endDateStr = editLeaveRequest.getEndLeave();
-                    endDate.setText(formatDate(endLeave));
+                    endDate.setText(endLeave + " - " + returnAt);
 
                     // notes
-                    //notes.setText(editLeaveRequest.getNotes());
                     notes.setText(notesStr);
 
                     // load Image if exist
@@ -773,13 +774,22 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 
     private String formatDate(String str){
         int position = str.indexOf("T");
+
         String dateStr = str.substring(0, position);
 
         String dateArr[] = dateStr.split("-");
 
-        dateStr = dateArr[1] + "/" + dateArr[2] + "/" + dateArr[0];
+        dateStr = dateArr[2] + "/" + dateArr[1] + "/" + dateArr[0];
 
         return dateStr;
+    }
+
+    private String formatTime(String str){
+        int position = str.indexOf("T");
+
+        String timeStr = str.substring(position + 1);
+
+        return timeStr;
     }
 
     public void setupSpinner()

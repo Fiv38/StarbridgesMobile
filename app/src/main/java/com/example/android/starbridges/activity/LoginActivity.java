@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.starbridges.R;
@@ -47,6 +48,7 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -76,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleApiClient googleApiClient;
     SessionManagement session;
     SharedPreferences pref;
-
+    TextView txtFooter;
 
 
     @Override
@@ -87,6 +89,22 @@ public class LoginActivity extends AppCompatActivity {
         // Set up the login form.
         mUsernameView = (EditText) findViewById(R.id.txt_username);
         mPasswordView = (EditText) findViewById(R.id.txt_password);
+        txtFooter=(TextView)findViewById(R.id.txtFooter);
+
+        Date date= new Date();
+
+        DateFormat df=new SimpleDateFormat("yyyy");
+        String year="";
+        try{
+            year=df.format(date);
+
+        }catch (Exception e)
+        {
+            year="2017";
+        }
+
+
+        txtFooter.setText("Copyrigth " + year + " PT. Indocyber Global Teknologi\nAll Right Reserved");
 
         session = new SessionManagement(getApplicationContext());
 

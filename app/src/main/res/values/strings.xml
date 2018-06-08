@@ -13,7 +13,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="header_login">TIME AND ATTENDANCE</string>
+    <string name="header_login">TIME &amp; ATTENDANCE</string>
     <string name="sub_header_login">APPLICATION</string>
     <string name="action_register">Register</string>
     <string name="start_end_date">Attendance</string>

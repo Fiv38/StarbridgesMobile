@@ -146,6 +146,9 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
         // set employee id
         employeeID = GlobalVar.getEmployeeId();
 
+        // set clickable to image
+        imageView.setClickable(true);
+
         // load api
         initMedicalSupport();
 
@@ -272,6 +275,29 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         finish();
+                    }
+                });
+
+                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                alert.show();
+            }
+        });
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(MedicalClaimDetailActivity.this);
+                alert.setTitle("Delete this image ?");
+                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        imageView.setImageResource(0);
+                        attachmentFile = "";
                     }
                 });
 
@@ -755,10 +781,14 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
                 if (data != null && data.getIsSucceed()) {
 
                     Toast.makeText(MedicalClaimDetailActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
+                    Intent intent1 = new Intent();
+                    intent1.putExtra("data","Saving berhasil");
+                    setResult(1100,intent1);
+                    finish();
 
                 } else {
                     Toast.makeText(MedicalClaimDetailActivity.this, "Failed to get data", Toast.LENGTH_SHORT).show();
-                    finish();
+                    //finish();
                 }
             }
 

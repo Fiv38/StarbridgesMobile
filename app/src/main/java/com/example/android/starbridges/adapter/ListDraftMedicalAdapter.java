@@ -1,5 +1,6 @@
 package com.example.android.starbridges.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -68,7 +69,8 @@ public class ListDraftMedicalAdapter extends ArrayAdapter<ReturnValue> {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), MedicalClaimDetailActivity.class);
                 intent.putExtra("ID", draftMedicalList.get(position).getID());
-                context.startActivity(intent);
+                //context.startActivity(intent);
+                ((Activity) context).startActivityForResult(intent,1000);
             }
         });
 

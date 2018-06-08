@@ -29,11 +29,20 @@ import retrofit2.Response;
 
 public class ListDraftMedicalActivity extends AppCompatActivity {
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == 1000) {
+            if (resultCode == 1100) {
+                getListDraftMedical();
+            }
+        }
+    }
+
     // decalre comp listview
     ListView listView;
 
-    private String medicalSupportID = "";
-    private String medicalSupportName = "";
+    //private String medicalSupportID = "";
+    //private String medicalSupportName = "";
 
     // declare adapter
     ListDraftMedicalAdapter adapter;
@@ -47,14 +56,14 @@ public class ListDraftMedicalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_draft_medical);
 
         // Get intent from MedicalClaimActivity
-        Intent intent2 = getIntent();
+        /*Intent intent2 = getIntent();
         if(intent2.getStringExtra("MEDICAL_GRADE") != null) {
             medicalSupportName = intent2.getStringExtra("MEDICAL_GRADE");
         }
 
         if(intent2.getStringExtra("MEDICAL_SUPPORT_ID") != null) {
             medicalSupportID = intent2.getStringExtra("MEDICAL_SUPPORT_ID");
-        }
+        }*/
 
         getListDraftMedical();
     }
@@ -73,8 +82,6 @@ public class ListDraftMedicalActivity extends AppCompatActivity {
         // add new medical
         if(id == R.id.action_item_one ){
             Intent intent = new Intent(ListDraftMedicalActivity.this, MedicalClaimDetailActivity.class);
-            //intent.putExtra("MEDICAL_GRADE", medicalSupportName);
-            //intent.putExtra("MEDICAL_SUPPORT_ID", medicalSupportID);
             startActivity(intent);
             return true;
         }
