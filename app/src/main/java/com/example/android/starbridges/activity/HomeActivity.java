@@ -49,8 +49,6 @@ public class HomeActivity extends AppCompatActivity {
         imageView = (CircleImageView)findViewById(R.id.profile_image);
         session = new SessionManagement(getApplicationContext());
 
-        btnSignOut=(Button)findViewById(R.id.btn_signout);
-
         HashMap<String, String> user = session.getUserDetails();
         String token_sp = user.get(SessionManagement.KEY_TOKEN);
         String loginName_sp = user.get(SessionManagement.KEY_LOGINNAME);

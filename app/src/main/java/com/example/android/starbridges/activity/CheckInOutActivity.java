@@ -118,9 +118,11 @@ public class CheckInOutActivity extends AppCompatActivity {
                 this.getSystemService( ACTIVITY_SERVICE );
         List<ActivityManager.RunningAppProcessInfo> procInfos = actvityManager.getRunningAppProcesses();
 
-        Toast.makeText(CheckInOutActivity.this, printForegroundTask(), Toast.LENGTH_LONG).show();
+
+        /*Toast.makeText(CheckInOutActivity.this, printForegroundTask(), Toast.LENGTH_LONG).show();
 
         Toast.makeText(CheckInOutActivity.this, needPermissionForBlocking(CheckInOutActivity.this)+"", Toast.LENGTH_LONG).show();
+        */
     }
 
     public static boolean needPermissionForBlocking(Context context){
