@@ -455,6 +455,7 @@ public class LoginActivity extends AppCompatActivity {
         TelephonyManager telephonyManager = (TelephonyManager) activity
                 .getSystemService(Context.TELEPHONY_SERVICE);
         IMEI= telephonyManager.getDeviceId();
+
     }
 
     public void checkIMEIPermission() {
