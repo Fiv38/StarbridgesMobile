@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -97,7 +99,7 @@
             android:name=".activity.OvertimeDetailActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.OvertimeActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.DraftOvertimeActivity"
             android:configChanges="orientation"
@@ -112,62 +114,92 @@
             android:configChanges="orientation"
             android:parentActivityName=".activity.OvertimeActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.ListDraftMedicalActivity"></activity>
-        <activity android:name=".activity.LeaveRequestActivity"
+        <activity android:name=".activity.ListDraftMedicalActivity" />
+        <activity
+            android:name=".activity.LeaveRequestActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.HomeActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".activity.LeaveRequestDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LeaveRequestDetailActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.LeaveRequestActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".activity.ListDraftLeaveRequestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ListDraftLeaveRequestActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.LeaveRequestActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".activity.LeaveCancelationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LeaveCancelationActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.HomeActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".activity.LeaveCancelationDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LeaveCancelationDetailActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.LeaveCancelationActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".activity.ListDraftLeaveCancelationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ListDraftLeaveCancelationActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.LeaveCancelationActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".activity.MedicalClaimActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MedicalClaimActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.HomeActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".activity.MedicalClaimDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MedicalClaimDetailActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.MedicalClaimActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".activity.ReimburseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ReimburseActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.HomeActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".activity.ListDraftReimburseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ListDraftReimburseActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.ReimburseActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".activity.ReimburseDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ReimburseDetailActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.ReimburseActivity"
-            android:screenOrientation="portrait"
-            ></activity>
+            android:screenOrientation="portrait" />
+
+        <!-- <receiver -->
+        <!-- android:name=".reminder.alarmManager.ReceiverPulang" -->
+        <!-- android:enabled="true" -->
+        <!-- android:exported="false"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="com.example.android.starbridges.NOTIFY_PULANG" /> -->
+        <!-- <action android:name="android.intent.action.BOOT_COMPLETED" /> -->
+        <!-- </intent-filter> -->
+        <!-- </receiver> -->
+
+        <receiver
+            android:name=".reminder.alarmManager.MyReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.android.starbridges.ACTION_NOTIFY_MASUK" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".reminder.alarmManager.MyReceiverPulang"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.android.starbridges.ACTION_NOTIFY_PULANG" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

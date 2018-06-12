@@ -78,7 +78,8 @@
                     android:paddingBottom="10dp"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:paddingTop="10dp" />
+                    android:paddingTop="10dp"
+                    android:text="dhaba.widhikari" />
 
                 <android.support.v4.widget.Space
                     android:layout_width="match_parent"
@@ -95,7 +96,8 @@
                     android:paddingBottom="10dp"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:paddingTop="10dp" />
+                    android:paddingTop="10dp"
+                    android:text="Pass123." />
 
                 <Button
                     android:id="@+id/btn_sign_in"

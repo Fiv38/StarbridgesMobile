@@ -6,6 +6,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -31,9 +32,12 @@ import android.widget.Toast;
 import com.example.android.starbridges.R;
 import com.example.android.starbridges.model.Authentication;
 import com.example.android.starbridges.model.OPost;
-import com.example.android.starbridges.model.RegIMEI;
 import com.example.android.starbridges.network.APIClient;
 import com.example.android.starbridges.network.APIInterfaceRest;
+
+
+import com.example.android.starbridges.reminder.alarmManager.AlarmManagerMasuk;
+import com.example.android.starbridges.reminder.alarmManager.AlarmManagerPulang;
 import com.example.android.starbridges.utility.GlobalVar;
 import com.example.android.starbridges.utility.SessionManagement;
 import com.google.android.gms.common.ConnectionResult;
@@ -47,10 +51,7 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+
 import java.util.List;
 
 import retrofit2.Callback;
@@ -77,8 +78,6 @@ public class LoginActivity extends AppCompatActivity {
     SessionManagement session;
     SharedPreferences pref;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,13 +86,13 @@ public class LoginActivity extends AppCompatActivity {
         // Set up the login form.
         mUsernameView = (EditText) findViewById(R.id.txt_username);
         mPasswordView = (EditText) findViewById(R.id.txt_password);
+//        alarmManager.start(getApplicationContext());
 
         session = new SessionManagement(getApplicationContext());
 
         mUsernameView.setText("");
         mPasswordView.setText("");
         checkIMEIPermission();
-
 
         Button mSignInButton = (Button) findViewById(R.id.btn_sign_in);
         mSignInButton.setOnClickListener(new OnClickListener() {
@@ -141,8 +140,8 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
 
+            setAlarmMasukPulang();
         }
-
 
     private boolean hasGPSDevice(Context context) {
         final LocationManager mgr = (LocationManager) context
@@ -153,6 +152,37 @@ public class LoginActivity extends AppCompatActivity {
         if (providers == null)
             return false;
         return providers.contains(LocationManager.GPS_PROVIDER);
+    }
+
+    private void setAlarmMasukPulang(){
+        boolean isAlarmMasuk = (PendingIntent.getBroadcast(this, 0,
+                new Intent("com.example.android.starbridges.ACTION_NOTIFY_MASUK"),
+                PendingIntent.FLAG_NO_CREATE) != null);
+
+        if (isAlarmMasuk)
+        {
+            Log.d("myTag", "Alarm Masuk is already active");
+            Toast.makeText(this, "Alarm Masuk is already active", Toast.LENGTH_SHORT).show();
+        }else {
+            AlarmManagerMasuk.start(getApplicationContext());
+            Log.d("myTag", "AlarmMasuk is Created");
+            Toast.makeText(this, "AlarmMasuk is Created", Toast.LENGTH_SHORT).show();
+        }
+
+        boolean isAlarmKeluar = (PendingIntent.getBroadcast(this, 1,
+                new Intent("com.example.android.starbridges.ACTION_NOTIFY_PULANG"),
+                PendingIntent.FLAG_NO_CREATE) != null);
+
+        if (isAlarmKeluar)
+        {
+            Log.d("myTag", "AlarmPulang is already active");
+            Toast.makeText(this, "Alarm Pulang is already active", Toast.LENGTH_SHORT).show();
+        }else {
+            AlarmManagerPulang.start(getApplicationContext());
+            Log.d("myTag", "AlarmPulang is Created");
+            Toast.makeText(this, "AlarmPulang is Created", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void enableLoc() {
@@ -397,7 +427,8 @@ public class LoginActivity extends AppCompatActivity {
     public void getIMEI (Activity activity){
         TelephonyManager telephonyManager = (TelephonyManager) activity
                 .getSystemService(Context.TELEPHONY_SERVICE);
-        IMEI= telephonyManager.getDeviceId();
+//        IMEI= telephonyManager.getDeviceId();
+        IMEI = "863263034362087";
     }
 
     public void checkIMEIPermission() {
