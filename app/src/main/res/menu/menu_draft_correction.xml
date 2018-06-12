@@ -5,6 +5,6 @@
     <item
         android:id="@+id/deleteDraft"
         android:title="Add Leave Request"
-        android:icon="@drawable/ic_action_delete"/>
+        android:icon="@mipmap/ic_delete"/>
 
 </menu>

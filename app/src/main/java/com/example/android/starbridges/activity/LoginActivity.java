@@ -27,15 +27,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.starbridges.R;
 import com.example.android.starbridges.model.Authentication;
 import com.example.android.starbridges.model.OPost;
+import com.example.android.starbridges.model.RegIMEI;
 import com.example.android.starbridges.network.APIClient;
 import com.example.android.starbridges.network.APIInterfaceRest;
-
-
 import com.example.android.starbridges.reminder.alarmManager.AlarmManagerMasuk;
 import com.example.android.starbridges.reminder.alarmManager.AlarmManagerPulang;
 import com.example.android.starbridges.utility.GlobalVar;
@@ -51,7 +51,11 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 
-
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Callback;
@@ -77,6 +81,9 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleApiClient googleApiClient;
     SessionManagement session;
     SharedPreferences pref;
+    TextView txtFooter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,13 +93,32 @@ public class LoginActivity extends AppCompatActivity {
         // Set up the login form.
         mUsernameView = (EditText) findViewById(R.id.txt_username);
         mPasswordView = (EditText) findViewById(R.id.txt_password);
+        txtFooter=(TextView)findViewById(R.id.txtFooter);
+
+        Date date= new Date();
+
+        DateFormat df=new SimpleDateFormat("yyyy");
+        String year="";
+        try{
+            year=df.format(date);
+
+        }catch (Exception e)
+        {
+            year="2017";
+        }
+
+
+        txtFooter.setText("Copyrigth " + year + " PT. Indocyber Global Teknologi\nAll Right Reserved");
+
 //        alarmManager.start(getApplicationContext());
+
 
         session = new SessionManagement(getApplicationContext());
 
         mUsernameView.setText("");
         mPasswordView.setText("");
         checkIMEIPermission();
+
 
         Button mSignInButton = (Button) findViewById(R.id.btn_sign_in);
         mSignInButton.setOnClickListener(new OnClickListener() {
@@ -139,9 +165,9 @@ public class LoginActivity extends AppCompatActivity {
                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
             finish();
         }
-
-            setAlarmMasukPulang();
+             setAlarmMasukPulang();
         }
+
 
     private boolean hasGPSDevice(Context context) {
         final LocationManager mgr = (LocationManager) context
@@ -184,6 +210,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
+
 
     private void enableLoc() {
 
@@ -427,8 +454,7 @@ public class LoginActivity extends AppCompatActivity {
     public void getIMEI (Activity activity){
         TelephonyManager telephonyManager = (TelephonyManager) activity
                 .getSystemService(Context.TELEPHONY_SERVICE);
-//        IMEI= telephonyManager.getDeviceId();
-        IMEI = "863263034362087";
+        IMEI= telephonyManager.getDeviceId();
     }
 
     public void checkIMEIPermission() {

@@ -41,7 +41,7 @@ public class ListDraftOvertimeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_draft_overtime);
-
+        setTitle("Draft Overtime");
         getListDraftOvertime();
 
     }

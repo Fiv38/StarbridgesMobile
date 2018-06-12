@@ -16,7 +16,10 @@ import com.example.android.starbridges.R;
 import com.example.android.starbridges.activity.LeaveRequestDetailActivity;
 import com.example.android.starbridges.model.listdraftleaverequest.ReturnValue;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -53,7 +56,7 @@ public class ListDraftLeaveRequestAdapter extends ArrayAdapter<ReturnValue> {
         CheckBox checkBox = (CheckBox) rowView.findViewById(R.id.checkBox);
 
         requestType.setText(draftLeaveRequestList.get(position).getLeaveType());
-        leave.setText(draftLeaveRequestList.get(position).getStartLeave() + " - " + draftLeaveRequestList.get(position).getEndLeave());
+        leave.setText(dateFormat(draftLeaveRequestList.get(position).getStartLeave())  + " - " + dateFormat(draftLeaveRequestList.get(position).getEndLeave()) );
         unitReduce.setText(draftLeaveRequestList.get(position).getTotalUnit().toString());
         notes.setText(draftLeaveRequestList.get(position).getNotes());
 
@@ -84,5 +87,21 @@ public class ListDraftLeaveRequestAdapter extends ArrayAdapter<ReturnValue> {
 
         // return rowView
         return rowView;
+    }
+
+    public String dateFormat(String dateString)
+    {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+        DateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");
+        Date date1;
+        String result;
+        try{
+            date1=df.parse(dateString);
+            result=sdf.format(date1);
+        }catch (Exception e)
+        {
+            result="";
+        }
+        return result;
     }
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/activatedBackgroundIndicator"
+    android:padding="15dp">
+
+    <TextView
+        android:id="@+id/lblEmployeeDraftShiftExchange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingVertical="5dp"
+        android:text="Employee"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/lblDateDraftShiftExchange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:paddingVertical="5dp"
+        android:text="Date"
+        android:textColor="@color/wallet_holo_blue_light"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/lblShiftDraftShiftExchange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lblEmployeeDraftShiftExchange"
+        android:paddingVertical="5dp"
+        android:text="Shift"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/lblNotesDraftShiftExchange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lblShiftDraftShiftExchange"
+        android:paddingVertical="5dp"
+        android:text="Notes" />
+
+</RelativeLayout>
