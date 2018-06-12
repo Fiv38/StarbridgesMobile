@@ -11,6 +11,9 @@ import android.widget.TextView;
 import com.example.android.starbridges.R;
 import com.example.android.starbridges.model.leaverequest.ReturnValue;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,12 +50,28 @@ public class LeaveRequestAdapter extends ArrayAdapter<ReturnValue> {
 
         decisionNumber.setText(leaveRequestList.get(position).getDecisionNumber());
         requestType.setText(leaveRequestList.get(position).getRequestType());
-        leave.setText(leaveRequestList.get(position).getStartLeave() + " - " + leaveRequestList.get(position).getEndLeave());
+        leave.setText(dateFormat(leaveRequestList.get(position).getStartLeave()) + " - " + dateFormat(leaveRequestList.get(position).getEndLeave()) );
         unitReduce.setText(leaveRequestList.get(position).getTotalUnit());
         notes.setText(leaveRequestList.get(position).getNotes());
         approvedDate.setText(leaveRequestList.get(position).getApproveDate());
 
         // return rowView
         return rowView;
+    }
+
+    public String dateFormat(String dateString)
+    {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+        DateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");
+        Date date1;
+        String result;
+        try{
+            date1=df.parse(dateString);
+            result=sdf.format(date1);
+        }catch (Exception e)
+        {
+            result="";
+        }
+        return result;
     }
 }

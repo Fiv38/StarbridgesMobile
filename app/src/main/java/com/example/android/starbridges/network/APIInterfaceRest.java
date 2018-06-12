@@ -4,22 +4,29 @@ import com.example.android.starbridges.model.Attendence;
 import com.example.android.starbridges.model.Authentication;
 import com.example.android.starbridges.model.CorrectionDetail.CorrectionDetail;
 import com.example.android.starbridges.model.DecisionNumber.DecisionNumber;
+import com.example.android.starbridges.model.DeleteShiftExchange.DeleteShiftExchange;
 import com.example.android.starbridges.model.EditLeaveCancelation.EditLeaveCancelation;
 import com.example.android.starbridges.model.EditOvertime.EditOvertime;
 import com.example.android.starbridges.model.EditReimbursement.EditReimbursement;
+import com.example.android.starbridges.model.EditShiftExchange.EditShiftExchange;
 import com.example.android.starbridges.model.ListAttendanceCorrection.ListAttendanceCorrection;
 import com.example.android.starbridges.model.ListDraftCorrection.ListDraftCorrection;
 import com.example.android.starbridges.model.ListDraftLeaveCancelation.ListDraftLeaveCancelation;
 import com.example.android.starbridges.model.ListDraftOvertime.ListDraftOvertime;
 import com.example.android.starbridges.model.ListDraftReimbursement.ListDraftReimbursement;
+import com.example.android.starbridges.model.ListDraftShiftExchange.ListDraftShiftExchange;
+import com.example.android.starbridges.model.ListEmployee.ListEmployee;
 import com.example.android.starbridges.model.ListLeaveCancelation.ListLeaveCancelation;
 import com.example.android.starbridges.model.ListOvertime.Overtime;
+import com.example.android.starbridges.model.ListShift.ListShift;
+import com.example.android.starbridges.model.ListShiftExchange.ListShiftExchange;
 import com.example.android.starbridges.model.OLocation.OLocation;
 import com.example.android.starbridges.model.OPost;
 import com.example.android.starbridges.model.MessageReturn.MessageReturn;
 import com.example.android.starbridges.model.PersonalOvertime.PersonalOvertime;
 import com.example.android.starbridges.model.Reimbursement.Reimbursement;
 import com.example.android.starbridges.model.ReimbursementType.ReimbursementType;
+import com.example.android.starbridges.model.SaveShiftExchange.SaveShiftExchange;
 import com.example.android.starbridges.model.SubmitOvertime.SubmitOvertime;
 import com.example.android.starbridges.model.balanceType.BalanceType;
 import com.example.android.starbridges.model.deleteleaverequest.DeleteLeaveRequest;
@@ -413,4 +420,37 @@ public interface APIInterfaceRest {
 
     @POST("api/LeaveCancelation/DetailRequestConfirmation")
     Call<MessageReturn> detailRequestConfirmationCancelation(@Body RequestBody body, @Query("TransactionStatusSaveOrSubmit") String transactionStatusSaveOrSubmit);
+
+    @GET("api/ShiftExchange/ListShiftExchange")
+    Call<ListShiftExchange> getListShiftExchange();
+
+    @GET("api/ShiftExchange/ListDraft")
+    Call<ListDraftShiftExchange> getListDraftShiftExchange();
+
+    @GET("api/ShiftExchange/GetShift")
+    Call<ListShift> getListShift();
+
+    @GET("api/ShiftExchange/GetListEmployee")
+    Call<ListEmployee> getListShiftEmployee();
+
+    @FormUrlEncoded
+    @POST("api/ShiftExchange/SaveDetail")
+    Call<SaveShiftExchange> saveShiftExchange(
+            @Query("transactionStatus") String transactionStatus,
+            @Field("ID") String id,
+            @Field("EmployeeID") String employeeID,
+            @Field("Date") String date,
+            @Field("ShiftID") String shiftID,
+            @Field("ShiftName") String shiftName,
+            @Field("Notes") String notes,
+            @Field("TransactionStatusID") String transactionStatusID,
+            @Field("AttachmentFile") String attachmentFile,
+            @Field("AttachmentID") String attachmentID)
+            ;
+
+    @POST("api/ShiftExchange/EditDraft")
+    Call<EditShiftExchange> editShiftExchange(@Query("id") String id);
+
+    @POST("api/ShiftExchange/DeleteDraft")
+    Call<DeleteShiftExchange> deleteShiftExchange(@Body RequestBody body);
 }

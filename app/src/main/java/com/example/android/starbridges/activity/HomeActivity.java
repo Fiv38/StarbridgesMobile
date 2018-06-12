@@ -119,12 +119,16 @@ public class HomeActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         Toast.makeText(HomeActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
+                    session.logoutUser();
+                    finish();
                 }
             }
 
             @Override
             public void onFailure(Call<GetImage> call, Throwable t) {
                 Toast.makeText(HomeActivity.this, "Something went wrong, please try again later", Toast.LENGTH_LONG).show();
+                session.logoutUser();
+                finish();
             }
         });
         }
@@ -177,6 +181,11 @@ public class HomeActivity extends AppCompatActivity {
     public void showReimburse(View view){
         Intent reimburse = new Intent(this, ReimburseActivity.class);
         startActivity(reimburse);
+    }
+
+    public void showShiftExchange(View view){
+        Intent shiftExchange = new Intent(this, ShiftExchangeActivity.class);
+        startActivity(shiftExchange);
     }
 
 }

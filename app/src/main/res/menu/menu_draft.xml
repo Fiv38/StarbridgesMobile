@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <item
-        android:id="@+id/deleteDraft"
-        android:title="Add Leave Request"
-        android:icon="@mipmap/ic_delete"/>
-
+        android:id="@+id/action_item_one"
+        android:title="Send"
+        android:icon="@mipmap/ic_draft"
+        app:showAsAction="always" />
 </menu>
