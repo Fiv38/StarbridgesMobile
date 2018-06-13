@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="10dp">
 
@@ -11,48 +11,62 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/txtDecisionNumberReimburse"
+            android:id="@+id/txtDecisionNumberCancelation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Decision Number"
+            android:text="1 Jan 18"
             android:textSize="16dp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/txtTransactionDateReimburse"
+            android:id="@+id/txtRequestTypeCancelation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:layout_weight="1"
             android:gravity="right"
-            android:text="Transaction Date"
-            android:textColor="@color/wallet_holo_blue_light"
+            android:text="Request Type"
             android:textSize="16dp"
             android:textStyle="bold" />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/txtDescriptionReimburse"
+        android:id="@+id/txtLeaveCancelation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Description"
+        android:text="Leave"
+        android:textColor="#0a7b02"
         android:textSize="16dp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/txtAmountReimburse"
+        android:id="@+id/txtCancelationCancelation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Amount"
+        android:text="Cancelation"
+        android:textColor="@color/colorRed"
         android:textSize="16dp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/txtTypeReimburse"
+        android:id="@+id/txtNotesCancelation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Type"
+        android:text="Notes"
         android:textSize="16dp"
         android:textStyle="bold" />
+
+
+    <!-- Leave -->
+
+
+    <!-- Unit Reduce -->
+
+    <!-- Notes -->
+
+
+    <!-- Approved Date -->
+
 
 </LinearLayout>

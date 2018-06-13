@@ -3,6 +3,7 @@ package com.example.android.starbridges.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.example.android.starbridges.R;
 import com.example.android.starbridges.activity.LeaveCancelationDetailActivity;
 import com.example.android.starbridges.model.ListDraftLeaveCancelation.ReturnValue;
+import com.example.android.starbridges.utility.SharedPreferenceUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,11 +28,16 @@ public class ListDraftLeaveCancelationAdapter extends ArrayAdapter<ReturnValue> 
     private final Context context;
     private final List<ReturnValue> draftLeaveCancelationList;
     public static List<String> listID = new ArrayList<>();
+    LayoutInflater inflater;
+    private SparseBooleanArray mSelectedItemsIds;
+    List<String> lstIdSelected= new ArrayList<>();
 
     public ListDraftLeaveCancelationAdapter(Context context, List<ReturnValue> draftLeaveCancelationList){
-        super(context, R.layout.list_draft_leave_cancelation, draftLeaveCancelationList);
+        super(context, R.layout.list_draft_leave_cancelation2, draftLeaveCancelationList);
 
+        mSelectedItemsIds=new SparseBooleanArray();
         this.context = context;
+        inflater=LayoutInflater.from(context);
         this.draftLeaveCancelationList = draftLeaveCancelationList;
     }
 
@@ -41,50 +48,19 @@ public class ListDraftLeaveCancelationAdapter extends ArrayAdapter<ReturnValue> 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         // get rowview from inflater
-        View rowView = inflater.inflate(R.layout.list_draft_leave_cancelation, parent, false);
+        View rowView = inflater.inflate(R.layout.list_draft_leave_cancelation2, parent, false);
 
         // get the text view from the rowView
         TextView txtRequestTypeDraftCancelation = (TextView) rowView.findViewById(R.id.txtRequestTypeDraftCancelation);
         TextView txtLeaveDraftCancelation = (TextView) rowView.findViewById(R.id.txtLeaveDraftCancelation);
         TextView txtCancelationDraftCancelation = (TextView) rowView.findViewById(R.id.txtCancelationDraftCancelation);
-        TextView txtAdditionalUnitDraftCancelation = (TextView) rowView.findViewById(R.id.txtAdditionalUnitDraftCancelation);
         TextView txtNotesDraftCancelation = (TextView) rowView.findViewById(R.id.txtNotesDraftCancelation);
-        Button btnEditDraftCanceltion = (Button) rowView.findViewById(R.id.btnEditDraftCanceltion);
-        CheckBox chcDraftCancelation = (CheckBox) rowView.findViewById(R.id.chcDraftCancelation);
 
         txtRequestTypeDraftCancelation.setText(draftLeaveCancelationList.get(position).getRequestType());
         txtLeaveDraftCancelation.setText( dateFormat(draftLeaveCancelationList.get(position).getRequestFrom())  + " - " + dateFormat(draftLeaveCancelationList.get(position).getRequestTo()));
         txtCancelationDraftCancelation.setText( dateFormat(draftLeaveCancelationList.get(position).getCancelFrom())  + " - " + dateFormat( draftLeaveCancelationList.get(position).getCancelTo()));
-        txtAdditionalUnitDraftCancelation.setText(draftLeaveCancelationList.get(position).getAdditionalBalance()+"");
         txtNotesDraftCancelation.setText(draftLeaveCancelationList.get(position).getNotes());
 
-        chcDraftCancelation.setChecked(draftLeaveCancelationList.get(position).getSelected());
-
-        btnEditDraftCanceltion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), LeaveCancelationDetailActivity.class);
-                intent.putExtra("id", draftLeaveCancelationList.get(position).getID());
-                context.startActivity(intent);
-            }
-        });
-
-        chcDraftCancelation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(((CompoundButton) v).isChecked())
-                {
-                    listID.add(draftLeaveCancelationList.get(position).getID()); // add to cb array
-                    draftLeaveCancelationList.get(position).setSelected(true);
-                }
-                else
-                {
-                    listID.remove(draftLeaveCancelationList.get(position).getID());
-                    draftLeaveCancelationList.get(position).setSelected(false);
-                }
-
-            }
-        });
 
         // return rowView
         return rowView;
@@ -105,4 +81,42 @@ public class ListDraftLeaveCancelationAdapter extends ArrayAdapter<ReturnValue> 
         }
         return result;
     }
+
+    @Override
+    public void remove(ReturnValue object) {
+        draftLeaveCancelationList.remove(object);
+        lstIdSelected.add(object.getID());
+        SharedPreferenceUtils.setSetting(context,"lstIdSelected", lstIdSelected.toString());
+        notifyDataSetChanged();
+    }
+
+    public List<ReturnValue> getLstorder() {
+        return draftLeaveCancelationList;
+    }
+
+    public void toggleSelection(int position) {
+        selectView(position, !mSelectedItemsIds.get(position));
+    }
+
+    public void removeSelection() {
+        mSelectedItemsIds = new SparseBooleanArray();
+        notifyDataSetChanged();
+    }
+
+    public void selectView(int position, boolean value) {
+        if (value)
+            mSelectedItemsIds.put(position, value);
+        else
+            mSelectedItemsIds.delete(position);
+        notifyDataSetChanged();
+    }
+
+    public int getSelectedCount() {
+        return mSelectedItemsIds.size();
+    }
+
+    public SparseBooleanArray getSelectedIds() {
+        return mSelectedItemsIds;
+    }
+
 }

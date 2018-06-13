@@ -2,10 +2,12 @@ package com.example.android.starbridges.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -34,6 +36,8 @@ public class ReimburseActivity extends AppCompatActivity {
     ReimburseAdapter viewAdapter;
     ListView lstReimburse;
 
+    FloatingActionButton fabAddReimburse;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +46,16 @@ public class ReimburseActivity extends AppCompatActivity {
 
 
         lstReimburse=(ListView)findViewById(R.id.lstReimburse);
+
+        fabAddReimburse=(FloatingActionButton)findViewById(R.id.fabAddReimburse);
+
+        fabAddReimburse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(ReimburseActivity.this, ReimburseDetailActivity.class);
+                startActivity(intent);
+            }
+        });
 
         session = new SessionManagement(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
@@ -59,7 +73,7 @@ public class ReimburseActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.menu_draft, menu);
 
         return true;
     }
@@ -68,19 +82,13 @@ public class ReimburseActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        // add new medical claim
+        // add new reimburse claim
         if(id == R.id.action_item_one ){
-            Intent intent = new Intent(ReimburseActivity.this, ReimburseDetailActivity.class);
-            startActivity(intent);
-            return true;
-        }
-
-        // save to draft
-        if(id == R.id.action_item_two ){
             Intent intent = new Intent(ReimburseActivity.this, ListDraftReimburseActivity.class);
             startActivity(intent);
             return true;
         }
+
 
         return super.onOptionsItemSelected(item);
     }

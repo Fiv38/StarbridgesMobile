@@ -3,6 +3,7 @@ package com.example.android.starbridges.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.example.android.starbridges.R;
 import com.example.android.starbridges.activity.LeaveCancelationDetailActivity;
 import com.example.android.starbridges.activity.ReimburseDetailActivity;
 import com.example.android.starbridges.model.ListDraftReimbursement.ReturnValue;
+import com.example.android.starbridges.utility.SharedPreferenceUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,11 +29,17 @@ public class ListDraftReimbursementAdapter extends ArrayAdapter<ReturnValue> {
     private final Context context;
     private final List<ReturnValue> draftLeaveReimbursement;
     public static List<String> listID = new ArrayList<>();
+    LayoutInflater inflater;
+    private SparseBooleanArray mSelectedItemsIds;
+    List<String> lstIdSelected= new ArrayList<>();
+
 
     public ListDraftReimbursementAdapter(Context context, List<ReturnValue> draftLeaveReimbursement){
         super(context, R.layout.list_draft_leave_cancelation, draftLeaveReimbursement);
 
+        mSelectedItemsIds=new SparseBooleanArray();
         this.context = context;
+        inflater=LayoutInflater.from(context);
         this.draftLeaveReimbursement = draftLeaveReimbursement;
     }
 
@@ -49,41 +57,11 @@ public class ListDraftReimbursementAdapter extends ArrayAdapter<ReturnValue> {
         TextView txtAmountDraftReimburse = (TextView) rowView.findViewById(R.id.txtAmountDraftReimburse);
         TextView txtTypeDraftReimburse = (TextView) rowView.findViewById(R.id.txtTypeDraftReimburse);
         TextView txtTransactionDateDraftReimburse = (TextView) rowView.findViewById(R.id.txtTransactionDateDraftReimburse);
-        Button btnEditDraft = (Button) rowView.findViewById(R.id.btnEditDraft);
-        CheckBox chcDraftReimburse = (CheckBox) rowView.findViewById(R.id.chcDraftReimburse);
 
         txtDesciptionDraftReimburse.setText(draftLeaveReimbursement.get(position).getDescription());
         txtAmountDraftReimburse.setText( draftLeaveReimbursement.get(position).getAmount());
         txtTypeDraftReimburse.setText( draftLeaveReimbursement.get(position).getType());
         txtTransactionDateDraftReimburse.setText(dateFormat(draftLeaveReimbursement.get(position).getTransactionDate()) );
-
-        chcDraftReimburse.setChecked(draftLeaveReimbursement.get(position).getSelected());
-
-        btnEditDraft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), ReimburseDetailActivity.class);
-                intent.putExtra("id", draftLeaveReimbursement.get(position).getID());
-                context.startActivity(intent);
-            }
-        });
-
-        chcDraftReimburse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(((CompoundButton) v).isChecked())
-                {
-                    listID.add(draftLeaveReimbursement.get(position).getID()); // add to cb array
-                    draftLeaveReimbursement.get(position).setSelected(true);
-                }
-                else
-                {
-                    listID.remove(draftLeaveReimbursement.get(position).getID());
-                    draftLeaveReimbursement.get(position).setSelected(false);
-                }
-
-            }
-        });
 
         // return rowView
         return rowView;
@@ -104,5 +82,44 @@ public class ListDraftReimbursementAdapter extends ArrayAdapter<ReturnValue> {
         }
         return result;
     }
+
+
+    @Override
+    public void remove(ReturnValue object) {
+        draftLeaveReimbursement.remove(object);
+        lstIdSelected.add(object.getID());
+        SharedPreferenceUtils.setSetting(context,"lstIdSelected", lstIdSelected.toString());
+        notifyDataSetChanged();
+    }
+
+    public List<ReturnValue> getLstorder() {
+        return draftLeaveReimbursement;
+    }
+
+    public void toggleSelection(int position) {
+        selectView(position, !mSelectedItemsIds.get(position));
+    }
+
+    public void removeSelection() {
+        mSelectedItemsIds = new SparseBooleanArray();
+        notifyDataSetChanged();
+    }
+
+    public void selectView(int position, boolean value) {
+        if (value)
+            mSelectedItemsIds.put(position, value);
+        else
+            mSelectedItemsIds.delete(position);
+        notifyDataSetChanged();
+    }
+
+    public int getSelectedCount() {
+        return mSelectedItemsIds.size();
+    }
+
+    public SparseBooleanArray getSelectedIds() {
+        return mSelectedItemsIds;
+    }
+
 }
 

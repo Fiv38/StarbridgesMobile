@@ -12,4 +12,16 @@
         android:id="@+id/lstDraftReimburse"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabAddDraftReimburse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:clickable="true"
+        app:backgroundTint="@color/wallet_holo_blue_light"
+        app:srcCompat="@drawable/ic_menu_add"
+        android:layout_margin="15dp"
+        app:fabSize="normal"/>
 </RelativeLayout>

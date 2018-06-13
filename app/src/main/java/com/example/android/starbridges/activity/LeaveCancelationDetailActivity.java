@@ -344,6 +344,9 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
                     imgCancelToDateCancelDetail.setEnabled(true);
                 }
 
+//                txtCancelToCancelDetail.setText("");
+//                txtCancelFromCancelDetail.setText("");
+
             }
 
             @Override
@@ -425,6 +428,7 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
             }
             spnDecisionNumberCancelDetail.setSelection(counter);
         }
+
     }
 
     public void processDatePickerResult(int year, int month, int day, EditText editText){

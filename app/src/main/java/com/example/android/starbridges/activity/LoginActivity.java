@@ -455,6 +455,8 @@ public class LoginActivity extends AppCompatActivity {
         TelephonyManager telephonyManager = (TelephonyManager) activity
                 .getSystemService(Context.TELEPHONY_SERVICE);
         IMEI= telephonyManager.getDeviceId();
+        //IMEI="865684032897881";
+        IMEI="863263034362087";
 
     }
 

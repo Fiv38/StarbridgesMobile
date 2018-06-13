@@ -55,13 +55,12 @@ public class LeaveCancelationAdapter extends ArrayAdapter<com.example.android.st
         if(convertView==null)
         {
             holder = new LeaveCancelationAdapter.ViewHolder();
-            convertView = inflater.inflate(R.layout.lst_cancelation, null);
+            convertView = inflater.inflate(R.layout.lst_cancelation2, null);
             // Locate the TextViews in listview_item.xml
             holder.txtDecisionNumberCancelation = (TextView) convertView.findViewById(R.id.txtDecisionNumberCancelation);
             holder.txtRequestTypeCancelation = (TextView) convertView.findViewById(R.id.txtRequestTypeCancelation);
             holder.txtCancelationCancelation = (TextView) convertView.findViewById(R.id.txtCancelationCancelation);
             holder.txtLeaveCancelation = (TextView) convertView.findViewById(R.id.txtLeaveCancelation);
-            holder.txtAdditionalUnitCancelation = (TextView) convertView.findViewById(R.id.txtAdditionalUnitCancelation);
             holder.txtNotesCancelation = (TextView) convertView.findViewById(R.id.txtNotesCancelation);
 
             convertView.setTag(holder);
@@ -80,7 +79,6 @@ public class LeaveCancelationAdapter extends ArrayAdapter<com.example.android.st
         holder.txtRequestTypeCancelation.setText(lstorder.get(position).getRequestType());
         holder.txtCancelationCancelation.setText( dateFormat(lstorder.get(position).getCancelFrom()) +" - "+ dateFormat(lstorder.get(position).getCancelTo()) );
         holder.txtLeaveCancelation.setText( dateFormat(lstorder.get(position).getRequestFrom()) +" - "+ dateFormat(lstorder.get(position).getRequestTo()) );
-        holder.txtAdditionalUnitCancelation.setText(lstorder.get(position).getAdditionalUnit()+"");
         holder.txtNotesCancelation.setText(lstorder.get(position).getNotes());
 
         return convertView;
