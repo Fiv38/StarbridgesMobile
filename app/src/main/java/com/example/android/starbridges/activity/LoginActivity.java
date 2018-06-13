@@ -165,7 +165,7 @@ public class LoginActivity extends AppCompatActivity {
                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
             finish();
         }
-             setAlarmMasukPulang();
+             setAlarmMasukPulang(getApplicationContext());
         }
 
 
@@ -180,33 +180,33 @@ public class LoginActivity extends AppCompatActivity {
         return providers.contains(LocationManager.GPS_PROVIDER);
     }
 
-    private void setAlarmMasukPulang(){
-        boolean isAlarmMasuk = (PendingIntent.getBroadcast(this, 0,
+    private void setAlarmMasukPulang(Context context){
+        boolean isAlarmMasuk = (PendingIntent.getBroadcast(context, 0,
                 new Intent("com.example.android.starbridges.ACTION_NOTIFY_MASUK"),
                 PendingIntent.FLAG_NO_CREATE) != null);
 
         if (isAlarmMasuk)
         {
             Log.d("myTag", "Alarm Masuk is already active");
-            Toast.makeText(this, "Alarm Masuk is already active", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Alarm Masuk is already active", Toast.LENGTH_SHORT).show();
         }else {
-            AlarmManagerMasuk.start(getApplicationContext());
+            AlarmManagerMasuk.start(context);
             Log.d("myTag", "AlarmMasuk is Created");
-            Toast.makeText(this, "AlarmMasuk is Created", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "AlarmMasuk is Created", Toast.LENGTH_SHORT).show();
         }
 
-        boolean isAlarmKeluar = (PendingIntent.getBroadcast(this, 1,
+        boolean isAlarmKeluar = (PendingIntent.getBroadcast(context, 1,
                 new Intent("com.example.android.starbridges.ACTION_NOTIFY_PULANG"),
                 PendingIntent.FLAG_NO_CREATE) != null);
 
         if (isAlarmKeluar)
         {
             Log.d("myTag", "AlarmPulang is already active");
-            Toast.makeText(this, "Alarm Pulang is already active", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Alarm Pulang is already active", Toast.LENGTH_SHORT).show();
         }else {
-            AlarmManagerPulang.start(getApplicationContext());
+            AlarmManagerPulang.start(context);
             Log.d("myTag", "AlarmPulang is Created");
-            Toast.makeText(this, "AlarmPulang is Created", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "AlarmPulang is Created", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -448,7 +448,6 @@ public class LoginActivity extends AppCompatActivity {
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
-
 
     @SuppressLint("MissingPermission")
     public void getIMEI (Activity activity){
