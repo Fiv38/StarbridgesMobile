@@ -334,7 +334,7 @@
                         android:id="@+id/imageView41"
                         android:layout_width="match_parent"
                         android:layout_height="63dp"
-                        app:srcCompat="@mipmap/ic_refund" />
+                        app:srcCompat="@mipmap/ic_reimburse2" />
 
                     <TextView
                         android:id="@+id/textView41"
@@ -358,7 +358,7 @@
                         android:id="@+id/imageView42"
                         android:layout_width="match_parent"
                         android:layout_height="63dp"
-                        app:srcCompat="@mipmap/ic_log_out4" />
+                        app:srcCompat="@mipmap/ic_shift_exchange2" />
 
                     <TextView
                         android:id="@+id/textView42"
@@ -382,7 +382,7 @@
                         android:id="@+id/imageView43"
                         android:layout_width="match_parent"
                         android:layout_height="63dp"
-                        app:srcCompat="@mipmap/ic_log_out4" />
+                        app:srcCompat="@mipmap/ic_logout2" />
 
                     <TextView
                         android:id="@+id/textView43"

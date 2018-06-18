@@ -67,6 +67,7 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
 
 
     String requestType, leaveRequestTransactionID, accessibilityAttribute, photo, id;
+    String cancelFrom="", cancelTo="";
     List<Object> exclusiveFields;
     boolean fullAccess;
     int leaveRequestRuleID;
@@ -344,8 +345,17 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
                     imgCancelToDateCancelDetail.setEnabled(true);
                 }
 
-//                txtCancelToCancelDetail.setText("");
-//                txtCancelFromCancelDetail.setText("");
+                if(editLeaveCancelation.getLeaveRequestTransactionID().equals(decisionNumber.getID()))
+                {
+                    txtCancelToCancelDetail.setText(cancelTo);
+                    txtCancelFromCancelDetail.setText(cancelFrom);
+                }
+                else{
+                    txtCancelToCancelDetail.setText("");
+                    txtCancelFromCancelDetail.setText("");
+                }
+
+
 
             }
 
@@ -681,8 +691,10 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
 
                     txtLeaveFromCancelDetail.setText(dateFormat(editLeaveCancelation.getLeaveFrom())  );
                     txtLeaveToCancelDetail.setText(dateFormat(editLeaveCancelation.getLeaveTo())  );
-                    txtCancelFromCancelDetail.setText(dateFormat(editLeaveCancelation.getCancelFrom())  );
-                    txtCancelToCancelDetail.setText(dateFormat(editLeaveCancelation.getCancelTo())  );
+                    cancelFrom=dateFormat(editLeaveCancelation.getCancelFrom());
+                    cancelTo=dateFormat(editLeaveCancelation.getCancelTo());
+//                    txtCancelFromCancelDetail.setText(dateFormat(editLeaveCancelation.getCancelFrom())  );
+//                    txtCancelToCancelDetail.setText(dateFormat(editLeaveCancelation.getCancelTo())  );
                     txtNotesCancelDetail.setText(editLeaveCancelation.getNotes());
                     photo=editLeaveCancelation.getAttachmentFile();
 
