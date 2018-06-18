@@ -453,8 +453,8 @@ public class LoginActivity extends AppCompatActivity {
     public void getIMEI (Activity activity){
         TelephonyManager telephonyManager = (TelephonyManager) activity
                 .getSystemService(Context.TELEPHONY_SERVICE);
-        IMEI= telephonyManager.getDeviceId();
-
+//        IMEI= telephonyManager.getDeviceId();
+        IMEI= "863263034362087";
     }
 
     public void checkIMEIPermission() {
