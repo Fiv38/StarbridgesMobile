@@ -4,11 +4,9 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.SystemClock;
 import android.text.format.DateFormat;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import static android.content.Context.ALARM_SERVICE;
 import static java.util.Calendar.AM;
@@ -30,7 +28,7 @@ public class AlarmManagerMasuk {
 //        //AlarmManager.INTERVAL_FIFTEEN_MINUTES /3 ;
         //setting specific time
 
-        final Calendar checkOutTime2 = Calendar.getInstance();
+        Calendar checkOutTime2 = Calendar.getInstance();
 
         if (DateFormat.is24HourFormat(ctx)) {
             checkOutTime2.set(Calendar.HOUR_OF_DAY, 8);
@@ -38,7 +36,7 @@ public class AlarmManagerMasuk {
             checkOutTime2.set(Calendar.HOUR, 8);
             checkOutTime2.set(Calendar.AM_PM, AM);
         }
-        checkOutTime2.set(Calendar.MINUTE, 0);
+        checkOutTime2.set(Calendar.MINUTE, 20);
         checkOutTime2.set(Calendar.SECOND, 10);
         checkOutTime2.set(Calendar.MILLISECOND, 0);
 

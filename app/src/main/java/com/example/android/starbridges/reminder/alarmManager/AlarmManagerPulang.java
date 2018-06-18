@@ -8,7 +8,6 @@ import android.os.SystemClock;
 import android.text.format.DateFormat;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import static android.content.Context.ALARM_SERVICE;
 import static java.util.Calendar.PM;
@@ -30,12 +29,12 @@ public class AlarmManagerPulang {
 
         Calendar checkOutTime = Calendar.getInstance();
         if (DateFormat.is24HourFormat(ctx)) {
-            checkOutTime.set(Calendar.HOUR_OF_DAY, 16);
+            checkOutTime.set(Calendar.HOUR_OF_DAY, 17);
         } else {
-            checkOutTime.set(Calendar.HOUR, 4);
+            checkOutTime.set(Calendar.HOUR, 5);
             checkOutTime.set(Calendar.AM_PM, PM);
         }
-        checkOutTime.set(Calendar.MINUTE, 45);
+        checkOutTime.set(Calendar.MINUTE, 20);
         checkOutTime.set(Calendar.SECOND, 10);
         checkOutTime.set(Calendar.MILLISECOND, 0);
 
