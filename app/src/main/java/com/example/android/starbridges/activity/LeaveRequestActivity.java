@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -137,5 +138,10 @@ public class LeaveRequestActivity extends AppCompatActivity {
                 call.cancel();
             }
         });
+    }
+
+    public void addLeaveRequest(View view) {
+        Intent intent = new Intent(LeaveRequestActivity.this, LeaveRequestDetailActivity.class);
+        startActivity(intent);
     }
 }

@@ -38,22 +38,22 @@ public class LeaveRequestAdapter extends ArrayAdapter<ReturnValue> {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         // get rowview from inflater
-        View rowView = inflater.inflate(R.layout.list_leave_request, parent, false);
+        View rowView = inflater.inflate(R.layout.list_leave_request2, parent, false);
 
         // get the text view from the rowView
-        TextView decisionNumber = (TextView) rowView.findViewById(R.id.decisionNumberView);
-        TextView requestType = (TextView) rowView.findViewById(R.id.requestTypeView);
-        TextView leave = (TextView) rowView.findViewById(R.id.leaveView);
-        TextView unitReduce = (TextView) rowView.findViewById(R.id.unitReduceView);
-        TextView notes = (TextView) rowView.findViewById(R.id.notesView);
-        TextView approvedDate = (TextView) rowView.findViewById(R.id.approvedDateView);
+        TextView decisionNumber = (TextView) rowView.findViewById(R.id.decisionNumberView2_2);
+        TextView requestType = (TextView) rowView.findViewById(R.id.requestTypeView3_2);
+        TextView leave = (TextView) rowView.findViewById(R.id.leaveView3_2);
+//        TextView unitReduce = (TextView) rowView.findViewById(R.id.unitReduceView);
+        TextView notes = (TextView) rowView.findViewById(R.id.notesView3_2);
+//        TextView approvedDate = (TextView) rowView.findViewById(R.id.approvedDateView);
 
         decisionNumber.setText(leaveRequestList.get(position).getDecisionNumber());
         requestType.setText(leaveRequestList.get(position).getRequestType());
         leave.setText(dateFormat(leaveRequestList.get(position).getStartLeave()) + " - " + dateFormat(leaveRequestList.get(position).getEndLeave()) );
-        unitReduce.setText(leaveRequestList.get(position).getTotalUnit());
+//        unitReduce.setText(leaveRequestList.get(position).getTotalUnit());
         notes.setText(leaveRequestList.get(position).getNotes());
-        approvedDate.setText(leaveRequestList.get(position).getApproveDate());
+//        approvedDate.setText(leaveRequestList.get(position).getApproveDate());
 
         // return rowView
         return rowView;

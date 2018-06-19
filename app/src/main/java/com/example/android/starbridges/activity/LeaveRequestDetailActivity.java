@@ -71,7 +71,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 
     Calendar myCalendar = Calendar.getInstance();
     Button saveBtn, submitBtn, uploadBtn, cancelBtn;
-    String saveStr,submitStr;
+    String saveStr, submitStr;
 
     Intent intent;
 
@@ -106,14 +106,14 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
     private String approveDate = "";
     private Boolean isHalfDay = true;
     private String submitType = "";
-    private String message =  "";
+    private String message = "";
     private String transactionStatusSaveOrSubmit = "";
     private String photo = "";
     private Boolean fullAccess = true;
     private List<String> exclusionFields = new ArrayList<String>();
     private String accessibilityAttribute = "";
 
-    int idRequestType= 0;
+    int idRequestType = 0;
     String balanceUID = "";
 
     // get data from request confirmation
@@ -199,22 +199,21 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                 int minute = mTime.get(Calendar.MINUTE);
 
                 TimePickerDialog mTimePicker;
-                try{
+                try {
                     mTimePicker = new TimePickerDialog(LeaveRequestDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                            leaveAt = String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0');
+                            leaveAt = String.format("%2s", selectedHour).replace(' ', '0') + ":" + String.format("%2s", selectedMinute).replace(' ', '0');
 
                             startDate.setText(startLeave + " - " + leaveAt);
                             Toast.makeText(LeaveRequestDetailActivity.this, "pertama1 :" + leaveAt, Toast.LENGTH_LONG).show();
                         }
-                    }, Integer.parseInt(startLeave.substring(0,2)) , Integer.parseInt(startLeave.substring(3,5)), true);
-                } catch (Exception e)
-                {
+                    }, Integer.parseInt(startLeave.substring(0, 2)), Integer.parseInt(startLeave.substring(3, 5)), true);
+                } catch (Exception e) {
                     mTimePicker = new TimePickerDialog(LeaveRequestDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                            leaveAt = String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0');
+                            leaveAt = String.format("%2s", selectedHour).replace(' ', '0') + ":" + String.format("%2s", selectedMinute).replace(' ', '0');
 
                             startDate.setText(endLeave + " - " + leaveAt);
 
@@ -245,23 +244,22 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                 int minute = mTime.get(Calendar.MINUTE);
 
                 TimePickerDialog mTimePicker;
-                try{
+                try {
                     mTimePicker = new TimePickerDialog(LeaveRequestDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                            returnAt = String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0');
+                            returnAt = String.format("%2s", selectedHour).replace(' ', '0') + ":" + String.format("%2s", selectedMinute).replace(' ', '0');
 
                             endDate.setText(endLeave + " - " + returnAt);
 
                             Toast.makeText(LeaveRequestDetailActivity.this, "kedua1 :" + returnAt, Toast.LENGTH_LONG).show();
                         }
-                    }, Integer.parseInt(startLeave.substring(0,2)) , Integer.parseInt(startLeave.substring(3,5)), true);
-                } catch (Exception e)
-                {
+                    }, Integer.parseInt(startLeave.substring(0, 2)), Integer.parseInt(startLeave.substring(3, 5)), true);
+                } catch (Exception e) {
                     mTimePicker = new TimePickerDialog(LeaveRequestDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                            returnAt = String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0');
+                            returnAt = String.format("%2s", selectedHour).replace(' ', '0') + ":" + String.format("%2s", selectedMinute).replace(' ', '0');
 
                             endDate.setText(endLeave + " - " + returnAt);
 
@@ -362,7 +360,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         spinnerRequestType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i>0){
+                if (i > 0) {
                     final ReturnValue returnValue = (ReturnValue) spinnerRequestType.getItemAtPosition(i);
                     leaveRequestRuleID = returnValue.getID();
                     leaveRequestType = returnValue.getName();
@@ -381,7 +379,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         spinnerBalanceType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i>0) {
+                if (i > 0) {
                     final com.example.android.starbridges.model.balanceType.ReturnValue returnValue1 = (com.example.android.starbridges.model.balanceType.ReturnValue) spinnerBalanceType.getItemAtPosition(i);
                     employeeLeaveBalanceUID = returnValue1.getValue().toString();
                     //Toast.makeText(LeaveRequestDetailActivity.this, "UID " + balanceUID, Toast.LENGTH_SHORT).show();
@@ -396,13 +394,13 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 
         // Get intent from adapter
         intent = getIntent();
-        if(intent.getStringExtra("ID") != null){
+        if (intent.getStringExtra("ID") != null) {
             id = intent.getStringExtra("ID");
             editLeaveRequest(id);
         }
     }
 
-    public void requestConfirmation(){
+    public void requestConfirmation() {
         // get token
         apiInterface = APIClient.getClient(GlobalVar.getToken()).create(APIInterfaceRest.class);
         progressDialog = new ProgressDialog(LeaveRequestDetailActivity.this);
@@ -417,12 +415,25 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         message = notes.getText().toString();
         notesStr = notes.getText().toString();
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("MM/dd/yyyy");
+        try{
+            Date a = sdf.parse(startLeave);
+            Date b = sdf.parse(endLeave);
+            startLeave = sdf2.format(a);
+            endLeave = sdf2.format(b);
+
+//            leaveAt = sdf2.format(a)+"T"+leaveAt+":00";
+//            returnAt = sdf2.format(b)+"T"+returnAt+":00";
+            System.out.println("a");
+        }catch (Exception e){}
+
         Call<RequestConfirmation> call3 = apiInterface.requestConfirmation(
-                    transactionStatus, id, employeeID, roster, requestDate, employeeNIK, employeeName, leaveRequestRuleID, leaveRequestType,
-                    employeeLeaveBalanceUID, currentBalance, balanceExpireDate, totalUnit, totalUnitReduce, startLeave,
-                    endLeave, leaveAt, returnAt, minIntervalViolation, unitLimitViolation, occurenceViolation, notesStr,
-                    attachmentFile, attachmentID, decisionNumber, transactionStatusID, approveDate, isHalfDay, submitType,
-                    message, transactionStatusSaveOrSubmit, photo, fullAccess, exclusionFields, accessibilityAttribute);
+                transactionStatus, id, employeeID, roster, requestDate, employeeNIK, employeeName, leaveRequestRuleID, leaveRequestType,
+                employeeLeaveBalanceUID, currentBalance, balanceExpireDate, totalUnit, totalUnitReduce, startLeave,
+                endLeave, leaveAt, returnAt, minIntervalViolation, unitLimitViolation, occurenceViolation, notesStr,
+                attachmentFile, attachmentID, decisionNumber, transactionStatusID, approveDate, isHalfDay, submitType,
+                message, transactionStatusSaveOrSubmit, photo, fullAccess, exclusionFields, accessibilityAttribute);
         call3.enqueue(new Callback<RequestConfirmation>() {
 
             @Override
@@ -509,7 +520,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 
     }
 
-    public void editLeaveRequest(String ids){
+    public void editLeaveRequest(String ids) {
         // get token
         apiInterface = APIClient.editLeaveRequest(GlobalVar.getToken()).create(APIInterfaceRest.class);
         progressDialog = new ProgressDialog(LeaveRequestDetailActivity.this);
@@ -530,7 +541,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                     editLeaveRequest = data.getReturnValue();
 
                     // used for set text spinner
-                    idRequestType= data.getReturnValue().getLeaveRequestRuleID();
+                    idRequestType = data.getReturnValue().getLeaveRequestRuleID();
                     balanceUID = data.getReturnValue().getEmployeeLeaveBalanceUID();
 
                     // get data from edit leave request
@@ -579,7 +590,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                     notes.setText(notesStr);
 
                     // load Image if exist
-                    if(attachmentFile != null) {
+                    if (attachmentFile != null) {
                         byte[] decodedString = Base64.decode(attachmentFile, Base64.DEFAULT);
                         Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                         imageView.setImageBitmap(bitmap);
@@ -608,7 +619,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
     }
 
 
-    public void saveLeaveRequest(){
+    public void saveLeaveRequest() {
         // get token
         apiInterface = APIClient.saveLeaveRequest(GlobalVar.getToken()).create(APIInterfaceRest.class);
         progressDialog = new ProgressDialog(LeaveRequestDetailActivity.this);
@@ -760,10 +771,10 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         endDate.setText(sdf.format(myCalendar.getTime()));
     }
 
-    private String getDate(String view){
+    private String getDate(String view) {
         DateFormat dateFormat;
         // view -> kebutuhan UI, other -> kirim ke server
-        if(view.equals("view"))
+        if (view.equals("view"))
             dateFormat = new SimpleDateFormat("dd MMM yyyy");
         else
             dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -772,7 +783,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         return dateFormat.format(date);
     }
 
-    private String formatDate(String str){
+    private String formatDate(String str) {
         int position = str.indexOf("T");
 
         String dateStr = str.substring(0, position);
@@ -784,7 +795,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         return dateStr;
     }
 
-    private String formatTime(String str){
+    private String formatTime(String str) {
         int position = str.indexOf("T");
 
         String timeStr = str.substring(position + 1);
@@ -792,15 +803,12 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         return timeStr;
     }
 
-    public void setupSpinner()
-    {
-        int spinnerIdSelected=0;
+    public void setupSpinner() {
+        int spinnerIdSelected = 0;
 
-        if(idRequestType > 0)
-        {
-            for(ReturnValue x: listReturnValue)
-            {
-                if(x.getID()==idRequestType)
+        if (idRequestType > 0) {
+            for (ReturnValue x : listReturnValue) {
+                if (x.getID() == idRequestType)
                     break;
                 spinnerIdSelected++;
             }
@@ -809,15 +817,12 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         spinnerRequestType.setSelection(spinnerIdSelected);
     }
 
-    public void setupSpinnerBalance()
-    {
-        int spinnerIdSelected=0;
+    public void setupSpinnerBalance() {
+        int spinnerIdSelected = 0;
 
-        if(balanceUID != "")
-        {
-            for(com.example.android.starbridges.model.balanceType.ReturnValue x: listReturnValue1)
-            {
-                if(x.getValue().equals(balanceUID))
+        if (balanceUID != "") {
+            for (com.example.android.starbridges.model.balanceType.ReturnValue x : listReturnValue1) {
+                if (x.getValue().equals(balanceUID))
                     break;
                 spinnerIdSelected++;
             }
@@ -838,19 +843,19 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-           try {
-               final Uri imageUri = data.getData();
-               final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-               final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+            try {
+                final Uri imageUri = data.getData();
+                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 
-               imageView.setImageBitmap(selectedImage);
-               attachmentFile = encodeImage(selectedImage);
-           }catch (FileNotFoundException e){
-               e.printStackTrace();
-               Toast.makeText(LeaveRequestDetailActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
-           }
-        }else{
-            Toast.makeText(LeaveRequestDetailActivity.this, "You haven't picked Image",Toast.LENGTH_LONG).show();
+                imageView.setImageBitmap(selectedImage);
+                attachmentFile = encodeImage(selectedImage);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                Toast.makeText(LeaveRequestDetailActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(LeaveRequestDetailActivity.this, "You haven't picked Image", Toast.LENGTH_LONG).show();
         }
     }
 

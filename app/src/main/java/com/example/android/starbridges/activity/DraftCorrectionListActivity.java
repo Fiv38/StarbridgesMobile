@@ -42,9 +42,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DraftCorrectionListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
-
-
-
     TextView txtNameCorrectionDraft, txtNIKCorrectionDraft;
 
     ImageView imgDeleteCDrafts;
