@@ -188,11 +188,11 @@ public class LoginActivity extends AppCompatActivity {
         if (isAlarmMasuk)
         {
             Log.d("myTag", "Alarm Masuk is already active");
-            Toast.makeText(context, "Alarm Masuk is already active", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Alarm Masuk is already active", Toast.LENGTH_SHORT).show();
         }else {
             AlarmManagerMasuk.start(context);
             Log.d("myTag", "AlarmMasuk is Created");
-            Toast.makeText(context, "AlarmMasuk is Created", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "AlarmMasuk is Created", Toast.LENGTH_SHORT).show();
         }
 
         boolean isAlarmKeluar = (PendingIntent.getBroadcast(context, 1,
@@ -202,15 +202,14 @@ public class LoginActivity extends AppCompatActivity {
         if (isAlarmKeluar)
         {
             Log.d("myTag", "AlarmPulang is already active");
-            Toast.makeText(context, "Alarm Pulang is already active", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Alarm Pulang is already active", Toast.LENGTH_SHORT).show();
         }else {
             AlarmManagerPulang.start(context);
             Log.d("myTag", "AlarmPulang is Created");
-            Toast.makeText(context, "AlarmPulang is Created", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "AlarmPulang is Created", Toast.LENGTH_SHORT).show();
         }
 
     }
-
 
     private void enableLoc() {
 
