@@ -210,7 +210,11 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.CorrectionListActivity"></activity>
+        <activity android:name=".activity.CorrectionListActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".activity.HomeActivity"
+            android:screenOrientation="portrait"
+            ></activity>
     </application>
 
 </manifest>
