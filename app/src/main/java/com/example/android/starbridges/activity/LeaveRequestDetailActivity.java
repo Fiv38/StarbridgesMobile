@@ -291,7 +291,6 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 
                         }
                     });
-
                     alert.show();
                 }else{
                     // set val "Save" to transaction Status
@@ -438,13 +437,23 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         notesStr = notes.getText().toString();
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat sdf2 = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+
+        System.out.println(startLeave+" T "+endLeave);
+        System.out.println(leaveAt+" T "+returnAt);
         try{
             Date a = sdf.parse(startLeave);
             Date b = sdf.parse(endLeave);
-            startLeave = sdf2.format(a);
-            endLeave = sdf2.format(b);
-
+            String timeA = leaveAt;
+            String timeB = returnAt;
+            String dateA = sdf2.format(a);
+            String dateB = sdf2.format(b);
+            String leave = dateA+"T"+timeA;
+            String returN = dateB+"T"+timeB;
+            startLeave = leave;
+            endLeave = returN;
+            leaveAt=leave;
+            returnAt=returN;
 //            leaveAt = sdf2.format(a)+"T"+leaveAt+":00";
 //            returnAt = sdf2.format(b)+"T"+returnAt+":00";
             System.out.println("a");
@@ -639,7 +648,6 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         });
 
     }
-
 
     public void saveLeaveRequest() {
         // get token
