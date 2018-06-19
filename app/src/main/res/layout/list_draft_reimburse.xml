@@ -36,9 +36,7 @@
             android:layout_weight="1"
             android:gravity="right"
             android:text="Transaction Date"
-            android:textColor="@color/wallet_holo_blue_light"
-            android:textSize="16dp"
-            android:textStyle="bold" />
+            android:textColor="@color/wallet_holo_blue_light" />
     </LinearLayout>
 
 
@@ -51,8 +49,7 @@
         android:layout_alignBaseline="@+id/requestTypeLbl"
         android:layout_alignParentRight="true"
         android:text="Amount"
-        android:textSize="16dp"
-        android:textStyle="bold" />
+        android:textSize="15dp" />
 
 
     <!-- Unit Reduce -->
@@ -63,9 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/unitReduceLbl"
         android:layout_alignParentRight="true"
-        android:text="Type"
-        android:textSize="16dp"
-        android:textStyle="bold" />
+        android:text="Type" />
 
     <!-- Unit Reduce -->
 

@@ -77,6 +77,10 @@ public class ListDraftLeaveCancelationActivity extends AppCompatActivity impleme
 
         fabAddDraftLeaveCancelation=(FloatingActionButton)findViewById(R.id.fabAddDraftLeaveCancelation);
 
+        setTitle("Draft Leave Cancelation");
+        getListDraftLeaveCancelation();
+
+
         fabAddDraftLeaveCancelation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,8 +88,6 @@ public class ListDraftLeaveCancelationActivity extends AppCompatActivity impleme
                 startActivity(intent);
             }
         });
-        setTitle("Draft Leave Cancelation");
-        getListDraftLeaveCancelation();
     }
 
     public void deleteCheckedDraft(){

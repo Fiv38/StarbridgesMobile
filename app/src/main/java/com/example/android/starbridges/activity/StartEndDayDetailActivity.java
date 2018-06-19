@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -65,7 +66,6 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_end_day_detail);
-
         setTitle("ATTENDANCE");
         mEventView = (EditText) findViewById(R.id.txt_event_sd);
         mDateView = (EditText) findViewById(R.id.txt_date_sd);

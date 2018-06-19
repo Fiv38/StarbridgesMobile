@@ -52,8 +52,7 @@
             android:name=".activity.CheckInOutDetailActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.CheckInOutActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
+            android:theme="@style/TranslucentTheme" />
         <activity
             android:name=".activity.StartEndDayActivity"
             android:configChanges="orientation"
@@ -63,8 +62,7 @@
             android:name=".activity.StartEndDayDetailActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.StartEndDayActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
+            android:theme="@style/TranslucentTheme" />
         <activity
             android:name=".activity.HistoriesActivity"
             android:configChanges="orientation"

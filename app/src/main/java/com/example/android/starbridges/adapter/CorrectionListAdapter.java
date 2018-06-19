@@ -90,6 +90,8 @@ public class CorrectionListAdapter extends ArrayAdapter<ReturnValue> {
         holder.txtStatusCorrection.setText(lstorder.get(position).getStatusCode());
         if(!lstorder.get(position).getStatusCode().matches("Normal")||!lstorder.get(position).getStatusCode().equals("Normal"))
             holder.txtStatusCorrection.setTextColor(ContextCompat.getColor(context, R.color.colorRed));
+        else
+            holder.txtStatusCorrection.setTextColor(ContextCompat.getColor(context, R.color.common_google_signin_btn_text_light));
         holder.txtLogDateCorrection.setText(dateResult);
         holder.txtDayCorrection.setText(lstorder.get(position).getDay());
 

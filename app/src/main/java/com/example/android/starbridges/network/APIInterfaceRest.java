@@ -433,20 +433,19 @@ public interface APIInterfaceRest {
     @GET("api/ShiftExchange/GetListEmployee")
     Call<ListEmployee> getListShiftEmployee();
 
-    @FormUrlEncoded
     @POST("api/ShiftExchange/SaveDetail")
-    Call<SaveShiftExchange> saveShiftExchange(
-            @Query("transactionStatus") String transactionStatus,
-            @Field("ID") String id,
-            @Field("EmployeeID") String employeeID,
-            @Field("Date") String date,
-            @Field("ShiftID") String shiftID,
-            @Field("ShiftName") String shiftName,
-            @Field("Notes") String notes,
-            @Field("TransactionStatusID") String transactionStatusID,
-            @Field("AttachmentFile") String attachmentFile,
-            @Field("AttachmentID") String attachmentID)
-            ;
+    Call<SaveShiftExchange> saveShiftExchange(@Body RequestBody body, @Query("transactionStatus") String transactionStatus);
+    //@Query("transactionStatus") String transactionStatus,
+    //@Field("ID") String id,
+    //@Field("EmployeeID") String employeeID,
+    //@Field("Date") String date,
+    //@Field("ShiftID") String shiftID,
+    //@Field("ShiftName") String shiftName,
+    //@Field("Notes") String notes,
+    //@Field("TransactionStatusID") String transactionStatusID,
+    //@Field("AttachmentFile") String attachmentFile,
+    //@Field("AttachmentID") String attachmentID)
+    //;
 
     @POST("api/ShiftExchange/EditDraft")
     Call<EditShiftExchange> editShiftExchange(@Query("id") String id);

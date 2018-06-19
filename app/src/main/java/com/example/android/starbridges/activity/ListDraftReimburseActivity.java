@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -55,6 +56,8 @@ public class ListDraftReimburseActivity extends AppCompatActivity implements Ada
 
     List<String> lstIdSelected=new ArrayList<>();
 
+    FloatingActionButton fabAddDraftReimburse;
+
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         ReturnValue data1=data.getReturnValue().get(position);
@@ -65,6 +68,7 @@ public class ListDraftReimburseActivity extends AppCompatActivity implements Ada
         Intent intent=new Intent(ListDraftReimburseActivity.this, ReimburseDetailActivity.class);
         intent.putExtra("id", data1.getID());
         startActivity(intent);
+
     }
 
     @Override
@@ -74,6 +78,15 @@ public class ListDraftReimburseActivity extends AppCompatActivity implements Ada
 
         setTitle("Reimbursement");
         getListDraftReimbursement();
+
+        fabAddDraftReimburse=(FloatingActionButton)findViewById(R.id.fabAddDraftReimburse);
+        fabAddDraftReimburse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(ListDraftReimburseActivity.this, ReimburseDetailActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 

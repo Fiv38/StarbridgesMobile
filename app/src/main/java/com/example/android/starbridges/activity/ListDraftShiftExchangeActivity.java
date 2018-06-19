@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.android.starbridges.R;
 import com.example.android.starbridges.adapter.ListDraftShiftExchangeAdapter;
+import com.example.android.starbridges.model.DeleteShiftExchange.DeleteShiftExchange;
 import com.example.android.starbridges.model.ListDraftShiftExchange.ListDraftShiftExchange;
 import com.example.android.starbridges.model.ListDraftShiftExchange.ReturnValue;
 import com.example.android.starbridges.network.APIClient;
@@ -34,6 +35,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,8 +48,6 @@ public class ListDraftShiftExchangeActivity extends AppCompatActivity implements
     ListDraftShiftExchange listData;
     private String idSelected="";
     List<String> lstIdSelected=new ArrayList<>();
-    FloatingActionButton fabAddDraftShiftExchange;
-
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -68,12 +68,11 @@ public class ListDraftShiftExchangeActivity extends AppCompatActivity implements
         setTitle("Shift Exchange Draft");
 
         list =(ListView) findViewById(R.id.lstDraftShiftExchange);
-        fabAddDraftShiftExchange=(FloatingActionButton)findViewById(R.id.fabAddDraftShiftExchange);
-
-        fabAddDraftShiftExchange.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabAddDraftShiftExchange);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(ListDraftShiftExchangeActivity.this, ShiftExchangeDetailActivity.class);
+                Intent intent = new Intent(ListDraftShiftExchangeActivity.this, ShiftExchangeDetailActivity.class);
                 startActivity(intent);
             }
         });
@@ -229,7 +228,37 @@ public class ListDraftShiftExchangeActivity extends AppCompatActivity implements
     }
 
     public void deleteDraftShiftEx() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Loading");
+        progressDialog.show();
+        final APIInterfaceRest apiInterface = APIClient.deleteShiftExchange(GlobalVar.getToken()).create(APIInterfaceRest.class);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),idSelected);
+        Call<DeleteShiftExchange> call3 = apiInterface.deleteShiftExchange(body);
+        call3.enqueue(new Callback<DeleteShiftExchange>() {
+            @Override
+            public void onResponse(Call<DeleteShiftExchange> call, Response<DeleteShiftExchange> response) {
+                progressDialog.dismiss();
+                DeleteShiftExchange result = response.body();
+                if (result != null && result.getIsSucceed()) {
+                    Toast.makeText(ListDraftShiftExchangeActivity.this, result.getMessage(), Toast.LENGTH_LONG).show();
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        Toast.makeText(ListDraftShiftExchangeActivity.this, jObjError.toString(), Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        Toast.makeText(ListDraftShiftExchangeActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
 
+            }
+
+            @Override
+            public void onFailure(Call<DeleteShiftExchange> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(getApplicationContext(), "Something went wrong...Please try again!", Toast.LENGTH_LONG).show();
+                call.cancel();
+            }
+        });
 
     }
 

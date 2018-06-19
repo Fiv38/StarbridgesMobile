@@ -1,44 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activity.DraftDetailCorrectionActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="13dp"
-        android:text="Log Date" />
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/textView"
-        android:layout_marginTop="39dp"
-        android:text="Shift" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="Log Date" />
 
-    <TextView
-        android:id="@+id/txtLogDateCDraftDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/textView"
-        android:layout_marginStart="140dp" />
+        <TextView
+            android:id="@+id/txtLogDateCDraftDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true" />
 
-    <TextView
-        android:id="@+id/txtShiftCDraftDetails"
-        android:layout_width="wrap_content"
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/txtLogDateCDraftDetails"
-        android:layout_alignTop="@+id/textView4" />
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="10dp"
+            android:text="Shift" />
+
+
+        <TextView
+            android:id="@+id/txtShiftCDraftDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textView4" />
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,20 +59,18 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="70dp"
         android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Log In" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="16dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Log In" />
 
             <EditText
                 android:id="@+id/txtLogInCDraftDetails"
@@ -68,10 +78,22 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:textSize="10dp"
                 android:inputType="textPersonName" />
 
+            <ImageView
+                android:id="@+id/imgLogInCDraftDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:src="@drawable/ic_action_time" />
+
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Break Start" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -79,12 +101,6 @@
             android:layout_weight="0"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="16dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Break Start" />
 
             <EditText
                 android:id="@+id/txtBreakStartCDraftDetails"
@@ -92,21 +108,26 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:textSize="10dp"
                 android:inputType="textPersonName" />
+
+            <ImageView
+                android:id="@+id/imgBreakStartCDraftDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:src="@drawable/ic_action_time" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Break End" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="16dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Break End" />
 
             <EditText
                 android:id="@+id/txtBreakEndCDraftDetails"
@@ -114,21 +135,26 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:textSize="10dp"
                 android:inputType="textPersonName" />
+
+            <ImageView
+                android:id="@+id/imgBreaEndCDraftDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:src="@drawable/ic_action_time" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Log Out" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="16dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Log Out" />
 
             <EditText
                 android:id="@+id/txtLogOutCDraftDetails"
@@ -136,21 +162,28 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:textSize="10dp"
                 android:inputType="textPersonName" />
+
+            <ImageView
+                android:id="@+id/imgLogOutCDraftDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:src="@drawable/ic_action_time" />
+
         </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Overtime In" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="16dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Overtime In" />
 
             <EditText
                 android:id="@+id/txtOverTimeInCDraftDetails"
@@ -158,22 +191,27 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:textSize="10dp"
                 android:inputType="textPersonName" />
 
+            <ImageView
+                android:id="@+id/imgOverTimeInCDraftDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:src="@drawable/ic_action_time" />
+
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Overtime Out" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="16dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Overtime Out" />
 
             <EditText
                 android:id="@+id/txtOverTimeOutCDraftDetails"
@@ -181,40 +219,47 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:textSize="10dp"
                 android:inputType="textPersonName" />
+
+            <ImageView
+                android:id="@+id/imgOverTimeOutCDraftDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:src="@drawable/ic_action_time" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="Location" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView14"
-                android:layout_width="5dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Location" />
 
             <Spinner
                 android:id="@+id/spnLocationCDraftDetails"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Notes" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView16"
-                android:layout_width="16dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Notes" />
 
             <EditText
                 android:id="@+id/txtNotesCDraftDetails"
@@ -222,7 +267,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:textSize="10dp"
                 android:inputType="textPersonName" />
         </LinearLayout>
 
@@ -232,18 +276,12 @@
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView17"
-                android:layout_width="143dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
             <Button
                 android:id="@+id/btnSubmitCDraftDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="31dp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_btn_green"
+                android:background="@drawable/rounded_btn"
                 android:text="Submit"
                 android:textColor="@android:color/background_light" />
 
@@ -261,10 +299,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="29dp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_btn_red"
+                android:background="@drawable/rounded_btn"
                 android:text="Cancel"
                 android:textColor="@android:color/background_light" />
         </LinearLayout>
     </LinearLayout>
 
-</android.widget.RelativeLayout>
+
+</LinearLayout>

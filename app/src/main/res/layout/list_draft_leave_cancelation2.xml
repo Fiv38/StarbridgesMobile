@@ -23,8 +23,7 @@
         android:layout_height="wrap_content"
         android:text="Leave"
         android:textColor="#0a7b02"
-        android:textSize="16dp"
-        android:textStyle="bold" />
+        android:textSize="15dp" />
 
     <TextView
         android:id="@+id/txtCancelationDraftCancelation"
@@ -32,16 +31,13 @@
         android:layout_height="wrap_content"
         android:text="DraftCancelation"
         android:textColor="@color/colorRed"
-        android:textSize="16dp"
-        android:textStyle="bold" />
+        android:textSize="15dp" />
 
     <TextView
         android:id="@+id/txtNotesDraftCancelation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Notes"
-        android:textSize="16dp"
-        android:textStyle="bold" />
+        android:text="Notes" />
 
 
     <!-- Leave -->

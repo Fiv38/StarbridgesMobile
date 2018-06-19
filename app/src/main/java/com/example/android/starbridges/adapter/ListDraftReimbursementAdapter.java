@@ -70,7 +70,7 @@ public class ListDraftReimbursementAdapter extends ArrayAdapter<ReturnValue> {
     public String dateFormat(String dateString)
     {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
-        DateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");
+        DateFormat sdf = new SimpleDateFormat("d MMMM yyyy");
         Date date1;
         String result;
         try{

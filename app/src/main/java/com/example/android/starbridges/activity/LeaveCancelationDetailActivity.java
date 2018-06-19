@@ -345,7 +345,7 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
                     imgCancelToDateCancelDetail.setEnabled(true);
                 }
 
-                if(editLeaveCancelation.getLeaveRequestTransactionID().equals(decisionNumber.getID()))
+                if(editLeaveCancelation != null && editLeaveCancelation.getLeaveRequestTransactionID().equals(decisionNumber.getID()))
                 {
                     txtCancelToCancelDetail.setText(cancelTo);
                     txtCancelFromCancelDetail.setText(cancelFrom);

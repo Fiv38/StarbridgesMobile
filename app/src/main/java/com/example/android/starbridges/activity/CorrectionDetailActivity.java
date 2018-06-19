@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -44,7 +45,7 @@ import retrofit2.Response;
 public class CorrectionDetailActivity extends AppCompatActivity {
 
     TextView txtLogDateCDetails, txtShiftCDetails;
-    EditText txtLogInCDetails,txtBreakStartCDetails,txtBreakEndCDetails, txtLocationCDetails;
+    EditText txtLogInCDetails,txtBreakStartCDetails,txtBreakEndCDetails;
     EditText txtLogOutCDetails, txtOverTimeInCDetails, txtOverTimeOutCDetails, txtNotesCDetails;
     Spinner spnLocationCDetails;
     String uid, locationId, locationIdSpinner;
@@ -55,6 +56,8 @@ public class CorrectionDetailActivity extends AppCompatActivity {
     List<com.example.android.starbridges.model.OLocation.ReturnValue> locItems;
     List<com.example.android.starbridges.model.OLocation.ReturnValue> listReturnValue;
 
+    ImageView imgLogInCDetails,imgBreakStartCDetails,imgBreakEndCDetails;
+    ImageView imgLogOutCDetails, imgOverTimeInCDetails, imgOverTimeOutCDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,9 +73,10 @@ public class CorrectionDetailActivity extends AppCompatActivity {
         txtShiftCDetails=(TextView)findViewById(R.id.txtShiftCDetails);
 
         txtLogInCDetails=(EditText)findViewById(R.id.txtLogInCDetails);
+        imgLogInCDetails=(ImageView)findViewById(R.id.imgLogInCDetails);
         txtLogInCDetails.setFocusable(false);
         txtLogInCDetails.setClickable(true);
-        txtLogInCDetails.setOnClickListener(new View.OnClickListener() {
+        imgLogInCDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar mTime = Calendar.getInstance();
@@ -102,10 +106,11 @@ public class CorrectionDetailActivity extends AppCompatActivity {
             }
         });
 
-        txtBreakEndCDetails=(EditText)findViewById(R.id.txtBreakEndDetails);
+        txtBreakEndCDetails=(EditText)findViewById(R.id.txtBreakEndCDetails);
+        imgBreakEndCDetails=(ImageView)findViewById(R.id.imgBreaEndCDetails);
         txtBreakEndCDetails.setFocusable(false);
         txtBreakEndCDetails.setClickable(true);
-        txtBreakEndCDetails.setOnClickListener(new View.OnClickListener() {
+        imgBreakEndCDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar mTime = Calendar.getInstance();
@@ -137,9 +142,10 @@ public class CorrectionDetailActivity extends AppCompatActivity {
 
 
         txtLogOutCDetails=(EditText)findViewById(R.id.txtLogOutCDetails);
+        imgLogOutCDetails=(ImageView)findViewById(R.id.imgLogOutCDetails);
         txtLogOutCDetails.setFocusable(false);
         txtLogOutCDetails.setClickable(true);
-        txtLogOutCDetails.setOnClickListener(new View.OnClickListener() {
+        imgLogOutCDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar mTime = Calendar.getInstance();
@@ -170,9 +176,10 @@ public class CorrectionDetailActivity extends AppCompatActivity {
         });
 
         txtOverTimeInCDetails=(EditText)findViewById(R.id.txtOverTimeInCDetails);
+        imgOverTimeInCDetails=(ImageView)findViewById(R.id.imgOverTimeInCDetails);
         txtOverTimeInCDetails.setFocusable(false);
         txtOverTimeInCDetails.setClickable(true);
-        txtOverTimeInCDetails.setOnClickListener(new View.OnClickListener() {
+        imgOverTimeInCDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar mTime = Calendar.getInstance();
@@ -203,9 +210,10 @@ public class CorrectionDetailActivity extends AppCompatActivity {
         });
 
         txtOverTimeOutCDetails=(EditText)findViewById(R.id.txtOverTimeOutCDetails);
+        imgOverTimeOutCDetails=(ImageView)findViewById(R.id.imgOverTimeOutCDetails);
         txtOverTimeOutCDetails.setFocusable(false);
         txtOverTimeOutCDetails.setClickable(true);
-        txtOverTimeOutCDetails.setOnClickListener(new View.OnClickListener() {
+        imgOverTimeOutCDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar mTime = Calendar.getInstance();
@@ -240,9 +248,10 @@ public class CorrectionDetailActivity extends AppCompatActivity {
 //        spnLocationCDetails.setClickable(true);
 
         txtBreakStartCDetails=(EditText)findViewById(R.id.txtBreakStartCDetails);
+        imgBreakStartCDetails=(ImageView) findViewById(R.id.imgBreakStartCDetails);
         txtBreakStartCDetails.setFocusable(false);
         txtBreakStartCDetails.setClickable(true);
-        txtBreakStartCDetails.setOnClickListener(new View.OnClickListener() {
+        imgBreakStartCDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
             Calendar mTime = Calendar.getInstance();
@@ -450,7 +459,7 @@ public class CorrectionDetailActivity extends AppCompatActivity {
                 }
                 else
                     Toast.makeText(getApplicationContext(), "no data", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(CorrectionDetailActivity.this, CorrectionActivity.class);
+                Intent intent = new Intent(CorrectionDetailActivity.this, CorrectionListActivity.class);
                 startActivity(intent);
 
             }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -26,9 +27,7 @@
             android:layout_marginLeft="20dp"
             android:layout_weight="1"
             android:gravity="right"
-            android:text="Request Type"
-            android:textSize="16dp"
-            android:textStyle="bold" />
+            android:text="Request Type" />
     </LinearLayout>
 
     <TextView
@@ -37,8 +36,7 @@
         android:layout_height="wrap_content"
         android:text="Leave"
         android:textColor="#0a7b02"
-        android:textSize="16dp"
-        android:textStyle="bold" />
+        android:textSize="15dp" />
 
     <TextView
         android:id="@+id/txtCancelationCancelation"
@@ -46,16 +44,13 @@
         android:layout_height="wrap_content"
         android:text="Cancelation"
         android:textColor="@color/colorRed"
-        android:textSize="16dp"
-        android:textStyle="bold" />
+        android:textSize="15dp" />
 
     <TextView
         android:id="@+id/txtNotesCancelation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Notes"
-        android:textSize="16dp"
-        android:textStyle="bold" />
+        android:text="Notes" />
 
 
     <!-- Leave -->

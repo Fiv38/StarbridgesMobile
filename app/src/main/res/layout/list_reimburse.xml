@@ -26,9 +26,7 @@
             android:layout_weight="1"
             android:gravity="right"
             android:text="Transaction Date"
-            android:textColor="@color/wallet_holo_blue_light"
-            android:textSize="16dp"
-            android:textStyle="bold" />
+            android:textColor="@color/wallet_holo_blue_light" />
     </LinearLayout>
 
     <TextView
@@ -36,23 +34,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Description"
-        android:textSize="16dp"
-        android:textStyle="bold" />
+        android:textSize="15dp" />
 
     <TextView
         android:id="@+id/txtAmountReimburse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Amount"
-        android:textSize="16dp"
-        android:textStyle="bold" />
+        android:textSize="15dp" />
 
     <TextView
         android:id="@+id/txtTypeReimburse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Type"
-        android:textSize="16dp"
-        android:textStyle="bold" />
+        android:text="Type" />
 
 </LinearLayout>

@@ -453,8 +453,9 @@ public class LoginActivity extends AppCompatActivity {
     public void getIMEI (Activity activity){
         TelephonyManager telephonyManager = (TelephonyManager) activity
                 .getSystemService(Context.TELEPHONY_SERVICE);
-        IMEI= telephonyManager.getDeviceId();
-        //IMEI="865684032897881";
+//        IMEI= telephonyManager.getDeviceId();
+//        IMEI="352875087316146";// maryuri
+        IMEI="865684032897881";
 //        IMEI="863263034362087"; // Dhaba
 
     }

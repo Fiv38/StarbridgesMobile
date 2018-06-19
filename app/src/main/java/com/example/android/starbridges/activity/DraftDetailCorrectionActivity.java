@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -54,6 +55,9 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
     List<com.example.android.starbridges.model.OLocation.ReturnValue> locItems;
     List<com.example.android.starbridges.model.OLocation.ReturnValue> listReturnValue;
 
+    ImageView imgLogInCDraftDetails,imgBreakStartCDraftDetails,imgBreakEndCDraftDetails;
+    ImageView imgLogOutCDraftDetails, imgOverTimeInCDraftDetails, imgOverTimeOutCDraftDetails;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,9 +72,10 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
         txtShiftCDraftDetails=(TextView)findViewById(R.id.txtShiftCDraftDetails);
 
         txtLogInCDraftDetails=(EditText)findViewById(R.id.txtLogInCDraftDetails);
+        imgLogInCDraftDetails=(ImageView)findViewById(R.id.imgLogInCDraftDetails);
         txtLogInCDraftDetails.setFocusable(false);
         txtLogInCDraftDetails.setClickable(true);
-        txtLogInCDraftDetails.setOnClickListener(new View.OnClickListener() {
+        imgLogInCDraftDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar mTime = Calendar.getInstance();
@@ -101,9 +106,10 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
         });
 
         txtBreakEndCDraftDetails=(EditText)findViewById(R.id.txtBreakEndCDraftDetails);
+        imgBreakEndCDraftDetails=(ImageView)findViewById(R.id.imgBreaEndCDraftDetails);
         txtBreakEndCDraftDetails.setFocusable(false);
         txtBreakEndCDraftDetails.setClickable(true);
-        txtBreakEndCDraftDetails.setOnClickListener(new View.OnClickListener() {
+        imgBreakEndCDraftDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar mTime = Calendar.getInstance();
@@ -134,9 +140,10 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
         });
 
         txtLogOutCDraftDetails=(EditText)findViewById(R.id.txtLogOutCDraftDetails);
+        imgLogOutCDraftDetails=(ImageView)findViewById(R.id.imgLogOutCDraftDetails);
         txtLogOutCDraftDetails.setFocusable(false);
         txtLogOutCDraftDetails.setClickable(true);
-        txtLogOutCDraftDetails.setOnClickListener(new View.OnClickListener() {
+        imgLogOutCDraftDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar mTime = Calendar.getInstance();
@@ -167,9 +174,10 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
         });
 
         txtOverTimeInCDraftDetails=(EditText)findViewById(R.id.txtOverTimeInCDraftDetails);
+        imgOverTimeInCDraftDetails=(ImageView)findViewById(R.id.imgOverTimeInCDraftDetails);
         txtOverTimeInCDraftDetails.setFocusable(false);
         txtOverTimeInCDraftDetails.setClickable(true);
-        txtOverTimeInCDraftDetails.setOnClickListener(new View.OnClickListener() {
+        imgOverTimeInCDraftDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar mTime = Calendar.getInstance();
@@ -200,9 +208,10 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
         });
 
         txtOverTimeOutCDraftDetails=(EditText)findViewById(R.id.txtOverTimeOutCDraftDetails);
+        imgOverTimeOutCDraftDetails=(ImageView)findViewById(R.id.imgOverTimeOutCDraftDetails);
         txtOverTimeOutCDraftDetails.setFocusable(false);
         txtOverTimeOutCDraftDetails.setClickable(true);
-        txtOverTimeOutCDraftDetails.setOnClickListener(new View.OnClickListener() {
+        imgOverTimeOutCDraftDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar mTime = Calendar.getInstance();
@@ -237,9 +246,10 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
 //        spnLocationCDraftDetails.setClickable(true);
 
         txtBreakStartCDraftDetails=(EditText)findViewById(R.id.txtBreakStartCDraftDetails);
+        imgBreakStartCDraftDetails=(ImageView)findViewById(R.id.imgBreakStartCDraftDetails);
         txtBreakStartCDraftDetails.setFocusable(false);
         txtBreakStartCDraftDetails.setClickable(true);
-        txtBreakStartCDraftDetails.setOnClickListener(new View.OnClickListener() {
+        imgBreakStartCDraftDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar mTime = Calendar.getInstance();
@@ -447,8 +457,8 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
                 }
                 else
                     Toast.makeText(getApplicationContext(), "no data", Toast.LENGTH_LONG).show();
-//                Intent intent = new Intent(DraftDetailCorrectionActivity.this, CorrectionActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(DraftDetailCorrectionActivity.this, CorrectionListActivity.class);
+                startActivity(intent);
                 finish();
 
             }
