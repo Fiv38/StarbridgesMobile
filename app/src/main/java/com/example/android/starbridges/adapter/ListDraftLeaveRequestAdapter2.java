@@ -100,6 +100,7 @@ public class ListDraftLeaveRequestAdapter2 extends ArrayAdapter<ReturnValue> {
         SharedPreferenceUtils.setSetting(context,"lstIdSelected", listID.toString());
         notifyDataSetChanged();
     }
+
     public void toggleSelection(int position) {
         selectView(position, !mSelectedItemsIds.get(position));
     }

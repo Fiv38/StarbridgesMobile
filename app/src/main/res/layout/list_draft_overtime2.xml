@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:orientation="vertical"
+    android:background="?android:attr/activatedBackgroundIndicator">
+
+    <!-- check box -->
+
+    <!-- Request Type -->
+
+    <TextView
+        android:id="@+id/DateDraftView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/decisionNumberLbl"
+        android:layout_alignParentRight="true"
+        android:text="20 Mei 2018"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+
+    <!-- Leave -->
+
+
+    <!-- Unit Reduce -->
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/StartDraftView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/requestTypeLbl"
+                android:layout_alignParentRight="true"
+                android:text="21:30"
+                android:textColor="@color/md_light_green_A700"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="-"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/EndDraftView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="23:00"
+                android:textColor="@color/md_red_A400"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+        </TableRow>
+
+    </TableLayout>
+
+</LinearLayout>

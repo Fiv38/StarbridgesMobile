@@ -18,6 +18,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -280,39 +281,63 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(returnAt.isEmpty()||leaveAt.isEmpty()||leaveRequestType.isEmpty()||employeeLeaveBalanceUID.isEmpty()){
+                    AlertDialog.Builder alert = new AlertDialog.Builder(LeaveRequestDetailActivity.this);
+                    alert.setTitle("Request Confirmation");
+                    alert.setMessage("kolom selain note harus di isi");
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-                // set val "Save" to transaction Status
-                transactionStatus = "Save";
+                        }
+                    });
 
-                // call method
-                requestConfirmation();
-
+                    alert.show();
+                }else{
+                    // set val "Save" to transaction Status
+                    transactionStatus = "Save";
+                    // call method
+                    requestConfirmation();
+                }
             }
         });
 
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(LeaveRequestDetailActivity.this);
-                alert.setTitle("Request Confirmation");
-                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // set val "Submit" to variable
-                        transactionStatus = "Submit";
+                if(returnAt.isEmpty()||leaveAt.isEmpty()||leaveRequestType.isEmpty()||employeeLeaveBalanceUID.isEmpty()){
+                    AlertDialog.Builder alert = new AlertDialog.Builder(LeaveRequestDetailActivity.this);
+                    alert.setTitle("Request Confirmation");
+                    alert.setMessage("kolom selain note harus di isi");
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    });
 
-                        //call method
-                        requestConfirmation();
-                    }
-                });
+                    alert.show();
+                }else{
+                    AlertDialog.Builder alert = new AlertDialog.Builder(LeaveRequestDetailActivity.this);
+                    alert.setTitle("Request Confirmation");
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            // set val "Submit" to variable
+                            transactionStatus = "Submit";
 
-                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                            //call method
+                            requestConfirmation();
+                        }
+                    });
+                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-                    }
-                });
-                alert.show();
+                        }
+                    });
+                    alert.show();
+                }
+
             }
         });
 
@@ -360,11 +385,9 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         spinnerRequestType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i > 0) {
-                    final ReturnValue returnValue = (ReturnValue) spinnerRequestType.getItemAtPosition(i);
-                    leaveRequestRuleID = returnValue.getID();
-                    leaveRequestType = returnValue.getName();
-                }
+                final ReturnValue returnValue = (ReturnValue) spinnerRequestType.getItemAtPosition(i);
+                leaveRequestRuleID = returnValue.getID();
+                leaveRequestType = returnValue.getName();
             }
 
             @Override
@@ -379,11 +402,10 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         spinnerBalanceType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i > 0) {
                     final com.example.android.starbridges.model.balanceType.ReturnValue returnValue1 = (com.example.android.starbridges.model.balanceType.ReturnValue) spinnerBalanceType.getItemAtPosition(i);
                     employeeLeaveBalanceUID = returnValue1.getValue().toString();
                     //Toast.makeText(LeaveRequestDetailActivity.this, "UID " + balanceUID, Toast.LENGTH_SHORT).show();
-                }
+
             }
 
             @Override
