@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/notesView3_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/requestTypeView3_2"
+        android:layout_marginTop="5dp"
+        android:text="Pulang Kampung"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/leaveView3_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/decisionNumberView2_2"
+        android:layout_marginTop="5dp"
+        android:text="20 Jul 2018 - 21 Jul 2018"
+        android:textColor="@color/md_light_blue_A100"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/requestTypeView3_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/leaveView3_2"
+        android:layout_marginTop="5dp"
+        android:text="Cuti Biasa"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/decisionNumberView2_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1 Jan 18"
+
+        android:textColor="@color/md_light_blue_900"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+</RelativeLayout>

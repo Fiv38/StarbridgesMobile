@@ -38,7 +38,7 @@ public class ReimburseAdapter extends ArrayAdapter<ReturnValue> {
 
     private class ViewHolder {
         TextView txtDecisionNumberReimburse, txtDescriptionReimburse, txtAmountReimburse, txtTypeReimburse;
-        TextView txtTransactionDateReimburse, txtApprovedDateReimburse;
+        TextView txtTransactionDateReimburse;
     }
 
 
@@ -58,7 +58,6 @@ public class ReimburseAdapter extends ArrayAdapter<ReturnValue> {
             holder.txtAmountReimburse = (TextView) convertView.findViewById(R.id.txtAmountReimburse);
             holder.txtTypeReimburse = (TextView) convertView.findViewById(R.id.txtTypeReimburse);
             holder.txtTransactionDateReimburse = (TextView) convertView.findViewById(R.id.txtTransactionDateReimburse);
-            holder.txtApprovedDateReimburse = (TextView) convertView.findViewById(R.id.txtApprovedDateReimburse);
 
             convertView.setTag(holder);
         }
@@ -72,7 +71,6 @@ public class ReimburseAdapter extends ArrayAdapter<ReturnValue> {
         holder.txtAmountReimburse.setText( lstorder.get(position).getAmount() );
         holder.txtTypeReimburse.setText( lstorder.get(position).getType() );
         holder.txtTransactionDateReimburse.setText(dateFormat(lstorder.get(position).getTransactionDate()));
-        holder.txtApprovedDateReimburse.setText( dateFormat(lstorder.get(position).getApprovedDate()+""));
 
         return convertView;
     }
@@ -80,7 +78,7 @@ public class ReimburseAdapter extends ArrayAdapter<ReturnValue> {
     public String dateFormat(String dateString)
     {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
-        DateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");
+        DateFormat sdf = new SimpleDateFormat("d MMMM yyyy");
         Date date1;
         String result;
         try{

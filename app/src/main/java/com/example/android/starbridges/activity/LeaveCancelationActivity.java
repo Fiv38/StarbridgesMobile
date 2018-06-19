@@ -2,10 +2,12 @@ package com.example.android.starbridges.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -35,6 +37,7 @@ public class LeaveCancelationActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     LeaveCancelationAdapter viewAdapter;
     ListView lstCancelation;
+    FloatingActionButton fabAddLeaveCancelation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,7 @@ public class LeaveCancelationActivity extends AppCompatActivity {
         setTitle("Leave Cancelation");
 
         lstCancelation=(ListView)findViewById(R.id.lstCancelation);
+        fabAddLeaveCancelation=(FloatingActionButton)findViewById(R.id.fabAddLeaveCancelation);
 
         session = new SessionManagement(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
@@ -57,11 +61,19 @@ public class LeaveCancelationActivity extends AppCompatActivity {
 
         getLeaveCancelationLog();
 
+        fabAddLeaveCancelation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent(LeaveCancelationActivity.this, LeaveCancelationDetailActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.menu_draft, menu);
 
         return true;
     }
@@ -70,15 +82,8 @@ public class LeaveCancelationActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        // add new leave request
-        if(id == R.id.action_item_one ){
-            Intent intent = new Intent(LeaveCancelationActivity.this, LeaveCancelationDetailActivity.class);
-            startActivity(intent);
-            return true;
-        }
-
         // save to draft
-        if(id == R.id.action_item_two ){
+        if(id == R.id.action_item_one ){
             Intent intent = new Intent(LeaveCancelationActivity.this, ListDraftLeaveCancelationActivity.class);
             startActivity(intent);
             return true;
@@ -101,7 +106,7 @@ public class LeaveCancelationActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 ListLeaveCancelation data = response.body();
                 if (data != null && data.isIsSucceed()) {
-                    viewAdapter = new LeaveCancelationAdapter(LeaveCancelationActivity.this, R.layout.lst_cancelation, data.getReturnValue());
+                    viewAdapter = new LeaveCancelationAdapter(LeaveCancelationActivity.this, R.layout.lst_cancelation2, data.getReturnValue());
                     lstCancelation.setAdapter(viewAdapter);
                 } else {
                     try {

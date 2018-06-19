@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="?android:attr/activatedBackgroundIndicator"
+    >
+
+    <TextView
+        android:id="@+id/txtRequestTypeDraftCancelation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Request Type"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/txtLeaveDraftCancelation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Leave"
+        android:textColor="#0a7b02"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtCancelationDraftCancelation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DraftCancelation"
+        android:textColor="@color/colorRed"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtNotesDraftCancelation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Notes"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+
+    <!-- Leave -->
+
+
+    <!-- Unit Reduce -->
+
+    <!-- Notes -->
+
+
+    <!-- Approved Date -->
+
+
+</LinearLayout>
