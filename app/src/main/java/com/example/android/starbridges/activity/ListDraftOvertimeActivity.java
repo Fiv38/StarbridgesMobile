@@ -65,36 +65,36 @@ public class ListDraftOvertimeActivity extends AppCompatActivity implements Adap
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.leaverequest, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        // add new leave request
-        if (id == R.id.action_item_one) {
-            Intent intent = new Intent(ListDraftOvertimeActivity.this, OvertimeDetailActivity.class);
-            startActivity(intent);
-            return true;
-        }
-
-        // delete
-        if (id == R.id.action_item_two) {
-            // get list data from checkbox
-            String listid = ListDraftOvertimeAdapter.listID.toString();
-
-            //Toast.makeText(ListDraftLeaveRequestActivity.this, "List : " + listid, Toast.LENGTH_SHORT).show();
-            deleteDraftOvertime(listid);
-
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.leaverequest, menu);
+//
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//
+//        // add new leave request
+//        if (id == R.id.action_item_one) {
+//            Intent intent = new Intent(ListDraftOvertimeActivity.this, OvertimeDetailActivity.class);
+//            startActivity(intent);
+//            return true;
+//        }
+//
+//        // delete
+//        if (id == R.id.action_item_two) {
+//            // get list data from checkbox
+//            String listid = ListDraftOvertimeAdapter.listID.toString();
+//
+//            //Toast.makeText(ListDraftLeaveRequestActivity.this, "List : " + listid, Toast.LENGTH_SHORT).show();
+//            deleteDraftOvertime(listid);
+//
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
 
     public void getListDraftOvertime() {
