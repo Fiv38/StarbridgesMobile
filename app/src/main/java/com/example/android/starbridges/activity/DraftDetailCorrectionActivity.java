@@ -359,25 +359,15 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
             }
         });
 
-        getAttendaceCorrection(id);
-
+        initSpinnerLoc();
 
         spnLocationCDraftDetails.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i>0)
-                {
-                    final com.example.android.starbridges.model.OLocation.ReturnValue returnValue1=(com.example.android.starbridges.model.OLocation.ReturnValue)spnLocationCDraftDetails.getItemAtPosition(i);
-                    //Log.d("LocationIdnya", returnValue1.getID());
-                    locationIdSpinner=returnValue1.getID();
-                }
+                final com.example.android.starbridges.model.OLocation.ReturnValue returnValue1=(com.example.android.starbridges.model.OLocation.ReturnValue)spnLocationCDraftDetails.getItemAtPosition(i);
+                //Log.d("LocationIdnya", returnValue1.getID());
+                locationIdSpinner=returnValue1.getID();
 
-
-                try{
-                }catch (Exception e)
-                {
-
-                }
 
             }
 
@@ -403,7 +393,6 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
                 if (data != null && data.isIsSucceed()) {
                     valueCorrectionDetail=data.getReturnValue();
                     locationId=valueCorrectionDetail.getLocationID();
-                    initSpinnerLoc();
                     setText(valueCorrectionDetail);
                 } else {
                     try {
@@ -423,6 +412,8 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
                 call.cancel();
             }
         });
+
+        setupSpinner();
 
     }
 
@@ -536,6 +527,12 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
             }
         });
 
+        ArrayAdapter<com.example.android.starbridges.model.OLocation.ReturnValue> adapter = new ArrayAdapter<com.example.android.starbridges.model.OLocation.ReturnValue>(DraftDetailCorrectionActivity.this,
+                android.R.layout.simple_spinner_item, listReturnValue);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnLocationCDraftDetails.setAdapter(adapter);
+
+        getAttendaceCorrection(id);
     }
 
     public void setupSpinner()
@@ -550,11 +547,6 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
                 spinnerIdSelected++;
             }
         }
-
-        ArrayAdapter<com.example.android.starbridges.model.OLocation.ReturnValue> adapter = new ArrayAdapter<com.example.android.starbridges.model.OLocation.ReturnValue>(DraftDetailCorrectionActivity.this,
-                android.R.layout.simple_spinner_item, listReturnValue);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnLocationCDraftDetails.setAdapter(adapter);
 
         spnLocationCDraftDetails.setSelection(spinnerIdSelected);
     }

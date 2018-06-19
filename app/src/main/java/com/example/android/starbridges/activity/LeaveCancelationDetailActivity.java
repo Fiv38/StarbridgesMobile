@@ -208,7 +208,15 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
 
                 }
 
-                if(convertDateCancelFrom.compareTo(convertDateCancelTo)>0)
+                if(txtCancelFromCancelDetail.getText().toString().matches(""))
+                {
+                    txtCancelFromCancelDetail.setError("Please fill cancel from");
+                }
+                else if(txtCancelToCancelDetail.getText().toString().matches(""))
+                {
+                    txtCancelToCancelDetail.setError("Please fill cancel to");
+                }
+                else if(convertDateCancelFrom.compareTo(convertDateCancelTo)>0)
                 {
                     Toast.makeText(LeaveCancelationDetailActivity.this, "Cancel To must bigger than Cancel From", Toast.LENGTH_SHORT).show();
                 }
@@ -268,7 +276,16 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
 
                 }
 
-                if(convertDateCancelFrom.compareTo(convertDateCancelTo)>0)
+
+                if(txtCancelFromCancelDetail.getText().toString().matches(""))
+                {
+                    txtCancelFromCancelDetail.setError("Please fill cancel from");
+                }
+                else if(txtCancelToCancelDetail.getText().toString().matches(""))
+                {
+                    txtCancelToCancelDetail.setError("Please fill cancel to");
+                }
+                else if(convertDateCancelFrom.compareTo(convertDateCancelTo)>0)
                 {
                     Toast.makeText(LeaveCancelationDetailActivity.this, "Cancel To must bigger than Cancel From", Toast.LENGTH_SHORT).show();
                 }
