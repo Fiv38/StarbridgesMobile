@@ -70,6 +70,13 @@ public interface APIInterfaceRest {
     Call<Authentication> getAuthentication(@Field("grant_type") String grant_type, @Field("username") String username, @Field("password") String password, @Field("client_id") String client_id, @Field("IMEI") String IMEI);
 
     @FormUrlEncoded
+    @POST("api/Attendance/ValidasiLogin")
+    Call<MessageReturn> getValidation(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("IMEI") String IMEI);
+
+    @FormUrlEncoded
     @POST("api/Attendance/RegisterIMEI")
     Call<OPost> postRegisterImei(@Field("username") String username, @Field("password") String password, @Field("IMEI") String imei);
 

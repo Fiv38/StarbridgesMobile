@@ -80,6 +80,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.CorrectionDetailActivity"
+            android:theme="@style/TranslucentTheme"
             android:configChanges="orientation"
             android:parentActivityName=".activity.CorrectionActivity"
             android:screenOrientation="portrait" />
@@ -87,6 +88,7 @@
         <activity
             android:name=".activity.DraftDetailCorrectionActivity"
             android:configChanges="orientation"
+            android:theme="@style/TranslucentTheme"
             android:parentActivityName=".activity.DraftCorrectionListActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -97,6 +99,7 @@
         <activity
             android:name=".activity.OvertimeDetailActivity"
             android:configChanges="orientation"
+            android:theme="@style/TranslucentTheme"
             android:parentActivityName=".activity.OvertimeActivity"
             android:screenOrientation="portrait"/>
         <activity
@@ -135,6 +138,7 @@
             android:screenOrientation="portrait"
             />
         <activity android:name=".activity.LeaveCancelationDetailActivity"
+            android:theme="@style/TranslucentTheme"
             android:configChanges="orientation"
             android:parentActivityName=".activity.LeaveCancelationActivity"
             android:screenOrientation="portrait"
@@ -166,6 +170,7 @@
             />
         <activity android:name=".activity.ReimburseDetailActivity"
             android:configChanges="orientation"
+            android:theme="@style/TranslucentTheme"
             android:parentActivityName=".activity.ReimburseActivity"
             android:screenOrientation="portrait"
             ></activity>
