@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingBottom="10dp"
     android:paddingLeft="10dp"
@@ -13,7 +13,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,7 +42,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/textView4"
@@ -62,7 +62,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="10dp"
@@ -294,7 +294,7 @@
                     <Spinner
                         android:id="@+id/spnLocationCDetails"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="30dp"
                         android:layout_weight="1" />
 
                 </LinearLayout>
@@ -321,42 +321,42 @@
                         android:inputType="textPersonName" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+            </LinearLayout>
 
-                    <Button
-                        android:id="@+id/btnSubmitCDetails"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:layout_margin="1dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/rounded_btn"
-                        android:text="Submit"
-                        android:textColor="@android:color/background_light" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/btnSaveCDetails"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:layout_margin="1dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/rounded_btn"
-                        android:text="Save"
-                        android:textColor="@android:color/background_light" />
+                <Button
+                    android:id="@+id/btnSubmitCDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_btn"
+                    android:text="Submit"
+                    android:textColor="@android:color/background_light" />
 
-                    <Button
-                        android:id="@+id/btnCancelCDetails"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:layout_margin="1dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/rounded_btn"
-                        android:text="Cancel"
-                        android:textColor="@android:color/background_light" />
+                <Button
+                    android:id="@+id/btnCancelCDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_btn"
+                    android:text="Cancel"
+                    android:textColor="@android:color/background_light" />
 
-                </LinearLayout>
+                <Button
+                    android:id="@+id/btnSaveCDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_btn"
+                    android:text="Save"
+                    android:textColor="@android:color/background_light" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
