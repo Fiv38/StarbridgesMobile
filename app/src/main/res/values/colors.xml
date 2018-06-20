@@ -163,7 +163,7 @@ http://www.google.com/design/spec/style/color.html#color-ui-color-palette -->
     <color name="md_green_400">#66BB6A</color>
     <color name="md_green_500">#4CAF50</color>
     <color name="md_green_600">#43A047</color>
-    <color name="md_green_700">#388E3C</color>
+    <color name="md_green_700">#388e3c</color>
     <color name="md_green_800">#2E7D32</color>
     <color name="md_green_900">#1B5E20</color>
     <color name="md_green_A100">#B9F6CA</color>

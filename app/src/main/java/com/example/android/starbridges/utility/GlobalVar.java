@@ -1,5 +1,15 @@
 package com.example.android.starbridges.utility;
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.ContextCompat;
+import android.text.format.DateFormat;
+
+import java.util.Calendar;
+
+import static java.util.Calendar.AM;
+import static java.util.Calendar.PM;
+
 /**
  * Created by user on 5/14/2018.
  */
@@ -75,5 +85,33 @@ public class  GlobalVar {
 
     public static String locationId;
 
+
+    public static Calendar jamMasuk(Context ctx){
+        Calendar checkOutTime2 = Calendar.getInstance();
+        if (DateFormat.is24HourFormat(ctx)) {
+            checkOutTime2.set(Calendar.HOUR_OF_DAY, 8);
+        } else {
+            checkOutTime2.set(Calendar.HOUR, 8);
+            checkOutTime2.set(Calendar.AM_PM, AM);
+        }
+        checkOutTime2.set(Calendar.MINUTE, 20);
+        checkOutTime2.set(Calendar.SECOND, 10);
+        checkOutTime2.set(Calendar.MILLISECOND, 0);
+        return checkOutTime2;
+    }
+
+    public static Calendar jamPulang(Context ctx){
+        Calendar checkOutTime = Calendar.getInstance();
+        if (DateFormat.is24HourFormat(ctx)) {
+            checkOutTime.set(Calendar.HOUR_OF_DAY, 17);
+        } else {
+            checkOutTime.set(Calendar.HOUR, 5);
+            checkOutTime.set(Calendar.AM_PM, PM);
+        }
+        checkOutTime.set(Calendar.MINUTE, 20);
+        checkOutTime.set(Calendar.SECOND, 10);
+        checkOutTime.set(Calendar.MILLISECOND, 0);
+        return checkOutTime;
+    }
 
 }
