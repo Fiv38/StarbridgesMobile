@@ -281,7 +281,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(returnAt.isEmpty()||leaveAt.isEmpty()||leaveRequestType.isEmpty()||employeeLeaveBalanceUID.isEmpty()){
+                if (returnAt.isEmpty() || leaveAt.isEmpty() || leaveRequestType.isEmpty() || employeeLeaveBalanceUID.isEmpty()) {
                     AlertDialog.Builder alert = new AlertDialog.Builder(LeaveRequestDetailActivity.this);
                     alert.setTitle("Request Confirmation");
                     alert.setMessage("kolom selain note harus di isi");
@@ -292,7 +292,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                         }
                     });
                     alert.show();
-                }else{
+                } else {
                     // set val "Save" to transaction Status
                     transactionStatus = "Save";
                     // call method
@@ -304,7 +304,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(returnAt.isEmpty()||leaveAt.isEmpty()||leaveRequestType.isEmpty()||employeeLeaveBalanceUID.isEmpty()){
+                if (returnAt.isEmpty() || leaveAt.isEmpty() || leaveRequestType.isEmpty() || employeeLeaveBalanceUID.isEmpty()) {
                     AlertDialog.Builder alert = new AlertDialog.Builder(LeaveRequestDetailActivity.this);
                     alert.setTitle("Request Confirmation");
                     alert.setMessage("kolom selain note harus di isi");
@@ -315,7 +315,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                     });
 
                     alert.show();
-                }else{
+                } else {
                     AlertDialog.Builder alert = new AlertDialog.Builder(LeaveRequestDetailActivity.this);
                     alert.setTitle("Request Confirmation");
                     alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -401,9 +401,9 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         spinnerBalanceType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    final com.example.android.starbridges.model.balanceType.ReturnValue returnValue1 = (com.example.android.starbridges.model.balanceType.ReturnValue) spinnerBalanceType.getItemAtPosition(i);
-                    employeeLeaveBalanceUID = returnValue1.getValue().toString();
-                    //Toast.makeText(LeaveRequestDetailActivity.this, "UID " + balanceUID, Toast.LENGTH_SHORT).show();
+                final com.example.android.starbridges.model.balanceType.ReturnValue returnValue1 = (com.example.android.starbridges.model.balanceType.ReturnValue) spinnerBalanceType.getItemAtPosition(i);
+                employeeLeaveBalanceUID = returnValue1.getValue().toString();
+                //Toast.makeText(LeaveRequestDetailActivity.this, "UID " + balanceUID, Toast.LENGTH_SHORT).show();
 
             }
 
@@ -439,25 +439,26 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 
-        System.out.println(startLeave+" T "+endLeave);
-        System.out.println(leaveAt+" T "+returnAt);
-        try{
+        System.out.println(startLeave + " T " + endLeave);
+        System.out.println(leaveAt + " T " + returnAt);
+        try {
             Date a = sdf.parse(startLeave);
             Date b = sdf.parse(endLeave);
             String timeA = leaveAt;
             String timeB = returnAt;
             String dateA = sdf2.format(a);
             String dateB = sdf2.format(b);
-            String leave = dateA+"T"+timeA;
-            String returN = dateB+"T"+timeB;
+            String leave = dateA + "T" + timeA;
+            String returN = dateB + "T" + timeB;
             startLeave = leave;
             endLeave = returN;
-            leaveAt=leave;
-            returnAt=returN;
+            leaveAt = leave;
+            returnAt = returN;
 //            leaveAt = sdf2.format(a)+"T"+leaveAt+":00";
 //            returnAt = sdf2.format(b)+"T"+returnAt+":00";
             System.out.println("a");
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
 
         Call<RequestConfirmation> call3 = apiInterface.requestConfirmation(
                 transactionStatus, id, employeeID, roster, requestDate, employeeNIK, employeeName, leaveRequestRuleID, leaveRequestType,
@@ -814,22 +815,31 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
     }
 
     private String formatDate(String str) {
-        int position = str.indexOf("T");
+        String dateStr = "";
+        if (str == null) {
+            dateStr = "";
+        } else {
+            int position = str.indexOf("T");
 
-        String dateStr = str.substring(0, position);
+            dateStr = str.substring(0, position);
 
-        String dateArr[] = dateStr.split("-");
+            String dateArr[] = dateStr.split("-");
 
-        dateStr = dateArr[2] + "/" + dateArr[1] + "/" + dateArr[0];
-
+            dateStr = dateArr[2] + "/" + dateArr[1] + "/" + dateArr[0];
+        }
         return dateStr;
     }
 
     private String formatTime(String str) {
-        int position = str.indexOf("T");
+        String timeStr = "";
 
-        String timeStr = str.substring(position + 1);
+        if (str == null) {
+            timeStr = "";
+        } else {
+            int position = str.indexOf("T");
 
+            timeStr = str.substring(position + 1);
+        }
         return timeStr;
     }
 
