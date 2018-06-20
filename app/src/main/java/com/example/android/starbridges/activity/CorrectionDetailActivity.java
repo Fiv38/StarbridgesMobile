@@ -59,6 +59,9 @@ public class CorrectionDetailActivity extends AppCompatActivity {
     ImageView imgLogInCDetails,imgBreakStartCDetails,imgBreakEndCDetails;
     ImageView imgLogOutCDetails, imgOverTimeInCDetails, imgOverTimeOutCDetails;
 
+    ImageView imgClearLogInCDetails,imgClearBreakStartCDetails,imgClearBreakEndCDetails;
+    ImageView imgClearLogOutCDetails, imgClearOverTimeInCDetails, imgClearOverTimeOutCDetails;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +77,13 @@ public class CorrectionDetailActivity extends AppCompatActivity {
 
         txtLogInCDetails=(EditText)findViewById(R.id.txtLogInCDetails);
         imgLogInCDetails=(ImageView)findViewById(R.id.imgLogInCDetails);
+        imgClearLogInCDetails=(ImageView)findViewById(R.id.imgClearLogInCDetails);
+        imgClearLogInCDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                txtLogInCDetails.setText("");
+            }
+        });
         txtLogInCDetails.setFocusable(false);
         txtLogInCDetails.setClickable(true);
         imgLogInCDetails.setOnClickListener(new View.OnClickListener() {
@@ -108,6 +118,13 @@ public class CorrectionDetailActivity extends AppCompatActivity {
 
         txtBreakEndCDetails=(EditText)findViewById(R.id.txtBreakEndCDetails);
         imgBreakEndCDetails=(ImageView)findViewById(R.id.imgBreaEndCDetails);
+        imgClearBreakEndCDetails=(ImageView)findViewById(R.id.imgClearBreaEndCDetails);
+        imgClearBreakEndCDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                txtBreakEndCDetails.setText("");
+            }
+        });
         txtBreakEndCDetails.setFocusable(false);
         txtBreakEndCDetails.setClickable(true);
         imgBreakEndCDetails.setOnClickListener(new View.OnClickListener() {
@@ -143,6 +160,13 @@ public class CorrectionDetailActivity extends AppCompatActivity {
 
         txtLogOutCDetails=(EditText)findViewById(R.id.txtLogOutCDetails);
         imgLogOutCDetails=(ImageView)findViewById(R.id.imgLogOutCDetails);
+        imgClearLogOutCDetails=(ImageView)findViewById(R.id.imgClearLogOutCDetails);
+        imgClearLogOutCDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                txtLogOutCDetails.setText("");
+            }
+        });
         txtLogOutCDetails.setFocusable(false);
         txtLogOutCDetails.setClickable(true);
         imgLogOutCDetails.setOnClickListener(new View.OnClickListener() {
@@ -177,6 +201,13 @@ public class CorrectionDetailActivity extends AppCompatActivity {
 
         txtOverTimeInCDetails=(EditText)findViewById(R.id.txtOverTimeInCDetails);
         imgOverTimeInCDetails=(ImageView)findViewById(R.id.imgOverTimeInCDetails);
+        imgClearOverTimeInCDetails=(ImageView)findViewById(R.id.imgClearOverTimeInCDetails);
+        imgClearOverTimeInCDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                txtOverTimeInCDetails.setText("");
+            }
+        });
         txtOverTimeInCDetails.setFocusable(false);
         txtOverTimeInCDetails.setClickable(true);
         imgOverTimeInCDetails.setOnClickListener(new View.OnClickListener() {
@@ -211,6 +242,13 @@ public class CorrectionDetailActivity extends AppCompatActivity {
 
         txtOverTimeOutCDetails=(EditText)findViewById(R.id.txtOverTimeOutCDetails);
         imgOverTimeOutCDetails=(ImageView)findViewById(R.id.imgOverTimeOutCDetails);
+        imgClearOverTimeOutCDetails=(ImageView)findViewById(R.id.imgClearOverTimeOutCDetails);
+        imgClearOverTimeOutCDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                txtOverTimeOutCDetails.setText("");
+            }
+        });
         txtOverTimeOutCDetails.setFocusable(false);
         txtOverTimeOutCDetails.setClickable(true);
         imgOverTimeOutCDetails.setOnClickListener(new View.OnClickListener() {
@@ -249,6 +287,13 @@ public class CorrectionDetailActivity extends AppCompatActivity {
 
         txtBreakStartCDetails=(EditText)findViewById(R.id.txtBreakStartCDetails);
         imgBreakStartCDetails=(ImageView) findViewById(R.id.imgBreakStartCDetails);
+        imgClearBreakStartCDetails=(ImageView) findViewById(R.id.imgClearBreakStartCDetails);
+        imgClearBreakStartCDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                txtBreakStartCDetails.setText("");
+            }
+        });
         txtBreakStartCDetails.setFocusable(false);
         txtBreakStartCDetails.setClickable(true);
         imgBreakStartCDetails.setOnClickListener(new View.OnClickListener() {
@@ -513,7 +558,14 @@ public class CorrectionDetailActivity extends AppCompatActivity {
                     locItems = response.body().getReturnValue();
                     listReturnValue.addAll(locItems);
 
-                    setupSpinner();
+                    ArrayAdapter<com.example.android.starbridges.model.OLocation.ReturnValue> adapter = new ArrayAdapter<com.example.android.starbridges.model.OLocation.ReturnValue>(CorrectionDetailActivity.this,
+                            android.R.layout.simple_spinner_item, listReturnValue);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spnLocationCDetails.setAdapter(adapter);
+
+                    getAttendaceCorrection(uid);
+
+
 
                 } else {
 
@@ -528,12 +580,7 @@ public class CorrectionDetailActivity extends AppCompatActivity {
             }
         });
 
-        ArrayAdapter<com.example.android.starbridges.model.OLocation.ReturnValue> adapter = new ArrayAdapter<com.example.android.starbridges.model.OLocation.ReturnValue>(CorrectionDetailActivity.this,
-                android.R.layout.simple_spinner_item, listReturnValue);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnLocationCDetails.setAdapter(adapter);
 
-        getAttendaceCorrection(uid);
 
     }
 
@@ -550,6 +597,7 @@ public class CorrectionDetailActivity extends AppCompatActivity {
             }
         }
 
-        spnLocationCDetails.setSelection(spinnerIdSelected);
+        if(spinnerIdSelected!=0)
+           spnLocationCDetails.setSelection(spinnerIdSelected);
     }
 }

@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.example.android.starbridges.R;
 import com.example.android.starbridges.model.Authentication;
+import com.example.android.starbridges.model.MessageReturn.MessageReturn;
 import com.example.android.starbridges.model.OPost;
 import com.example.android.starbridges.model.RegIMEI;
 import com.example.android.starbridges.network.APIClient;
@@ -124,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
         mSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                validateLogin();
             }
         });
 
@@ -397,6 +398,61 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<Authentication> call, Throwable t) {
+                    showProgress(false);
+                    Toast.makeText(LoginActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    private void validateLogin()
+    {
+        mUsernameView.setError(null);
+        mPasswordView.setError(null);
+
+        // Store values at the time of the login attempt.
+        String username = mUsernameView.getText().toString();
+        String password = mPasswordView.getText().toString();
+
+
+        boolean cancel = false;
+        View focusView = null;
+
+        // Check for a valid password, if the user entered one.
+        if (TextUtils.isEmpty(username)) {
+            mUsernameView.setError(getString(R.string.error_field_required));
+            focusView = mUsernameView;
+            cancel = true;
+        }
+
+        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+            mPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mPasswordView;
+            cancel = true;
+        }
+        if (cancel) {
+            focusView.requestFocus();
+        } else {
+            showProgress(true);
+            //checkIMEIPermission();
+            APIInterfaceRest loginService = APIClient.getClient().create(APIInterfaceRest.class);
+            Call<MessageReturn> call = loginService.getValidation( username, password,  IMEI);
+            call.enqueue(new Callback<MessageReturn>() {
+                @Override
+                public void onResponse(Call<MessageReturn> call, Response<MessageReturn> response) {
+
+                    if (response.body().isIsSucceed()) {
+                        showProgress(false);
+                        attemptLogin();
+                    } else {
+                        showProgress(false);
+                        Toast.makeText(LoginActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<MessageReturn> call, Throwable t) {
                     showProgress(false);
                     Toast.makeText(LoginActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                 }

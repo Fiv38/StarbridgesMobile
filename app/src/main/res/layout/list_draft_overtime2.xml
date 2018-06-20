@@ -44,8 +44,7 @@
                 android:layout_alignParentRight="true"
                 android:text="21:30"
                 android:textColor="@color/md_light_green_A700"
-                android:textSize="16dp"
-                android:textStyle="bold" />
+                android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/textView19"
@@ -62,9 +61,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:text="23:00"
-                android:textColor="@color/md_red_A400"
-                android:textSize="16dp"
-                android:textStyle="bold" />
+                android:textColor="@color/colorRed"
+                android:textSize="16dp" />
 
         </TableRow>
 

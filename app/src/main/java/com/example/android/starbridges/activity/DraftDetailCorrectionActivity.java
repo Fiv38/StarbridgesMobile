@@ -58,6 +58,9 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
     ImageView imgLogInCDraftDetails,imgBreakStartCDraftDetails,imgBreakEndCDraftDetails;
     ImageView imgLogOutCDraftDetails, imgOverTimeInCDraftDetails, imgOverTimeOutCDraftDetails;
 
+    ImageView imgClearLogInCDraftDetails,imgClearBreakStartCDraftDetails,imgClearBreakEndCDraftDetails;
+    ImageView imgClearLogOutCDraftDetails, imgClearOverTimeInCDraftDetails, imgClearOverTimeOutCDraftDetails;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +76,13 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
 
         txtLogInCDraftDetails=(EditText)findViewById(R.id.txtLogInCDraftDetails);
         imgLogInCDraftDetails=(ImageView)findViewById(R.id.imgLogInCDraftDetails);
+        imgClearLogInCDraftDetails=(ImageView)findViewById(R.id.imgClearLogInCDraftDetails);
+        imgClearLogInCDraftDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                txtLogInCDraftDetails.setText("");
+            }
+        });
         txtLogInCDraftDetails.setFocusable(false);
         txtLogInCDraftDetails.setClickable(true);
         imgLogInCDraftDetails.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +117,13 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
 
         txtBreakEndCDraftDetails=(EditText)findViewById(R.id.txtBreakEndCDraftDetails);
         imgBreakEndCDraftDetails=(ImageView)findViewById(R.id.imgBreaEndCDraftDetails);
+        imgClearBreakEndCDraftDetails=(ImageView)findViewById(R.id.imgClearBreaEndCDraftDetails);
+        imgClearBreakEndCDraftDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                txtBreakEndCDraftDetails.setText("");
+            }
+        });
         txtBreakEndCDraftDetails.setFocusable(false);
         txtBreakEndCDraftDetails.setClickable(true);
         imgBreakEndCDraftDetails.setOnClickListener(new View.OnClickListener() {
@@ -141,6 +158,13 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
 
         txtLogOutCDraftDetails=(EditText)findViewById(R.id.txtLogOutCDraftDetails);
         imgLogOutCDraftDetails=(ImageView)findViewById(R.id.imgLogOutCDraftDetails);
+        imgClearLogOutCDraftDetails=(ImageView)findViewById(R.id.imgClearLogOutCDraftDetails);
+        imgClearLogOutCDraftDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                txtLogOutCDraftDetails.setText("");
+            }
+        });
         txtLogOutCDraftDetails.setFocusable(false);
         txtLogOutCDraftDetails.setClickable(true);
         imgLogOutCDraftDetails.setOnClickListener(new View.OnClickListener() {
@@ -175,6 +199,13 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
 
         txtOverTimeInCDraftDetails=(EditText)findViewById(R.id.txtOverTimeInCDraftDetails);
         imgOverTimeInCDraftDetails=(ImageView)findViewById(R.id.imgOverTimeInCDraftDetails);
+        imgClearOverTimeInCDraftDetails=(ImageView)findViewById(R.id.imgClearOverTimeInCDraftDetails);
+        imgClearOverTimeInCDraftDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                txtOverTimeInCDraftDetails.setText("");
+            }
+        });
         txtOverTimeInCDraftDetails.setFocusable(false);
         txtOverTimeInCDraftDetails.setClickable(true);
         imgOverTimeInCDraftDetails.setOnClickListener(new View.OnClickListener() {
@@ -209,6 +240,14 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
 
         txtOverTimeOutCDraftDetails=(EditText)findViewById(R.id.txtOverTimeOutCDraftDetails);
         imgOverTimeOutCDraftDetails=(ImageView)findViewById(R.id.imgOverTimeOutCDraftDetails);
+        imgClearOverTimeOutCDraftDetails=(ImageView)findViewById(R.id.imgClearOverTimeOutCDraftDetails);
+        imgClearOverTimeOutCDraftDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                txtOverTimeOutCDraftDetails.setText("");
+            }
+        });
+        txtOverTimeOutCDraftDetails.setText("");
         txtOverTimeOutCDraftDetails.setFocusable(false);
         txtOverTimeOutCDraftDetails.setClickable(true);
         imgOverTimeOutCDraftDetails.setOnClickListener(new View.OnClickListener() {
@@ -247,6 +286,13 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
 
         txtBreakStartCDraftDetails=(EditText)findViewById(R.id.txtBreakStartCDraftDetails);
         imgBreakStartCDraftDetails=(ImageView)findViewById(R.id.imgBreakStartCDraftDetails);
+        imgClearBreakStartCDraftDetails=(ImageView)findViewById(R.id.imgClearBreakStartCDraftDetails);
+        imgClearBreakStartCDraftDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                txtBreakStartCDraftDetails.setText("");
+            }
+        });
         txtBreakStartCDraftDetails.setFocusable(false);
         txtBreakStartCDraftDetails.setClickable(true);
         imgBreakStartCDraftDetails.setOnClickListener(new View.OnClickListener() {
@@ -379,9 +425,6 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
 
     public void getAttendaceCorrection(String id) {
 
-        progressDialog = new ProgressDialog(DraftDetailCorrectionActivity.this);
-        progressDialog.setTitle("Loading");
-        progressDialog.show();
 
         final APIInterfaceRest apiInterface = APIClient.getDetailAttendanceCorrection(GlobalVar.getToken()).create(APIInterfaceRest.class);
         Call<CorrectionDetail> call3 = apiInterface.getDetailDraftAttendanceCorrection(id);
@@ -394,6 +437,7 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
                     valueCorrectionDetail=data.getReturnValue();
                     locationId=valueCorrectionDetail.getLocationID();
                     setText(valueCorrectionDetail);
+                    setupSpinner();
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
@@ -413,7 +457,6 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
             }
         });
 
-        setupSpinner();
 
     }
 
@@ -489,10 +532,13 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
         txtNotesCDraftDetails.setText(valueCorrectionDetail.getNotes() == null? "":valueCorrectionDetail.getNotes());
 
 
-        progressDialog.dismiss();
     }
 
     public void initSpinnerLoc() {
+        progressDialog = new ProgressDialog(DraftDetailCorrectionActivity.this);
+        progressDialog.setTitle("Loading");
+        progressDialog.show();
+
         listReturnValue= new ArrayList<>();
         com.example.android.starbridges.model.OLocation.ReturnValue returnValue=new com.example.android.starbridges.model.OLocation.ReturnValue();
         returnValue.setID("");
@@ -512,7 +558,13 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
                     locItems = response.body().getReturnValue();
                     listReturnValue.addAll(locItems);
 
-                    setupSpinner();
+                    ArrayAdapter<com.example.android.starbridges.model.OLocation.ReturnValue> adapter = new ArrayAdapter<com.example.android.starbridges.model.OLocation.ReturnValue>(DraftDetailCorrectionActivity.this,
+                            android.R.layout.simple_spinner_item, listReturnValue);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spnLocationCDraftDetails.setAdapter(adapter);
+
+                    getAttendaceCorrection(id);
+
 
                 } else {
 
@@ -527,12 +579,6 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
             }
         });
 
-        ArrayAdapter<com.example.android.starbridges.model.OLocation.ReturnValue> adapter = new ArrayAdapter<com.example.android.starbridges.model.OLocation.ReturnValue>(DraftDetailCorrectionActivity.this,
-                android.R.layout.simple_spinner_item, listReturnValue);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnLocationCDraftDetails.setAdapter(adapter);
-
-        getAttendaceCorrection(id);
     }
 
     public void setupSpinner()
@@ -548,6 +594,10 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
             }
         }
 
-        spnLocationCDraftDetails.setSelection(spinnerIdSelected);
+        if(spinnerIdSelected!=0)
+            spnLocationCDraftDetails.setSelection(spinnerIdSelected);
+
+        progressDialog.dismiss();
+
     }
 }
