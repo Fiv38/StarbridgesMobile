@@ -313,50 +313,52 @@
 
                     <EditText
                         android:id="@+id/txtNotesCDraftDetails"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:ems="10"
                         android:inputType="textPersonName" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal"
-                    android:paddingBottom="10dp">
 
-                    <Button
-                        android:id="@+id/btnSubmitCDraftDetails"
-                        android:layout_width="wrap_content"
-                        android:layout_height="31dp"
-                        android:layout_margin="1dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/rounded_btn"
-                        android:text="Submit"
-                        android:textColor="@android:color/background_light" />
+            </LinearLayout>
 
-                    <Button
-                        android:id="@+id/btnSaveCDraftDetails"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:layout_margin="1dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/rounded_btn"
-                        android:text="Save"
-                        android:textColor="@android:color/background_light" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp">
 
-                    <Button
-                        android:id="@+id/btnCancelCDraftDetails"
-                        android:layout_width="wrap_content"
-                        android:layout_height="29dp"
-                        android:layout_margin="1dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/rounded_btn"
-                        android:text="Cancel"
-                        android:textColor="@android:color/background_light" />
-                </LinearLayout>
+                <Button
+                    android:id="@+id/btnSubmitCDraftDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="31dp"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_btn"
+                    android:text="Submit"
+                    android:textColor="@android:color/background_light" />
+
+                <Button
+                    android:id="@+id/btnSaveCDraftDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_btn"
+                    android:text="Save"
+                    android:textColor="@android:color/background_light" />
+
+                <Button
+                    android:id="@+id/btnCancelCDraftDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="29dp"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_btn"
+                    android:text="Cancel"
+                    android:textColor="@android:color/background_light" />
             </LinearLayout>
 
         </LinearLayout>
