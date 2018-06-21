@@ -99,74 +99,74 @@ public class OvertimeDetailActivity extends AppCompatActivity {
         setTitle("Overtime Request");
 
 
-        reqDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new DatePickerDialog(OvertimeDetailActivity.this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
-
-        ovStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Calendar mTime = Calendar.getInstance();
-                int hour = mTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mTime.get(Calendar.MINUTE);
-
-                TimePickerDialog mTimePicker;
-                try{
-                    mTimePicker = new TimePickerDialog(OvertimeDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                        @Override
-                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                            ovStart.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
-                        }
-                    }, Integer.parseInt(ovStart.getText().toString().substring(0,2)) , Integer.parseInt(ovStart.getText().toString().substring(3,5)), true);
-                } catch (Exception e)
-                {
-                    mTimePicker = new TimePickerDialog(OvertimeDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                        @Override
-                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                            ovStart.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
-                        }
-                    }, hour, minute, true);
-                }
-
-                mTimePicker.setTitle("Select Time");
-                mTimePicker.show();
-            }
-        });
-
-        ovEnd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Calendar mTime = Calendar.getInstance();
-                int hour = mTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mTime.get(Calendar.MINUTE);
-
-                TimePickerDialog mTimePicker;
-                try{
-                    mTimePicker = new TimePickerDialog(OvertimeDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                        @Override
-                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                            ovEnd.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
-                        }
-                    }, Integer.parseInt(ovEnd.getText().toString().substring(0,2)) , Integer.parseInt(ovEnd.getText().toString().substring(3,5)), true);
-                } catch (Exception e)
-                {
-                    mTimePicker = new TimePickerDialog(OvertimeDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                        @Override
-                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                            ovEnd.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
-                        }
-                    }, hour, minute, true);
-                }
-
-                mTimePicker.setTitle("Select Time");
-                mTimePicker.show();
-            }
-        });
+//        reqDate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                new DatePickerDialog(OvertimeDetailActivity.this, date, myCalendar
+//                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+//                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+//            }
+//        });
+//
+//        ovStart.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Calendar mTime = Calendar.getInstance();
+//                int hour = mTime.get(Calendar.HOUR_OF_DAY);
+//                int minute = mTime.get(Calendar.MINUTE);
+//
+//                TimePickerDialog mTimePicker;
+//                try{
+//                    mTimePicker = new TimePickerDialog(OvertimeDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+//                        @Override
+//                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+//                            ovStart.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+//                        }
+//                    }, Integer.parseInt(ovStart.getText().toString().substring(0,2)) , Integer.parseInt(ovStart.getText().toString().substring(3,5)), true);
+//                } catch (Exception e)
+//                {
+//                    mTimePicker = new TimePickerDialog(OvertimeDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+//                        @Override
+//                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+//                            ovStart.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+//                        }
+//                    }, hour, minute, true);
+//                }
+//
+//                mTimePicker.setTitle("Select Time");
+//                mTimePicker.show();
+//            }
+//        });
+//
+//        ovEnd.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Calendar mTime = Calendar.getInstance();
+//                int hour = mTime.get(Calendar.HOUR_OF_DAY);
+//                int minute = mTime.get(Calendar.MINUTE);
+//
+//                TimePickerDialog mTimePicker;
+//                try{
+//                    mTimePicker = new TimePickerDialog(OvertimeDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+//                        @Override
+//                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+//                            ovEnd.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+//                        }
+//                    }, Integer.parseInt(ovEnd.getText().toString().substring(0,2)) , Integer.parseInt(ovEnd.getText().toString().substring(3,5)), true);
+//                } catch (Exception e)
+//                {
+//                    mTimePicker = new TimePickerDialog(OvertimeDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+//                        @Override
+//                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+//                            ovEnd.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+//                        }
+//                    }, hour, minute, true);
+//                }
+//
+//                mTimePicker.setTitle("Select Time");
+//                mTimePicker.show();
+//            }
+//        });
 
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -617,4 +617,63 @@ public class OvertimeDetailActivity extends AppCompatActivity {
 
     }
 
+    public void datePicker(View view) {
+        new DatePickerDialog(OvertimeDetailActivity.this, date, myCalendar
+                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    public void timePickerStart(View view) {
+        Calendar mTime = Calendar.getInstance();
+        int hour = mTime.get(Calendar.HOUR_OF_DAY);
+        int minute = mTime.get(Calendar.MINUTE);
+
+        TimePickerDialog mTimePicker;
+        try{
+            mTimePicker = new TimePickerDialog(OvertimeDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                    ovStart.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+                }
+            }, Integer.parseInt(ovStart.getText().toString().substring(0,2)) , Integer.parseInt(ovStart.getText().toString().substring(3,5)), true);
+        } catch (Exception e)
+        {
+            mTimePicker = new TimePickerDialog(OvertimeDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                    ovStart.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+                }
+            }, hour, minute, true);
+        }
+
+        mTimePicker.setTitle("Select Time");
+        mTimePicker.show();
+    }
+
+    public void timePickerEnd(View view) {
+        Calendar mTime = Calendar.getInstance();
+        int hour = mTime.get(Calendar.HOUR_OF_DAY);
+        int minute = mTime.get(Calendar.MINUTE);
+
+        TimePickerDialog mTimePicker;
+        try{
+            mTimePicker = new TimePickerDialog(OvertimeDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                    ovEnd.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+                }
+            }, Integer.parseInt(ovEnd.getText().toString().substring(0,2)) , Integer.parseInt(ovEnd.getText().toString().substring(3,5)), true);
+        } catch (Exception e)
+        {
+            mTimePicker = new TimePickerDialog(OvertimeDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                    ovEnd.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+                }
+            }, hour, minute, true);
+        }
+
+        mTimePicker.setTitle("Select Time");
+        mTimePicker.show();
+    }
 }
