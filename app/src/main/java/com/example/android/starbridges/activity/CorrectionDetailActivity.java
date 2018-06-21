@@ -426,9 +426,7 @@ public class CorrectionDetailActivity extends AppCompatActivity {
 
     public void getAttendaceCorrection(String uid) {
 
-        progressDialog = new ProgressDialog(CorrectionDetailActivity.this);
-        progressDialog.setTitle("Loading");
-        progressDialog.show();
+
 
         final APIInterfaceRest apiInterface = APIClient.getDetailAttendanceCorrection(GlobalVar.getToken()).create(APIInterfaceRest.class);
         Call<CorrectionDetail> call3 = apiInterface.getDetailAttendanceCorrection(uid);
@@ -534,11 +532,13 @@ public class CorrectionDetailActivity extends AppCompatActivity {
         txtBreakStartCDetails.setText(valueCorrectionDetail.getActualBreakStart() == null? "":valueCorrectionDetail.getActualBreakStart().substring(11,16));
         txtNotesCDetails.setText(valueCorrectionDetail.getNotes() == null? "":valueCorrectionDetail.getNotes());
 
-
-        progressDialog.dismiss();
     }
 
     public void initSpinnerLoc() {
+        progressDialog = new ProgressDialog(CorrectionDetailActivity.this);
+        progressDialog.setTitle("Loading");
+        progressDialog.show();
+
         listReturnValue= new ArrayList<>();
         com.example.android.starbridges.model.OLocation.ReturnValue returnValue=new com.example.android.starbridges.model.OLocation.ReturnValue();
         returnValue.setID("");
@@ -599,5 +599,8 @@ public class CorrectionDetailActivity extends AppCompatActivity {
 
         if(spinnerIdSelected!=0)
            spnLocationCDetails.setSelection(spinnerIdSelected);
+
+        progressDialog.dismiss();
     }
+
 }
