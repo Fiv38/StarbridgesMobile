@@ -186,7 +186,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@android:color/holo_blue_light"
+
+                android:background="@drawable/rounded_btn"
                 android:text="Upload Attachment"
                 android:textColor="@android:color/white" />
 
@@ -213,7 +214,7 @@
                     android:layout_margin="1dp"
                     android:layout_marginTop="16dp"
                     android:layout_weight="1"
-                    android:background="@android:color/holo_blue_light"
+                    android:background="@drawable/rounded_btn"
                     android:text="Submit"
                     android:textColor="@android:color/white" />
 
@@ -224,7 +225,7 @@
                     android:layout_margin="1dp"
                     android:layout_marginTop="16dp"
                     android:layout_weight="1"
-                    android:background="@android:color/holo_blue_light"
+                    android:background="@drawable/rounded_btn"
                     android:text="Save"
                     android:textColor="@android:color/white" />
 
@@ -235,7 +236,7 @@
                     android:layout_margin="1dp"
                     android:layout_marginTop="16dp"
                     android:layout_weight="1"
-                    android:background="@android:color/holo_blue_light"
+                    android:background="@drawable/rounded_btn"
                     android:text="Cancel"
                     android:textColor="@android:color/white" />
             </LinearLayout>

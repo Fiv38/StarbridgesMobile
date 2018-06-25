@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -156,5 +157,10 @@ public class OvertimeActivity extends AppCompatActivity {
                 call.cancel();
             }
         });
+    }
+
+    public void addOvertime(View view) {
+        Intent intent = new Intent(OvertimeActivity.this,OvertimeDetailActivity.class);
+        startActivity(intent);
     }
 }
