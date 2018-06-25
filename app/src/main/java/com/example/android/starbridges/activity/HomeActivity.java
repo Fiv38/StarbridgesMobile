@@ -1,6 +1,8 @@
 package com.example.android.starbridges.activity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.graphics.Bitmap;
@@ -19,6 +21,7 @@ import com.example.android.starbridges.R;
 import com.example.android.starbridges.model.getimage.GetImage;
 import com.example.android.starbridges.network.APIClient;
 import com.example.android.starbridges.network.APIInterfaceRest;
+import com.example.android.starbridges.utility.AlertDialogManager;
 import com.example.android.starbridges.utility.GlobalVar;
 import com.example.android.starbridges.utility.SessionManagement;
 
@@ -153,8 +156,26 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(correction);
     }
     public void signOut(View view){
-        session.logoutUser();
-        finish();
+        AlertDialog.Builder alert = new AlertDialog.Builder(HomeActivity.this);
+        alert.setTitle("Confirmation");
+        alert.setTitle("Are You Sure to Sign Out?");
+        alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                session.logoutUser();
+                finish();
+            }
+        });
+
+        alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        alert.show();
+
+
     }
 
     public void showOvertime(View view){

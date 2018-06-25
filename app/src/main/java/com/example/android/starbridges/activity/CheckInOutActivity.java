@@ -1,6 +1,7 @@
 package com.example.android.starbridges.activity;
 
 import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.app.AppOpsManager;
 import android.app.ProgressDialog;
 import android.app.usage.UsageStats;
@@ -8,11 +9,13 @@ import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,6 +35,7 @@ import com.example.android.starbridges.model.history.History;
 import com.example.android.starbridges.model.history.ReturnValue;
 import com.example.android.starbridges.network.APIClient;
 import com.example.android.starbridges.network.APIInterfaceRest;
+import com.example.android.starbridges.utility.AlertDialogManager;
 import com.example.android.starbridges.utility.GlobalVar;
 import com.google.android.gms.location.FusedLocationProviderApi;
 
@@ -43,7 +47,9 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -73,7 +79,7 @@ public class CheckInOutActivity extends AppCompatActivity {
 
         this.setTitle("Attendance");
 
-        Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
+        final Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
         mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         List<ResolveInfo> pkgAppsList = getPackageManager().queryIntentActivities( mainIntent, 0);
 
@@ -110,7 +116,29 @@ public class CheckInOutActivity extends AppCompatActivity {
         mShowDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDetail();
+                List<ResolveInfo> pkgAppsList = getPackageManager().queryIntentActivities( mainIntent, 0);
+
+                if (isAppInstalled("com.lexa.fakegps")
+                        || isAppInstalled("com.theappninjas.gpsjosystick")
+                        ||isAppInstalled("com.incorporateapps.fakegps.fre")
+                        ||isAppInstalled("com.divi.fakeGPS")
+                        ||isAppInstalled("com.fakegps.mock")
+                        ||isAppInstalled("com.frastan.fakegps")
+                        ||isAppInstalled("com.gsmartstudio.fakegps")
+                        ||isAppInstalled("com.lkr.fakelocation")
+                        ||isAppInstalled("com.ltp.pro.fakelocation")
+                        ||isAppInstalled("com.pe.fakegpsrun")
+                        ||isAppInstalled("com.perfect.apps.fakegps.flygps.fake.location.changer.fake.gps")
+                        ||isAppInstalled("com.usefullapps.fakegpslocationpro")
+                        ||isAppInstalled("com.fake.gps.location")
+                        ||isAppInstalled("org.hola.gpslocation")
+                        ){
+                    //Toast.makeText(CheckInOutActivity.this,"Terdeteksi",Toast.LENGTH_SHORT).show();
+                    AlertDialogManager alertDialogManager = new AlertDialogManager();
+                    alertDialogManager.showAlertDialog(CheckInOutActivity.this, "Warning","Please Uninstall your Fake GPS Apps",false);
+                }
+                else
+                    showDetail();
             }
         });
 
@@ -123,6 +151,116 @@ public class CheckInOutActivity extends AppCompatActivity {
 
         Toast.makeText(CheckInOutActivity.this, needPermissionForBlocking(CheckInOutActivity.this)+"", Toast.LENGTH_LONG).show();
         */
+
+        Log.d("cekMock", isMockLocationOn(location, CheckInOutActivity.this)+"");
+        Log.d("cekMockList", getListOfFakeLocationApps(CheckInOutActivity.this)+"");
+    }
+
+    public static boolean isMockLocationOn(Location location, Context context) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            return location.isFromMockProvider();
+        } else {
+            String mockLocation = "0";
+            try {
+                mockLocation = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ALLOW_MOCK_LOCATION);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return !mockLocation.equals("0");
+        }
+    }
+
+    public static List<String> getListOfFakeLocationApps(Context context) {
+        List<String> runningApps = getRunningApps(context, false);
+        for (int i = runningApps.size() - 1; i >= 0; i--) {
+            String app = runningApps.get(i);
+            if(!hasAppPermission(context, app, "android.permission.ACCESS_MOCK_LOCATION")){
+                runningApps.remove(i);
+            }
+        }
+        return runningApps;
+    }
+
+    public static List<String> getRunningApps(Context context, boolean includeSystem) {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+
+        List<String> runningApps = new ArrayList<>();
+
+        List<ActivityManager.RunningAppProcessInfo> runAppsList = activityManager.getRunningAppProcesses();
+        for (ActivityManager.RunningAppProcessInfo processInfo : runAppsList) {
+            for (String pkg : processInfo.pkgList) {
+                runningApps.add(pkg);
+            }
+        }
+
+        try {
+            //can throw securityException at api<18 (maybe need "android.permission.GET_TASKS")
+            List<ActivityManager.RunningTaskInfo> runningTasks = activityManager.getRunningTasks(1000);
+            for (ActivityManager.RunningTaskInfo taskInfo : runningTasks) {
+                runningApps.add(taskInfo.topActivity.getPackageName());
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        List<ActivityManager.RunningServiceInfo> runningServices = activityManager.getRunningServices(1000);
+        for (ActivityManager.RunningServiceInfo serviceInfo : runningServices) {
+            runningApps.add(serviceInfo.service.getPackageName());
+        }
+
+        runningApps = new ArrayList<>(new HashSet<>(runningApps));
+
+        if(!includeSystem){
+            for (int i = runningApps.size() - 1; i >= 0; i--) {
+                String app = runningApps.get(i);
+                if(isSystemPackage(context, app)){
+                    runningApps.remove(i);
+                }
+            }
+        }
+        return runningApps;
+    }
+
+    public static boolean isSystemPackage(Context context, String app){
+        PackageManager packageManager = context.getPackageManager();
+        try {
+            PackageInfo pkgInfo = packageManager.getPackageInfo(app, 0);
+            return (pkgInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean hasAppPermission(Context context, String app, String permission){
+        PackageManager packageManager = context.getPackageManager();
+        PackageInfo packageInfo;
+        try {
+            packageInfo = packageManager.getPackageInfo(app, PackageManager.GET_PERMISSIONS);
+            if(packageInfo.requestedPermissions!= null){
+                for (String requestedPermission : packageInfo.requestedPermissions) {
+                    if (requestedPermission.equals(permission)) {
+                        return true;
+                    }
+                }
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+    public boolean isAppInstalled(String packageName) {
+        PackageManager pm = getPackageManager();
+        boolean installed = false;
+        try {
+            pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
+            installed = true;
+        } catch (PackageManager.NameNotFoundException e) {
+            installed = false;
+        }
+        return installed;
     }
 
     public static boolean needPermissionForBlocking(Context context){

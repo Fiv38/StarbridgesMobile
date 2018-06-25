@@ -2,6 +2,8 @@ package com.example.android.starbridges.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -20,6 +22,7 @@ import com.example.android.starbridges.model.history.History;
 import com.example.android.starbridges.model.history.ReturnValue;
 import com.example.android.starbridges.network.APIClient;
 import com.example.android.starbridges.network.APIInterfaceRest;
+import com.example.android.starbridges.utility.AlertDialogManager;
 import com.example.android.starbridges.utility.GlobalVar;
 
 import org.json.JSONObject;
@@ -66,15 +69,53 @@ public class StartEndDayActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        final Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
+        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        List<ResolveInfo> pkgAppsList = getPackageManager().queryIntentActivities( mainIntent, 0);
+
         mShowDetail = (Button) findViewById(R.id.btn_show_detail);
         mShowDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDetail();
+                List<ResolveInfo> pkgAppsList = getPackageManager().queryIntentActivities( mainIntent, 0);
+
+                if (isAppInstalled("com.lexa.fakegps")
+                        || isAppInstalled("com.theappninjas.gpsjosystick")
+                        ||isAppInstalled("com.incorporateapps.fakegps.fre")
+                        ||isAppInstalled("com.divi.fakeGPS")
+                        ||isAppInstalled("com.fakegps.mock")
+                        ||isAppInstalled("com.frastan.fakegps")
+                        ||isAppInstalled("com.gsmartstudio.fakegps")
+                        ||isAppInstalled("com.lkr.fakelocation")
+                        ||isAppInstalled("com.ltp.pro.fakelocation")
+                        ||isAppInstalled("com.pe.fakegpsrun")
+                        ||isAppInstalled("com.perfect.apps.fakegps.flygps.fake.location.changer.fake.gps")
+                        ||isAppInstalled("com.usefullapps.fakegpslocationpro")
+                        ||isAppInstalled("com.fake.gps.location")
+                        ||isAppInstalled("org.hola.gpslocation")
+                        ){
+                    //Toast.makeText(CheckInOutActivity.this,"Terdeteksi",Toast.LENGTH_SHORT).show();
+                    AlertDialogManager alertDialogManager = new AlertDialogManager();
+                    alertDialogManager.showAlertDialog(StartEndDayActivity.this, "Warning","Please Uninstall your Fake GPS Apps",false);
+                }
+                else
+                    showDetail();
             }
         });
 
         //getAttendaceLog(dateString2, dateString2);
+    }
+
+    public boolean isAppInstalled(String packageName) {
+        PackageManager pm = getPackageManager();
+        boolean installed = false;
+        try {
+            pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
+            installed = true;
+        } catch (PackageManager.NameNotFoundException e) {
+            installed = false;
+        }
+        return installed;
     }
 
     @Override

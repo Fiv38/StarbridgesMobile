@@ -124,6 +124,7 @@
             />
         <activity android:name=".activity.LeaveRequestDetailActivity"
             android:configChanges="orientation"
+            android:theme="@style/TranslucentTheme"
             android:parentActivityName=".activity.LeaveRequestActivity"
             android:screenOrientation="portrait"
             />
