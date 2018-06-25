@@ -27,8 +27,16 @@ public class ReturnValue implements Serializable, Parcelable
     @SerializedName("EmploymentStatus")
     @Expose
     private Integer employmentStatus;
+
+    @Override
+    public String toString() {
+        return fullName;
+    }
+
     @SerializedName("JobTitle")
     @Expose
+
+
     private Object jobTitle;
     public final static Creator<ReturnValue> CREATOR = new Creator<ReturnValue>() {
 
