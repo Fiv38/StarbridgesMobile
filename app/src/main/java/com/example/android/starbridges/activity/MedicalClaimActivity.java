@@ -2,19 +2,18 @@ package com.example.android.starbridges.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.android.starbridges.R;
-import com.example.android.starbridges.adapter.LeaveRequestAdapter;
 import com.example.android.starbridges.adapter.MedicalAdapter;
 import com.example.android.starbridges.model.getmedicalsupport.GetMedicalSupport;
-import com.example.android.starbridges.model.leaverequest.LeaveRequest;
 import com.example.android.starbridges.model.listmedicalclaim.ListMedicalClaim;
 import com.example.android.starbridges.network.APIClient;
 import com.example.android.starbridges.network.APIInterfaceRest;
@@ -46,6 +45,15 @@ public class MedicalClaimActivity extends AppCompatActivity {
         setContentView(R.layout.activity_medical_claim);
         setTitle("Medical Claim");
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabAddMedical);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MedicalClaimActivity.this, MedicalClaimDetailActivity.class);
+                startActivity(intent);
+            }
+        });
         // run api Medical Support
         //initMedicalSupport();
 

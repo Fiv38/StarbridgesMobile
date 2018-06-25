@@ -53,9 +53,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MedicalClaimDetailActivity extends AppCompatActivity {
-    static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int MY_GALLERY_REQUEST_CODE = 100;
     private static final int PICK_IMAGE = 999;
+    private int TotalSpinner;
+    private String TransID;
 
     private Spinner spinnerMedicalPolicy, spinnerEmployeeFamily, spinnerClaimPolicy;
     private TextView medicalGrade;
@@ -122,7 +123,7 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medical_claim_detail);
-        setTitle("Medical Support");
+        setTitle("Medical Claim Detail");
 
         // get reference to component
         medicalGrade = (TextView) findViewById(R.id.medicalGradeView);
@@ -358,6 +359,7 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
 
                     // init spinner medical policy
                     initSpinnerMedicalPolicy();
+                    initSpinnerClaimPolicy();
 
                 } else {
                     Toast.makeText(MedicalClaimDetailActivity.this, "Failed to get data", Toast.LENGTH_SHORT).show();

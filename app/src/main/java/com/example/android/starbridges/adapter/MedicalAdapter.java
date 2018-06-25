@@ -44,15 +44,15 @@ public class MedicalAdapter extends ArrayAdapter<ReturnValue> {
         TextView policy = (TextView) rowView.findViewById(R.id.policyView);
         TextView family = (TextView) rowView.findViewById(R.id.familyView);
         TextView claim = (TextView) rowView.findViewById(R.id.claimView);
-        TextView remainingBalance = (TextView) rowView.findViewById(R.id.remainingBalanceView);
+        //TextView remainingBalance = (TextView) rowView.findViewById(R.id.remainingBalanceView);
         TextView reimbursement = (TextView) rowView.findViewById(R.id.reimbursementView);
 
-        //decisionNumber.setText(medicalList.get(position).getD);
+        decisionNumber.setText(medicalList.get(position).getDecisionNumber());
         policy.setText(medicalList.get(position).getPolicyName());
         family.setText(medicalList.get(position).getFamily());
-        claim.setText(medicalList.get(position).getClaim());
-        //remainingBalance.setText(medicalList.get(position).getre);
-        reimbursement.setText(medicalList.get(position).getReimbursement());
+        claim.setText("Claim: "+medicalList.get(position).getClaim());
+        //remainingBalance.setText(medicalList.get(position).get);
+        reimbursement.setText("Reimburse: "+medicalList.get(position).getReimbursement());
 
         // return rowView
         return rowView;

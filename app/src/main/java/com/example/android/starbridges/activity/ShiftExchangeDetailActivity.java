@@ -65,8 +65,6 @@ public class ShiftExchangeDetailActivity extends AppCompatActivity {
     List<com.example.android.starbridges.model.ListEmployee.ReturnValue> lstEmployee;
     List<com.example.android.starbridges.model.ListShift.ReturnValue> lstShift;
 
-    List<Object> exclusiveFields;
-
     Calendar myCalendar = Calendar.getInstance();
     DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
         @Override

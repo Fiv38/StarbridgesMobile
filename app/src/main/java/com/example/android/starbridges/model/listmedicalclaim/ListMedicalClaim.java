@@ -24,7 +24,7 @@ public class ListMedicalClaim implements Serializable, Parcelable
     @SerializedName("message")
     @Expose
     private String message;
-    public final static Creator<ListMedicalClaim> CREATOR = new Creator<ListMedicalClaim>() {
+    public final static Parcelable.Creator<ListMedicalClaim> CREATOR = new Creator<ListMedicalClaim>() {
 
 
         @SuppressWarnings({
@@ -40,11 +40,11 @@ public class ListMedicalClaim implements Serializable, Parcelable
 
     }
     ;
-    private final static long serialVersionUID = -5773049355634684888L;
+    private final static long serialVersionUID = 7899558373967826459L;
 
     protected ListMedicalClaim(Parcel in) {
         this.customField = ((CustomField) in.readValue((CustomField.class.getClassLoader())));
-        in.readList(this.returnValue, (ReturnValue.class.getClassLoader()));
+        in.readList(this.returnValue, (com.example.android.starbridges.model.listmedicalclaim.ReturnValue.class.getClassLoader()));
         this.isSucceed = ((Boolean) in.readValue((Boolean.class.getClassLoader())));
         this.message = ((String) in.readValue((String.class.getClassLoader())));
     }
