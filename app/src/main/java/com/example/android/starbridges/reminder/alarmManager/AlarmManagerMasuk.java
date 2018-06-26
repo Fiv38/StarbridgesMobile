@@ -21,15 +21,6 @@ public class AlarmManagerMasuk {
     public static void start(Context ctx) {
         final AlarmManager alarmManager = (AlarmManager) ctx.getSystemService(ALARM_SERVICE);
 
-        // setting waktu
-//        final long time = 1 * 60 * 1000; // 15 menit
-//        Date a = Calendar.getInstance().getTime();
-//        long time2 = a.getTime();
-//        long triggerTime = SystemClock.elapsedRealtime() + time;
-//        long repeatInterval = time;
-//        //AlarmManager.INTERVAL_FIFTEEN_MINUTES /3 ;
-        //setting specific time
-
 //        Calendar checkOutTime2 = Calendar.getInstance();
 //
 //        if (DateFormat.is24HourFormat(ctx)) {

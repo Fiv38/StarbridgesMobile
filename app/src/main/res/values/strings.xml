@@ -35,4 +35,10 @@
     <string name="title_activity_draft">DraftActivity</string>
     <string name="date_picker">datePicker</string>
     <string name="reimbursement">REIMBURSE</string>
+
+    <!-- Strings reminder -->
+    <string name="reminder_title">Star Brigdes</string>
+    <string name="reminder_pesan_masuk">Jam kerja akan di mulai, Pastikan sudah melakukan absensi masuk  !!!</string>
+    <string name="reminder_pesan_pulang">Jam kerja akan berakhir, Pastikan melakukan absensi pulang !!!</string>
+
 </resources>
