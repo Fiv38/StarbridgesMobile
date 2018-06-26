@@ -55,6 +55,12 @@ public class ReturnValue implements Serializable, Parcelable
     @SerializedName("AccessibilityAttribute")
     @Expose
     private String accessibilityAttribute;
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
     public final static Creator<ReturnValue> CREATOR = new Creator<ReturnValue>() {
 
 

@@ -15,21 +15,24 @@ public class ReturnValue implements Serializable, Parcelable
     @SerializedName("ID")
     @Expose
     private String iD;
+    @SerializedName("DecisionNumber")
+    @Expose
+    private String decisionNumber;
     @SerializedName("Family")
     @Expose
     private String family;
-    @SerializedName("MedicalSupport")
-    @Expose
-    private String medicalSupport;
     @SerializedName("PolicyName")
     @Expose
     private String policyName;
+    @SerializedName("MedicalSupport")
+    @Expose
+    private String medicalSupport;
     @SerializedName("Service")
     @Expose
     private String service;
     @SerializedName("Institution")
     @Expose
-    private Object institution;
+    private String institution;
     @SerializedName("Claim")
     @Expose
     private String claim;
@@ -41,7 +44,7 @@ public class ReturnValue implements Serializable, Parcelable
     private String receiptDate;
     @SerializedName("AttachmentFile")
     @Expose
-    private String attachmentFile;
+    private Object attachmentFile;
     @SerializedName("FullAccess")
     @Expose
     private Boolean fullAccess;
@@ -51,7 +54,7 @@ public class ReturnValue implements Serializable, Parcelable
     @SerializedName("AccessibilityAttribute")
     @Expose
     private String accessibilityAttribute;
-    public final static Creator<ReturnValue> CREATOR = new Creator<ReturnValue>() {
+    public final static Parcelable.Creator<ReturnValue> CREATOR = new Creator<ReturnValue>() {
 
 
         @SuppressWarnings({
@@ -67,21 +70,22 @@ public class ReturnValue implements Serializable, Parcelable
 
     }
     ;
-    private final static long serialVersionUID = 2455688955516915374L;
+    private final static long serialVersionUID = 3301520482751459769L;
 
     protected ReturnValue(Parcel in) {
         this.iD = ((String) in.readValue((String.class.getClassLoader())));
+        this.decisionNumber = ((String) in.readValue((String.class.getClassLoader())));
         this.family = ((String) in.readValue((String.class.getClassLoader())));
-        this.medicalSupport = ((String) in.readValue((String.class.getClassLoader())));
         this.policyName = ((String) in.readValue((String.class.getClassLoader())));
+        this.medicalSupport = ((String) in.readValue((String.class.getClassLoader())));
         this.service = ((String) in.readValue((String.class.getClassLoader())));
-        this.institution = ((Object) in.readValue((Object.class.getClassLoader())));
+        this.institution = ((String) in.readValue((String.class.getClassLoader())));
         this.claim = ((String) in.readValue((String.class.getClassLoader())));
         this.reimbursement = ((String) in.readValue((String.class.getClassLoader())));
         this.receiptDate = ((String) in.readValue((String.class.getClassLoader())));
-        this.attachmentFile = ((String) in.readValue((String.class.getClassLoader())));
+        this.attachmentFile = ((Object) in.readValue((Object.class.getClassLoader())));
         this.fullAccess = ((Boolean) in.readValue((Boolean.class.getClassLoader())));
-        in.readList(this.exclusionFields, (Object.class.getClassLoader()));
+        in.readList(this.exclusionFields, (java.lang.Object.class.getClassLoader()));
         this.accessibilityAttribute = ((String) in.readValue((String.class.getClassLoader())));
     }
 
@@ -100,6 +104,7 @@ public class ReturnValue implements Serializable, Parcelable
      * @param reimbursement
      * @param iD
      * @param exclusionFields
+     * @param decisionNumber
      * @param policyName
      * @param receiptDate
      * @param family
@@ -108,12 +113,13 @@ public class ReturnValue implements Serializable, Parcelable
      * @param medicalSupport
      * @param institution
      */
-    public ReturnValue(String iD, String family, String medicalSupport, String policyName, String service, Object institution, String claim, String reimbursement, String receiptDate, String attachmentFile, Boolean fullAccess, List<Object> exclusionFields, String accessibilityAttribute) {
+    public ReturnValue(String iD, String decisionNumber, String family, String policyName, String medicalSupport, String service, String institution, String claim, String reimbursement, String receiptDate, Object attachmentFile, Boolean fullAccess, List<Object> exclusionFields, String accessibilityAttribute) {
         super();
         this.iD = iD;
+        this.decisionNumber = decisionNumber;
         this.family = family;
-        this.medicalSupport = medicalSupport;
         this.policyName = policyName;
+        this.medicalSupport = medicalSupport;
         this.service = service;
         this.institution = institution;
         this.claim = claim;
@@ -133,20 +139,20 @@ public class ReturnValue implements Serializable, Parcelable
         this.iD = iD;
     }
 
+    public String getDecisionNumber() {
+        return decisionNumber;
+    }
+
+    public void setDecisionNumber(String decisionNumber) {
+        this.decisionNumber = decisionNumber;
+    }
+
     public String getFamily() {
         return family;
     }
 
     public void setFamily(String family) {
         this.family = family;
-    }
-
-    public String getMedicalSupport() {
-        return medicalSupport;
-    }
-
-    public void setMedicalSupport(String medicalSupport) {
-        this.medicalSupport = medicalSupport;
     }
 
     public String getPolicyName() {
@@ -157,6 +163,14 @@ public class ReturnValue implements Serializable, Parcelable
         this.policyName = policyName;
     }
 
+    public String getMedicalSupport() {
+        return medicalSupport;
+    }
+
+    public void setMedicalSupport(String medicalSupport) {
+        this.medicalSupport = medicalSupport;
+    }
+
     public String getService() {
         return service;
     }
@@ -165,11 +179,11 @@ public class ReturnValue implements Serializable, Parcelable
         this.service = service;
     }
 
-    public Object getInstitution() {
+    public String getInstitution() {
         return institution;
     }
 
-    public void setInstitution(Object institution) {
+    public void setInstitution(String institution) {
         this.institution = institution;
     }
 
@@ -197,11 +211,11 @@ public class ReturnValue implements Serializable, Parcelable
         this.receiptDate = receiptDate;
     }
 
-    public String getAttachmentFile() {
+    public Object getAttachmentFile() {
         return attachmentFile;
     }
 
-    public void setAttachmentFile(String attachmentFile) {
+    public void setAttachmentFile(Object attachmentFile) {
         this.attachmentFile = attachmentFile;
     }
 
@@ -231,9 +245,10 @@ public class ReturnValue implements Serializable, Parcelable
 
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(iD);
+        dest.writeValue(decisionNumber);
         dest.writeValue(family);
-        dest.writeValue(medicalSupport);
         dest.writeValue(policyName);
+        dest.writeValue(medicalSupport);
         dest.writeValue(service);
         dest.writeValue(institution);
         dest.writeValue(claim);

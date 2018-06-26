@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +18,14 @@ import android.widget.TextView;
 import com.example.android.starbridges.R;
 import com.example.android.starbridges.activity.MedicalClaimDetailActivity;
 import com.example.android.starbridges.model.listdraftmedical.ReturnValue;
+import com.example.android.starbridges.utility.SharedPreferenceUtils;
 
 import org.w3c.dom.Text;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,63 +37,89 @@ public class ListDraftMedicalAdapter extends ArrayAdapter<ReturnValue> {
     private final Context context;
     private final List<ReturnValue> draftMedicalList;
     public static List<String> listID = new ArrayList<>();
+    private SparseBooleanArray mSelectedItemsIds;
+    LayoutInflater inflater;
 
-    public ListDraftMedicalAdapter(Context context, List<ReturnValue> draftMedicalList){
+    public ListDraftMedicalAdapter(Context context, List<ReturnValue> draftMedicalList) {
         super(context, R.layout.list_draft_medical, draftMedicalList);
 
+        mSelectedItemsIds = new SparseBooleanArray();
         this.context = context;
         this.draftMedicalList = draftMedicalList;
+        inflater = LayoutInflater.from(context);
+    }
+
+    private class ViewHolder {
+        TextView lblPolicy;
+        TextView lblFamily;
+        TextView lblClaim;
+        TextView lblReimburse;
     }
 
     @NonNull
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        // create inflater
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final ListDraftMedicalAdapter.ViewHolder holder;
 
-        // get rowview from inflater
-        View rowview = inflater.inflate(R.layout.list_draft_medical, parent, false);
+        if (convertView == null) {
+            holder = new ListDraftMedicalAdapter.ViewHolder();
+            convertView = inflater.inflate(R.layout.list_draft_medical, null);
+            // Locate the TextViews in listview_item.xml
 
-        // get the text view from the rowView
-        TextView policy = (TextView) rowview.findViewById(R.id.policyView);
-        TextView family = (TextView) rowview.findViewById(R.id.familyView);
-        TextView claim = (TextView) rowview.findViewById(R.id.claimView);
-        TextView reimbursement = (TextView) rowview.findViewById(R.id.reimbursementView);
-        Button btnEdit = (Button) rowview.findViewById(R.id.btnEditDraft);
-        CheckBox checkBox = (CheckBox) rowview.findViewById(R.id.checkBox);
+            holder.lblPolicy = (TextView) convertView.findViewById(R.id.policyView);
+            holder.lblFamily = (TextView) convertView.findViewById(R.id.familyView);
+            holder.lblClaim = (TextView) convertView.findViewById(R.id.claimView);
+            holder.lblReimburse = (TextView) convertView.findViewById(R.id.reimbursementView);
 
-        policy.setText(draftMedicalList.get(position).getPolicyName());
-        family.setText(draftMedicalList.get(position).getFamily());
-        claim.setText(draftMedicalList.get(position).getClaim());
-        reimbursement.setText(draftMedicalList.get(position).getReimbursement());
+            convertView.setTag(holder);
+        } else {
+            holder = (ListDraftMedicalAdapter.ViewHolder) convertView.getTag();
+        }
 
-        checkBox.setChecked(draftMedicalList.get(position).getSelected());
 
-        btnEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), MedicalClaimDetailActivity.class);
-                intent.putExtra("ID", draftMedicalList.get(position).getID());
-                //context.startActivity(intent);
-                ((Activity) context).startActivityForResult(intent,1000);
-            }
-        });
+        holder.lblPolicy.setText(draftMedicalList.get(position).getPolicyName());
+        holder.lblFamily.setText(draftMedicalList.get(position).getFamily());
+        holder.lblClaim.setText("Claim: " + draftMedicalList.get(position).getClaim());
+        holder.lblReimburse.setText("Reimburse: " + draftMedicalList.get(position).getReimbursement());
 
-        checkBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(((CompoundButton) v).isChecked()) {
-                    listID.add(draftMedicalList.get(position).getID());
-                    draftMedicalList.get(position).setSelected(true);
-                }
-                else {
-                    listID.remove(draftMedicalList.get(position).getID());
-                    draftMedicalList.get(position).setSelected(false);
-                }
-            }
-        });
+        return convertView;
 
-        return rowview;
+    }
 
+    @Override
+    public void remove(ReturnValue object) {
+        draftMedicalList.remove(object);
+        listID.add(object.getID());
+        SharedPreferenceUtils.setSetting(context, "listID", listID.toString());
+        notifyDataSetChanged();
+    }
+
+    public List<ReturnValue> getLstorder() {
+        return draftMedicalList;
+    }
+
+    public void toggleSelection(int position) {
+        selectView(position, !mSelectedItemsIds.get(position));
+    }
+
+    public void removeSelection() {
+        mSelectedItemsIds = new SparseBooleanArray();
+        notifyDataSetChanged();
+    }
+
+    public void selectView(int position, boolean value) {
+        if (value)
+            mSelectedItemsIds.put(position, value);
+        else
+            mSelectedItemsIds.delete(position);
+        notifyDataSetChanged();
+    }
+
+    public int getSelectedCount() {
+        return mSelectedItemsIds.size();
+    }
+
+    public SparseBooleanArray getSelectedIds() {
+        return mSelectedItemsIds;
     }
 }

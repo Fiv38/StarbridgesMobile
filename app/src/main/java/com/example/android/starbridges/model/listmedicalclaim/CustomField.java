@@ -9,7 +9,7 @@ import android.os.Parcelable.Creator;
 public class CustomField implements Serializable, Parcelable
 {
 
-    public final static Creator<CustomField> CREATOR = new Creator<CustomField>() {
+    public final static Parcelable.Creator<CustomField> CREATOR = new Creator<CustomField>() {
 
 
         @SuppressWarnings({
@@ -25,7 +25,7 @@ public class CustomField implements Serializable, Parcelable
 
     }
     ;
-    private final static long serialVersionUID = 3354222077397993344L;
+    private final static long serialVersionUID = 7724897019706338073L;
 
     protected CustomField(Parcel in) {
     }
