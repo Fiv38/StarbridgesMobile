@@ -27,8 +27,9 @@ public final class NotificationPulang {
                     .setContentIntent(contentPendingIntent)
                     .setAutoCancel(true)
                     .setPriority(NotificationCompat.PRIORITY_MAX)
-                    .setDefaults(NotificationCompat.DEFAULT_ALL);
-
+                    .setDefaults(NotificationCompat.DEFAULT_ALL)
+                    .setStyle(new NotificationCompat.BigTextStyle()
+                    .bigText(message));
             mNotificationManager.notify(NOTIFICATION_ID, builder.build());
     }
 }

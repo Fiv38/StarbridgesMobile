@@ -5,13 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.example.android.starbridges.R;
 import com.example.android.starbridges.utility.GlobalVar;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class MyReceiver extends BroadcastReceiver {
-
     @Override
     public void onReceive(Context context, Intent intent) {
         Calendar today = Calendar.getInstance();
@@ -21,8 +21,8 @@ public class MyReceiver extends BroadcastReceiver {
             Calendar alarm =  GlobalVar.jamMasuk(context);
             Boolean hasil = today.before(alarm);
             if(hasil==true){
-                String message = "Jam kerja akan di mulai Pastikan sudah melakukan absensi masuk  !!!";
-                String tittle = "Star Brigdes";
+                String message = context.getString(R.string.reminder_pesan_masuk);
+                String tittle = context.getString(R.string.reminder_title);
                 Notification.deliverNotification(context, tittle, message);
                 Log.d("myTag", "notif AlarmMasuk di jalankan karena jam masih akan datang");
             }else{

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.example.android.starbridges.R;
 import com.example.android.starbridges.utility.GlobalVar;
 
 import java.util.Calendar;
@@ -20,7 +21,9 @@ public class MyReceiverPulang extends BroadcastReceiver {
             Calendar alarm2 = GlobalVar.jamPulang(context);
             Boolean hasil2 = today2.before(alarm2);
             if(hasil2==true) {
-                NotificationPulang.deliverNotification(context, "Star Brigdes", "Jam kerja akan berakhir, Pastikan melakukan absensi pulang !!!");
+                String message = context.getString(R.string.reminder_pesan_pulang);
+                String tittle = context.getString(R.string.reminder_title);
+                NotificationPulang.deliverNotification(context, tittle, message);
                 Log.d("myTag", "notif AlarmPulang di jalankan");
             }else{
                 Log.d("myTag", "notif AlarmPulang tidak di jalankan karena jam sudah terlewat");
