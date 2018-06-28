@@ -158,6 +158,7 @@
             android:configChanges="orientation"
             android:parentActivityName=".activity.MedicalClaimActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/TranslucentTheme"
             />
         <activity android:name=".activity.ReimburseActivity"
             android:configChanges="orientation"

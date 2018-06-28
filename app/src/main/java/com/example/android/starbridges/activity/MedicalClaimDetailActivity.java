@@ -9,13 +9,11 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Base64;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,8 +32,6 @@ import com.example.android.starbridges.model.getmedicalpolicy.GetMedicalPolicy;
 import com.example.android.starbridges.model.getmedicalsupport.GetMedicalSupport;
 import com.example.android.starbridges.model.medicalrequestconfirmation.MedicalRequestConfirmation;
 import com.example.android.starbridges.model.medicalsavedetail.MedicalSaveDetail;
-import com.example.android.starbridges.model.requesttype.ReturnValue;
-import com.example.android.starbridges.model.saveLeaveRequest.SaveLeaveRequest;
 import com.example.android.starbridges.network.APIClient;
 import com.example.android.starbridges.network.APIInterfaceRest;
 import com.example.android.starbridges.utility.GlobalVar;
@@ -55,8 +51,6 @@ import retrofit2.Response;
 public class MedicalClaimDetailActivity extends AppCompatActivity {
     private static final int MY_GALLERY_REQUEST_CODE = 100;
     private static final int PICK_IMAGE = 999;
-    private int TotalSpinner;
-    private String TransID;
 
     private Spinner spinnerMedicalPolicy, spinnerEmployeeFamily, spinnerClaimPolicy;
     private TextView medicalGrade;
@@ -150,6 +144,8 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
         // set clickable to image
         imageView.setClickable(true);
 
+        progressDialog = new ProgressDialog(MedicalClaimDetailActivity.this);
+        progressDialog.setTitle("Loading");
         // load api
         initMedicalSupport();
 
@@ -339,17 +335,15 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
         // get token
         apiInterface = APIClient.getClient(GlobalVar.getToken()).create(APIInterfaceRest.class);
         progressDialog = new ProgressDialog(MedicalClaimDetailActivity.this);
-        progressDialog.setTitle("Loading");
-//        progressDialog.show();
+        progressDialog.setTitle("Initialize Medical Support");
+        progressDialog.show();
 
         Call<GetMedicalSupport> call3 = apiInterface.getMedicalSupport();
         call3.enqueue(new Callback<GetMedicalSupport>() {
 
             @Override
             public void onResponse(Call<GetMedicalSupport> call, Response<GetMedicalSupport> response) {
-                progressDialog.dismiss();
                 GetMedicalSupport data = response.body();
-
                 if (data != null && data.getIsSucceed()) {
                     medicalSupportID = response.body().getReturnValue().getMedicalSupportID().toString();
                     medicalSupportName = response.body().getReturnValue().getMedicalSupportName();
@@ -358,9 +352,10 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
                     medicalGrade.setText(medicalSupportName);
 
                     // init spinner medical policy
+                    progressDialog.dismiss();
                     initSpinnerMedicalPolicy();
                     initSpinnerClaimPolicy();
-
+                    progressDialog.dismiss();
                 } else {
                     Toast.makeText(MedicalClaimDetailActivity.this, "Failed to get data", Toast.LENGTH_SHORT).show();
                     finish();
@@ -380,6 +375,8 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
 
     // load spinner Claim Policy
     public void initSpinnerClaimPolicy(){
+        progressDialog.setTitle("Initialize Claim Policy");
+        progressDialog.show();
         listClaimPolicyReturnValue = new ArrayList<>();
         com.example.android.starbridges.model.getclaimpolicy.ReturnValue returnValue2 = new com.example.android.starbridges.model.getclaimpolicy.ReturnValue();
         returnValue2.setText("");
@@ -394,7 +391,7 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<GetClaimPolicy> call, Response<GetClaimPolicy> response) {
-                //progressDialog.dismiss();
+
                 GetClaimPolicy data = response.body();
 
                 if (data != null && data.getIsSucceed()) {
@@ -408,18 +405,17 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
 
                     // set text while edit
                     setupSpinnerMedicalClaim();
-
                 } else {
                     Toast.makeText(MedicalClaimDetailActivity.this, "Failed to get data", Toast.LENGTH_SHORT).show();
                     //finish();
                 }
-
+                progressDialog.dismiss();
 
             }
 
             @Override
             public void onFailure(Call<GetClaimPolicy> call, Throwable t) {
-                //progressDialog.dismiss();
+                progressDialog.dismiss();
                 Toast.makeText(MedicalClaimDetailActivity.this, "Something went wrong...Please try again!", Toast.LENGTH_SHORT).show();
                 call.cancel();
 
@@ -430,6 +426,8 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
 
     // load spinner Medical Employee Family
     public void initSpinnerEmployeeFamily(){
+        progressDialog.setTitle("Initialize Family");
+        progressDialog.show();
         listEmployeeReturnValue = new ArrayList<>();
         com.example.android.starbridges.model.getemployeefamily.ReturnValue returnValue1 = new com.example.android.starbridges.model.getemployeefamily.ReturnValue();
         returnValue1.setID("");
@@ -444,7 +442,6 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<GetEmployeeFamily> call, Response<GetEmployeeFamily> response) {
-                //progressDialog.dismiss();
                 GetEmployeeFamily data = response.body();
 
                 if (data != null && data.getIsSucceed()) {
@@ -457,15 +454,17 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
                     spinnerEmployeeFamily.setAdapter(adapter1);
 
                     setupSpinnerMedicalFamily();
+
                 } else {
                     Toast.makeText(MedicalClaimDetailActivity.this, "Failed to get data", Toast.LENGTH_SHORT).show();
                     //finish();
                 }
+                progressDialog.dismiss();
             }
 
             @Override
             public void onFailure(Call<GetEmployeeFamily> call, Throwable t) {
-                //progressDialog.dismiss();
+                progressDialog.dismiss();
                 Toast.makeText(MedicalClaimDetailActivity.this, "Something went wrong...Please try again!", Toast.LENGTH_SHORT).show();
                 call.cancel();
 
@@ -476,6 +475,8 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
 
     // load spinner Medical Policy Type
     public void initSpinnerMedicalPolicy(){
+        progressDialog.setTitle("Initialize Policy");
+        progressDialog.show();
         listPolicyReturnValue = new ArrayList<>();
         com.example.android.starbridges.model.getmedicalpolicy.ReturnValue returnValue = new com.example.android.starbridges.model.getmedicalpolicy.ReturnValue();
         returnValue.setID("");
@@ -506,15 +507,17 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
 
                     // set text while edit
                     setupSpinnerMedicalPolicy();
+
                 } else {
                     Toast.makeText(MedicalClaimDetailActivity.this, "Failed to get data", Toast.LENGTH_SHORT).show();
                     //finish();
                 }
+                progressDialog.dismiss();
             }
 
             @Override
             public void onFailure(Call<GetMedicalPolicy> call, Throwable t) {
-                //progressDialog.dismiss();
+                progressDialog.dismiss();
                 Toast.makeText(MedicalClaimDetailActivity.this, "Something went wrong...Please try again!", Toast.LENGTH_SHORT).show();
                 call.cancel();
 
@@ -683,16 +686,14 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
     public void editMedical(String id){
         // get token
         apiInterface = APIClient.getClient(GlobalVar.getToken()).create(APIInterfaceRest.class);
-        progressDialog = new ProgressDialog(MedicalClaimDetailActivity.this);
-        progressDialog.setTitle("Loading");
-        progressDialog.show();
+        //progressDialog.show();
 
         Call<EditMedical> call3 = apiInterface.editMedical(id);
         call3.enqueue(new Callback<EditMedical>() {
 
             @Override
             public void onResponse(Call<EditMedical> call, Response<EditMedical> response) {
-                progressDialog.dismiss();
+
                 EditMedical data = response.body();
 
                 if (data != null && data.getIsSucceed()) {
@@ -746,6 +747,7 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
 
                     initSpinnerMedicalPolicy();
                 }
+                progressDialog.dismiss();
             }
 
             @Override
