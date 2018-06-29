@@ -21,7 +21,7 @@ public final class Notification {
             PendingIntent contentPendingIntent = PendingIntent.getActivity
                     (context, NOTIFICATION_ID, contentIntent, 0);
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                    .setSmallIcon(R.drawable.cast_ic_notification_forward)
+                    .setSmallIcon(R.mipmap.ic_launcher2_round)
                     .setContentTitle(title)
                     .setContentText(message)
                     .setContentIntent(contentPendingIntent)
