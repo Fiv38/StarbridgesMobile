@@ -66,7 +66,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 
     // declara var instance
     private APIInterfaceRest apiInterface;
-    private ProgressDialog progressDialog,progressDialog2;
+    private ProgressDialog progressDialog, progressDialog2;
     private EditText startDate, endDate, notes, timeDateEnd, timeDateStart;
     private Spinner spinnerRequestType, spinnerBalanceType;
     private ImageView imageView, imgStartDate, imgEndDate, imgStartTime, imgEndTime;
@@ -293,16 +293,12 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                             returnAt = String.format("%2s", selectedHour).replace(' ', '0') + ":" + String.format("%2s", selectedMinute).replace(' ', '0');
-                            if(validasiTime()==true){
-                                alertNotif("","Return at tidak boleh lebih kecil dari leave at");
-                                returnAt= "";
-                                timeDateEnd.setText(null);
-                            }else{
+//                            }else{
 //                            endDate.setText(endLeave + " - " + returnAt);
-                                endDate.setText(endLeave);
-                                timeDateEnd.setText(returnAt);
-                                Toast.makeText(LeaveRequestDetailActivity.this, "kedua1 :" + returnAt, Toast.LENGTH_LONG).show();
-                            }
+                            endDate.setText(endLeave);
+                            timeDateEnd.setText(returnAt);
+                            Toast.makeText(LeaveRequestDetailActivity.this, "kedua1 :" + returnAt, Toast.LENGTH_LONG).show();
+//
 
                         }
 //                    }, Integer.parseInt(startLeave.substring(0, 2)), Integer.parseInt(startLeave.substring(3, 5)), true);
@@ -350,10 +346,28 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                     alertNotif("Request Confirmation", "untuk ijin keluar dan kembali terlambat kolom leave at dan return at tidak di perkenankan dikosongkan");
 
                 } else {
-                    // set val "Save" to transaction Status
-                    transactionStatus = "Save";
-                    // call method
-                    requestConfirmation();
+                    if (leaveRequestType.equalsIgnoreCase("ijin pulang ") ||
+                            leaveRequestType.equalsIgnoreCase("ijin terlambat") ||
+                            leaveRequestType.equalsIgnoreCase("ijin keluar dan kembali")
+                            ) {
+                        if (validasiTime() == true) {
+                            alertNotif("Request Confirmation", "Kolom return at harus setelah leave at");
+                        } else {
+                            transactionStatus = "Save";
+                            // call method
+                            requestConfirmation();
+                        }
+
+                    } else {
+                        // set val "Save" to transaction Status
+                        transactionStatus = "Save";
+                        // call method
+                        requestConfirmation();
+                    }
+//                    // set val "Save" to transaction Status
+//                    transactionStatus = "Save";
+//                    // call method
+//                    requestConfirmation();
                 }
             }
         });
@@ -377,25 +391,39 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                     alertNotif("Request Confirmation", "untuk ijin keluar dan kembali terlambat kolom leave at dan return at tidak di perkenankan dikosongkan");
 
                 } else {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(LeaveRequestDetailActivity.this);
-                    alert.setTitle("Request Confirmation");
-                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            // set val "Submit" to variable
-                            transactionStatus = "Submit";
-
-                            //call method
+                    if (leaveRequestType.equalsIgnoreCase("ijin pulang ")||
+                            leaveRequestType.equalsIgnoreCase("ijin terlambat") ||
+                            leaveRequestType.equalsIgnoreCase("ijin keluar dan kembali")
+                            ) {
+                        if (validasiTime() == true) {
+                            alertNotif("Request Confirmation", "Kolom return at harus setelah leave at");
+                        } else {
+                            transactionStatus = "Save";
+                            // call method
                             requestConfirmation();
                         }
-                    });
-                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
+                    } else {
+                        AlertDialog.Builder alert = new AlertDialog.Builder(LeaveRequestDetailActivity.this);
+                        alert.setTitle("Request Confirmation");
+                        alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                // set val "Submit" to variable
+                                transactionStatus = "Submit";
 
-                        }
-                    });
-                    alert.show();
+                                //call method
+                                requestConfirmation();
+                            }
+                        });
+                        alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+                        alert.show();
+                    }
+
                 }
 
             }
@@ -744,7 +772,11 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
     }
 
     public void saveLeaveRequest() {
-        // get token
+//        if (validasiTime() == true) {
+//            alertNotif("", "Return at tidak boleh lebih kecil dari leave at");
+//            returnAt = "";
+//            timeDateEnd.setText(null);
+//        } else {
         apiInterface = APIClient.saveLeaveRequest(GlobalVar.getToken()).create(APIInterfaceRest.class);
         progressDialog = new ProgressDialog(LeaveRequestDetailActivity.this);
         progressDialog.setTitle("Loading");
@@ -781,6 +813,9 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                 call.cancel();
             }
         });
+//        }
+        // get token
+
 
     }
 
@@ -1025,9 +1060,9 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         timeDateEnd.setText("");
     }
 
-    private boolean validasiTime(){
+    private boolean validasiTime() {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:MM");
-        Date tmp1 =null;
+        Date tmp1 = null;
         Date tmp2 = null;
         try {
             tmp2 = sdf.parse(returnAt);
