@@ -54,6 +54,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -142,42 +143,49 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
             myCalendar.set(Calendar.MONTH, i1);
             myCalendar.set(Calendar.DAY_OF_MONTH, i2);
             updateLabel();
+            if (leaveRequestType.isEmpty()) {
+                updateLabel2(myCalendar);
+            } else {
+                defaultLabelEndDate(leaveRequestRuleID);
+            }
+
+
         }
     };
 
     DatePickerDialog.OnDateSetListener date2 = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            String cd = sdf.format(myCalendar.getTime());
-            Date tmp11 = null;
-            try {
-                tmp11 = sdf.parse(cd);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//            String cd = sdf.format(myCalendar.getTime());
+//            Date tmp11 = null;
+//            try {
+//                tmp11 = sdf.parse(cd);
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
 
             myCalendar.set(Calendar.YEAR, i);
             myCalendar.set(Calendar.MONTH, i1);
             myCalendar.set(Calendar.DAY_OF_MONTH, i2);
-
-//            Calendar tmp2 = myCalendar;
-            String cd2 = sdf.format(myCalendar.getTime());
-            Date tmp22 = null;
-            try {
-                tmp22 = sdf.parse(cd2);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-            if (tmp11.after(tmp22)) {
-                alertNotif("", "end date tidak boleh lebih kecil dari start date ");
-                endDate.setText(startDate.getText());
-                endLeave = sdf.format(Calendar.getInstance().getTime());
-            } else {
-                updateLabel2();
-            }
-
+//
+////            Calendar tmp2 = myCalendar;
+//            String cd2 = sdf.format(myCalendar.getTime());
+//            Date tmp22 = null;
+//            try {
+//                tmp22 = sdf.parse(cd2);
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+//
+//            if (tmp11.after(tmp22)) {
+//                alertNotif("", "end date tidak boleh lebih kecil dari start date ");
+//                endDate.setText(startDate.getText());
+//                endLeave = sdf.format(Calendar.getInstance().getTime());
+//            } else {
+            updateLabel2(myCalendar);
+//            }
+            hitungJumlahHari();
         }
     };
 
@@ -246,7 +254,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 //                            startDate.setText(startLeave + " - " + leaveAt);
                             startDate.setText(startLeave);
                             timeDateStart.setText(leaveAt);
-                            Toast.makeText(LeaveRequestDetailActivity.this, "pertama1 :" + leaveAt, Toast.LENGTH_LONG).show();
+//                            Toast.makeText(LeaveRequestDetailActivity.this, "pertama1 :" + leaveAt, Toast.LENGTH_LONG).show();
                         }
 //                    }, Integer.parseInt(startLeave.substring(0, 2)), Integer.parseInt(startLeave.substring(3, 5)), true);
                     }, hour, minute, true);
@@ -259,7 +267,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 //                            startDate.setText(endLeave + " - " + leaveAt);
                             startDate.setText(endLeave);
                             timeDateStart.setText(leaveAt);
-                            Toast.makeText(LeaveRequestDetailActivity.this, "pertama2 : " + leaveAt, Toast.LENGTH_LONG).show();
+//                            Toast.makeText(LeaveRequestDetailActivity.this, "pertama2 : " + leaveAt, Toast.LENGTH_LONG).show();
                         }
                     }, hour, minute, true);
                 }
@@ -297,7 +305,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 //                            endDate.setText(endLeave + " - " + returnAt);
                             endDate.setText(endLeave);
                             timeDateEnd.setText(returnAt);
-                            Toast.makeText(LeaveRequestDetailActivity.this, "kedua1 :" + returnAt, Toast.LENGTH_LONG).show();
+//                            Toast.makeText(LeaveRequestDetailActivity.this, "kedua1 :" + returnAt, Toast.LENGTH_LONG).show();
 //
 
                         }
@@ -312,7 +320,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 //                            endDate.setText(endLeave + " - " + returnAt);
                             endDate.setText(endLeave);
                             timeDateEnd.setText(returnAt);
-                            Toast.makeText(LeaveRequestDetailActivity.this, "kedua2 : " + returnAt, Toast.LENGTH_LONG).show();
+//                            Toast.makeText(LeaveRequestDetailActivity.this, "kedua2 : " + returnAt, Toast.LENGTH_LONG).show();
                         }
                     }, hour, minute, true);
                 }
@@ -325,49 +333,54 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 
         // set text default date to
         updateLabel();
-        updateLabel2();
+        updateLabel2(myCalendar);
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (employeeLeaveBalanceUID.isEmpty() || leaveRequestType.isEmpty()) {
                     alertNotif("Request Confirmation", "Request Type dan Take from Balance tidak di perkenankan di kosongkan");
-
-                } else if (leaveRequestType.equalsIgnoreCase("ijin pulang ") && leaveAt.isEmpty() ||
-                        leaveRequestType.equalsIgnoreCase("ijin pulang ") && returnAt.isEmpty()) {
-                    alertNotif("Request Confirmation", "untuk Ijin Pulang kolom leave at dan return at tidak di perkenankan dikosongkan");
-
-                } else if (leaveRequestType.equalsIgnoreCase("ijin terlambat") && leaveAt.isEmpty() ||
-                        leaveRequestType.equalsIgnoreCase("ijin terlambat") && returnAt.isEmpty()) {
-                    alertNotif("Request Confirmation", "untuk ijin terlambat kolom leave at dan return at tidak di perkenankan dikosongkan");
-
-                } else if (leaveRequestType.equalsIgnoreCase("ijin keluar dan kembali") && leaveAt.isEmpty() ||
-                        leaveRequestType.equalsIgnoreCase("ijin keluar dan kembali") && returnAt.isEmpty()) {
-                    alertNotif("Request Confirmation", "untuk ijin keluar dan kembali terlambat kolom leave at dan return at tidak di perkenankan dikosongkan");
-
                 } else {
-                    if (leaveRequestType.equalsIgnoreCase("ijin pulang ") ||
-                            leaveRequestType.equalsIgnoreCase("ijin terlambat") ||
-                            leaveRequestType.equalsIgnoreCase("ijin keluar dan kembali")
-                            ) {
-                        if (validasiTime() == true) {
-                            alertNotif("Request Confirmation", "Kolom return at harus setelah leave at");
-                        } else {
-                            transactionStatus = "Save";
-                            // call method
-                            requestConfirmation();
-                        }
-
+                    if (validasiDate() == true) {
+                        alertNotif("Request Confirmation", "Kolom End Leave harus setelah Start Leave");
                     } else {
-                        // set val "Save" to transaction Status
-                        transactionStatus = "Save";
-                        // call method
-                        requestConfirmation();
-                    }
+                        if (leaveRequestRuleID == 19 && leaveAt.isEmpty() ||
+                                leaveRequestRuleID == 19 && returnAt.isEmpty()) {
+                            alertNotif("Request Confirmation", "untuk Ijin Pulang kolom leave at dan return at tidak di perkenankan dikosongkan");
+
+                        } else if (leaveRequestRuleID == 20 && leaveAt.isEmpty() ||
+                                leaveRequestRuleID == 20 && returnAt.isEmpty()) {
+                            alertNotif("Request Confirmation", "untuk ijin terlambat kolom leave at dan return at tidak di perkenankan dikosongkan");
+
+                        } else if (leaveRequestRuleID == 21 && leaveAt.isEmpty() ||
+                                leaveRequestRuleID == 21 && returnAt.isEmpty()) {
+                            alertNotif("Request Confirmation", "untuk ijin keluar dan kembali terlambat kolom leave at dan return at tidak di perkenankan dikosongkan");
+
+                        } else {
+                            if (leaveRequestRuleID == 19 ||
+                                    leaveRequestRuleID == 20 ||
+                                    leaveRequestRuleID == 21
+                                    ) {
+                                if (validasiTime() == true) {
+                                    alertNotif("Request Confirmation", "Kolom return at harus setelah leave at");
+                                } else {
+                                    transactionStatus = "Save";
+                                    // call method
+                                    requestConfirmation();
+                                }
+
+                            } else {
+                                // set val "Save" to transaction Status
+                                transactionStatus = "Save";
+                                // call method
+                                requestConfirmation();
+                            }
 //                    // set val "Save" to transaction Status
 //                    transactionStatus = "Save";
 //                    // call method
 //                    requestConfirmation();
+                        }
+                    }
                 }
             }
         });
@@ -378,53 +391,60 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                 if (employeeLeaveBalanceUID.isEmpty() || leaveRequestType.isEmpty()) {
                     alertNotif("Request Confirmation", "Request Type dan Take from Balance tidak di perkenankan di kosongkan");
 
-                } else if (leaveRequestType.equalsIgnoreCase("ijin pulang ") && leaveAt.isEmpty() ||
-                        leaveRequestType.equalsIgnoreCase("ijin pulang ") && returnAt.isEmpty()) {
-                    alertNotif("Request Confirmation", "untuk Ijin Pulang kolom leave at dan return at tidak di perkenankan dikosongkan");
-
-                } else if (leaveRequestType.equalsIgnoreCase("ijin terlambat") && leaveAt.isEmpty() ||
-                        leaveRequestType.equalsIgnoreCase("ijin terlambat") && returnAt.isEmpty()) {
-                    alertNotif("Request Confirmation", "untuk ijin terlambat kolom leave at dan return at tidak di perkenankan dikosongkan");
-
-                } else if (leaveRequestType.equalsIgnoreCase("ijin keluar dan kembali") && leaveAt.isEmpty() ||
-                        leaveRequestType.equalsIgnoreCase("ijin keluar dan kembali") && returnAt.isEmpty()) {
-                    alertNotif("Request Confirmation", "untuk ijin keluar dan kembali terlambat kolom leave at dan return at tidak di perkenankan dikosongkan");
-
                 } else {
-                    if (leaveRequestType.equalsIgnoreCase("ijin pulang ")||
-                            leaveRequestType.equalsIgnoreCase("ijin terlambat") ||
-                            leaveRequestType.equalsIgnoreCase("ijin keluar dan kembali")
-                            ) {
-                        if (validasiTime() == true) {
-                            alertNotif("Request Confirmation", "Kolom return at harus setelah leave at");
-                        } else {
-                            transactionStatus = "Save";
-                            // call method
-                            requestConfirmation();
-                        }
+                    if (validasiDate() == true) {
+                        alertNotif("Request Confirmation", "Kolom End Leave harus setelah Start Leave");
                     } else {
-                        AlertDialog.Builder alert = new AlertDialog.Builder(LeaveRequestDetailActivity.this);
-                        alert.setTitle("Request Confirmation");
-                        alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                // set val "Submit" to variable
-                                transactionStatus = "Submit";
+                        if (leaveRequestType.equalsIgnoreCase("ijin pulang ") && leaveAt.isEmpty() ||
+                                leaveRequestType.equalsIgnoreCase("ijin pulang ") && returnAt.isEmpty()) {
+                            alertNotif("Request Confirmation", "untuk Ijin Pulang kolom leave at dan return at tidak di perkenankan dikosongkan");
 
-                                //call method
-                                requestConfirmation();
-                            }
-                        });
-                        alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
+                        } else if (leaveRequestType.equalsIgnoreCase("ijin terlambat") && leaveAt.isEmpty() ||
+                                leaveRequestType.equalsIgnoreCase("ijin terlambat") && returnAt.isEmpty()) {
+                            alertNotif("Request Confirmation", "untuk ijin terlambat kolom leave at dan return at tidak di perkenankan dikosongkan");
 
+                        } else if (leaveRequestType.equalsIgnoreCase("ijin keluar dan kembali") && leaveAt.isEmpty() ||
+                                leaveRequestType.equalsIgnoreCase("ijin keluar dan kembali") && returnAt.isEmpty()) {
+                            alertNotif("Request Confirmation", "untuk ijin keluar dan kembali terlambat kolom leave at dan return at tidak di perkenankan dikosongkan");
+
+                        } else {
+                            if (leaveRequestType.equalsIgnoreCase("ijin pulang ") ||
+                                    leaveRequestType.equalsIgnoreCase("ijin terlambat") ||
+                                    leaveRequestType.equalsIgnoreCase("ijin keluar dan kembali")
+                                    ) {
+                                if (validasiTime() == true) {
+                                    alertNotif("Request Confirmation", "Kolom return at harus setelah leave at");
+                                } else {
+                                    transactionStatus = "Save";
+                                    // call method
+                                    requestConfirmation();
+                                }
+                            } else {
+                                AlertDialog.Builder alert = new AlertDialog.Builder(LeaveRequestDetailActivity.this);
+                                alert.setTitle("Request Confirmation");
+                                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        // set val "Submit" to variable
+                                        transactionStatus = "Submit";
+
+                                        //call method
+                                        requestConfirmation();
+                                    }
+                                });
+                                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    }
+                                });
+                                alert.show();
                             }
-                        });
-                        alert.show();
+
+                        }
                     }
-
                 }
+
 
             }
         });
@@ -477,10 +497,12 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 
                 leaveRequestRuleID = returnValue.getID();
                 leaveRequestType = returnValue.getName();
-                if (leaveRequestType.equalsIgnoreCase("cuti melahirkan") ||
-                        leaveRequestType.equalsIgnoreCase("ijin pulang ") ||
-                        leaveRequestType.equalsIgnoreCase("ijin terlambat") ||
-                        leaveRequestType.equalsIgnoreCase("ijin keluar dan kembali")) {
+                defaultLabelEndDate(leaveRequestRuleID);
+                if (leaveRequestRuleID == 3 ||
+                        leaveRequestRuleID == 19 ||
+                        leaveRequestRuleID == 20 ||
+                        leaveRequestRuleID == 21
+                        ) {
                     imgEndDate.setEnabled(false);
                 } else {
                     imgEndDate.setEnabled(true);
@@ -921,15 +943,15 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         startDate.setText(sdf.format(myCalendar.getTime()));
     }
 
-    private void updateLabel2() {
+    private void updateLabel2(Calendar cal) {
         String myFormat = "dd/MM/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
         // set text to endLeave
-        endLeave = sdf.format(myCalendar.getTime());
+        endLeave = sdf.format(cal.getTime());
 
         // set text to comp date
-        endDate.setText(sdf.format(myCalendar.getTime()));
+        endDate.setText(sdf.format(cal.getTime()));
     }
 
     private String getDate(String view) {
@@ -1061,17 +1083,130 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
     }
 
     private boolean validasiTime() {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:MM");
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         Date tmp1 = null;
         Date tmp2 = null;
         try {
             tmp2 = sdf.parse(returnAt);
             tmp1 = sdf.parse(leaveAt);
         } catch (ParseException e) {
-            e.printStackTrace();
+            try {
+                tmp2 = sdf.parse(formatTime(returnAt));
+                tmp1 = sdf.parse(formatTime(leaveAt));
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            }
         }
         boolean test = tmp1.after(tmp2);
         return test;
     }
+
+    private boolean validasiDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date tmp1 = null;
+        Date tmp2 = null;
+        try {
+            tmp1 = sdf.parse(startLeave);
+            tmp2 = sdf.parse(endLeave);
+        } catch (ParseException e) {
+            try {
+                tmp1 = sdf.parse(formatDate(startLeave));
+                tmp2 = sdf.parse(formatDate(endLeave));
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            }
+        }
+        boolean output = tmp1.after(tmp2);
+        return output;
+    }
+
+    private void hitungJumlahHari() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date tmp1 = null;
+        Date tmp2 = null;
+        try {
+            tmp1 = sdf.parse(startLeave);
+            tmp2 = sdf.parse(endLeave);
+        } catch (ParseException e) {
+            try {
+                tmp1 = sdf.parse(formatDate(startLeave));
+                tmp2 = sdf.parse(formatDate(endLeave));
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            }
+        }
+        long a = tmp2.getTime() - tmp1.getTime();
+        int b = Integer.parseInt(String.valueOf(TimeUnit.DAYS.convert(a, TimeUnit.MILLISECONDS))) + 1;
+        alertNotif("beda hari ", "Days: " + b);
+
+    }
+
+    private void defaultLabelEndDate(int id) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date tmpDate = null;
+
+        try {
+            tmpDate = sdf.parse(startDate.getText().toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Calendar tmpCal = Calendar.getInstance();
+        tmpCal.setTime(tmpDate);
+
+        int check = 0;
+        check = id;
+        if (check == 0) {
+            updateLabel2(tmpCal);
+        } else if (check == 1) {
+            tmpCal.add(Calendar.DATE, 6);
+            updateLabel2(tmpCal);
+        } else if (check == 3) {
+            tmpCal.add(Calendar.DATE, 89);
+            updateLabel2(tmpCal);
+        } else if (check == 4) {
+            tmpCal.add(Calendar.DATE, 9);
+            updateLabel2(tmpCal);
+        } else if (check == 10) {
+            tmpCal.add(Calendar.DATE, 4);
+            updateLabel2(tmpCal);
+        } else if (check == 11) {
+            tmpCal.add(Calendar.DATE, 9);
+            updateLabel2(tmpCal);
+        } else if (check == 12) {
+            tmpCal.add(Calendar.DATE, 2);
+            updateLabel2(tmpCal);
+        } else if (check == 13) {
+            tmpCal.add(Calendar.DATE, 0);
+            updateLabel2(tmpCal);
+        } else if (check == 14) {
+            tmpCal.add(Calendar.DATE, 1);
+            updateLabel2(tmpCal);
+        } else if (check == 15) {
+            tmpCal.add(Calendar.DATE, 1);
+            updateLabel2(tmpCal);
+        } else if (check == 16) {
+            tmpCal.add(Calendar.DATE, 1);
+            updateLabel2(tmpCal);
+        } else if (check == 17) {
+            tmpCal.add(Calendar.DATE, 0);
+            updateLabel2(tmpCal);
+        } else if (check == 18) {
+            tmpCal.add(Calendar.DATE, 2);
+            updateLabel2(tmpCal);
+        } else if (check == 19) {
+            tmpCal.add(Calendar.DATE, 0);
+            updateLabel2(tmpCal);
+        } else if (check == 20) {
+            tmpCal.add(Calendar.DATE, 0);
+            updateLabel2(tmpCal);
+        } else if (check == 21) {
+            tmpCal.add(Calendar.DATE, 0);
+            updateLabel2(tmpCal);
+        } else
+            updateLabel2(tmpCal);
+    }
+
+
 }
 
