@@ -46,6 +46,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -65,8 +66,8 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 
     // declara var instance
     private APIInterfaceRest apiInterface;
-    private ProgressDialog progressDialog;
-    private EditText startDate, endDate, notes;
+    private ProgressDialog progressDialog,progressDialog2;
+    private EditText startDate, endDate, notes, timeDateEnd, timeDateStart;
     private Spinner spinnerRequestType, spinnerBalanceType;
     private ImageView imageView, imgStartDate, imgEndDate, imgStartTime, imgEndTime;
 
@@ -147,10 +148,36 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener date2 = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String cd = sdf.format(myCalendar.getTime());
+            Date tmp11 = null;
+            try {
+                tmp11 = sdf.parse(cd);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
             myCalendar.set(Calendar.YEAR, i);
             myCalendar.set(Calendar.MONTH, i1);
             myCalendar.set(Calendar.DAY_OF_MONTH, i2);
-            updateLabel2();
+
+//            Calendar tmp2 = myCalendar;
+            String cd2 = sdf.format(myCalendar.getTime());
+            Date tmp22 = null;
+            try {
+                tmp22 = sdf.parse(cd2);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            if (tmp11.after(tmp22)) {
+                alertNotif("", "end date tidak boleh lebih kecil dari start date ");
+                endDate.setText(startDate.getText());
+                endLeave = sdf.format(Calendar.getInstance().getTime());
+            } else {
+                updateLabel2();
+            }
+
         }
     };
 
@@ -164,6 +191,10 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         startDate = (EditText) findViewById(R.id.dateStart);
         endDate = (EditText) findViewById(R.id.dateEnd);
         notes = (EditText) findViewById(R.id.notes);
+
+        timeDateEnd = (EditText) findViewById(R.id.timeDateEnd);
+        timeDateStart = (EditText) findViewById(R.id.timeDateStart);
+
         spinnerRequestType = (Spinner) findViewById(R.id.requestTypeSpinner);
         spinnerBalanceType = (Spinner) findViewById(R.id.balanceTypeSpinner);
         saveBtn = (Button) findViewById(R.id.btnSave);
@@ -176,6 +207,10 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         imgEndDate = (ImageView) findViewById(R.id.imgCalendarEndDate);
         imgStartTime = (ImageView) findViewById(R.id.imgStartTime);
         imgEndTime = (ImageView) findViewById(R.id.imgEndTime);
+
+        progressDialog2 = new ProgressDialog(LeaveRequestDetailActivity.this);
+        progressDialog2.setTitle("Load Data");
+        progressDialog2.show();
 
         // get session
         session = new SessionManagement(getApplicationContext());
@@ -200,30 +235,37 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                 int minute = mTime.get(Calendar.MINUTE);
 
                 TimePickerDialog mTimePicker;
+
                 try {
+
                     mTimePicker = new TimePickerDialog(LeaveRequestDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                             leaveAt = String.format("%2s", selectedHour).replace(' ', '0') + ":" + String.format("%2s", selectedMinute).replace(' ', '0');
 
-                            startDate.setText(startLeave + " - " + leaveAt);
+//                            startDate.setText(startLeave + " - " + leaveAt);
+                            startDate.setText(startLeave);
+                            timeDateStart.setText(leaveAt);
                             Toast.makeText(LeaveRequestDetailActivity.this, "pertama1 :" + leaveAt, Toast.LENGTH_LONG).show();
                         }
-                    }, Integer.parseInt(startLeave.substring(0, 2)), Integer.parseInt(startLeave.substring(3, 5)), true);
+//                    }, Integer.parseInt(startLeave.substring(0, 2)), Integer.parseInt(startLeave.substring(3, 5)), true);
+                    }, hour, minute, true);
                 } catch (Exception e) {
                     mTimePicker = new TimePickerDialog(LeaveRequestDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                             leaveAt = String.format("%2s", selectedHour).replace(' ', '0') + ":" + String.format("%2s", selectedMinute).replace(' ', '0');
 
-                            startDate.setText(endLeave + " - " + leaveAt);
-
+//                            startDate.setText(endLeave + " - " + leaveAt);
+                            startDate.setText(endLeave);
+                            timeDateStart.setText(leaveAt);
                             Toast.makeText(LeaveRequestDetailActivity.this, "pertama2 : " + leaveAt, Toast.LENGTH_LONG).show();
                         }
                     }, hour, minute, true);
                 }
 
                 mTimePicker.setTitle("Select Time");
+
                 mTimePicker.show();
             }
         });
@@ -245,31 +287,42 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                 int minute = mTime.get(Calendar.MINUTE);
 
                 TimePickerDialog mTimePicker;
+
                 try {
                     mTimePicker = new TimePickerDialog(LeaveRequestDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                             returnAt = String.format("%2s", selectedHour).replace(' ', '0') + ":" + String.format("%2s", selectedMinute).replace(' ', '0');
+                            if(validasiTime()==true){
+                                alertNotif("","Return at tidak boleh lebih kecil dari leave at");
+                                returnAt= "";
+                                timeDateEnd.setText(null);
+                            }else{
+//                            endDate.setText(endLeave + " - " + returnAt);
+                                endDate.setText(endLeave);
+                                timeDateEnd.setText(returnAt);
+                                Toast.makeText(LeaveRequestDetailActivity.this, "kedua1 :" + returnAt, Toast.LENGTH_LONG).show();
+                            }
 
-                            endDate.setText(endLeave + " - " + returnAt);
-
-                            Toast.makeText(LeaveRequestDetailActivity.this, "kedua1 :" + returnAt, Toast.LENGTH_LONG).show();
                         }
-                    }, Integer.parseInt(startLeave.substring(0, 2)), Integer.parseInt(startLeave.substring(3, 5)), true);
+//                    }, Integer.parseInt(startLeave.substring(0, 2)), Integer.parseInt(startLeave.substring(3, 5)), true);
+                    }, hour, minute, true);
                 } catch (Exception e) {
                     mTimePicker = new TimePickerDialog(LeaveRequestDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                             returnAt = String.format("%2s", selectedHour).replace(' ', '0') + ":" + String.format("%2s", selectedMinute).replace(' ', '0');
 
-                            endDate.setText(endLeave + " - " + returnAt);
-
+//                            endDate.setText(endLeave + " - " + returnAt);
+                            endDate.setText(endLeave);
+                            timeDateEnd.setText(returnAt);
                             Toast.makeText(LeaveRequestDetailActivity.this, "kedua2 : " + returnAt, Toast.LENGTH_LONG).show();
                         }
                     }, hour, minute, true);
                 }
 
                 mTimePicker.setTitle("Select Time");
+
                 mTimePicker.show();
             }
         });
@@ -281,17 +334,21 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (returnAt.isEmpty() || leaveAt.isEmpty() || leaveRequestType.isEmpty() || employeeLeaveBalanceUID.isEmpty()) {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(LeaveRequestDetailActivity.this);
-                    alert.setTitle("Request Confirmation");
-                    alert.setMessage("kolom selain note harus di isi");
-                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
+                if (employeeLeaveBalanceUID.isEmpty() || leaveRequestType.isEmpty()) {
+                    alertNotif("Request Confirmation", "Request Type dan Take from Balance tidak di perkenankan di kosongkan");
 
-                        }
-                    });
-                    alert.show();
+                } else if (leaveRequestType.equalsIgnoreCase("ijin pulang ") && leaveAt.isEmpty() ||
+                        leaveRequestType.equalsIgnoreCase("ijin pulang ") && returnAt.isEmpty()) {
+                    alertNotif("Request Confirmation", "untuk Ijin Pulang kolom leave at dan return at tidak di perkenankan dikosongkan");
+
+                } else if (leaveRequestType.equalsIgnoreCase("ijin terlambat") && leaveAt.isEmpty() ||
+                        leaveRequestType.equalsIgnoreCase("ijin terlambat") && returnAt.isEmpty()) {
+                    alertNotif("Request Confirmation", "untuk ijin terlambat kolom leave at dan return at tidak di perkenankan dikosongkan");
+
+                } else if (leaveRequestType.equalsIgnoreCase("ijin keluar dan kembali") && leaveAt.isEmpty() ||
+                        leaveRequestType.equalsIgnoreCase("ijin keluar dan kembali") && returnAt.isEmpty()) {
+                    alertNotif("Request Confirmation", "untuk ijin keluar dan kembali terlambat kolom leave at dan return at tidak di perkenankan dikosongkan");
+
                 } else {
                     // set val "Save" to transaction Status
                     transactionStatus = "Save";
@@ -304,17 +361,21 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (returnAt.isEmpty() || leaveAt.isEmpty() || leaveRequestType.isEmpty() || employeeLeaveBalanceUID.isEmpty()) {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(LeaveRequestDetailActivity.this);
-                    alert.setTitle("Request Confirmation");
-                    alert.setMessage("kolom selain note harus di isi");
-                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                        }
-                    });
+                if (employeeLeaveBalanceUID.isEmpty() || leaveRequestType.isEmpty()) {
+                    alertNotif("Request Confirmation", "Request Type dan Take from Balance tidak di perkenankan di kosongkan");
 
-                    alert.show();
+                } else if (leaveRequestType.equalsIgnoreCase("ijin pulang ") && leaveAt.isEmpty() ||
+                        leaveRequestType.equalsIgnoreCase("ijin pulang ") && returnAt.isEmpty()) {
+                    alertNotif("Request Confirmation", "untuk Ijin Pulang kolom leave at dan return at tidak di perkenankan dikosongkan");
+
+                } else if (leaveRequestType.equalsIgnoreCase("ijin terlambat") && leaveAt.isEmpty() ||
+                        leaveRequestType.equalsIgnoreCase("ijin terlambat") && returnAt.isEmpty()) {
+                    alertNotif("Request Confirmation", "untuk ijin terlambat kolom leave at dan return at tidak di perkenankan dikosongkan");
+
+                } else if (leaveRequestType.equalsIgnoreCase("ijin keluar dan kembali") && leaveAt.isEmpty() ||
+                        leaveRequestType.equalsIgnoreCase("ijin keluar dan kembali") && returnAt.isEmpty()) {
+                    alertNotif("Request Confirmation", "untuk ijin keluar dan kembali terlambat kolom leave at dan return at tidak di perkenankan dikosongkan");
+
                 } else {
                     AlertDialog.Builder alert = new AlertDialog.Builder(LeaveRequestDetailActivity.this);
                     alert.setTitle("Request Confirmation");
@@ -385,8 +446,17 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 final ReturnValue returnValue = (ReturnValue) spinnerRequestType.getItemAtPosition(i);
+
                 leaveRequestRuleID = returnValue.getID();
                 leaveRequestType = returnValue.getName();
+                if (leaveRequestType.equalsIgnoreCase("cuti melahirkan") ||
+                        leaveRequestType.equalsIgnoreCase("ijin pulang ") ||
+                        leaveRequestType.equalsIgnoreCase("ijin terlambat") ||
+                        leaveRequestType.equalsIgnoreCase("ijin keluar dan kembali")) {
+                    imgEndDate.setEnabled(false);
+                } else {
+                    imgEndDate.setEnabled(true);
+                }
             }
 
             @Override
@@ -441,6 +511,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 
         System.out.println(startLeave + " T " + endLeave);
         System.out.println(leaveAt + " T " + returnAt);
+        String returN = null, leave = null;
         try {
             Date a = sdf.parse(startLeave);
             Date b = sdf.parse(endLeave);
@@ -448,12 +519,32 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
             String timeB = returnAt;
             String dateA = sdf2.format(a);
             String dateB = sdf2.format(b);
-            String leave = dateA + "T" + timeA;
-            String returN = dateB + "T" + timeB;
+            if (leaveAt.isEmpty()) {
+                leave = dateA;
+
+            } else {
+                leave = dateA + "T" + timeA;
+            }
+
+            if (returnAt.isEmpty()) {
+                returN = dateB;
+
+            } else {
+
+                returN = dateB + "T" + timeB;
+            }
             startLeave = leave;
             endLeave = returN;
-            leaveAt = leave;
-            returnAt = returN;
+            if (leaveRequestType.equalsIgnoreCase("ijin pulang ") ||
+                    leaveRequestType.equalsIgnoreCase("ijin terlambat") ||
+                    leaveRequestType.equalsIgnoreCase("ijin keluar dan kembali")) {
+                leaveAt = leave;
+                returnAt = returN;
+            } else {
+                leaveAt = null;
+                returnAt = null;
+            }
+
 //            leaveAt = sdf2.format(a)+"T"+leaveAt+":00";
 //            returnAt = sdf2.format(b)+"T"+returnAt+":00";
             System.out.println("a");
@@ -515,7 +606,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                     alert.setTitle("Request Confirmation");
                     alert.setMessage(
                             "Request Type : \n" + requestConfirmation.getLeaveRequestType() +
-                                    "\nLeave : \n" + requestConfirmation.getLeaveAt() + " - " + requestConfirmation.getReturnAt() +
+                                    "\nLeave : \n" + requestConfirmation.getStartLeave() + " - " + requestConfirmation.getEndLeave() +
                                     "\nTotal Unit : \n" + requestConfirmation.getTotalUnit() +
                                     "\nUnit Reduce : \n" + requestConfirmation.getTotalUnitReduce() +
                                     "\nNotes : \n" + requestConfirmation.getNotes()
@@ -613,11 +704,13 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                     accessibilityAttribute = editLeaveRequest.getAccessibilityAttribute();
 
                     // start leave
-                    startDate.setText(startLeave + " - " + leaveAt);
-
+//                    startDate.setText(startLeave + " - " + leaveAt);
+                    startDate.setText(startLeave);
+                    timeDateStart.setText(leaveAt);
                     // end date
-                    endDate.setText(endLeave + " - " + returnAt);
-
+//                    endDate.setText(endLeave + " - " + returnAt);
+                    endDate.setText(endLeave);
+                    timeDateEnd.setText(returnAt);
                     // notes
                     notes.setText(notesStr);
 
@@ -720,14 +813,16 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 
                     // set text data while editing
                     setupSpinnerBalance();
+                    progressDialog2.dismiss();
                 } else {
-
+                    progressDialog2.dismiss();
                     Toast.makeText(LeaveRequestDetailActivity.this, "Failed to get data", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<BalanceType> call, Throwable t) {
+                progressDialog.dismiss();
                 Toast.makeText(LeaveRequestDetailActivity.this, "Something went wrong...Please try again!", Toast.LENGTH_SHORT).show();
                 setupSpinnerBalance();
             }
@@ -838,7 +933,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         } else {
             int position = str.indexOf("T");
 
-            timeStr = str.substring(position + 1);
+            timeStr = str.substring(position + 1, str.length() - 3);
         }
         return timeStr;
     }
@@ -906,6 +1001,42 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         String encImage = Base64.encodeToString(b, Base64.DEFAULT);
 
         return encImage;
+    }
+
+    private void alertNotif(String title, String message) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(LeaveRequestDetailActivity.this);
+        alert.setTitle(title);
+        alert.setMessage(message);
+        alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+        alert.show();
+    }
+
+    public void deleteTimeLeave(View view) {
+        leaveAt = "";
+        timeDateStart.setText("");
+    }
+
+    public void deleteTimeReturn(View view) {
+        returnAt = "";
+        timeDateEnd.setText("");
+    }
+
+    private boolean validasiTime(){
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:MM");
+        Date tmp1 =null;
+        Date tmp2 = null;
+        try {
+            tmp2 = sdf.parse(returnAt);
+            tmp1 = sdf.parse(leaveAt);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        boolean test = tmp1.after(tmp2);
+        return test;
     }
 }
 
