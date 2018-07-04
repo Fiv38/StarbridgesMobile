@@ -65,7 +65,7 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
     ImageView imgCancelDetail, imgCancelFromDateCancelDetail, imgCancelFromTimeCancelDetail, imgCancelToDateCancelDetail, imgCancelToTimeCancelDetail;
     ProgressDialog progressDialog;
 
-    String requestType, leaveRequestTransactionID, accessibilityAttribute, photo, id;
+    String requestType, leaveRequestTransactionID, accessibilityAttribute, photo, id="";
     String cancelFrom="", cancelTo="";
     List<Object> exclusiveFields;
     boolean fullAccess;
@@ -618,7 +618,7 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
         JSONObject paramObject= new JSONObject();
         try {
 
-            paramObject.put("ID","");
+            paramObject.put("ID",id);
             paramObject.put("EmployeeID",GlobalVar.getEmployeeId());
             paramObject.put("RequestorID",3);
             paramObject.put("LeaveRequestDecisionNumber",spnDecisionNumberCancelDetail.getSelectedItem().toString());
@@ -659,9 +659,9 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
             paramObject.put("CancelTo", cancelTo);
             paramObject.put("Notes", txtNotesCancelDetail.getText().toString());
             paramObject.put("AttachmentFile", photo);
-            paramObject.put("AttachmentID", null);
-            paramObject.put("AdditionalBalance", null);
-            paramObject.put("TransactionStatusID", null);
+            paramObject.put("AttachmentID", 1);
+            paramObject.put("AdditionalBalance", 15);
+            paramObject.put("TransactionStatusID", 16);
             paramObject.put("TotalUnitReduce", 17);
             paramObject.put("TransactionStatusSaveOrSubmit", "Submit");
             paramObject.put("FullAccess", fullAccess);
@@ -675,7 +675,7 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
 
        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),paramObject.toString());
         final APIInterfaceRest apiInterface = APIClient.detailRequestConfirmationCancelation(GlobalVar.getToken()).create(APIInterfaceRest.class);
-        Call<MessageReturn> call3 = apiInterface.detailRequestConfirmationCancelation(body, "Submit");
+        Call<MessageReturn> call3 = apiInterface.saveLeaveCancelation(body, "Submit");
 
         call3.enqueue(new Callback<MessageReturn>() {
             @Override
