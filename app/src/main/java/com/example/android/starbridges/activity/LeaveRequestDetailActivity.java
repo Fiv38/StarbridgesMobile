@@ -75,7 +75,8 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
     Calendar myCalendar = Calendar.getInstance();
     Button saveBtn, submitBtn, uploadBtn, cancelBtn;
     String saveStr, submitStr;
-
+    Boolean update = false;
+    int jmlClick=0;
     Intent intent;
 
     // declare parameter (balikan dari api)
@@ -143,6 +144,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
             myCalendar.set(Calendar.MONTH, i1);
             myCalendar.set(Calendar.DAY_OF_MONTH, i2);
             updateLabel();
+
             if (leaveRequestType.isEmpty()) {
                 updateLabel2(myCalendar);
             } else {
@@ -164,7 +166,6 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 //            } catch (ParseException e) {
 //                e.printStackTrace();
 //            }
-
             myCalendar.set(Calendar.YEAR, i);
             myCalendar.set(Calendar.MONTH, i1);
             myCalendar.set(Calendar.DAY_OF_MONTH, i2);
@@ -185,7 +186,13 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 //            } else {
             updateLabel2(myCalendar);
 //            }
-            hitungJumlahHari();
+            if(hitungJumlahHari() == false && !leaveRequestType.isEmpty()){
+                int a = defaultLabelEndDate(leaveRequestRuleID);
+                alertNotif("","max unit request = "+String.valueOf(a));
+
+            }else{
+                updateLabel2(myCalendar);
+            }
         }
     };
 
@@ -281,9 +288,21 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         imgEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(LeaveRequestDetailActivity.this, date2, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+//                new DatePickerDialog(LeaveRequestDetailActivity.this, date2, myCalendar
+//                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+//                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                Date a = null;
+                try {
+                    a = sdf.parse(endDate.getText().toString());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Calendar b = Calendar.getInstance();
+                b.setTime(a);
+                new DatePickerDialog(LeaveRequestDetailActivity.this, date2, b
+                        .get(Calendar.YEAR), b.get(Calendar.MONTH),
+                        b.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
@@ -497,7 +516,17 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 
                 leaveRequestRuleID = returnValue.getID();
                 leaveRequestType = returnValue.getName();
-                defaultLabelEndDate(leaveRequestRuleID);
+                if(update == false && jmlClick>1 ||update == false && jmlClick == 0){
+                    defaultLabelEndDate(leaveRequestRuleID);
+                }else{
+                    jmlClick++;
+                    update=false;
+//                    if(jmlClick>0){
+//                        update=false;
+//                    }
+                }
+//                defaultLabelEndDate(leaveRequestRuleID);
+
                 if (leaveRequestRuleID == 3 ||
                         leaveRequestRuleID == 19 ||
                         leaveRequestRuleID == 20 ||
@@ -507,6 +536,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                 } else {
                     imgEndDate.setEnabled(true);
                 }
+
             }
 
             @Override
@@ -537,6 +567,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         intent = getIntent();
         if (intent.getStringExtra("ID") != null) {
             id = intent.getStringExtra("ID");
+            update= true;
             editLeaveRequest(id);
         }
     }
@@ -1007,6 +1038,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         }
 
         spinnerRequestType.setSelection(spinnerIdSelected);
+
     }
 
     public void setupSpinnerBalance() {
@@ -1136,19 +1168,27 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
             }
         }
         long a = tmp2.getTime() - tmp1.getTime();
-        int b = Integer.parseInt(String.valueOf(TimeUnit.DAYS.convert(a, TimeUnit.MILLISECONDS))) + 1;
-        alertNotif("beda hari ", "Days: " + b);
+        int hasilHitung = Integer.parseInt(String.valueOf(TimeUnit.DAYS.convert(a, TimeUnit.MILLISECONDS))) + 1;
+//        alertNotif("beda hari ", "Days: " + b);
 
-        boolean output = false;
+        boolean output;
+        int maxDay = defaultLabelEndDate(leaveRequestRuleID);
 
-        if(true){
+        if(maxDay == 0){
+            maxDay = 1;
+        }
 
+        if(hasilHitung<=maxDay && hasilHitung>=0){
+            output = true;
+
+        }else{
+            output = false;
         }
 
         return output;
     }
 
-    private void defaultLabelEndDate(int id) {
+    private int defaultLabelEndDate(int id) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date tmpDate = null;
 
@@ -1164,72 +1204,75 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         int check = 0;
         check = id;
         int maks =0;
+
         if (check == 0) {
             updateLabel2(tmpCal);
+            maks =0;
         } else if (check == 1) {
             tmpCal.add(Calendar.DATE, 6);
-            maks = 6;
+            maks = 7;
             updateLabel2(tmpCal);
         } else if (check == 3) {
             tmpCal.add(Calendar.DATE, 89);
-            maks = 89;
+            maks = 90;
             updateLabel2(tmpCal);
         } else if (check == 4) {
             tmpCal.add(Calendar.DATE, 9);
-            maks = 9;
+            maks = 10;
             updateLabel2(tmpCal);
         } else if (check == 10) {
             tmpCal.add(Calendar.DATE, 4);
-            maks = 4;
+            maks = 5;
             updateLabel2(tmpCal);
         } else if (check == 11) {
             tmpCal.add(Calendar.DATE, 9);
-            maks = 9;
+            maks = 10;
             updateLabel2(tmpCal);
         } else if (check == 12) {
             tmpCal.add(Calendar.DATE, 2);
-            maks = 2;
+            maks = 3;
             updateLabel2(tmpCal);
         } else if (check == 13) {
             tmpCal.add(Calendar.DATE, 0);
-            maks = 0;
+            maks = 1;
             updateLabel2(tmpCal);
         } else if (check == 14) {
             tmpCal.add(Calendar.DATE, 1);
-            maks = 1;
+            maks = 2;
             updateLabel2(tmpCal);
         } else if (check == 15) {
             tmpCal.add(Calendar.DATE, 1);
-            maks = 1;
+            maks = 2;
             updateLabel2(tmpCal);
         } else if (check == 16) {
             tmpCal.add(Calendar.DATE, 1);
-            maks = 1;
+            maks = 2;
             updateLabel2(tmpCal);
         } else if (check == 17) {
             tmpCal.add(Calendar.DATE, 0);
-            maks = 0;
+            maks = 1;
             updateLabel2(tmpCal);
         } else if (check == 18) {
             tmpCal.add(Calendar.DATE, 2);
-            maks = 2;
+            maks = 3;
             updateLabel2(tmpCal);
         } else if (check == 19) {
             tmpCal.add(Calendar.DATE, 0);
-            maks = 0;
+            maks = 1;
             updateLabel2(tmpCal);
         } else if (check == 20) {
             tmpCal.add(Calendar.DATE, 0);
-            maks = 0;
+            maks = 1;
             updateLabel2(tmpCal);
         } else if (check == 21) {
             tmpCal.add(Calendar.DATE, 0);
-            maks = 0;
+            maks = 1;
             updateLabel2(tmpCal);
-        } else
+        } else {
+            maks=0;
             updateLabel2(tmpCal);
+        }
+        return maks;
     }
-
-
 }
 
