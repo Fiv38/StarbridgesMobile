@@ -1120,7 +1120,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         return output;
     }
 
-    private void hitungJumlahHari() {
+    private boolean hitungJumlahHari() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date tmp1 = null;
         Date tmp2 = null;
@@ -1139,6 +1139,13 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         int b = Integer.parseInt(String.valueOf(TimeUnit.DAYS.convert(a, TimeUnit.MILLISECONDS))) + 1;
         alertNotif("beda hari ", "Days: " + b);
 
+        boolean output = false;
+
+        if(true){
+
+        }
+
+        return output;
     }
 
     private void defaultLabelEndDate(int id) {
@@ -1156,52 +1163,68 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 
         int check = 0;
         check = id;
+        int maks =0;
         if (check == 0) {
             updateLabel2(tmpCal);
         } else if (check == 1) {
             tmpCal.add(Calendar.DATE, 6);
+            maks = 6;
             updateLabel2(tmpCal);
         } else if (check == 3) {
             tmpCal.add(Calendar.DATE, 89);
+            maks = 89;
             updateLabel2(tmpCal);
         } else if (check == 4) {
             tmpCal.add(Calendar.DATE, 9);
+            maks = 9;
             updateLabel2(tmpCal);
         } else if (check == 10) {
             tmpCal.add(Calendar.DATE, 4);
+            maks = 4;
             updateLabel2(tmpCal);
         } else if (check == 11) {
             tmpCal.add(Calendar.DATE, 9);
+            maks = 9;
             updateLabel2(tmpCal);
         } else if (check == 12) {
             tmpCal.add(Calendar.DATE, 2);
+            maks = 2;
             updateLabel2(tmpCal);
         } else if (check == 13) {
             tmpCal.add(Calendar.DATE, 0);
+            maks = 0;
             updateLabel2(tmpCal);
         } else if (check == 14) {
             tmpCal.add(Calendar.DATE, 1);
+            maks = 1;
             updateLabel2(tmpCal);
         } else if (check == 15) {
             tmpCal.add(Calendar.DATE, 1);
+            maks = 1;
             updateLabel2(tmpCal);
         } else if (check == 16) {
             tmpCal.add(Calendar.DATE, 1);
+            maks = 1;
             updateLabel2(tmpCal);
         } else if (check == 17) {
             tmpCal.add(Calendar.DATE, 0);
+            maks = 0;
             updateLabel2(tmpCal);
         } else if (check == 18) {
             tmpCal.add(Calendar.DATE, 2);
+            maks = 2;
             updateLabel2(tmpCal);
         } else if (check == 19) {
             tmpCal.add(Calendar.DATE, 0);
+            maks = 0;
             updateLabel2(tmpCal);
         } else if (check == 20) {
             tmpCal.add(Calendar.DATE, 0);
+            maks = 0;
             updateLabel2(tmpCal);
         } else if (check == 21) {
             tmpCal.add(Calendar.DATE, 0);
+            maks = 0;
             updateLabel2(tmpCal);
         } else
             updateLabel2(tmpCal);
