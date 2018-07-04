@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.starbridges.R;
@@ -55,6 +57,7 @@ public class ReimburseDetailActivity extends AppCompatActivity {
 
     EditText txtDescriptionReimburseDetail, txtAmountReimburseDetail, txtTransactionDateReimburseDetail;
     Spinner spnTypeReimburseDetail;
+    TextView txtSpnError;
 
     Button btnUploadReimburseDetail, btnSubmitReimburseDetail, btnSaveReimburseDetail, btnCancelReimburseDetail;
 
@@ -107,6 +110,8 @@ public class ReimburseDetailActivity extends AppCompatActivity {
         imgTransactionDateReimburseDetail=(ImageView)findViewById(R.id.imgTransactionDateReimburseDetail);
         imgReimburseDetail=(ImageView)findViewById(R.id.imgReimburseDetail);
 
+        txtSpnError=(TextView)findViewById(R.id.txtSpnError);
+
         imgTransactionDateReimburseDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,31 +157,45 @@ public class ReimburseDetailActivity extends AppCompatActivity {
         btnSaveReimburseDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(ReimburseDetailActivity.this);
-                alert.setTitle("Reimbursement Confirmation");
-                alert.setMessage("Description\n" +
-                        "\t"+txtDescriptionReimburseDetail.getText().toString()+"" +
-                        "\nAmount\n" +
-                        "\t"+numberFormat(txtAmountReimburseDetail.getText().toString()+"")  +
-                        "\nType\n" +
-                        "\t"+spnTypeReimburseDetail.getSelectedItem().toString()+"" +
-                        "\nTransaction Date\n" +
-                        "\t"+dateFormat2(txtTransactionDateReimburseDetail.getText().toString())+"\n\n" +
-                        "This information will be saved in draft");
-                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        saveSubmitReimbursement("Save");
-                    }
-                });
+                if(reimbursementTypeID==0)
+                {
+                    txtSpnError.setError("");
+                    txtSpnError.setTextColor(Color.RED);//just to highlight that this is an error
+                    txtSpnError.setText(" Please select reimburse type");//changes the selected item text to this
+                }
+                else if(txtTransactionDateReimburseDetail.getText().toString().matches("")) {
+                    txtTransactionDateReimburseDetail.setError("Please select transaction date");
+                }
+                else
+                {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(ReimburseDetailActivity.this);
+                    alert.setTitle("Reimbursement Confirmation");
+                    alert.setMessage("Description\n" +
+                            "\t"+txtDescriptionReimburseDetail.getText().toString()+"" +
+                            "\nAmount\n" +
+                            "\t"+numberFormat(txtAmountReimburseDetail.getText().toString()+"")  +
+                            "\nType\n" +
+                            "\t"+spnTypeReimburseDetail.getSelectedItem().toString()+"" +
+                            "\nTransaction Date\n" +
+                            "\t"+dateFormat2(txtTransactionDateReimburseDetail.getText().toString())+"\n\n" +
+                            "This information will be saved in draft");
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            saveSubmitReimbursement("Save");
+                        }
+                    });
 
-                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-                    }
-                });
-                alert.show();
+                        }
+                    });
+                    alert.show();
+                }
+
+
 
 
             }
@@ -185,30 +204,42 @@ public class ReimburseDetailActivity extends AppCompatActivity {
         btnSubmitReimburseDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(ReimburseDetailActivity.this);
-                alert.setTitle("Reimbursement Confirmation");
-                alert.setMessage("Description\n" +
-                        "\t"+txtDescriptionReimburseDetail.getText().toString()+"" +
-                        "\nAmount\n" +
-                        "\t"+ numberFormat(txtAmountReimburseDetail.getText().toString()+"")  +
-                        "\nType\n" +
-                        "\t"+spnTypeReimburseDetail.getSelectedItem().toString()+"" +
-                        "\nTransaction Date\n" +
-                        "\t"+dateFormat2(txtTransactionDateReimburseDetail.getText().toString())+"\n\n" );
-                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        saveSubmitReimbursement("Submit");
-                    }
-                });
+                if(reimbursementTypeID==0)
+                {
+                    txtSpnError.setError("");
+                    txtSpnError.setTextColor(Color.RED);//just to highlight that this is an error
+                    txtSpnError.setText(" Please select reimburse type");//changes the selected item text to this
+                }
+                else if(txtTransactionDateReimburseDetail.getText().toString().matches("")) {
+                    txtTransactionDateReimburseDetail.setError("Please select transaction date");
+                }
+                else{
+                    AlertDialog.Builder alert = new AlertDialog.Builder(ReimburseDetailActivity.this);
+                    alert.setTitle("Reimbursement Confirmation");
+                    alert.setMessage("Description\n" +
+                            "\t"+txtDescriptionReimburseDetail.getText().toString()+"" +
+                            "\nAmount\n" +
+                            "\t"+ numberFormat(txtAmountReimburseDetail.getText().toString()+"")  +
+                            "\nType\n" +
+                            "\t"+spnTypeReimburseDetail.getSelectedItem().toString()+"" +
+                            "\nTransaction Date\n" +
+                            "\t"+dateFormat2(txtTransactionDateReimburseDetail.getText().toString())+"\n\n" );
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            saveSubmitReimbursement("Submit");
+                        }
+                    });
 
-                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-                    }
-                });
-                alert.show();
+                        }
+                    });
+                    alert.show();
+                }
+
             }
         });
 
@@ -217,15 +248,7 @@ public class ReimburseDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(ReimburseDetailActivity.this);
                 alert.setTitle("Reimbursement Confirmation");
-                alert.setMessage("Description\n" +
-                        "\t"+txtDescriptionReimburseDetail.getText().toString()+"" +
-                        "\nAmount\n" +
-                        "\t"+numberFormat(txtAmountReimburseDetail.getText().toString()+"")  +
-                        "\nType\n" +
-                        "\t"+spnTypeReimburseDetail.getSelectedItem().toString()+"" +
-                        "\nTransaction Date\n" +
-                        "\t"+dateFormat2(txtTransactionDateReimburseDetail.getText().toString())+"\n\n" +
-                        "Your information will not be saved");
+                alert.setMessage("This information will not be saved");
                 alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

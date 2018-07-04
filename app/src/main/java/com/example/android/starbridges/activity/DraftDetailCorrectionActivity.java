@@ -47,7 +47,7 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
     EditText txtLogInCDraftDetails,txtBreakStartCDraftDetails,txtBreakEndCDraftDetails, txtLocationCDraftDetails;
     EditText txtLogOutCDraftDetails, txtOverTimeInCDraftDetails, txtOverTimeOutCDraftDetails, txtNotesCDraftDetails;
     Spinner spnLocationCDraftDetails;
-    String id, locationIdSpinner, locationId;
+    String id="", locationIdSpinner, locationId;
     ProgressDialog progressDialog;
     ReturnValue valueCorrectionDetail;
     Button btnSubmitCDraftDetails, btnSaveCDraftDetails, btnCancelCDraftDetails;
@@ -466,7 +466,7 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
         progressDialog.setTitle("Loading");
         progressDialog.show();
 
-        valueCorrectionDetail.setID("");
+        valueCorrectionDetail.setID(id);
         valueCorrectionDetail.setActualLogIn(txtLogInCDraftDetails.getText().toString());
         valueCorrectionDetail.setActualBreakEnd(txtBreakEndCDraftDetails.getText().toString());
         valueCorrectionDetail.setActualLogOut(txtLogOutCDraftDetails.getText().toString());

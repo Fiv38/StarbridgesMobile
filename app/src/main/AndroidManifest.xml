@@ -66,11 +66,12 @@
         <activity
             android:name=".activity.HistoriesActivity"
             android:configChanges="orientation"
-            android:parentActivityName=".activity.HistoryFilterActivity"
+            android:parentActivityName=".activity.HomeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.HistoryFilterActivity"
             android:configChanges="orientation"
+            android:theme="@style/TranslucentTheme"
             android:parentActivityName=".activity.HomeActivity"
             android:screenOrientation="portrait" />
         <activity
