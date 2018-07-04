@@ -65,7 +65,6 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
     ImageView imgCancelDetail, imgCancelFromDateCancelDetail, imgCancelFromTimeCancelDetail, imgCancelToDateCancelDetail, imgCancelToTimeCancelDetail;
     ProgressDialog progressDialog;
 
-
     String requestType, leaveRequestTransactionID, accessibilityAttribute, photo, id;
     String cancelFrom="", cancelTo="";
     List<Object> exclusiveFields;
@@ -406,6 +405,16 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
 
     public void initSpinner()
     {
+
+        if(progressDialog==null)
+        {
+            progressDialog= new ProgressDialog(LeaveCancelationDetailActivity.this);
+            progressDialog.setTitle("Loading");
+            progressDialog.show();
+        }
+        else if(!progressDialog.isShowing())
+            progressDialog.show();
+
         listDecisionNumber= new ArrayList<>();
         ReturnValue returnValue=new ReturnValue();
         returnValue.setID("");
@@ -420,6 +429,7 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
 
                 if (response.isSuccessful()) {
 
+
                     listDecisionNumber.addAll(response.body().getReturnValue());
 
                     setupSpinner();
@@ -431,7 +441,7 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<DecisionNumber> call, Throwable t) {
+             public void onFailure(Call<DecisionNumber> call, Throwable t) {
                 Toast.makeText(LeaveCancelationDetailActivity.this, "Something went wrong...Please try again!", Toast.LENGTH_SHORT).show();
                 setupSpinner();
             }
@@ -455,6 +465,8 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
             }
             spnDecisionNumberCancelDetail.setSelection(counter);
         }
+        if(progressDialog.isShowing())
+            progressDialog.dismiss();
 
     }
 
@@ -694,7 +706,7 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
 
     public void getData(String id)
     {
-        progressDialog = new ProgressDialog(LeaveCancelationDetailActivity.this);
+        progressDialog= new ProgressDialog(LeaveCancelationDetailActivity.this);
         progressDialog.setTitle("Loading");
         progressDialog.show();
 
@@ -722,12 +734,13 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
                     }
 
                     editLeaveCancelation=response.body().getReturnValue();
-                    initSpinner();
+
 
                 } else {
 
                     Toast.makeText(LeaveCancelationDetailActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }
+                initSpinner();
                 progressDialog.dismiss();
             }
 
