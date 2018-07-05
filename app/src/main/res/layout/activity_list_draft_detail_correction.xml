@@ -86,6 +86,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:ems="10"
+                        android:longClickable="false"
                         android:inputType="textPersonName" />
 
                     <ImageView
@@ -123,6 +124,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:ems="10"
+                        android:longClickable="false"
                         android:inputType="textPersonName" />
 
                     <ImageView
@@ -157,6 +159,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:ems="10"
+                        android:longClickable="false"
                         android:inputType="textPersonName" />
 
                     <ImageView
@@ -191,6 +194,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:ems="10"
+                        android:longClickable="false"
                         android:inputType="textPersonName" />
 
                     <ImageView
@@ -227,6 +231,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:ems="10"
+                        android:longClickable="false"
                         android:inputType="textPersonName" />
 
                     <ImageView
@@ -262,6 +267,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:ems="10"
+                        android:longClickable="false"
                         android:inputType="textPersonName" />
 
                     <ImageView
