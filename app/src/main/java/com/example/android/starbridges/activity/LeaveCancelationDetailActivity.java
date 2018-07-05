@@ -450,6 +450,10 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
 
     public void setupSpinner()
     {
+        progressDialog= new ProgressDialog(LeaveCancelationDetailActivity.this);
+        progressDialog.setTitle("Loading");
+        progressDialog.show();
+
         ArrayAdapter<ReturnValue> adapter = new ArrayAdapter<ReturnValue>(LeaveCancelationDetailActivity.this,
                 android.R.layout.simple_spinner_item, listDecisionNumber);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -523,7 +527,7 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
         JSONObject paramObject= new JSONObject();
         try {
 
-            paramObject.put("ID","");
+            paramObject.put("ID",id);
             paramObject.put("EmployeeID",GlobalVar.getEmployeeId());
             paramObject.put("RequestorID",3);
             paramObject.put("LeaveRequestDecisionNumber",spnDecisionNumberCancelDetail.getSelectedItem().toString());

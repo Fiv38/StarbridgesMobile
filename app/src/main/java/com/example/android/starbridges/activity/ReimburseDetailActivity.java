@@ -65,6 +65,7 @@ public class ReimburseDetailActivity extends AppCompatActivity {
 
     APIInterfaceRest apiInterface;
     ProgressDialog progressDialog;
+    String id="";
 
     List<com.example.android.starbridges.model.ReimbursementType.ReturnValue> lstReimbursementType;
 
@@ -122,7 +123,7 @@ public class ReimburseDetailActivity extends AppCompatActivity {
         });
 
         final Intent intent = getIntent();
-        String id = intent.getStringExtra("id");
+        id = intent.getStringExtra("id");
         if(id!=null)
         {
             getData(id);
@@ -165,6 +166,10 @@ public class ReimburseDetailActivity extends AppCompatActivity {
                 }
                 else if(txtTransactionDateReimburseDetail.getText().toString().matches("")) {
                     txtTransactionDateReimburseDetail.setError("Please select transaction date");
+                }
+                else if(txtAmountReimburseDetail.getText().toString().matches(""))
+                {
+                    txtAmountReimburseDetail.setError("Please fill amount");
                 }
                 else
                 {
@@ -212,6 +217,10 @@ public class ReimburseDetailActivity extends AppCompatActivity {
                 }
                 else if(txtTransactionDateReimburseDetail.getText().toString().matches("")) {
                     txtTransactionDateReimburseDetail.setError("Please select transaction date");
+                }
+                else if(txtAmountReimburseDetail.getText().toString().matches(""))
+                {
+                    txtAmountReimburseDetail.setError("Please fill amount");
                 }
                 else{
                     AlertDialog.Builder alert = new AlertDialog.Builder(ReimburseDetailActivity.this);
@@ -445,7 +454,7 @@ public class ReimburseDetailActivity extends AppCompatActivity {
         JSONObject paramObject= new JSONObject();
         try {
 
-            paramObject.put("ID",null);
+            paramObject.put("ID",id);
             paramObject.put("EmployeeID",GlobalVar.getEmployeeId());
             paramObject.put("Description",txtDescriptionReimburseDetail.getText().toString());
             paramObject.put("Amount",txtAmountReimburseDetail.getText().toString());

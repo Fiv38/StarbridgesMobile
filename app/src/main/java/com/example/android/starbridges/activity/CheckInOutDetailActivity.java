@@ -87,6 +87,8 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
     final List<ReturnValue> listReturnValue= new ArrayList<>();
 
 
+
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -315,6 +317,28 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_ACCESS_LOCATION);
         }
 
+        if(mLocationNameView.isEnabled())
+        {
+            if(mLocationNameView.getText().toString().matches(""))
+            {
+                mLocationNameView.setError("Please fill the location");
+            }
+            else
+            {
+                capturePhoto();
+            }
+            sLocationID=null;
+            sLocationName = mLocationNameView.getText().toString();
+            sLocationAddress=null;
+        }
+        else
+        {
+            capturePhoto();
+        }
+    }
+
+    public void capturePhoto()
+    {
         client = LocationServices.getFusedLocationProviderClient(this);
         client.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
             @Override
@@ -333,13 +357,14 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
-
-
     }
+
     public void initSpinnerLoc() {
+
+        progressDialog = new ProgressDialog(CheckInOutDetailActivity.this);
+        progressDialog.setTitle("Loading");
+        progressDialog.show();
+
         ReturnValue returnValue=new ReturnValue();
         returnValue.setID("");
         returnValue.setAddress("");
@@ -380,11 +405,12 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
                     setupSpinner(locationId);
                 }
                 else mLocationNameView.setText(location);
-
+                progressDialog.dismiss();
             }
 
             @Override
             public void onFailure(Call<OLocation> call, Throwable t) {
+                progressDialog.dismiss();
                 Toast.makeText(CheckInOutDetailActivity.this, "Something went wrong...Please try again!", Toast.LENGTH_SHORT).show();
 
             }
@@ -404,14 +430,13 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
             counter=0;
 
         mLocationSpinner.setSelection(counter);
+        progressDialog.dismiss();
     }
 
     public void callInputAbsence() {
 
         apiInterface = APIClient.inputAbsence(GlobalVar.getToken()).create(APIInterfaceRest.class);
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Loading");
-        progressDialog.show();
+
 
         long date = System.currentTimeMillis();
 
@@ -426,42 +451,89 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
 
         if(mLocationNameView.isEnabled())
         {
+            if(mLocationNameView.getText().toString().matches(""))
+            {
+                mLocationNameView.setError("Please fill the location");
+            }
             sLocationID=null;
             sLocationName = mLocationNameView.getText().toString();
             sLocationAddress=null;
         }
 
-
-        SimpleDateFormat timeFmt = new SimpleDateFormat("HH:mm:ss");
-        Calendar todaysTime = new GregorianCalendar();
-        if(checkStartDay==false)
+        if((mLocationNameView.isEnabled()&&!mLocationNameView.getText().toString().matches(""))||!mLocationSpinner.getSelectedItem().toString().matches(""))
         {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Loading");
+            progressDialog.show();
 
-            //adding time 1 second for checkin
-            try{
-                todaysTime.setTime(timeFmt.parse(sTime));
-                todaysTime.add(Calendar.SECOND,1);
-
-            }catch (Exception e)
+            SimpleDateFormat timeFmt = new SimpleDateFormat("HH:mm:ss");
+            Calendar todaysTime = new GregorianCalendar();
+            if(checkStartDay==false)
             {
 
+                //adding time 1 second for checkin
+                try{
+                    todaysTime.setTime(timeFmt.parse(sTime));
+                    todaysTime.add(Calendar.SECOND,1);
+
+                }catch (Exception e)
+                {
+
+                }
+
+                Call<Attendence> call3 = apiInterface.inputAbsence(sUsername, sEmployeeID, sBussinessGroupID, dateString, sTime, sBeaconID, sLocationID, sLocationName, sLocationAddress, sLongitude, sLatitude, "Start Day", null, sNotes, sEvent,timeZoneOffset);
+                call3.enqueue(new Callback<Attendence>() {
+                    @Override
+                    public void onResponse(Call<Attendence> call, Response<Attendence> response) {
+                        Attendence data = response.body();
+
+                        if (data != null && data.getIsSucceed()) {
+                            Toast.makeText(CheckInOutDetailActivity.this, "Start Day", Toast.LENGTH_LONG).show();
+                        }else if(data != null && data.getMessage() =="Please Check Your Time And Date Settings"){
+                            Toast.makeText(CheckInOutDetailActivity.this, data.getMessage(), Toast.LENGTH_LONG).show();
+
+                        } else {
+                            try {
+                                //JSONObject jObjError = new JSONObject(response.errorBody().string());
+                                Toast.makeText(CheckInOutDetailActivity.this, "Failed to Start Day", Toast.LENGTH_LONG).show();
+                            } catch (Exception e) {
+                                Toast.makeText(CheckInOutDetailActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Attendence> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(), "Something went wrong...Please try again!", Toast.LENGTH_LONG).show();
+                        call.cancel();
+                    }
+                });
             }
 
-            Call<Attendence> call3 = apiInterface.inputAbsence(sUsername, sEmployeeID, sBussinessGroupID, dateString, sTime, sBeaconID, sLocationID, sLocationName, sLocationAddress, sLongitude, sLatitude, "Start Day", null, sNotes, sEvent,timeZoneOffset);
+
+
+            sTime=new SimpleDateFormat("HH:mm:ss").format(todaysTime.getTime());
+
+
+            // khusus logType di hardcode -> LogType -> Start Day
+            Call<Attendence> call3 = apiInterface.inputAbsence(sUsername, sEmployeeID, sBussinessGroupID, dateString, sTime, sBeaconID, sLocationID, sLocationName, sLocationAddress, sLongitude, sLatitude, sLogType, sPhoto, sNotes, sEvent, timeZoneOffset);
             call3.enqueue(new Callback<Attendence>() {
                 @Override
                 public void onResponse(Call<Attendence> call, Response<Attendence> response) {
+                    progressDialog.dismiss();
                     Attendence data = response.body();
 
                     if (data != null && data.getIsSucceed()) {
-                        Toast.makeText(CheckInOutDetailActivity.this, "Start Day", Toast.LENGTH_LONG).show();
-                    }else if(data != null && data.getMessage() =="Please Check Your Time And Date Settings"){
+                        Toast.makeText(CheckInOutDetailActivity.this, "Data Submitted", Toast.LENGTH_LONG).show();
+                        finish();
+                    } else if(data != null && data.getMessage() =="Please Check Your Time And Date Settings"){
                         Toast.makeText(CheckInOutDetailActivity.this, data.getMessage(), Toast.LENGTH_LONG).show();
 
-                    } else {
+                    }else {
                         try {
                             //JSONObject jObjError = new JSONObject(response.errorBody().string());
-                            Toast.makeText(CheckInOutDetailActivity.this, "Failed to Start Day", Toast.LENGTH_LONG).show();
+                            Toast.makeText(CheckInOutDetailActivity.this, "Failed to Submit", Toast.LENGTH_LONG).show();
                         } catch (Exception e) {
                             Toast.makeText(CheckInOutDetailActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                         }
@@ -471,6 +543,7 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<Attendence> call, Throwable t) {
+                    progressDialog.dismiss();
                     Toast.makeText(getApplicationContext(), "Something went wrong...Please try again!", Toast.LENGTH_LONG).show();
                     call.cancel();
                 }
@@ -478,43 +551,8 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
         }
 
 
-
-        sTime=new SimpleDateFormat("HH:mm:ss").format(todaysTime.getTime());
-
-
-        // khusus logType di hardcode -> LogType -> Start Day
-        Call<Attendence> call3 = apiInterface.inputAbsence(sUsername, sEmployeeID, sBussinessGroupID, dateString, sTime, sBeaconID, sLocationID, sLocationName, sLocationAddress, sLongitude, sLatitude, sLogType, sPhoto, sNotes, sEvent, timeZoneOffset);
-        call3.enqueue(new Callback<Attendence>() {
-            @Override
-            public void onResponse(Call<Attendence> call, Response<Attendence> response) {
-                progressDialog.dismiss();
-                Attendence data = response.body();
-
-                if (data != null && data.getIsSucceed()) {
-                    Toast.makeText(CheckInOutDetailActivity.this, "Data Submitted", Toast.LENGTH_LONG).show();
-                    finish();
-                } else if(data != null && data.getMessage() =="Please Check Your Time And Date Settings"){
-                    Toast.makeText(CheckInOutDetailActivity.this, data.getMessage(), Toast.LENGTH_LONG).show();
-
-                }else {
-                    try {
-                        //JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Toast.makeText(CheckInOutDetailActivity.this, "Failed to Submit", Toast.LENGTH_LONG).show();
-                    } catch (Exception e) {
-                        Toast.makeText(CheckInOutDetailActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<Attendence> call, Throwable t) {
-                progressDialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Something went wrong...Please try again!", Toast.LENGTH_LONG).show();
-                call.cancel();
-            }
-        });
     }
+
 
     public void setEnableSpinnerAndEditTextLocation()
     {
