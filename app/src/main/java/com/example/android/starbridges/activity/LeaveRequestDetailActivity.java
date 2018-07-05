@@ -76,7 +76,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
     Button saveBtn, submitBtn, uploadBtn, cancelBtn;
     String saveStr, submitStr;
     Boolean update = false;
-    int jmlClick=0;
+    int jmlClick = 0;
     Intent intent;
 
     // declare parameter (balikan dari api)
@@ -186,11 +186,15 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 //            } else {
             updateLabel2(myCalendar);
 //            }
-            if(hitungJumlahHari() == false && !leaveRequestType.isEmpty()){
-                int a = defaultLabelEndDate(leaveRequestRuleID);
-                alertNotif("","max unit request = "+String.valueOf(a));
+            if (hitungJumlahHari() == false && !leaveRequestType.isEmpty()) {
 
-            }else{
+                int a = defaultLabelEndDate(leaveRequestRuleID);
+                if(leaveRequestRuleID == 4){
+                    alertNotif("", "min unit request = 5, max unit request = " + String.valueOf(a));
+                }else{
+                    alertNotif("", "max unit request = " + String.valueOf(a));
+                }
+            } else {
                 updateLabel2(myCalendar);
             }
         }
@@ -516,11 +520,11 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 
                 leaveRequestRuleID = returnValue.getID();
                 leaveRequestType = returnValue.getName();
-                if(update == false && jmlClick>1 ||update == false && jmlClick == 0){
+                if (update == false && jmlClick > 1 || update == false && jmlClick == 0) {
                     defaultLabelEndDate(leaveRequestRuleID);
-                }else{
+                } else {
                     jmlClick++;
-                    update=false;
+                    update = false;
 //                    if(jmlClick>0){
 //                        update=false;
 //                    }
@@ -567,7 +571,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         intent = getIntent();
         if (intent.getStringExtra("ID") != null) {
             id = intent.getStringExtra("ID");
-            update= true;
+            update = true;
             editLeaveRequest(id);
         }
     }
@@ -1174,18 +1178,24 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         boolean output;
         int maxDay = defaultLabelEndDate(leaveRequestRuleID);
 
-        if(maxDay == 0){
+        if (maxDay == 0) {
             maxDay = 1;
         }
-
-        if(hasilHitung<=maxDay && hasilHitung>=0){
-            output = true;
-
-        }else{
-            output = false;
+        if (leaveRequestRuleID == 4) {
+            if (hasilHitung <= maxDay && hasilHitung >= 5) {
+                return output = true;
+            } else {
+                return output = false;
+            }
+        } else {
+            if (hasilHitung <= maxDay && hasilHitung >= 0) {
+                output = true;
+            } else {
+                output = false;
+            }
+            return output;
         }
 
-        return output;
     }
 
     private int defaultLabelEndDate(int id) {
@@ -1203,11 +1213,11 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 
         int check = 0;
         check = id;
-        int maks =0;
+        int maks = 0;
 
         if (check == 0) {
             updateLabel2(tmpCal);
-            maks =0;
+            maks = 0;
         } else if (check == 1) {
             tmpCal.add(Calendar.DATE, 6);
             maks = 7;
@@ -1269,7 +1279,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
             maks = 1;
             updateLabel2(tmpCal);
         } else {
-            maks=0;
+            maks = 0;
             updateLabel2(tmpCal);
         }
         return maks;
