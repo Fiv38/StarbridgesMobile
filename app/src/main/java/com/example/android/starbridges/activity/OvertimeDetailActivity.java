@@ -42,6 +42,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -55,13 +56,13 @@ import retrofit2.Response;
 public class OvertimeDetailActivity extends AppCompatActivity {
 
 
-    EditText reqDate,ovStart,ovEnd,notes;
-    Button upload, save,submit,cancel;
+    EditText reqDate, ovStart, ovEnd, notes;
+    Button upload, save, submit, cancel;
     ImageView image_view;
     APIInterfaceRest apiInterface;
     ProgressDialog progressDialog;
     Calendar myCalendar = Calendar.getInstance();
-    String photo;
+    String photo, id2 = "";
     TextView txtShiftOvertimeDetail, txtOvertimeStartOvertimeDetail, txtOvertimeEndOvertimeDetail;
     private static final int MY_GALLERY_REQUEST_CODE = 100;
     private static final int PICK_IMAGE = 999;
@@ -78,24 +79,25 @@ public class OvertimeDetailActivity extends AppCompatActivity {
             updateLabelDate();
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overtime_detail);
-        reqDate=(EditText)findViewById(R.id.txt_req_date);
-        ovStart = (EditText)findViewById(R.id.txt_req_ov_start);
-        ovEnd = (EditText)findViewById(R.id.txt_req_ov_end);
-        image_view = (ImageView)findViewById(R.id.image_upload);
-        notes=(EditText)findViewById(R.id.txtNotesOvertimeDetail);
+        reqDate = (EditText) findViewById(R.id.txt_req_date);
+        ovStart = (EditText) findViewById(R.id.txt_req_ov_start);
+        ovEnd = (EditText) findViewById(R.id.txt_req_ov_end);
+        image_view = (ImageView) findViewById(R.id.image_upload);
+        notes = (EditText) findViewById(R.id.txtNotesOvertimeDetail);
 
-        txtShiftOvertimeDetail=(TextView)findViewById(R.id.txtShiftOvertimeDetail);
-        txtOvertimeStartOvertimeDetail=(TextView)findViewById(R.id.txtOvertimeStartOvertimeDetail);
-        txtOvertimeEndOvertimeDetail=(TextView)findViewById(R.id.txtOvertimeEndOvertimeDetail);
+        txtShiftOvertimeDetail = (TextView) findViewById(R.id.txtShiftOvertimeDetail);
+        txtOvertimeStartOvertimeDetail = (TextView) findViewById(R.id.txtOvertimeStartOvertimeDetail);
+        txtOvertimeEndOvertimeDetail = (TextView) findViewById(R.id.txtOvertimeEndOvertimeDetail);
 
-        upload = (Button)findViewById(R.id.btn_upload);
-        save = (Button)findViewById(R.id.btn_save);
-        submit = (Button)findViewById(R.id.btn_submit);
-        cancel = (Button)findViewById(R.id.btn_cancel);
+        upload = (Button) findViewById(R.id.btn_upload);
+        save = (Button) findViewById(R.id.btn_save);
+        submit = (Button) findViewById(R.id.btn_submit);
+        cancel = (Button) findViewById(R.id.btn_cancel);
         setTitle("Overtime Request");
 
 
@@ -191,38 +193,41 @@ public class OvertimeDetailActivity extends AppCompatActivity {
                 String reqDateFormatted = "";
 
                 Date convertDate;
-                try{
-                    convertDate =  sdf.parse(reqDate.getText().toString());
-                    reqDateFormatted=df.format(convertDate);
-                }catch (Exception e)
-                {
+                try {
+                    convertDate = sdf.parse(reqDate.getText().toString());
+                    reqDateFormatted = df.format(convertDate);
+                } catch (Exception e) {
 
                 }
+                boolean validasiWaktu = validasiTime(ovStart.getText().toString(), ovEnd.getText().toString());
+                if (validasiWaktu == false) {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(OvertimeDetailActivity.this);
+                    alert.setTitle("Request Confirmation");
+                    alert.setMessage("Date\n" +
+                            "\t" + reqDateFormatted + "" +
+                            "\nStart\n" +
+                            "\t" + ovStart.getText().toString() + "" +
+                            "\nEnd\n" +
+                            "\t" + ovEnd.getText().toString() + "\n\n" +
+                            "This information will be saved in draft"
+                    );
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            saveDetailOvertime();
+                        }
+                    });
 
-                AlertDialog.Builder alert = new AlertDialog.Builder(OvertimeDetailActivity.this);
-                alert.setTitle("Request Confirmation");
-                alert.setMessage("Date\n" +
-                        "\t"+reqDateFormatted+"" +
-                        "\nStart\n" +
-                        "\t"+ ovStart.getText().toString()+"" +
-                        "\nEnd\n" +
-                        "\t"+ovStart.getText().toString()+"\n\n"+
-                        "This information will be saved in draft"
-                );
-                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        saveDetailOvertime();
-                    }
-                });
+                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                });
-                alert.show();
+                        }
+                    });
+                    alert.show();
+                } else {
+                    alertMe("Request Confirmation", "overtime end harus lebih besar dari overtime start");
+                }
             }
         });
 
@@ -234,39 +239,40 @@ public class OvertimeDetailActivity extends AppCompatActivity {
                 String reqDateFormatted = "";
 
                 Date convertDate;
-                try{
-                    convertDate =  sdf.parse(reqDate.getText().toString());
-                    reqDateFormatted=df.format(convertDate);
-                }catch (Exception e)
-                {
+                try {
+                    convertDate = sdf.parse(reqDate.getText().toString());
+                    reqDateFormatted = df.format(convertDate);
+                } catch (Exception e) {
 
                 }
+                boolean validasiWaktu = validasiTime(ovStart.getText().toString(), ovEnd.getText().toString());
+                if (validasiWaktu == false) {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(OvertimeDetailActivity.this);
+                    alert.setTitle("Request Confirmation");
+                    alert.setMessage("Date\n" +
+                            "\t" + reqDateFormatted + "" +
+                            "\nStart\n" +
+                            "\t" + ovStart.getText().toString() + "" +
+                            "\nEnd\n" +
+                            "\t" + ovStart.getText().toString() + "\n\n"
+                    );
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            submitDetailOvertime();
+                        }
+                    });
 
-                AlertDialog.Builder alert = new AlertDialog.Builder(OvertimeDetailActivity.this);
-                alert.setTitle("Request Confirmation");
-                alert.setMessage("Date\n" +
-                        "\t"+reqDateFormatted+"" +
-                        "\nStart\n" +
-                        "\t"+ ovStart.getText().toString()+"" +
-                        "\nEnd\n" +
-                        "\t"+ovStart.getText().toString()+"\n\n"
-                        );
-                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        submitDetailOvertime();
-                    }
-                });
+                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                });
-                alert.show();
-
-
+                        }
+                    });
+                    alert.show();
+                } else {
+                    alertMe("Request Confirmation", "overtime end harus lebih besar dari overtime start");
+                }
 
             }
         });
@@ -279,11 +285,10 @@ public class OvertimeDetailActivity extends AppCompatActivity {
                 String reqDateFormatted = "";
 
                 Date convertDate;
-                try{
-                    convertDate =  sdf.parse(reqDate.getText().toString());
-                    reqDateFormatted=df.format(convertDate);
-                }catch (Exception e)
-                {
+                try {
+                    convertDate = sdf.parse(reqDate.getText().toString());
+                    reqDateFormatted = df.format(convertDate);
+                } catch (Exception e) {
 
                 }
 
@@ -309,8 +314,7 @@ public class OvertimeDetailActivity extends AppCompatActivity {
 
         final Intent intent = getIntent();
         String id = intent.getStringExtra("id");
-        if(id!=null)
-        {
+        if (id != null) {
             getData(id);
         }
 
@@ -318,8 +322,7 @@ public class OvertimeDetailActivity extends AppCompatActivity {
 
     }
 
-    public void getData(String id)
-    {
+    public void getData(String id) {
         progressDialog = new ProgressDialog(OvertimeDetailActivity.this);
         progressDialog.setTitle("Loading");
         progressDialog.show();
@@ -330,20 +333,21 @@ public class OvertimeDetailActivity extends AppCompatActivity {
             public void onResponse(Call<EditOvertime> call, Response<EditOvertime> response) {
 
                 if (response.body().isIsSucceed()) {
-                    editOvertime= response.body().getReturnValue();
-
-                    ovStart.setText(editOvertime.getFrom().substring(11,16) );
-                    ovEnd.setText(editOvertime.getTo().substring(11,16) );
+                    editOvertime = response.body().getReturnValue();
+                    id2 = response.body().getReturnValue().getID();
+                    ovStart.setText(editOvertime.getFrom().substring(11, 16));
+                    ovEnd.setText(editOvertime.getTo().substring(11, 16));
                     reqDate.setText(dateFormat(editOvertime.getRequestDate()));
                     notes.setText(editOvertime.getNotes());
-                    photo=editOvertime.getAttachmentFile();
+                    photo = editOvertime.getAttachmentFile();
 
-                    if(photo != null) {
+                    if (photo != null) {
                         byte[] decodedString = Base64.decode(photo, Base64.DEFAULT);
                         Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                         image_view.setImageBitmap(bitmap);
-                    }
+                    }else{
 
+                    }
 
                 } else {
 
@@ -361,18 +365,16 @@ public class OvertimeDetailActivity extends AppCompatActivity {
         });
     }
 
-    public String dateFormat(String dateString)
-    {
+    public String dateFormat(String dateString) {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
         DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date date1;
         String result;
-        try{
-            date1=df.parse(dateString);
-            result=sdf.format(date1);
-        }catch (Exception e)
-        {
-            result="";
+        try {
+            date1 = df.parse(dateString);
+            result = sdf.format(date1);
+        } catch (Exception e) {
+            result = "";
         }
         return result;
     }
@@ -394,8 +396,8 @@ public class OvertimeDetailActivity extends AppCompatActivity {
                 Toast.makeText(OvertimeDetailActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
             }
 
-        }else {
-            Toast.makeText(OvertimeDetailActivity.this, "You haven't picked Image",Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(OvertimeDetailActivity.this, "You haven't picked Image", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -415,9 +417,7 @@ public class OvertimeDetailActivity extends AppCompatActivity {
         reqDate.setText(sdf.format(myCalendar.getTime()));
     }
 
-
-    public void getPersonalOverTime()
-    {
+    public void getPersonalOverTime() {
         apiInterface = APIClient.editDraftLeaveCancelation(GlobalVar.getToken()).create(APIInterfaceRest.class);
         apiInterface.getPersonalOvertime().enqueue(new Callback<PersonalOvertime>() {
             @Override
@@ -449,58 +449,56 @@ public class OvertimeDetailActivity extends AppCompatActivity {
         progressDialog.setTitle("Loading");
         progressDialog.show();
 
-        JSONObject paramObject= new JSONObject();
+        JSONObject paramObject = new JSONObject();
         try {
-            paramObject.put("ShiftName",txtShiftOvertimeDetail.getText().toString());
-            paramObject.put("OvertimeStart",txtOvertimeStartOvertimeDetail.getText().toString());
-            paramObject.put("OvertimeEnd",txtOvertimeEndOvertimeDetail.getText().toString());
-            paramObject.put("ID",null);
-            paramObject.put("EmployeeID",GlobalVar.getEmployeeId());
+            paramObject.put("ShiftName", txtShiftOvertimeDetail.getText().toString());
+            paramObject.put("OvertimeStart", txtOvertimeStartOvertimeDetail.getText().toString());
+            paramObject.put("OvertimeEnd", txtOvertimeEndOvertimeDetail.getText().toString());
+            paramObject.put("ID", id2);
+            paramObject.put("EmployeeID", GlobalVar.getEmployeeId());
 
-            Date date=new Date();
+            Date date = new Date();
             String patternSQLServer = "yyyy-MM-dd'T'HH:mm:ss.sssssZ";
             SimpleDateFormat formatTimeSQLServer = new SimpleDateFormat(patternSQLServer);
 
-            paramObject.put("RequestDate",formatTimeSQLServer.format(date).toString());
+            paramObject.put("RequestDate", formatTimeSQLServer.format(date).toString());
 
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
             DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             String overtimeDate = "";
             Date convertOvertimeDate;
-            try{
-                convertOvertimeDate =  sdf.parse(reqDate.getText().toString());
-                overtimeDate=df.format(convertOvertimeDate);
-            }catch (Exception e)
-            {
+            try {
+                convertOvertimeDate = sdf.parse(reqDate.getText().toString());
+                overtimeDate = df.format(convertOvertimeDate);
+            } catch (Exception e) {
 
             }
 
-            paramObject.put("OvertimeDate",overtimeDate);
-            paramObject.put("From",ovStart.getText().toString());
-            paramObject.put("To",ovEnd.getText().toString());
+            paramObject.put("OvertimeDate", overtimeDate);
+            paramObject.put("From", ovStart.getText().toString());
+            paramObject.put("To", ovEnd.getText().toString());
             paramObject.put("Notes", notes.getText().toString());
             paramObject.put("AttachmentID", "11");
             paramObject.put("AttachmentFile", photo);
 
-            paramObject.put("TransactionStatusID", personalOvertime.getTransactionStatusID()+"");
-            paramObject.put("SubmitType", personalOvertime.getSubmitType()+"");
-            paramObject.put("Message", personalOvertime.getMessage()+"");
-            paramObject.put("MaxOvertimePerDay", personalOvertime.getMaxOvertimePerDay()+"");
-            paramObject.put("MaxOvertimePerWeek", personalOvertime.getMaxOvertimePerWeek()+"");
-            paramObject.put("MaxOvertimePerMonth", personalOvertime.getMaxOvertimePerMonth()+"");
-            paramObject.put("TotalRequestCurrentWeek", personalOvertime.getTotalRequestCurrentWeek()+"");
-            paramObject.put("TotalRequestCurrentMonth", personalOvertime.getTotalRequestCurrentMonth()+"");
+            paramObject.put("TransactionStatusID", personalOvertime.getTransactionStatusID() + "");
+            paramObject.put("SubmitType", personalOvertime.getSubmitType() + "");
+            paramObject.put("Message", personalOvertime.getMessage() + "");
+            paramObject.put("MaxOvertimePerDay", personalOvertime.getMaxOvertimePerDay() + "");
+            paramObject.put("MaxOvertimePerWeek", personalOvertime.getMaxOvertimePerWeek() + "");
+            paramObject.put("MaxOvertimePerMonth", personalOvertime.getMaxOvertimePerMonth() + "");
+            paramObject.put("TotalRequestCurrentWeek", personalOvertime.getTotalRequestCurrentWeek() + "");
+            paramObject.put("TotalRequestCurrentMonth", personalOvertime.getTotalRequestCurrentMonth() + "");
             paramObject.put("TransactionStatusSaveOrSubmit", "Save");
             paramObject.put("FullAccess", true);
-            paramObject.put("ExclusiveFields", personalOvertime.getExclusionFields()+"");
-            paramObject.put("AccessibilityAttribute", personalOvertime.getAccessibilityAttribute()+"");
+            paramObject.put("ExclusiveFields", personalOvertime.getExclusionFields() + "");
+            paramObject.put("AccessibilityAttribute", personalOvertime.getAccessibilityAttribute() + "");
 
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
 
         }
 
-        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),paramObject.toString());
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), paramObject.toString());
         final APIInterfaceRest apiInterface = APIClient.saveLeaveCancelation(GlobalVar.getToken()).create(APIInterfaceRest.class);
         Call<MessageReturn> call3 = apiInterface.saveDetailOvertime(body);
 
@@ -512,8 +510,7 @@ public class OvertimeDetailActivity extends AppCompatActivity {
                 if (data != null) {
                     Toast.makeText(getApplicationContext(), data.getMessage(), Toast.LENGTH_LONG).show();
 
-                }
-                else
+                } else
                     Toast.makeText(getApplicationContext(), "no data", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(OvertimeDetailActivity.this, OvertimeActivity.class);
                 startActivity(intent);
@@ -527,6 +524,7 @@ public class OvertimeDetailActivity extends AppCompatActivity {
                 call.cancel();
             }
         });
+
     }
 
     public void submitDetailOvertime() {
@@ -535,58 +533,56 @@ public class OvertimeDetailActivity extends AppCompatActivity {
         progressDialog.setTitle("Loading");
         progressDialog.show();
 
-        JSONObject paramObject= new JSONObject();
+        JSONObject paramObject = new JSONObject();
         try {
-            paramObject.put("ShiftName",txtShiftOvertimeDetail.getText().toString());
-            paramObject.put("OvertimeStart",txtOvertimeStartOvertimeDetail.getText().toString());
-            paramObject.put("OvertimeEnd",txtOvertimeEndOvertimeDetail.getText().toString());
-            paramObject.put("ID",null);
-            paramObject.put("EmployeeID",GlobalVar.getEmployeeId());
+            paramObject.put("ShiftName", txtShiftOvertimeDetail.getText().toString());
+            paramObject.put("OvertimeStart", txtOvertimeStartOvertimeDetail.getText().toString());
+            paramObject.put("OvertimeEnd", txtOvertimeEndOvertimeDetail.getText().toString());
+            paramObject.put("ID", id2);
+            paramObject.put("EmployeeID", GlobalVar.getEmployeeId());
 
-            Date date=new Date();
+            Date date = new Date();
             String patternSQLServer = "yyyy-MM-dd'T'HH:mm:ss.sssssZ";
             SimpleDateFormat formatTimeSQLServer = new SimpleDateFormat(patternSQLServer);
 
-            paramObject.put("RequestDate",formatTimeSQLServer.format(date).toString());
+            paramObject.put("RequestDate", formatTimeSQLServer.format(date).toString());
 
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
             DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             String overtimeDate = "";
             Date convertOvertimeDate;
-            try{
-                convertOvertimeDate =  sdf.parse(reqDate.getText().toString());
-                overtimeDate=df.format(convertOvertimeDate);
-            }catch (Exception e)
-            {
+            try {
+                convertOvertimeDate = sdf.parse(reqDate.getText().toString());
+                overtimeDate = df.format(convertOvertimeDate);
+            } catch (Exception e) {
 
             }
 
-            paramObject.put("OvertimeDate",overtimeDate);
-            paramObject.put("From",ovStart.getText().toString());
-            paramObject.put("To",ovEnd.getText().toString());
+            paramObject.put("OvertimeDate", overtimeDate);
+            paramObject.put("From", ovStart.getText().toString());
+            paramObject.put("To", ovEnd.getText().toString());
             paramObject.put("Notes", notes.getText().toString());
             paramObject.put("AttachmentID", "11");
             paramObject.put("AttachmentFile", photo);
 
-            paramObject.put("TransactionStatusID", personalOvertime.getTransactionStatusID()+"");
-            paramObject.put("SubmitType", personalOvertime.getSubmitType()+"");
-            paramObject.put("Message", personalOvertime.getMessage()+"");
-            paramObject.put("MaxOvertimePerDay", personalOvertime.getMaxOvertimePerDay()+"");
-            paramObject.put("MaxOvertimePerWeek", personalOvertime.getMaxOvertimePerWeek()+"");
-            paramObject.put("MaxOvertimePerMonth", personalOvertime.getMaxOvertimePerMonth()+"");
-            paramObject.put("TotalRequestCurrentWeek", personalOvertime.getTotalRequestCurrentWeek()+"");
-            paramObject.put("TotalRequestCurrentMonth", personalOvertime.getTotalRequestCurrentMonth()+"");
+            paramObject.put("TransactionStatusID", personalOvertime.getTransactionStatusID() + "");
+            paramObject.put("SubmitType", personalOvertime.getSubmitType() + "");
+            paramObject.put("Message", personalOvertime.getMessage() + "");
+            paramObject.put("MaxOvertimePerDay", personalOvertime.getMaxOvertimePerDay() + "");
+            paramObject.put("MaxOvertimePerWeek", personalOvertime.getMaxOvertimePerWeek() + "");
+            paramObject.put("MaxOvertimePerMonth", personalOvertime.getMaxOvertimePerMonth() + "");
+            paramObject.put("TotalRequestCurrentWeek", personalOvertime.getTotalRequestCurrentWeek() + "");
+            paramObject.put("TotalRequestCurrentMonth", personalOvertime.getTotalRequestCurrentMonth() + "");
             paramObject.put("TransactionStatusSaveOrSubmit", "Submit");
             paramObject.put("FullAccess", true);
-            paramObject.put("ExclusiveFields", personalOvertime.getExclusionFields()+"");
-            paramObject.put("AccessibilityAttribute", personalOvertime.getAccessibilityAttribute()+"");
+            paramObject.put("ExclusiveFields", personalOvertime.getExclusionFields() + "");
+            paramObject.put("AccessibilityAttribute", personalOvertime.getAccessibilityAttribute() + "");
 
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
 
         }
 
-        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),paramObject.toString());
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), paramObject.toString());
         final APIInterfaceRest apiInterface = APIClient.saveLeaveCancelation(GlobalVar.getToken()).create(APIInterfaceRest.class);
         Call<SubmitOvertime> call3 = apiInterface.submitOvertime(body, "Submit");
 
@@ -598,8 +594,7 @@ public class OvertimeDetailActivity extends AppCompatActivity {
                 if (data != null) {
                     Toast.makeText(getApplicationContext(), data.getMessage(), Toast.LENGTH_LONG).show();
 
-                }
-                else
+                } else
                     Toast.makeText(getApplicationContext(), "no data", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(OvertimeDetailActivity.this, OvertimeActivity.class);
                 startActivity(intent);
@@ -618,9 +613,11 @@ public class OvertimeDetailActivity extends AppCompatActivity {
     }
 
     public void datePicker(View view) {
-        new DatePickerDialog(OvertimeDetailActivity.this, date, myCalendar
+        DatePickerDialog dialog = new DatePickerDialog(OvertimeDetailActivity.this, date, myCalendar
                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                myCalendar.get(Calendar.DAY_OF_MONTH));
+        dialog.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
+        dialog.show();
     }
 
     public void timePickerStart(View view) {
@@ -629,23 +626,21 @@ public class OvertimeDetailActivity extends AppCompatActivity {
         int minute = mTime.get(Calendar.MINUTE);
 
         TimePickerDialog mTimePicker;
-        try{
+        try {
             mTimePicker = new TimePickerDialog(OvertimeDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                    ovStart.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+                    ovStart.setText(String.format("%2s", selectedHour).replace(' ', '0') + ":" + String.format("%2s", selectedMinute).replace(' ', '0'));
                 }
-            }, Integer.parseInt(ovStart.getText().toString().substring(0,2)) , Integer.parseInt(ovStart.getText().toString().substring(3,5)), true);
-        } catch (Exception e)
-        {
+            }, Integer.parseInt(ovStart.getText().toString().substring(0, 2)), Integer.parseInt(ovStart.getText().toString().substring(3, 5)), true);
+        } catch (Exception e) {
             mTimePicker = new TimePickerDialog(OvertimeDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                    ovStart.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+                    ovStart.setText(String.format("%2s", selectedHour).replace(' ', '0') + ":" + String.format("%2s", selectedMinute).replace(' ', '0'));
                 }
             }, hour, minute, true);
         }
-
         mTimePicker.setTitle("Select Time");
         mTimePicker.show();
     }
@@ -656,24 +651,76 @@ public class OvertimeDetailActivity extends AppCompatActivity {
         int minute = mTime.get(Calendar.MINUTE);
 
         TimePickerDialog mTimePicker;
-        try{
+        try {
             mTimePicker = new TimePickerDialog(OvertimeDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                    ovEnd.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+                    ovEnd.setText(String.format("%2s", selectedHour).replace(' ', '0') + ":" + String.format("%2s", selectedMinute).replace(' ', '0'));
                 }
-            }, Integer.parseInt(ovEnd.getText().toString().substring(0,2)) , Integer.parseInt(ovEnd.getText().toString().substring(3,5)), true);
-        } catch (Exception e)
-        {
+            }, Integer.parseInt(ovEnd.getText().toString().substring(0, 2)), Integer.parseInt(ovEnd.getText().toString().substring(3, 5)), true);
+        } catch (Exception e) {
             mTimePicker = new TimePickerDialog(OvertimeDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                    ovEnd.setText( String.format("%2s",selectedHour).replace(' ','0')  + ":" + String.format("%2s",selectedMinute).replace(' ','0'));
+                    ovEnd.setText(String.format("%2s", selectedHour).replace(' ', '0') + ":" + String.format("%2s", selectedMinute).replace(' ', '0'));
                 }
             }, hour, minute, true);
         }
 
         mTimePicker.setTitle("Select Time");
         mTimePicker.show();
+    }
+
+    private boolean validasiTime(String time1, String time2) {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        Date tmp1 = null;
+        Date tmp2 = null;
+        try {
+            tmp1 = sdf.parse(time1);
+            tmp2 = sdf.parse(time2);
+        } catch (ParseException e) {
+            try {
+                tmp1 = sdf.parse(formatTime(time1));
+                tmp2 = sdf.parse(formatTime(time2));
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            }
+        }
+
+        boolean test = tmp1.after(tmp2);
+        return test;
+    }
+
+    private String formatTime(String str) {
+        String timeStr = "";
+
+        if (str == null) {
+            timeStr = "";
+        } else {
+            int position = str.indexOf("T");
+
+            timeStr = str.substring(position + 1, str.length() - 3);
+        }
+        return timeStr;
+    }
+
+    private void alertMe(String title, String message) {
+        final AlertDialog.Builder alert = new AlertDialog.Builder(OvertimeDetailActivity.this);
+        alert.setTitle(title);
+        alert.setMessage(message);
+        alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+//                saveDetailOvertime();
+
+            }
+        });
+//        alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//
+//            }
+//        });
+        alert.show();
     }
 }

@@ -85,6 +85,7 @@
                     android:layout_width="259dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:longClickable="false"
                     android:ems="10"
                     android:focusable="false"
                     android:inputType="text" />
@@ -114,6 +115,7 @@
                     android:id="@+id/txt_req_ov_start"
                     android:layout_width="259dp"
                     android:layout_height="wrap_content"
+                    android:longClickable="false"
                     android:layout_weight="1"
                     android:ems="10"
                     android:focusable="false"
@@ -146,6 +148,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
+                    android:longClickable="false"
                     android:focusable="false"
                     android:inputType="text" />
 
