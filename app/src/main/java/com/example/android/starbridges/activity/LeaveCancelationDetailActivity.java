@@ -523,7 +523,7 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
         JSONObject paramObject= new JSONObject();
         try {
 
-            paramObject.put("ID","");
+            paramObject.put("ID",id);
             paramObject.put("EmployeeID",GlobalVar.getEmployeeId());
             paramObject.put("RequestorID",3);
             paramObject.put("LeaveRequestDecisionNumber",spnDecisionNumberCancelDetail.getSelectedItem().toString());
