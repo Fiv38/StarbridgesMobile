@@ -62,6 +62,8 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
     final List<ReturnValue> listReturnValue= new ArrayList<>();
     SessionManagement session;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,7 +164,23 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
     }
 
     public void SubmitData() {
-        callInputAbsence();
+        if(mLocationNameView.isEnabled())
+        {
+            if(mLocationNameView.getText().toString().matches(""))
+            {
+                mLocationNameView.setError("Please fill the location");
+            }
+            else
+            {
+                callInputAbsence();
+            }
+            sLocationName = mLocationNameView.getText().toString();
+            sLocationAddress = null;
+            sLocationID=null;
+        }
+        else
+            callInputAbsence();
+
     }
 
     @SuppressLint("MissingPermission")
@@ -196,6 +214,10 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
 
 
     public void initSpinnerLoc() {
+
+        progressDialog = new ProgressDialog(StartEndDayDetailActivity.this);
+        progressDialog.setTitle("Loading");
+        progressDialog.show();
 
         ReturnValue returnValue=new ReturnValue();
         returnValue.setID("");
@@ -238,12 +260,15 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
                     setupSpinner(locationId);
                 }
                 else mLocationNameView.setText(location);
+                progressDialog.dismiss();
+
             }
 
 
 
             @Override
             public void onFailure(Call<OLocation> call, Throwable t) {
+                progressDialog.dismiss();
                 Toast.makeText(StartEndDayDetailActivity.this, "Something went wrong...Please try again!", Toast.LENGTH_SHORT).show();
 
             }
@@ -262,6 +287,7 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
             counter=0;
 
         mLocationSpinner.setSelection(counter);
+        progressDialog.dismiss();
     }
 
     public void callInputAbsence() {
@@ -285,45 +311,50 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
 
         if(mLocationNameView.isEnabled())
         {
+            if(mLocationNameView.getText().toString().matches(""))
+            {
+                mLocationNameView.setError("Please fill the location");
+            }
             sLocationName = mLocationNameView.getText().toString();
             sLocationAddress = null;
             sLocationID=null;
         }
 
+        if((mLocationNameView.isEnabled()&&!mLocationNameView.getText().toString().matches(""))||!mLocationSpinner.getSelectedItem().toString().matches(""))
+        {
+            // khusus logType di hardcode -> LogType -> Start Day
+            Call<Attendence> call3 = apiInterface.inputAbsence(sUsername, sEmployeeID, sBussinessGroupID, dateString, sTime, sBeaconID, sLocationID, sLocationName, sLocationAddress, sLongitude, sLatitude, sLogType, sPhoto, sNotes, sEvent, timeZoneOffset);
+            call3.enqueue(new Callback<Attendence>() {
+                @Override
+                public void onResponse(Call<Attendence> call, Response<Attendence> response) {
+                    progressDialog.dismiss();
+                    Attendence data = response.body();
 
-        // khusus logType di hardcode -> LogType -> Start Day
-        Call<Attendence> call3 = apiInterface.inputAbsence(sUsername, sEmployeeID, sBussinessGroupID, dateString, sTime, sBeaconID, sLocationID, sLocationName, sLocationAddress, sLongitude, sLatitude, sLogType, sPhoto, sNotes, sEvent, timeZoneOffset);
-        call3.enqueue(new Callback<Attendence>() {
-            @Override
-            public void onResponse(Call<Attendence> call, Response<Attendence> response) {
-                progressDialog.dismiss();
-                Attendence data = response.body();
-
-                if (data != null && data.getIsSucceed()) {
-                    Toast.makeText(StartEndDayDetailActivity.this, "Data Submitted", Toast.LENGTH_LONG).show();
-                    finish();
-                }else if(data != null && data.getMessage() =="Please Check Your Time And Date Settings"){
-                    Toast.makeText(StartEndDayDetailActivity.this, data.getMessage(), Toast.LENGTH_LONG).show();
-
-                } else {
-                    try {
-                        //JSONObject jObjError = new JSONObject(response.errorBody().string());
+                    if (data != null && data.getIsSucceed()) {
+                        Toast.makeText(StartEndDayDetailActivity.this, "Data Submitted", Toast.LENGTH_LONG).show();
+                        finish();
+                    }else if(data != null && data.getMessage() =="Please Check Your Time And Date Settings"){
                         Toast.makeText(StartEndDayDetailActivity.this, data.getMessage(), Toast.LENGTH_LONG).show();
-                    } catch (Exception e) {
-                        Toast.makeText(StartEndDayDetailActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+
+                    } else {
+                        try {
+                            //JSONObject jObjError = new JSONObject(response.errorBody().string());
+                            Toast.makeText(StartEndDayDetailActivity.this, data.getMessage(), Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+                            Toast.makeText(StartEndDayDetailActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
                     }
+
                 }
 
-            }
-
-            @Override
-            public void onFailure(Call<Attendence> call, Throwable t) {
-                progressDialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Something went wrong...Please try again!", Toast.LENGTH_LONG).show();
-                call.cancel();
-            }
-        });
-
+                @Override
+                public void onFailure(Call<Attendence> call, Throwable t) {
+                    progressDialog.dismiss();
+                    Toast.makeText(getApplicationContext(), "Something went wrong...Please try again!", Toast.LENGTH_LONG).show();
+                    call.cancel();
+                }
+            });
+        }
     }
 
     public void setEnableSpinnerAndEditTextLocation()

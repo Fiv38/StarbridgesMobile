@@ -450,6 +450,10 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
 
     public void setupSpinner()
     {
+        progressDialog= new ProgressDialog(LeaveCancelationDetailActivity.this);
+        progressDialog.setTitle("Loading");
+        progressDialog.show();
+
         ArrayAdapter<ReturnValue> adapter = new ArrayAdapter<ReturnValue>(LeaveCancelationDetailActivity.this,
                 android.R.layout.simple_spinner_item, listDecisionNumber);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
