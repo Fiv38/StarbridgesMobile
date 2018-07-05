@@ -199,35 +199,40 @@ public class OvertimeDetailActivity extends AppCompatActivity {
                 } catch (Exception e) {
 
                 }
-                boolean validasiWaktu = validasiTime(ovStart.getText().toString(), ovEnd.getText().toString());
-                if (validasiWaktu == false) {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(OvertimeDetailActivity.this);
-                    alert.setTitle("Request Confirmation");
-                    alert.setMessage("Date\n" +
-                            "\t" + reqDateFormatted + "" +
-                            "\nStart\n" +
-                            "\t" + ovStart.getText().toString() + "" +
-                            "\nEnd\n" +
-                            "\t" + ovEnd.getText().toString() + "\n\n" +
-                            "This information will be saved in draft"
-                    );
-                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            saveDetailOvertime();
-                        }
-                    });
-
-                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                        }
-                    });
-                    alert.show();
+                if (ovEnd.getText().toString().isEmpty() || ovStart.getText().toString().isEmpty() || reqDate.getText().toString().isEmpty()) {
+                    alertMe("", "semua kolom selain note harus di isi");
                 } else {
-                    alertMe("Request Confirmation", "overtime end harus lebih besar dari overtime start");
+                    boolean validasiWaktu = validasiTime(ovStart.getText().toString(), ovEnd.getText().toString());
+                    if (validasiWaktu == false) {
+                        AlertDialog.Builder alert = new AlertDialog.Builder(OvertimeDetailActivity.this);
+                        alert.setTitle("Request Confirmation");
+                        alert.setMessage("Date\n" +
+                                "\t" + reqDateFormatted + "" +
+                                "\nStart\n" +
+                                "\t" + ovStart.getText().toString() + "" +
+                                "\nEnd\n" +
+                                "\t" + ovEnd.getText().toString() + "\n\n" +
+                                "This information will be saved in draft"
+                        );
+                        alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                saveDetailOvertime();
+                            }
+                        });
+
+                        alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+                        alert.show();
+                    } else {
+                        alertMe("Request Confirmation", "overtime end harus lebih besar dari overtime start");
+                    }
                 }
+
             }
         });
 
@@ -245,34 +250,43 @@ public class OvertimeDetailActivity extends AppCompatActivity {
                 } catch (Exception e) {
 
                 }
-                boolean validasiWaktu = validasiTime(ovStart.getText().toString(), ovEnd.getText().toString());
-                if (validasiWaktu == false) {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(OvertimeDetailActivity.this);
-                    alert.setTitle("Request Confirmation");
-                    alert.setMessage("Date\n" +
-                            "\t" + reqDateFormatted + "" +
-                            "\nStart\n" +
-                            "\t" + ovStart.getText().toString() + "" +
-                            "\nEnd\n" +
-                            "\t" + ovStart.getText().toString() + "\n\n"
-                    );
-                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            submitDetailOvertime();
-                        }
-                    });
+                String ovStartValue = ovStart.getText().toString();
+                String ovEndValue = ovEnd.getText().toString();
+                String reqDateValue = reqDate.getText().toString();
 
-                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                        }
-                    });
-                    alert.show();
+                if (ovEndValue.isEmpty() || ovStartValue.isEmpty() || reqDateValue.isEmpty()) {
+                    alertMe("", "semua kolom selain note harus di isi");
                 } else {
-                    alertMe("Request Confirmation", "overtime end harus lebih besar dari overtime start");
+                    boolean validasiWaktu = validasiTime(ovStart.getText().toString(), ovEnd.getText().toString());
+                    if (validasiWaktu == false) {
+                        AlertDialog.Builder alert = new AlertDialog.Builder(OvertimeDetailActivity.this);
+                        alert.setTitle("Request Confirmation");
+                        alert.setMessage("Date\n" +
+                                "\t" + reqDateFormatted + "" +
+                                "\nStart\n" +
+                                "\t" + ovStart.getText().toString() + "" +
+                                "\nEnd\n" +
+                                "\t" + ovEnd.getText().toString() + "\n\n"
+                        );
+                        alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                submitDetailOvertime();
+                            }
+                        });
+
+                        alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+                        alert.show();
+                    } else {
+                        alertMe("Request Confirmation", "overtime end harus lebih besar dari overtime start");
+                    }
                 }
+
 
             }
         });
@@ -341,13 +355,13 @@ public class OvertimeDetailActivity extends AppCompatActivity {
                     notes.setText(editOvertime.getNotes());
                     photo = editOvertime.getAttachmentFile();
 
+
                     if (photo != null) {
                         byte[] decodedString = Base64.decode(photo, Base64.DEFAULT);
                         Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                         image_view.setImageBitmap(bitmap);
-                    }else{
-
                     }
+
 
                 } else {
 
