@@ -357,16 +357,6 @@
                     android:textColor="@android:color/background_light" />
 
                 <Button
-                    android:id="@+id/btnCancelCDetails"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_margin="1dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_btn"
-                    android:text="Cancel"
-                    android:textColor="@android:color/background_light" />
-
-                <Button
                     android:id="@+id/btnSaveCDetails"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
@@ -374,6 +364,16 @@
                     android:layout_weight="1"
                     android:background="@drawable/rounded_btn"
                     android:text="Save"
+                    android:textColor="@android:color/background_light" />
+
+                <Button
+                    android:id="@+id/btnCancelCDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_btn"
+                    android:text="Cancel"
                     android:textColor="@android:color/background_light" />
             </LinearLayout>
         </LinearLayout>

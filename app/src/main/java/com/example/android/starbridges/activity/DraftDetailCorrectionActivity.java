@@ -377,7 +377,7 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
                 {
                     lblLocationCDraftDetails.setError("");
                     lblLocationCDraftDetails.setTextColor(Color.RED);//just to highlight that this is an error
-                    lblLocationCDraftDetails.setText(" Please select reimburse type");//changes the selected item text to this
+                    lblLocationCDraftDetails.setText(" Please choose location");//changes the selected item text to this
                 }
                 else if(Double.parseDouble(txtLogOutCDraftDetails.getText().toString().substring(0,2)+"."+txtLogOutCDraftDetails.getText().toString().substring(3,5))<Double.parseDouble(txtLogInCDraftDetails.getText().toString().substring(0,2)+"."+txtLogInCDraftDetails.getText().toString().substring(3,5)))
                 {
@@ -430,7 +430,7 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
                 {
                     lblLocationCDraftDetails.setError("");
                     lblLocationCDraftDetails.setTextColor(Color.RED);//just to highlight that this is an error
-                    lblLocationCDraftDetails.setText(" Please select reimburse type");//changes the selected item text to this
+                    lblLocationCDraftDetails.setText(" Please choose location");//changes the selected item text to this
                 }
                 else if(Double.parseDouble(txtLogOutCDraftDetails.getText().toString().substring(0,2)+"."+txtLogOutCDraftDetails.getText().toString().substring(3,5))<Double.parseDouble(txtLogInCDraftDetails.getText().toString().substring(0,2)+"."+txtLogInCDraftDetails.getText().toString().substring(3,5)))
                 {
