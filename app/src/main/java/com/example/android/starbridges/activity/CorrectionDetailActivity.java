@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -44,7 +45,7 @@ import retrofit2.Response;
 
 public class CorrectionDetailActivity extends AppCompatActivity {
 
-    TextView txtLogDateCDetails, txtShiftCDetails;
+    TextView txtLogDateCDetails, txtShiftCDetails, lblLocationErrorCDetails;
     EditText txtLogInCDetails,txtBreakStartCDetails,txtBreakEndCDetails;
     EditText txtLogOutCDetails, txtOverTimeInCDetails, txtOverTimeOutCDetails, txtNotesCDetails;
     Spinner spnLocationCDetails;
@@ -78,6 +79,9 @@ public class CorrectionDetailActivity extends AppCompatActivity {
         txtLogInCDetails=(EditText)findViewById(R.id.txtLogInCDetails);
         imgLogInCDetails=(ImageView)findViewById(R.id.imgLogInCDetails);
         imgClearLogInCDetails=(ImageView)findViewById(R.id.imgClearLogInCDetails);
+
+        lblLocationErrorCDetails=(TextView)findViewById(R.id.lblLocationErrorCDetails);
+
         imgClearLogInCDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -363,46 +367,105 @@ public class CorrectionDetailActivity extends AppCompatActivity {
         btnSaveCDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(CorrectionDetailActivity.this);
-                alert.setTitle("Confirmation");
-                alert.setTitle("This information will be saved as draft");
-                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        saveSubmitAttendanceCorrection("Save");
-                    }
-                });
 
-                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                if(txtLogInCDetails.getText().toString().matches(""))
+                {
+                    txtLogInCDetails.setError("Please fill the blank");
+                }
+                else if(txtLogOutCDetails.getText().toString().matches(""))
+                {
+                    txtLogOutCDetails.setError("Please fill the blank");
+                }
+                else if(spnLocationCDetails.getSelectedItem().toString().matches(""))
+                {
+                    lblLocationErrorCDetails.setError("");
+                    lblLocationErrorCDetails.setTextColor(Color.RED);//just to highlight that this is an error
+                    lblLocationErrorCDetails.setText(" Please select reimburse type");//changes the selected item text to this
+                }
+                else if(Double.parseDouble(txtLogOutCDetails.getText().toString().substring(0,2)+"."+txtLogOutCDetails.getText().toString().substring(3,5))<Double.parseDouble(txtLogInCDetails.getText().toString().substring(0,2)+"."+txtLogInCDetails.getText().toString().substring(3,5)))
+                {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(CorrectionDetailActivity.this);
+                    alert.setTitle("Please make sure log out > log in");
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-                    }
-                });
-                alert.show();
+                        }
+                    });
+                    alert.show();
+                }
+                else
+                {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(CorrectionDetailActivity.this);
+                    alert.setTitle("Confirmation");
+                    alert.setTitle("This information will be saved as draft");
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            saveSubmitAttendanceCorrection("Save");
+                        }
+                    });
+
+                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                    alert.show();
+                }
+
+
             }
         });
 
         btnSubmitCDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(CorrectionDetailActivity.this);
-                alert.setTitle("Confirmation");
-                alert.setTitle("This information will be send and wait for approval");
-                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        saveSubmitAttendanceCorrection("Submit");
-                    }
-                });
 
-                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                if(txtLogInCDetails.getText().toString().matches(""))
+                {
+                    txtLogInCDetails.setError("Please fill the blank");
+                }
+                else if(txtLogOutCDetails.getText().toString().matches(""))
+                {
+                    txtLogOutCDetails.setError("Please fill the blank");
+                }
+                else if(spnLocationCDetails.getSelectedItem().toString().matches(""))
+                {
+                    lblLocationErrorCDetails.setError(" Please choose location");
+                }
+                else if(Double.parseDouble(txtLogOutCDetails.getText().toString().substring(0,2)+"."+txtLogOutCDetails.getText().toString().substring(3,5))<Double.parseDouble(txtLogInCDetails.getText().toString().substring(0,2)+"."+txtLogInCDetails.getText().toString().substring(3,5)))
+                {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(CorrectionDetailActivity.this);
+                    alert.setTitle("Please make sure log out > log in");
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-                    }
-                });
-                alert.show();
+                        }
+                    });
+                    alert.show();
+                }
+                else {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(CorrectionDetailActivity.this);
+                    alert.setTitle("Confirmation");
+                    alert.setTitle("This information will be send and wait for approval");
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            saveSubmitAttendanceCorrection("Submit");
+                        }
+                    });
+
+                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                    alert.show();
+                }
             }
         });
 

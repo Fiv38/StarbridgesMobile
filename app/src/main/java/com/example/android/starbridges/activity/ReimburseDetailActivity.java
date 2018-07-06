@@ -394,6 +394,15 @@ public class ReimburseDetailActivity extends AppCompatActivity {
 
     public void initSpinner()
     {
+        if(progressDialog==null)
+        {
+            progressDialog= new ProgressDialog(ReimburseDetailActivity.this);
+            progressDialog.setTitle("Loading");
+            progressDialog.show();
+        }
+        else if(!progressDialog.isShowing())
+            progressDialog.show();
+
         lstReimbursementType= new ArrayList<>();
         ReturnValue returnValue=new ReturnValue();
         returnValue.setText("");
@@ -412,6 +421,7 @@ public class ReimburseDetailActivity extends AppCompatActivity {
                     setupSpinner();
 
                 } else {
+                    progressDialog.dismiss();
 
                     Toast.makeText(ReimburseDetailActivity.this, "Failed to get data", Toast.LENGTH_SHORT).show();
                 }
@@ -442,6 +452,9 @@ public class ReimburseDetailActivity extends AppCompatActivity {
             }
             spnTypeReimburseDetail.setSelection(counter);
         }
+
+        if(progressDialog.isShowing())
+            progressDialog.dismiss();
 
     }
 
