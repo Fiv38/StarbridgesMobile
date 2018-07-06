@@ -189,9 +189,9 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
             if (hitungJumlahHari() == false && !leaveRequestType.isEmpty()) {
 
                 int a = defaultLabelEndDate(leaveRequestRuleID);
-                if(leaveRequestRuleID == 4){
+                if (leaveRequestRuleID == 4) {
                     alertNotif("", "min unit request = 5, max unit request = " + String.valueOf(a));
-                }else{
+                } else {
                     alertNotif("", "max unit request = " + String.valueOf(a));
                 }
             } else {
@@ -261,9 +261,9 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                             leaveAt = String.format("%2s", selectedHour).replace(' ', '0') + ":" + String.format("%2s", selectedMinute).replace(' ', '0');
-
 //                            startDate.setText(startLeave + " - " + leaveAt);
                             startDate.setText(startLeave);
+
                             timeDateStart.setText(leaveAt);
 //                            Toast.makeText(LeaveRequestDetailActivity.this, "pertama1 :" + leaveAt, Toast.LENGTH_LONG).show();
                         }
@@ -276,7 +276,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                             leaveAt = String.format("%2s", selectedHour).replace(' ', '0') + ":" + String.format("%2s", selectedMinute).replace(' ', '0');
 
 //                            startDate.setText(endLeave + " - " + leaveAt);
-                            startDate.setText(endLeave);
+                            startDate.setText(startLeave);
                             timeDateStart.setText(leaveAt);
 //                            Toast.makeText(LeaveRequestDetailActivity.this, "pertama2 : " + leaveAt, Toast.LENGTH_LONG).show();
                         }
@@ -384,13 +384,13 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                                     leaveRequestRuleID == 20 ||
                                     leaveRequestRuleID == 21
                                     ) {
-                                if (validasiTime() == true) {
-                                    alertNotif("Request Confirmation", "Kolom return at harus setelah leave at");
-                                } else {
-                                    transactionStatus = "Save";
-                                    // call method
-                                    requestConfirmation();
-                                }
+                                        if (validasiTime(leaveAt, returnAt) == true) {
+                                            alertNotif("Request Confirmation", "Kolom return at harus setelah leave at");
+                                        } else {
+                                            transactionStatus = "Save";
+                                            // call method
+                                            requestConfirmation();
+                                        }
 
                             } else {
                                 // set val "Save" to transaction Status
@@ -435,7 +435,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                                     leaveRequestType.equalsIgnoreCase("ijin terlambat") ||
                                     leaveRequestType.equalsIgnoreCase("ijin keluar dan kembali")
                                     ) {
-                                if (validasiTime() == true) {
+                                if (validasiTime(leaveAt, returnAt) == true) {
                                     alertNotif("Request Confirmation", "Kolom return at harus setelah leave at");
                                 } else {
                                     transactionStatus = "Save";
@@ -531,6 +531,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                 }
 //                defaultLabelEndDate(leaveRequestRuleID);
 
+
                 if (leaveRequestRuleID == 3 ||
                         leaveRequestRuleID == 19 ||
                         leaveRequestRuleID == 20 ||
@@ -620,14 +621,15 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
             }
             startLeave = leave;
             endLeave = returN;
+
             if (leaveRequestType.equalsIgnoreCase("ijin pulang ") ||
                     leaveRequestType.equalsIgnoreCase("ijin terlambat") ||
                     leaveRequestType.equalsIgnoreCase("ijin keluar dan kembali")) {
                 leaveAt = leave;
                 returnAt = returN;
             } else {
-                leaveAt = null;
-                returnAt = null;
+                leaveAt = leave;
+                returnAt = returN;
             }
 
 //            leaveAt = sdf2.format(a)+"T"+leaveAt+":00";
@@ -665,10 +667,15 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                     balanceExpireDate = requestConfirmation.getBalanceExpireDate();
                     totalUnit = requestConfirmation.getTotalUnit().toString();
                     totalUnitReduce = requestConfirmation.getTotalUnit().toString();
-                    startLeave = requestConfirmation.getStartLeave().toString();
-                    endLeave = requestConfirmation.getEndLeave().toString();
-                    leaveAt = requestConfirmation.getLeaveAt();
-                    returnAt = requestConfirmation.getReturnAt();
+//                    startLeave = requestConfirmation.getStartLeave().toString();
+//                    endLeave = requestConfirmation.getEndLeave().toString();
+//                    leaveAt = requestConfirmation.getLeaveAt();
+//                    returnAt = requestConfirmation.getReturnAt();
+                    startLeave = formatDate(requestConfirmation.getStartLeave());
+                    endLeave = formatDate(requestConfirmation.getEndLeave());
+                    leaveAt = formatTime(requestConfirmation.getLeaveAt());
+                    returnAt = formatTime(requestConfirmation.getReturnAt());
+
                     minIntervalViolation = requestConfirmation.getMinIntervalViolation();
                     unitLimitViolation = requestConfirmation.getUnitLimitViolation();
                     occurenceViolation = requestConfirmation.getOccurenceViolation();
@@ -1024,8 +1031,12 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
             timeStr = "";
         } else {
             int position = str.indexOf("T");
-
             timeStr = str.substring(position + 1, str.length() - 3);
+//            if(position<0){
+//                timeStr= str;
+//            }else{
+//                timeStr = str.substring(position + 1, str.length() - 3);
+//            }
         }
         return timeStr;
     }
@@ -1118,21 +1129,22 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         timeDateEnd.setText("");
     }
 
-    private boolean validasiTime() {
+    private boolean validasiTime(String time1, String time2) {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         Date tmp1 = null;
         Date tmp2 = null;
         try {
-            tmp2 = sdf.parse(returnAt);
-            tmp1 = sdf.parse(leaveAt);
+            tmp2 = sdf.parse(time2);
+            tmp1 = sdf.parse(time1);
         } catch (ParseException e) {
             try {
-                tmp2 = sdf.parse(formatTime(returnAt));
-                tmp1 = sdf.parse(formatTime(leaveAt));
+                tmp2 = sdf.parse(formatTime(time2));
+                tmp1 = sdf.parse(formatTime(time1));
             } catch (ParseException e1) {
                 e1.printStackTrace();
             }
         }
+        System.out.println(tmp1.toString() + " " + tmp2.toString());
         boolean test = tmp1.after(tmp2);
         return test;
     }
