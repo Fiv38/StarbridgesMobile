@@ -52,6 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
+                    android:longClickable="false"
                     android:focusable="false"/>
 
                 <ImageView
@@ -81,6 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
+                    android:longClickable="false"
                     android:focusable="false"
                     android:inputType="textPersonName" />
 
@@ -115,6 +117,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
+                    android:longClickable="false"
                     android:focusable="false" />
 
                 <ImageView
@@ -142,6 +145,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:longClickable="false"
                     android:ems="10"
                     android:focusable="false"
                     android:inputType="textPersonName" />
@@ -171,6 +175,7 @@
             <EditText
                 android:id="@+id/notes"
                 android:layout_width="match_parent"
+                android:longClickable="false"
                 android:layout_height="wrap_content" />
 
             <Button
