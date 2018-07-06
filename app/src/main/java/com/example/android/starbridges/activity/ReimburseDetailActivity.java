@@ -167,8 +167,7 @@ public class ReimburseDetailActivity extends AppCompatActivity {
                 else if(txtTransactionDateReimburseDetail.getText().toString().matches("")) {
                     txtTransactionDateReimburseDetail.setError("Please select transaction date");
                 }
-                else if(txtAmountReimburseDetail.getText().toString().matches(""))
-                {
+                else if(txtAmountReimburseDetail.getText().toString().matches("")||txtAmountReimburseDetail.getText().toString().matches("\\+")||txtAmountReimburseDetail.getText().toString().matches("-")) {
                     txtAmountReimburseDetail.setError("Please fill amount");
                 }
                 else
@@ -218,7 +217,7 @@ public class ReimburseDetailActivity extends AppCompatActivity {
                 else if(txtTransactionDateReimburseDetail.getText().toString().matches("")) {
                     txtTransactionDateReimburseDetail.setError("Please select transaction date");
                 }
-                else if(txtAmountReimburseDetail.getText().toString().matches(""))
+                else if(txtAmountReimburseDetail.getText().toString().matches("")||txtAmountReimburseDetail.getText().toString().matches("\\+")||txtAmountReimburseDetail.getText().toString().matches("-"))
                 {
                     txtAmountReimburseDetail.setError("Please fill amount");
                 }
