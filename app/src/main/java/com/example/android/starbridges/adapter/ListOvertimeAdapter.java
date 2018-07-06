@@ -33,21 +33,21 @@ public class ListOvertimeAdapter extends ArrayAdapter<ReturnValue> {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         // get rowview from inflater
-        View rowView = inflater.inflate(R.layout.list_overtime, parent, false);
+        View rowView = inflater.inflate(R.layout.list_overtime2, parent, false);
 
         // get the text view from the rowView
-        TextView decisionNumber = (TextView) rowView.findViewById(R.id.decisionNumberView);
-        TextView date = (TextView) rowView.findViewById(R.id.DateView);
-        TextView startOv = (TextView) rowView.findViewById(R.id.StartView);
-        TextView endOv = (TextView) rowView.findViewById(R.id.EndView);
-        TextView approvedDate = (TextView) rowView.findViewById(R.id.approvedDateView);
+        TextView decisionNumber = (TextView) rowView.findViewById(R.id.decisionNumberView2);
+        TextView date = (TextView) rowView.findViewById(R.id.DateView2);
+        TextView startOv = (TextView) rowView.findViewById(R.id.StartView2);
+        TextView endOv = (TextView) rowView.findViewById(R.id.EndView2);
+//        TextView approvedDate = (TextView) rowView.findViewById(R.id.approvedDateView);
 
 
         decisionNumber.setText( OvertimeList.get(position).getDecisionNumber());
         date.setText(OvertimeList.get(position).getOvertimeDate());
         startOv.setText(OvertimeList.get(position).getOvertimeStart());
         endOv.setText(OvertimeList.get(position).getOvertimeEnd());
-        approvedDate.setText(OvertimeList.get(position).getApprovedDate());
+//        approvedDate.setText(OvertimeList.get(position).getApprovedDate());
 
         // return rowView
         return rowView;

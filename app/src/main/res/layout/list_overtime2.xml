@@ -8,7 +8,7 @@
     <!--Decision Number-->
 
     <TextView
-        android:id="@+id/decisionNumberView"
+        android:id="@+id/decisionNumberView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/lblDecNumber"
@@ -21,7 +21,7 @@
 
     <!-- Date -->
     <TextView
-        android:id="@+id/DateView"
+        android:id="@+id/DateView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/DateLbl"
@@ -42,7 +42,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/StartView"
+                android:id="@+id/StartView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/StartLbl"
@@ -52,6 +52,7 @@
                 android:textColor="@color/md_green_700"
                 android:textSize="16dp"
                 android:textStyle="normal" />
+
             <TextView
                 android:id="@+id/dashlistOvertime"
                 android:layout_width="wrap_content"
@@ -62,7 +63,7 @@
                 android:textStyle="normal" />
 
             <TextView
-                android:id="@+id/EndView"
+                android:id="@+id/EndView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/EndLbl"
