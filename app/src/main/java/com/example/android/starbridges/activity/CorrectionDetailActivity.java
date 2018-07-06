@@ -380,7 +380,7 @@ public class CorrectionDetailActivity extends AppCompatActivity {
                 {
                     lblLocationErrorCDetails.setError("");
                     lblLocationErrorCDetails.setTextColor(Color.RED);//just to highlight that this is an error
-                    lblLocationErrorCDetails.setText(" Please choose location");//changes the selected item text to this
+                    lblLocationErrorCDetails.setText(" Please choose location ");//changes the selected item text to this
                 }
                 else if(Double.parseDouble(txtLogOutCDetails.getText().toString().substring(0,2)+"."+txtLogOutCDetails.getText().toString().substring(3,5))<Double.parseDouble(txtLogInCDetails.getText().toString().substring(0,2)+"."+txtLogInCDetails.getText().toString().substring(3,5)))
                 {
@@ -433,7 +433,7 @@ public class CorrectionDetailActivity extends AppCompatActivity {
                 }
                 else if(spnLocationCDetails.getSelectedItem().toString().matches(""))
                 {
-                    lblLocationErrorCDetails.setError(" Please choose location");
+                    lblLocationErrorCDetails.setError(" Please choose location ");
                 }
                 else if(Double.parseDouble(txtLogOutCDetails.getText().toString().substring(0,2)+"."+txtLogOutCDetails.getText().toString().substring(3,5))<Double.parseDouble(txtLogInCDetails.getText().toString().substring(0,2)+"."+txtLogInCDetails.getText().toString().substring(3,5)))
                 {
