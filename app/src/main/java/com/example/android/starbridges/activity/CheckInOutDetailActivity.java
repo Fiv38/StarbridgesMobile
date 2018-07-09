@@ -236,6 +236,7 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
 
         if (requestCode == REQUEST_ACCESS_LOCATION){
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "GPS granted", Toast.LENGTH_SHORT).show();
                 //getLocation();
             } else {
                 Toast.makeText(this, "Need your location!", Toast.LENGTH_SHORT).show();
@@ -354,6 +355,15 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
                         callInputAbsence();
                     }
 
+                }
+                else
+                {
+                    if (sLogType.equals("Check In")) {
+                        dispatchTakePictureIntent();
+                    } else {
+                        sPhoto=null;
+                        callInputAbsence();
+                    }
                 }
             }
         });
