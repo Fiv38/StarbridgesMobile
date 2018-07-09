@@ -595,8 +595,8 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 
-        System.out.println(startLeave + " T " + endLeave);
-        System.out.println(leaveAt + " T " + returnAt);
+//        System.out.println(startLeave + " T " + endLeave);
+//        System.out.println(leaveAt + " T " + returnAt);
         String returN = null, leave = null;
         try {
             Date a = sdf.parse(startLeave);
@@ -605,11 +605,12 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
             String timeB = returnAt;
             String dateA = sdf2.format(a);
             String dateB = sdf2.format(b);
-            if (leaveAt.isEmpty()) {
-                leave = dateA;
 
+            if (leaveAt.isEmpty()) {
+//                leave = dateA+"T00:00";
+                leave = dateA;
             } else {
-                leave = dateA + "T" + timeA;
+                leave = dateA+"T"+timeA;
             }
 
             if (returnAt.isEmpty()) {
@@ -669,7 +670,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                     totalUnitReduce = requestConfirmation.getTotalUnit().toString();
 //                    startLeave = requestConfirmation.getStartLeave().toString();
 //                    endLeave = requestConfirmation.getEndLeave().toString();
-//                    leaveAt = requestConfirmation.getLeaveAt();
+//                        leaveAt = requestConfirmation.getLeaveAt();
 //                    returnAt = requestConfirmation.getReturnAt();
                     startLeave = formatDate(requestConfirmation.getStartLeave());
                     endLeave = formatDate(requestConfirmation.getEndLeave());
@@ -845,6 +846,56 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(LeaveRequestDetailActivity.this);
         progressDialog.setTitle("Loading");
         progressDialog.show();
+
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+
+//        System.out.println(startLeave + " T " + endLeave);
+//        System.out.println(leaveAt + " T " + returnAt);
+        String returN = null, leave = null;
+
+        try {
+            Date a = sdf.parse(startLeave);
+            Date b = sdf.parse(endLeave);
+            String timeA = leaveAt;
+            String timeB = returnAt;
+            String dateA = sdf2.format(a);
+            String dateB = sdf2.format(b);
+
+            if (leaveAt.isEmpty()) {
+                leave = dateA;
+
+            } else {
+                leave = dateA + "T" + timeA;
+            }
+
+            if (returnAt.isEmpty()) {
+                returN = dateB;
+
+            } else {
+
+                returN = dateB + "T" + timeB;
+            }
+            startLeave = leave;
+            endLeave = returN;
+
+            if (leaveRequestType.equalsIgnoreCase("ijin pulang ") ||
+                    leaveRequestType.equalsIgnoreCase("ijin terlambat") ||
+                    leaveRequestType.equalsIgnoreCase("ijin keluar dan kembali")) {
+                leaveAt = leave;
+                returnAt = returN;
+            } else {
+                leaveAt = leave;
+                returnAt = returN;
+            }
+
+//            leaveAt = sdf2.format(a)+"T"+leaveAt+":00";
+//            returnAt = sdf2.format(b)+"T"+returnAt+":00";
+            System.out.println("a");
+        } catch (Exception e) {
+        }
+
 
         apiInterface = APIClient.saveLeaveRequest(GlobalVar.getToken()).create(APIInterfaceRest.class);
         Call<SaveLeaveRequest> call3 = apiInterface.saveLeaveRequest(
