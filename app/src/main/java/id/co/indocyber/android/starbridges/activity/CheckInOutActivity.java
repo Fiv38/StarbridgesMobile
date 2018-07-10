@@ -28,7 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderApi;
-import com.indocyber.android.starbridges.R;
+import id.co.indocyber.android.starbridges.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

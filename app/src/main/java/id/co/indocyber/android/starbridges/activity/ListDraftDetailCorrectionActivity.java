@@ -3,7 +3,7 @@ package id.co.indocyber.android.starbridges.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.indocyber.android.starbridges.R;
+import id.co.indocyber.android.starbridges.R;
 
 public class ListDraftDetailCorrectionActivity extends AppCompatActivity {
 

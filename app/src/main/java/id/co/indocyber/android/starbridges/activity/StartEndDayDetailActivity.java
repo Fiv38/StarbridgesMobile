@@ -22,7 +22,7 @@ import android.widget.Toast;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.indocyber.android.starbridges.R;
+import id.co.indocyber.android.starbridges.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

@@ -9,7 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
-import com.indocyber.android.starbridges.R;
+import id.co.indocyber.android.starbridges.R;
 
 import org.json.JSONObject;
 

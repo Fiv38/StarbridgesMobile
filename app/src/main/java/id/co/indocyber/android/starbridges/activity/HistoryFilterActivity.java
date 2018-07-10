@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
-import com.indocyber.android.starbridges.R;
+import id.co.indocyber.android.starbridges.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

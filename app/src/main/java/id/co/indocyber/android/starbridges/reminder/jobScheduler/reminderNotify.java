@@ -9,7 +9,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 
-import com.indocyber.android.starbridges.R;
+import id.co.indocyber.android.starbridges.R;
 
 import id.co.indocyber.android.starbridges.activity.LoginActivity;
 

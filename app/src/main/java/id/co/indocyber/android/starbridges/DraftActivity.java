@@ -7,8 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.indocyber.android.starbridges.R;
-
 public class DraftActivity extends AppCompatActivity {
 
     @Override
