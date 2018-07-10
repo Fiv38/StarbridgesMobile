@@ -175,7 +175,6 @@ public class HomeActivity extends AppCompatActivity {
         });
         alert.show();
 
-
     }
 
     public void showOvertime(View view){
@@ -207,12 +206,6 @@ public class HomeActivity extends AppCompatActivity {
     public void showShiftExchange(View view){
         Intent shiftExchange = new Intent(this, ShiftExchangeActivity.class);
         startActivity(shiftExchange);
-    }
-
-    public void showOvertime(View view){
-        Intent overtime = new Intent(this, OvertimeDetailActivity.class);
-        startActivity(overtime);
-
     }
 
 }
