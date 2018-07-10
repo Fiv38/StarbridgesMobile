@@ -366,6 +366,7 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
             }
         });
 
+        /*
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -388,6 +389,7 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
                 alert.show();
             }
         });
+        */
 
     }
 
