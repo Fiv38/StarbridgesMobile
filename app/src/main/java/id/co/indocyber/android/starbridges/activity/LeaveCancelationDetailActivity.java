@@ -349,25 +349,35 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
                 txtLeaveFromCancelDetail.setText(leaveFrom);
                 txtLeaveToCancelDetail.setText(leaveTo);
 
-                if(txtLeaveFromCancelDetail.getText().toString().matches(""))
+                if(txtLeaveFromCancelDetail.getText().toString().matches(txtLeaveToCancelDetail.getText().toString()))
                 {
                     imgCancelFromDateCancelDetail.setEnabled(false);
                     imgCancelToDateCancelDetail.setEnabled(false);
+                    txtCancelFromCancelDetail.setText(leaveFrom);
+                    txtCancelToCancelDetail.setText(leaveTo);
                 }
                 else
                 {
-                    imgCancelFromDateCancelDetail.setEnabled(true);
-                    imgCancelToDateCancelDetail.setEnabled(true);
-                }
+                    if(txtLeaveFromCancelDetail.getText().toString().matches(""))
+                    {
+                        imgCancelFromDateCancelDetail.setEnabled(false);
+                        imgCancelToDateCancelDetail.setEnabled(false);
+                    }
+                    else
+                    {
+                        imgCancelFromDateCancelDetail.setEnabled(true);
+                        imgCancelToDateCancelDetail.setEnabled(true);
+                    }
 
-                if(editLeaveCancelation != null && editLeaveCancelation.getLeaveRequestTransactionID().equals(decisionNumber.getID()))
-                {
-                    txtCancelToCancelDetail.setText(cancelTo);
-                    txtCancelFromCancelDetail.setText(cancelFrom);
-                }
-                else{
-                    txtCancelToCancelDetail.setText("");
-                    txtCancelFromCancelDetail.setText("");
+                    if(editLeaveCancelation != null && editLeaveCancelation.getLeaveRequestTransactionID().equals(decisionNumber.getID()))
+                    {
+                        txtCancelToCancelDetail.setText(cancelTo);
+                        txtCancelFromCancelDetail.setText(cancelFrom);
+                    }
+                    else{
+                        txtCancelToCancelDetail.setText("");
+                        txtCancelFromCancelDetail.setText("");
+                    }
                 }
 
 

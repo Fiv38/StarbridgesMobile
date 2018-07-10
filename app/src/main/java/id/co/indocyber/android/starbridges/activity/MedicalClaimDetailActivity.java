@@ -249,8 +249,48 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // set transaction status to Save
                 transactionStatus = "Save";
+                if(spinnerMedicalPolicy.getSelectedItem().toString().matches(""))
+                {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(MedicalClaimDetailActivity.this);
+                    alert.setTitle("Please fill medical policy");
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-                requestConfirmation();
+                        }
+                    });
+                    alert.show();
+                }
+                else if(spinnerClaimPolicy.getSelectedItem().toString().matches(""))
+                {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(MedicalClaimDetailActivity.this);
+                    alert.setTitle("Please fill claim policy");
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                    alert.show();
+                }
+                else if(spinnerMedicalPolicy.getSelectedItem().toString().matches("Family Rawat Jalan")&&spinnerEmployeeFamily.getSelectedItem().toString().matches(""))
+                {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(MedicalClaimDetailActivity.this);
+                    alert.setTitle("Please fill the family member if claim policy is Family Rawat Jalan");
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                    alert.show();
+                }
+                else if(claimEditText.getText().toString().matches(""))
+                {
+                    claimEditText.setError("Please fill claim");
+                }
+                else
+                    requestConfirmation();
             }
         });
 
@@ -260,7 +300,48 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
                 // set transaction status to Submit
                 transactionStatus = "Submit";
 
-                requestConfirmation();
+                if(spinnerMedicalPolicy.getSelectedItem().toString().matches(""))
+                {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(MedicalClaimDetailActivity.this);
+                    alert.setTitle("Please fill medical policy");
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                    alert.show();
+                }
+                else if(spinnerClaimPolicy.getSelectedItem().toString().matches(""))
+                {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(MedicalClaimDetailActivity.this);
+                    alert.setTitle("Please fill claim policy");
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                    alert.show();
+                }
+                else if(spinnerMedicalPolicy.getSelectedItem().toString().matches("Family Rawat Jalan")&&spinnerEmployeeFamily.getSelectedItem().toString().matches(""))
+                {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(MedicalClaimDetailActivity.this);
+                    alert.setTitle("Please fill the family member if claim policy is Family Rawat Jalan");
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                    alert.show();
+                }
+                else if(claimEditText.getText().toString().matches(""))
+                {
+                    claimEditText.setError("Please fill claim");
+                }
+                else
+                    requestConfirmation();
             }
         });
 
@@ -286,6 +367,7 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
             }
         });
 
+        /*
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -308,6 +390,7 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
                 alert.show();
             }
         });
+        */
 
     }
 
