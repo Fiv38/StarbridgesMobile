@@ -4,7 +4,7 @@ android {
     compileSdkVersion 27
     buildToolsVersion '27.0.3'
     defaultConfig {
-        applicationId "com.example.android.starbridges"
+        applicationId "id.co.indocyber.android.starbridges"
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
