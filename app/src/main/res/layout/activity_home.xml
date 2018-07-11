@@ -56,7 +56,7 @@
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="88dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -133,7 +133,7 @@
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:gravity="center"
-                        android:text="HISTORIES"
+                        android:text="ATTENDANCE HISTORY"
                         android:textColor="@android:color/background_light"
                         android:textStyle="bold" />
                 </LinearLayout>
