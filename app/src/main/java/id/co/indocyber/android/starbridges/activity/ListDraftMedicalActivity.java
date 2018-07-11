@@ -66,6 +66,7 @@ public class ListDraftMedicalActivity extends AppCompatActivity implements Adapt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_draft_medical);
+        setTitle("Draft Medical");
         list =(ListView) findViewById(R.id.listDraftMedical);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabAddDraftMedical);
 

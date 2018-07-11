@@ -117,7 +117,11 @@
             android:configChanges="orientation"
             android:parentActivityName=".activity.OvertimeActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.ListDraftMedicalActivity"></activity>
+        <activity android:name=".activity.ListDraftMedicalActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".activity.HomeActivity"
+            android:screenOrientation="portrait"
+            ></activity>
         <activity android:name=".activity.LeaveRequestActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.HomeActivity"
