@@ -125,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        Button mRegisterButton = (Button) findViewById(R.id.btn_register);
+        TextView mRegisterButton = (TextView) findViewById(R.id.lbl_register_imei);
         mRegisterButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
