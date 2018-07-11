@@ -5,10 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.OvertimeActivity">
-    <ListView
-        android:id="@+id/listOvertime"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
 
     <ListView
         android:id="@+id/listOvertime"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.indocyber.android.starbridges.activity.LeaveRequestActivity">
+    tools:context="id.co.indocyber.android.starbridges.activity.LeaveRequestActivity">
 
     <ListView
         android:id="@+id/listLeaveRequest"
