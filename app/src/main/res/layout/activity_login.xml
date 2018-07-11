@@ -122,11 +122,12 @@
 
                 <TextView
                     android:id="@+id/lbl_register_imei"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:textAlignment="center"
                     android:text="@string/action_register"
-                    android:textColor="@android:color/holo_blue_bright" />
+                    android:textColor="@android:color/darker_gray" />
 
 
             </LinearLayout>

@@ -15,7 +15,7 @@
     </string>
     <string name="header_login">TIME &amp; ATTENDANCE</string>
     <string name="sub_header_login">APPLICATION</string>
-    <string name="action_register">Register IMEI?</string>
+    <string name="action_register"><u>register your phone</u></string>
     <string name="start_end_date">Attendance</string>
     <string name="check_in_out">Out Of\nOffice</string>
     <string name="histories">Histories</string>
