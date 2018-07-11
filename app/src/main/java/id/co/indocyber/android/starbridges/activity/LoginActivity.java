@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 
-        txtFooter.setText("Copyrigth " + year + " PT. Indocyber Global Teknologi\nAll Right Reserved");
+//        txtFooter.setText("Copyright " + year + " PT. Indocyber Global Teknologi\nAll Right Reserved");
 
 //        alarmManager.start(getApplicationContext());
 
