@@ -142,7 +142,7 @@
             <LinearLayout
                 android:id="@+id/linearLayout2"
                 android:layout_width="match_parent"
-                android:layout_height="88dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -156,22 +156,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="showOvertime"
+                    android:onClick="showMedicalClaim"
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imageView7"
+                        android:id="@+id/imageView33"
                         android:layout_width="match_parent"
                         android:layout_height="63dp"
-                        app:srcCompat="@mipmap/ic_overtime4" />
+                        app:srcCompat="@mipmap/ic_medical4" />
 
                     <TextView
-                        android:id="@+id/textView18"
+                        android:id="@+id/textView33"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:gravity="center"
-                        android:text="OVERTIME"
+                        android:text="MEDICAL"
                         android:textColor="@android:color/background_light"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -204,43 +204,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/imageView10"
-                        android:layout_width="match_parent"
-                        android:layout_height="63dp"
-                        app:srcCompat="@mipmap/ic_loan4" />
-
-                    <TextView
-                        android:id="@+id/textView21"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:gravity="center"
-                        android:text="LOAN"
-                        android:textColor="@android:color/background_light"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayout3"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="232dp">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:onClick="showLeaveRequest"
                     android:orientation="vertical">
 
@@ -260,6 +223,21 @@
                         android:textColor="@android:color/background_light"
                         android:textStyle="bold" />
                 </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="232dp">
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -283,31 +261,57 @@
                         android:text="LEAVE\nCANCELATION"
                         android:textColor="@android:color/background_light"
                         android:textStyle="bold" />
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="showMedicalClaim"
+                    android:onClick="signOut"
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imageView33"
+                        android:id="@+id/imageView43"
                         android:layout_width="match_parent"
                         android:layout_height="63dp"
-                        app:srcCompat="@mipmap/ic_medical4" />
+                        app:srcCompat="@mipmap/ic_logout2" />
 
                     <TextView
-                        android:id="@+id/textView33"
+                        android:id="@+id/textView43"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:gravity="center"
-                        android:text="MEDICAL"
+                        android:text="SIGN OUT"
                         android:textColor="@android:color/background_light"
                         android:textStyle="bold" />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:visibility="invisible">
+
+                    <ImageView
+                        android:id="@+id/imageView10"
+                        android:layout_width="match_parent"
+                        android:layout_height="63dp"
+                        app:srcCompat="@mipmap/ic_loan4" />
+
+                    <TextView
+                        android:id="@+id/textView21"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:text="LOAN"
+                        android:textColor="@android:color/background_light"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -320,8 +324,33 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
                 tools:layout_editor_absoluteX="0dp"
+                android:visibility="gone"
                 tools:layout_editor_absoluteY="232dp">
 
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="showOvertime"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imageView7"
+                        android:layout_width="match_parent"
+                        android:layout_height="63dp"
+                        app:srcCompat="@mipmap/ic_overtime4" />
+
+                    <TextView
+                        android:id="@+id/textView18"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:text="OVERTIME"
+                        android:textColor="@android:color/background_light"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -371,29 +400,6 @@
                         android:textStyle="bold" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:onClick="signOut"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/imageView43"
-                        android:layout_width="match_parent"
-                        android:layout_height="63dp"
-                        app:srcCompat="@mipmap/ic_logout2" />
-
-                    <TextView
-                        android:id="@+id/textView43"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:gravity="center"
-                        android:text="SIGN OUT"
-                        android:textColor="@android:color/background_light"
-                        android:textStyle="bold" />
-                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
