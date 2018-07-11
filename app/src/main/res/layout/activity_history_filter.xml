@@ -25,6 +25,7 @@
         android:ems="10"
         android:inputType="text"
         android:focusable="false"
+        android:longClickable="false"
         android:hint="touch to pick date"/>
 
     <TextView
@@ -40,6 +41,7 @@
         android:ems="10"
         android:inputType="text"
         android:focusable="false"
+        android:longClickable="false"
         android:hint="touch to pick date"/>
 
     <Button

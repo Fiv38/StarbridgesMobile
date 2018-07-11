@@ -1,6 +1,8 @@
 package id.co.indocyber.android.starbridges.activity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +13,7 @@ import android.widget.EditText;
 
 import id.co.indocyber.android.starbridges.R;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -73,7 +76,34 @@ public class HistoryFilterActivity extends AppCompatActivity {
         mShowHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShowHistory();
+                Date fromDate = new Date();
+                Date toDate = new Date();
+
+                DateFormat sdf=new SimpleDateFormat("MM/dd/yyyy");
+                try{
+                    fromDate=sdf.parse(mFromDate.getText().toString());
+                    toDate= sdf.parse(mToDate.getText().toString());
+                }
+                catch (Exception e)
+                {
+
+                }
+
+                if(fromDate.after(toDate))
+                {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(HistoryFilterActivity.this);
+                    alert.setTitle("Please make sure From is lower or equals To") ;
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+
+                    alert.show();
+                }
+                else
+                    ShowHistory();
             }
         });
 
