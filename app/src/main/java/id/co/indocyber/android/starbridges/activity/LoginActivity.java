@@ -421,11 +421,19 @@ public class LoginActivity extends AppCompatActivity {
             cancel = true;
         }
 
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
+        if (TextUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
             cancel = true;
+        }else{
+            if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+                mPasswordView.setError(getString(R.string.error_invalid_password));
+                focusView = mPasswordView;
+                cancel = true;
+            }
         }
+
+
         if (cancel) {
             focusView.requestFocus();
         } else {
@@ -507,7 +515,7 @@ public class LoginActivity extends AppCompatActivity {
         IMEI= telephonyManager.getDeviceId();
 //        IMEI="352875087316146";// maryuri
 //        IMEI="865684032897881";
-//        IMEI="863263034362087"; // Dhaba
+        IMEI="863263034362087"; // Dhaba
 //        IMEI="868042031440079";// Dhaba new
 //        IMEI="866941024390260";// Pak rio
 
