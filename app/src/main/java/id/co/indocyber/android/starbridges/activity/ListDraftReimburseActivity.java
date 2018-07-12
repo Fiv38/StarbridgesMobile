@@ -76,7 +76,7 @@ public class ListDraftReimburseActivity extends AppCompatActivity implements Ada
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_draft_reimburse);
 
-        setTitle("Reimbursement");
+        setTitle("Draft Reimbursement");
         getListDraftReimbursement();
 
         fabAddDraftReimburse=(FloatingActionButton)findViewById(R.id.fabAddDraftReimburse);
@@ -104,112 +104,116 @@ public class ListDraftReimburseActivity extends AppCompatActivity implements Ada
                 progressDialog.dismiss();
                 data = response.body();
 
-                if (data != null) {
+                if(data.isIsSucceed())
+                {
+                    if (data.getReturnValue().size()>0) {
 
-                    // pass context and data to the custor adapter
-                    adapter = new ListDraftReimbursementAdapter(ListDraftReimburseActivity.this, data.getReturnValue());
+                        // pass context and data to the custor adapter
+                        adapter = new ListDraftReimbursementAdapter(ListDraftReimburseActivity.this, data.getReturnValue());
 
-                    // get lstDraftReimburse from activity
-                    lstDraftReimburse = (ListView) findViewById(R.id.lstDraftReimburse);
+                        // get lstDraftReimburse from activity
+                        lstDraftReimburse = (ListView) findViewById(R.id.lstDraftReimburse);
 
-                    // set listadapter
-                    lstDraftReimburse.setAdapter(adapter);
+                        // set listadapter
+                        lstDraftReimburse.setAdapter(adapter);
 
-                    lstDraftReimburse.setOnItemClickListener(ListDraftReimburseActivity.this);
+                        lstDraftReimburse.setOnItemClickListener(ListDraftReimburseActivity.this);
 
-                    lstDraftReimburse.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-                    lstDraftReimburse.setItemsCanFocus(true);
-                    lstDraftReimburse.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
-                        @Override
-                        public void onItemCheckedStateChanged(ActionMode actionMode, int i, long l, boolean b) {
+                        lstDraftReimburse.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+                        lstDraftReimburse.setItemsCanFocus(true);
+                        lstDraftReimburse.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
+                            @Override
+                            public void onItemCheckedStateChanged(ActionMode actionMode, int i, long l, boolean b) {
 
-                            // Capture total checked items
-                            final int checkedCount = lstDraftReimburse.getCheckedItemCount();
-                            // Set the CAB title according to total checked items
-                            actionMode.setTitle(checkedCount + " Selected");
-                            // Calls toggleSelection method from ListViewAdapter Class
-                            adapter.toggleSelection(i);
-
-
-                        }
-
-                        @Override
-                        public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
-                            MenuInflater inflater=actionMode.getMenuInflater();
-                            inflater.inflate(R.menu.menu_draft_correction, menu);
-                            return true;
-
-                        }
-
-                        @Override
-                        public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
-                            return false;
-
-                        }
-
-                        @Override
-                        public boolean onActionItemClicked(final ActionMode actionMode, MenuItem menuItem) {
-
-                            switch (menuItem.getItemId()) {
-                                case R.id.deleteDraft:
-                                    AlertDialog.Builder alert = new AlertDialog.Builder(ListDraftReimburseActivity.this);
-                                    alert.setTitle("Confirmation");
-                                    alert.setTitle("This information will be deleted");
-
-                                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                                            // Calls getSelectedIds method from ListViewAdapter Class
-                                            final SparseBooleanArray selected = adapter
-                                                    .getSelectedIds();
-//                                idSelected= SharedPreferenceUtils.getSetting(ListDrafttReimburseActivitythis, "lstIdSelected", "");
-                                            lstIdSelected=new ArrayList<>();
-                                            // Captures all selected ids with a loop
-                                            for (int i2 = (selected.size() - 1); i2 >= 0; i2--) {
-                                                if (selected.valueAt(i2)) {
-                                                    ReturnValue selecteditem = adapter
-                                                            .getItem(selected.keyAt(i2));
-                                                    // Remove selected items following the ids
-                                                    lstIdSelected.add(selecteditem.getID());
-                                                    adapter.remove(selecteditem);
-                                                }
-                                            }
-                                            idSelected=lstIdSelected.toString();
-                                            Log.d("lstIdSelected",idSelected);
-                                            deleteCheckedDraft();
-                                            // Close CAB
-                                            actionMode.finish();
-
-                                        }
-                                    });
-
-                                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                                        }
-                                    });
-
-                                    alert.show();
+                                // Capture total checked items
+                                final int checkedCount = lstDraftReimburse.getCheckedItemCount();
+                                // Set the CAB title according to total checked items
+                                actionMode.setTitle(checkedCount + " Selected");
+                                // Calls toggleSelection method from ListViewAdapter Class
+                                adapter.toggleSelection(i);
 
 
-
-                                    return true;
-                                default:
-                                    return false;
                             }
-                        }
 
-                        @Override
-                        public void onDestroyActionMode(ActionMode actionMode) {
+                            @Override
+                            public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+                                MenuInflater inflater=actionMode.getMenuInflater();
+                                inflater.inflate(R.menu.menu_draft_correction, menu);
+                                return true;
 
-                            adapter.removeSelection();
+                            }
 
-                        }
-                    });
+                            @Override
+                            public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+                                return false;
 
-                } else {
+                            }
+
+                            @Override
+                            public boolean onActionItemClicked(final ActionMode actionMode, MenuItem menuItem) {
+
+                                switch (menuItem.getItemId()) {
+                                    case R.id.deleteDraft:
+                                        AlertDialog.Builder alert = new AlertDialog.Builder(ListDraftReimburseActivity.this);
+                                        alert.setTitle("Confirmation");
+                                        alert.setTitle("This information will be deleted");
+
+                                        alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                                // Calls getSelectedIds method from ListViewAdapter Class
+                                                final SparseBooleanArray selected = adapter
+                                                        .getSelectedIds();
+//                                idSelected= SharedPreferenceUtils.getSetting(ListDrafttReimburseActivitythis, "lstIdSelected", "");
+                                                lstIdSelected=new ArrayList<>();
+                                                // Captures all selected ids with a loop
+                                                for (int i2 = (selected.size() - 1); i2 >= 0; i2--) {
+                                                    if (selected.valueAt(i2)) {
+                                                        ReturnValue selecteditem = adapter
+                                                                .getItem(selected.keyAt(i2));
+                                                        // Remove selected items following the ids
+                                                        lstIdSelected.add(selecteditem.getID());
+                                                        adapter.remove(selecteditem);
+                                                    }
+                                                }
+                                                idSelected=lstIdSelected.toString();
+                                                Log.d("lstIdSelected",idSelected);
+                                                deleteCheckedDraft();
+                                                // Close CAB
+                                                actionMode.finish();
+
+                                            }
+                                        });
+
+                                        alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                            }
+                                        });
+
+                                        alert.show();
+
+
+
+                                        return true;
+                                    default:
+                                        return false;
+                                }
+                            }
+
+                            @Override
+                            public void onDestroyActionMode(ActionMode actionMode) {
+
+                                adapter.removeSelection();
+
+                            }
+                        });
+
+                    }
+                }
+                 else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         Toast.makeText(ListDraftReimburseActivity.this, jObjError.toString(), Toast.LENGTH_LONG).show();

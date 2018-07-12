@@ -373,9 +373,10 @@ public class LoginActivity extends AppCompatActivity {
                         String employee_id= response.body().getEmployeeID();
                         String locationId=response.body().getLocationID();
                         String locationName=response.body().getLocation();
+                        String attendancePrivilege=response.body().getAttendancePrivilege();
                         //String employee_id_sp =
 
-                        session.createLoginSession(loginName_sp,fullName_sp,token_sp,expires_sp, nik_sp, employee_id, locationName, locationId);
+                        session.createLoginSession(loginName_sp,fullName_sp,token_sp,expires_sp, nik_sp, employee_id, locationName, locationId,attendancePrivilege);
 
                         GlobalVar.setToken(token_sp);
                         GlobalVar.setLoginName(loginName_sp);
@@ -383,6 +384,7 @@ public class LoginActivity extends AppCompatActivity {
                         GlobalVar.setNIK(nik_sp);
                         GlobalVar.setLocation(locationName);
                         GlobalVar.setLocationId(locationId);
+                        GlobalVar.setAttendancePrivilege(attendancePrivilege);
 
                         startActivity(home);
                         finish();
