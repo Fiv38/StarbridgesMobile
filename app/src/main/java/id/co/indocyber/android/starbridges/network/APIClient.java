@@ -16,9 +16,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class APIClient {
-    public static String BASE_URL ="http://116.254.100.222:7000/"; // test
-//    public static String BASE_URL ="https://starbridges.indocyber.co.id/ESS/"; // production
-    //public static String API_KEY ="59D3CFCA29DB8697C4962A36EEB653C8";
+   // public static String BASE_URL ="http://116.254.100.222:7000/"; // test
+    public static String BASE_URL ="https://starbridges.indocyber.co.id/ESS/"; // production
     private static Retrofit retrofit = null;
 
     public static Retrofit getClient(){
