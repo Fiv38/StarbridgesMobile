@@ -74,7 +74,7 @@
             android:configChanges="orientation"
             android:theme="@style/TranslucentTheme"
             android:parentActivityName=".activity.HomeActivity"
-            android:screenOrientation="portrait" />
+             />
         <activity
             android:name=".activity.CorrectionActivity"
             android:configChanges="orientation"
@@ -85,14 +85,14 @@
             android:theme="@style/TranslucentTheme"
             android:configChanges="orientation"
             android:parentActivityName=".activity.CorrectionActivity"
-            android:screenOrientation="portrait" />
+             />
         <activity android:name=".activity.DraftCorrectionActivity" />
         <activity
             android:name=".activity.DraftDetailCorrectionActivity"
             android:configChanges="orientation"
             android:theme="@style/TranslucentTheme"
             android:parentActivityName=".activity.DraftCorrectionListActivity"
-            android:screenOrientation="portrait" />
+            />
         <activity
             android:name=".activity.DraftCorrectionListActivity"
             android:configChanges="orientation"
@@ -103,7 +103,7 @@
             android:configChanges="orientation"
             android:theme="@style/TranslucentTheme"
             android:parentActivityName=".activity.OvertimeActivity"
-            android:screenOrientation="portrait"/>
+            />
         <activity
             android:name=".activity.DraftOvertimeActivity"
             android:configChanges="orientation"
@@ -120,7 +120,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".activity.ListDraftMedicalActivity"
             android:configChanges="orientation"
-            android:parentActivityName=".activity.HomeActivity"
+            android:parentActivityName=".activity.MedicalClaimActivity"
             android:screenOrientation="portrait"
             ></activity>
         <activity android:name=".activity.LeaveRequestActivity"
@@ -132,7 +132,6 @@
             android:configChanges="orientation"
             android:theme="@style/TranslucentTheme"
             android:parentActivityName=".activity.LeaveRequestActivity"
-            android:screenOrientation="portrait"
             />
         <activity android:name=".activity.ListDraftLeaveRequestActivity"
             android:configChanges="orientation"
@@ -148,7 +147,6 @@
             android:theme="@style/TranslucentTheme"
             android:configChanges="orientation"
             android:parentActivityName=".activity.LeaveCancelationActivity"
-            android:screenOrientation="portrait"
             />
         <activity android:name=".activity.ListDraftLeaveCancelationActivity"
             android:configChanges="orientation"
@@ -163,7 +161,6 @@
         <activity android:name=".activity.MedicalClaimDetailActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.MedicalClaimActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/TranslucentTheme"
             />
         <activity android:name=".activity.ReimburseActivity"
@@ -180,7 +177,6 @@
             android:configChanges="orientation"
             android:theme="@style/TranslucentTheme"
             android:parentActivityName=".activity.ReimburseActivity"
-            android:screenOrientation="portrait"
             ></activity>
 
         <activity android:name=".activity.ShiftExchangeActivity"
@@ -188,7 +184,7 @@
         <activity android:name=".activity.ShiftExchangeDetailActivity"
             android:parentActivityName=".activity.ShiftExchangeActivity"
             android:theme="@style/TranslucentTheme"
-            android:screenOrientation="portrait"/>
+            />
         <activity android:name=".activity.ListDraftShiftExchangeActivity"
             android:parentActivityName=".activity.ShiftExchangeActivity"
             android:screenOrientation="portrait"></activity>
