@@ -214,7 +214,7 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
                 {
                     txtCancelToCancelDetail.setError("Please fill cancel to");
                 }
-                else if(convertDateCancelFrom.compareTo(convertDateCancelTo)>0)
+                else if(convertDateCancelFrom.after(convertDateCancelTo))
                 {
                     Toast.makeText(LeaveCancelationDetailActivity.this, "Cancel To must bigger than Cancel From", Toast.LENGTH_SHORT).show();
                 }
@@ -283,7 +283,7 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
                 {
                     txtCancelToCancelDetail.setError("Please fill cancel to");
                 }
-                else if(convertDateCancelFrom.compareTo(convertDateCancelTo)>0)
+                else if(convertDateCancelFrom.after(convertDateCancelTo))
                 {
                     Toast.makeText(LeaveCancelationDetailActivity.this, "Cancel To must bigger than Cancel From", Toast.LENGTH_SHORT).show();
                 }
