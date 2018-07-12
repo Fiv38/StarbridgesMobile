@@ -16,6 +16,7 @@ import id.co.indocyber.android.starbridges.R;
 
 import org.json.JSONObject;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -95,7 +96,25 @@ public class CorrectionListActivity extends AppCompatActivity implements Adapter
 
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 
-        getAttendaceCorrectionLog(sdf.format(firstDateOfThisYear), sdf.format(today));
+        Intent intent = getIntent();
+        String sDateFrom = intent.getStringExtra("from");
+        String sDateTo = intent.getStringExtra("to");
+
+        try{
+            DateFormat df= new SimpleDateFormat("MM/dd/yyyy");
+            Date dateFrom = df.parse(sDateFrom);
+            Date dateTo= df.parse(sDateTo);
+
+            sDateFrom=sdf.format(dateFrom);
+            sDateTo=sdf.format(dateTo);
+
+        }catch (Exception e)
+        {
+
+        }
+
+        getAttendaceCorrectionLog(sDateFrom, sDateTo);
+//        getAttendaceCorrectionLog(sdf.format(firstDateOfThisYear), sdf.format(today));
     }
 
 

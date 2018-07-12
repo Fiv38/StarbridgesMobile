@@ -7,9 +7,8 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -25,10 +24,10 @@
         <activity
             android:name=".activity.LoginActivity"
             android:configChanges="orientation"
-            android:windowSoftInputMode="adjustPan"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -72,9 +71,8 @@
         <activity
             android:name=".activity.HistoryFilterActivity"
             android:configChanges="orientation"
-            android:theme="@style/TranslucentTheme"
             android:parentActivityName=".activity.HomeActivity"
-             />
+            android:theme="@style/TranslucentTheme" />
         <activity
             android:name=".activity.CorrectionActivity"
             android:configChanges="orientation"
@@ -82,17 +80,15 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.CorrectionDetailActivity"
-            android:theme="@style/TranslucentTheme"
             android:configChanges="orientation"
             android:parentActivityName=".activity.CorrectionActivity"
-             />
+            android:theme="@style/TranslucentTheme" />
         <activity android:name=".activity.DraftCorrectionActivity" />
         <activity
             android:name=".activity.DraftDetailCorrectionActivity"
             android:configChanges="orientation"
-            android:theme="@style/TranslucentTheme"
             android:parentActivityName=".activity.DraftCorrectionListActivity"
-            />
+            android:theme="@style/TranslucentTheme" />
         <activity
             android:name=".activity.DraftCorrectionListActivity"
             android:configChanges="orientation"
@@ -101,9 +97,8 @@
         <activity
             android:name=".activity.OvertimeDetailActivity"
             android:configChanges="orientation"
-            android:theme="@style/TranslucentTheme"
             android:parentActivityName=".activity.OvertimeActivity"
-            />
+            android:theme="@style/TranslucentTheme" />
         <activity
             android:name=".activity.DraftOvertimeActivity"
             android:configChanges="orientation"
@@ -118,76 +113,77 @@
             android:configChanges="orientation"
             android:parentActivityName=".activity.OvertimeActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.ListDraftMedicalActivity"
+        <activity
+            android:name=".activity.ListDraftMedicalActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.MedicalClaimActivity"
-            android:screenOrientation="portrait"
-            ></activity>
-        <activity android:name=".activity.LeaveRequestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LeaveRequestActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.HomeActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".activity.LeaveRequestDetailActivity"
-            android:configChanges="orientation"
-            android:theme="@style/TranslucentTheme"
-            android:parentActivityName=".activity.LeaveRequestActivity"
-            />
-        <activity android:name=".activity.ListDraftLeaveRequestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LeaveRequestDetailActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.LeaveRequestActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".activity.LeaveCancelationActivity"
+            android:theme="@style/TranslucentTheme" />
+        <activity
+            android:name=".activity.ListDraftLeaveRequestActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".activity.LeaveRequestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LeaveCancelationActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.HomeActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".activity.LeaveCancelationDetailActivity"
-            android:theme="@style/TranslucentTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LeaveCancelationDetailActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.LeaveCancelationActivity"
-            />
-        <activity android:name=".activity.ListDraftLeaveCancelationActivity"
+            android:theme="@style/TranslucentTheme" />
+        <activity
+            android:name=".activity.ListDraftLeaveCancelationActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.LeaveCancelationActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".activity.MedicalClaimActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MedicalClaimActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.HomeActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".activity.MedicalClaimDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MedicalClaimDetailActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.MedicalClaimActivity"
-            android:theme="@style/TranslucentTheme"
-            />
-        <activity android:name=".activity.ReimburseActivity"
+            android:theme="@style/TranslucentTheme" />
+        <activity
+            android:name=".activity.ReimburseActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.HomeActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".activity.ListDraftReimburseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ListDraftReimburseActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.ReimburseActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".activity.ReimburseDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ReimburseDetailActivity"
             android:configChanges="orientation"
-            android:theme="@style/TranslucentTheme"
             android:parentActivityName=".activity.ReimburseActivity"
-            ></activity>
-
-        <activity android:name=".activity.ShiftExchangeActivity"
-            android:parentActivityName=".activity.HomeActivity"/>
-        <activity android:name=".activity.ShiftExchangeDetailActivity"
+            android:theme="@style/TranslucentTheme" />
+        <activity
+            android:name=".activity.ShiftExchangeActivity"
+            android:parentActivityName=".activity.HomeActivity" />
+        <activity
+            android:name=".activity.ShiftExchangeDetailActivity"
             android:parentActivityName=".activity.ShiftExchangeActivity"
-            android:theme="@style/TranslucentTheme"
-            />
-        <activity android:name=".activity.ListDraftShiftExchangeActivity"
+            android:theme="@style/TranslucentTheme" />
+        <activity
+            android:name=".activity.ListDraftShiftExchangeActivity"
             android:parentActivityName=".activity.ShiftExchangeActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <receiver
             android:name=".reminder.alarmManager.MyReceiver"
@@ -195,35 +191,38 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="com.example.android.starbridges.ACTION_NOTIFY_MASUK" />
-                <!--<action android:name="android.intent.action.BOOT_COMPLETED" />-->
+                <!-- <action android:name="android.intent.action.BOOT_COMPLETED" /> -->
             </intent-filter>
         </receiver>
-
         <receiver
             android:name=".reminder.alarmManager.MyReceiverPulang"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.example.android.starbridges.ACTION_NOTIFY_PULANG" />
-                <!--<action android:name="android.intent.action.BOOT_COMPLETED" />-->
+                <!-- <action android:name="android.intent.action.BOOT_COMPLETED" /> -->
             </intent-filter>
         </receiver>
-
         <receiver
             android:name=".reminder.alarmManager.StartAlarmService"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.TIME_SET"/>
-                <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.CorrectionListActivity"
+        <activity
+            android:name=".activity.CorrectionListActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.HomeActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.CorrectionFilterActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".activity.HomeActivity"
+            android:theme="@style/TranslucentTheme"
             ></activity>
     </application>
 

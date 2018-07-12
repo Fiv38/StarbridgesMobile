@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".activity.CorrectionFilterActivity">
+
+    <TextView
+        android:id="@+id/lbl_from"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="From" />
+
+    <EditText
+        android:id="@+id/txt_from_date_correction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:focusable="false"
+        android:hint="touch to pick date"
+        android:inputType="text"
+        android:longClickable="false" />
+
+    <TextView
+        android:id="@+id/lbl_to"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="To" />
+
+    <EditText
+        android:id="@+id/txt_to_date_correction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:focusable="false"
+        android:hint="touch to pick date"
+        android:inputType="text"
+        android:longClickable="false" />
+
+    <Button
+        android:id="@+id/btn_show_correction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_btn"
+        android:backgroundTint="@android:color/holo_blue_light"
+        android:text="Show"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>

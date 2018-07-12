@@ -149,7 +149,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void showCorrection(View view){
-        Intent correction = new Intent(this, CorrectionListActivity.class);
+        Intent correction = new Intent(this, CorrectionFilterActivity.class);
         startActivity(correction);
     }
     public void signOut(View view){
