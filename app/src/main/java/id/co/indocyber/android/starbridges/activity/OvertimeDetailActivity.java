@@ -597,13 +597,13 @@ public class OvertimeDetailActivity extends AppCompatActivity {
 
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), paramObject.toString());
         final APIInterfaceRest apiInterface = APIClient.saveLeaveCancelation(GlobalVar.getToken()).create(APIInterfaceRest.class);
-        Call<SubmitOvertime> call3 = apiInterface.submitOvertime(body, "Submit");
+        Call<MessageReturn> call3 = apiInterface.saveDetailOvertime(body);
 
-        call3.enqueue(new Callback<SubmitOvertime>() {
+        call3.enqueue(new Callback<MessageReturn>() {
             @Override
-            public void onResponse(Call<SubmitOvertime> call, Response<SubmitOvertime> response) {
+            public void onResponse(Call<MessageReturn> call, Response<MessageReturn> response) {
                 progressDialog.dismiss();
-                SubmitOvertime data = response.body();
+                MessageReturn data = response.body();
                 if (data != null) {
                     Toast.makeText(getApplicationContext(), data.getMessage(), Toast.LENGTH_LONG).show();
 
@@ -615,7 +615,7 @@ public class OvertimeDetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<SubmitOvertime> call, Throwable t) {
+            public void onFailure(Call<MessageReturn> call, Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(), "Something went wrong...Please try again!", Toast.LENGTH_LONG).show();
                 call.cancel();

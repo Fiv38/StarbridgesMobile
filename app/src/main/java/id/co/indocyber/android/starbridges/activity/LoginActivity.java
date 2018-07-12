@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
@@ -515,7 +516,7 @@ public class LoginActivity extends AppCompatActivity {
         IMEI= telephonyManager.getDeviceId();
 //        IMEI="352875087316146";// maryuri
 //        IMEI="865684032897881";
-//        IMEI="863263034362087"; // Dhaba
+        IMEI="863263034362087"; // Dhaba
 //        IMEI="868042031440079";// Dhaba new
 //        IMEI="866941024390260";// Pak rio
 
@@ -542,7 +543,21 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    private void checkAppVersion(){
+        String versionName = "";
+        int versionCode = -1;
+        try {
+            PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            versionName = packageInfo.versionName;
+            versionCode = packageInfo.versionCode;
 
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
 
 }
 
