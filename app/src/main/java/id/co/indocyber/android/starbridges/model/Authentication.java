@@ -47,6 +47,9 @@ public class Authentication implements Serializable, Parcelable
     @SerializedName(".expires")
     @Expose
     private String expires;
+    @SerializedName("AttendancePrivilege")
+    @Expose
+    private String attendancePrivilege;
     public final static Creator<Authentication> CREATOR = new Creator<Authentication>() {
 
 
@@ -78,6 +81,7 @@ public class Authentication implements Serializable, Parcelable
         this.location = ((String) in.readValue((String.class.getClassLoader())));
         this.issued = ((String) in.readValue((String.class.getClassLoader())));
         this.expires = ((String) in.readValue((String.class.getClassLoader())));
+        this.attendancePrivilege = ((String) in.readValue((String.class.getClassLoader())));
     }
 
     /**
@@ -102,7 +106,7 @@ public class Authentication implements Serializable, Parcelable
      * @param loginName
      * @param asClientId
      */
-    public Authentication(String accessToken, String tokenType, int expiresIn, String asClientId, String loginName, String fullName, String nik, String employeeID, String locationID, String location, String issued, String expires) {
+    public Authentication(String accessToken, String tokenType, int expiresIn, String asClientId, String loginName, String fullName, String nik, String employeeID, String locationID, String location, String issued, String expires, String attendancePrivilege) {
         super();
         this.accessToken = accessToken;
         this.tokenType = tokenType;
@@ -116,6 +120,7 @@ public class Authentication implements Serializable, Parcelable
         this.location = location;
         this.issued = issued;
         this.expires = expires;
+        this.attendancePrivilege = attendancePrivilege;
     }
 
     public String getAccessToken() {
@@ -274,6 +279,19 @@ public class Authentication implements Serializable, Parcelable
         return this;
     }
 
+    public String getAttendancePrivilege() {
+        return attendancePrivilege;
+    }
+
+    public void setAttendancePrivilege(String attendancePrivilege) {
+        this.attendancePrivilege = attendancePrivilege;
+    }
+
+    public Authentication withAttendancePrivilege(String attendancePrivilege) {
+        this.attendancePrivilege = attendancePrivilege;
+        return this;
+    }
+
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(accessToken);
         dest.writeValue(tokenType);
@@ -287,6 +305,7 @@ public class Authentication implements Serializable, Parcelable
         dest.writeValue(location);
         dest.writeValue(issued);
         dest.writeValue(expires);
+        dest.writeValue(attendancePrivilege);
     }
 
     public int describeContents() {

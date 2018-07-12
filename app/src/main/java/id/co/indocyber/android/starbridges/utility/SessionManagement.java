@@ -34,6 +34,7 @@ public class SessionManagement {
     public static final String KEY_EMPLOYEE_ID = "employeeId";
     public static final String KEY_LOCATION = "location";
     public static final String KEY_LOCATION_ID = "locationId";
+    public static final String KEY_ATTENDANCE_PRIVILEGE = "attendancePrivilege";
 
 
     // Constructor
@@ -46,7 +47,7 @@ public class SessionManagement {
     /**
      * Create login session
      * */
-    public void createLoginSession(String loginName, String fullName,String token, String expires, String nik, String employeeId, String location, String locationId){
+    public void createLoginSession(String loginName, String fullName,String token, String expires, String nik, String employeeId, String location, String locationId, String attendancePrivilege){
 
         editor.putBoolean(IS_LOGIN, true);
 
@@ -58,6 +59,7 @@ public class SessionManagement {
         editor.putString(KEY_EMPLOYEE_ID, employeeId);
         editor.putString(KEY_LOCATION, location);
         editor.putString(KEY_LOCATION_ID, locationId);
+        editor.putString(KEY_ATTENDANCE_PRIVILEGE, attendancePrivilege);
         editor.commit();
     }
 
@@ -95,6 +97,7 @@ public class SessionManagement {
         user.put(KEY_EMPLOYEE_ID, pref.getString(KEY_EMPLOYEE_ID, null));
         user.put(KEY_LOCATION, pref.getString(KEY_LOCATION, null));
         user.put(KEY_LOCATION_ID, pref.getString(KEY_LOCATION_ID, null));
+        user.put(KEY_ATTENDANCE_PRIVILEGE, pref.getString(KEY_ATTENDANCE_PRIVILEGE, null));
 
         // return user
         return user;
@@ -118,11 +121,6 @@ public class SessionManagement {
      * **/
     // Get Login State
     public boolean isLoggedIn() {
-
-
-
-
-
         return pref.getBoolean(IS_LOGIN, false);
     }
 

@@ -39,8 +39,10 @@ public class HomeActivity extends AppCompatActivity {
     APIInterfaceRest apiInterface;
     CircleImageView imageView;
     private TextView mUsernameView;
+    private String attendancePrivilege;
     SessionManagement session;
     Button btnSignOut;
+    Button AttendanceButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +58,7 @@ public class HomeActivity extends AppCompatActivity {
         String tokenExpiredDate=user.get(SessionManagement.KEY_EXPIRES);
         String location=user.get(SessionManagement.KEY_LOCATION);
         String locationId=user.get(SessionManagement.KEY_LOCATION_ID);
+        attendancePrivilege=user.get(SessionManagement.KEY_ATTENDANCE_PRIVILEGE);
 
                 //Thu, 31 May 2018 01:34:37 GMT
         DateFormat df = new SimpleDateFormat("EEE, dd MMMM yyyy kk:mm:ss z", Locale.ENGLISH);
@@ -71,14 +74,12 @@ public class HomeActivity extends AppCompatActivity {
             Log.d("error parse", "error parse");
         }
 
-
-
-
         GlobalVar.setToken(token_sp);
         GlobalVar.setLoginName(loginName_sp);
         GlobalVar.setFullname(fullName_sp);
         GlobalVar.setLocation(location);
         GlobalVar.setLocationId(locationId);
+        GlobalVar.setAttendancePrivilege(attendancePrivilege);
         username = GlobalVar.loginName();
         fullname = GlobalVar.getFullname();
         mUsernameView=(TextView) findViewById(R.id.lbl_username);
@@ -134,13 +135,41 @@ public class HomeActivity extends AppCompatActivity {
         }
 
     public void showStartEndDate(View view) {
-        Intent startEndDay = new Intent(this, StartEndDayActivity.class);
-        startActivity(startEndDay);
+        if (attendancePrivilege.equals("False")){
+            AlertDialog.Builder alert = new AlertDialog.Builder(HomeActivity.this);
+            alert.setTitle("Alert");
+            alert.setTitle("You do not have privilege to access this menu");
+            alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+
+            alert.show();
+        } else {
+            Intent startEndDay = new Intent(this, StartEndDayActivity.class);
+            startActivity(startEndDay);
+        }
     }
 
     public void showCheckInOut(View view) {
-        Intent checkInOut = new Intent(this, CheckInOutActivity.class);
-        startActivity(checkInOut);
+        if (attendancePrivilege.equals("False")){
+            AlertDialog.Builder alert = new AlertDialog.Builder(HomeActivity.this);
+            alert.setTitle("Alert");
+            alert.setTitle("You do not have privilege to access this menu");
+            alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+
+            alert.show();
+        } else {
+            Intent checkInOut = new Intent(this, CheckInOutActivity.class);
+            startActivity(checkInOut);
+        }
     }
 
     public void showHistory(View view) {

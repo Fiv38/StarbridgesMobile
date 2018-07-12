@@ -83,6 +83,15 @@ public class  GlobalVar {
 
     public static String locationId;
 
+    public static String getAttendancePrivilege() {
+        return attendancePrivilege;
+    }
+
+    public static void setAttendancePrivilege(String attendancePrivilege) {
+        GlobalVar.attendancePrivilege = attendancePrivilege;
+    }
+
+    public static String attendancePrivilege;
 
     public static Calendar jamMasuk(Context ctx){
         Calendar checkOutTime2 = Calendar.getInstance();
