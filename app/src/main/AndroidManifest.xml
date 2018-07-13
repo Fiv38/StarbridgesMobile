@@ -100,10 +100,6 @@
             android:parentActivityName=".activity.OvertimeActivity"
             android:theme="@style/TranslucentTheme" />
         <activity
-            android:name=".activity.DraftOvertimeActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.OvertimeActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.HomeActivity"

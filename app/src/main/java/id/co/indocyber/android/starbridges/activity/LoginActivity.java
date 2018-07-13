@@ -310,7 +310,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<OPost> call, Throwable t) {
                     showProgress(false);
-                    Toast.makeText(LoginActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, getString(R.string.error_connection), Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -394,7 +394,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<Authentication> call, Throwable t) {
                     showProgress(false);
-                    Toast.makeText(LoginActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, getString(R.string.error_connection), Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -456,7 +456,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<MessageReturn> call, Throwable t) {
                     showProgress(false);
-                    Toast.makeText(LoginActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, getString(R.string.error_connection), Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -583,14 +583,14 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "Something went wrong...Please try again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.error_connection), Toast.LENGTH_LONG).show();
                 }
 
             }
 
             @Override
             public void onFailure(Call<Versioning> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Something went wrong...Please try again!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.error_connection), Toast.LENGTH_LONG).show();
                 call.cancel();
             }
         });

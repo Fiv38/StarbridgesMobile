@@ -13,6 +13,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="error_connection">Failed connect to server.. Please try again!</string>
     <string name="header_login">TIME &amp; ATTENDANCE</string>
     <string name="sub_header_login">APPLICATION</string>
     <string name="action_register"><u>register your phone</u></string>

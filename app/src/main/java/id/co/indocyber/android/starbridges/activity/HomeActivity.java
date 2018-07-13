@@ -127,7 +127,7 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<GetImage> call, Throwable t) {
-                Toast.makeText(HomeActivity.this, "Something went wrong, please try again later", Toast.LENGTH_LONG).show();
+                Toast.makeText(HomeActivity.this, getString(R.string.error_connection), Toast.LENGTH_LONG).show();
                 session.logoutUser();
                 finish();
             }

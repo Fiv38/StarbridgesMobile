@@ -727,7 +727,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<RequestConfirmation> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(LeaveRequestDetailActivity.this, "Something went wrong...Please try again!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LeaveRequestDetailActivity.this, getString(R.string.error_connection), Toast.LENGTH_SHORT).show();
                 call.cancel();
             }
         });
@@ -824,7 +824,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<EditLeaveRequest> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(LeaveRequestDetailActivity.this, "Something went wrong...Please try again!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LeaveRequestDetailActivity.this, getString(R.string.error_connection), Toast.LENGTH_SHORT).show();
                 call.cancel();
 
                 initSpinnerRequestType();
@@ -922,7 +922,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<SaveLeaveRequest> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(LeaveRequestDetailActivity.this, "Something went wrong...Please try again!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LeaveRequestDetailActivity.this, getString(R.string.error_connection), Toast.LENGTH_SHORT).show();
                 call.cancel();
             }
         });
@@ -971,7 +971,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<BalanceType> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(LeaveRequestDetailActivity.this, "Something went wrong...Please try again!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LeaveRequestDetailActivity.this, getString(R.string.error_connection), Toast.LENGTH_SHORT).show();
                 setupSpinnerBalance();
             }
         });
@@ -1016,7 +1016,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<RequestType> call, Throwable t) {
-                Toast.makeText(LeaveRequestDetailActivity.this, "Something went wrong...Please try again!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LeaveRequestDetailActivity.this, getString(R.string.error_connection), Toast.LENGTH_SHORT).show();
                 setupSpinner();
             }
         });

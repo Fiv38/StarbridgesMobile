@@ -125,7 +125,7 @@ public class ListDraftLeaveCancelationActivity extends AppCompatActivity impleme
             @Override
             public void onFailure(Call<MessageReturn> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Something were wrong, please try again later", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.error_connection), Toast.LENGTH_LONG).show();
                 call.cancel();
             }
         });

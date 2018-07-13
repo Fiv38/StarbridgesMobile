@@ -321,7 +321,7 @@ public class ReimburseDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<EditReimbursement> call, Throwable t) {
-                Toast.makeText(ReimburseDetailActivity.this, "Something went wrong...Please try again!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ReimburseDetailActivity.this, getString(R.string.error_connection), Toast.LENGTH_SHORT).show();
                 initSpinner();
                 progressDialog.dismiss();
             }
@@ -428,7 +428,7 @@ public class ReimburseDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ReimbursementType> call, Throwable t) {
-                Toast.makeText(ReimburseDetailActivity.this, "Something went wrong...Please try again!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ReimburseDetailActivity.this, getString(R.string.error_connection), Toast.LENGTH_SHORT).show();
                 setupSpinner();
             }
         });
@@ -524,7 +524,7 @@ public class ReimburseDetailActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<MessageReturn> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Something went wrong...Please try again!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.error_connection), Toast.LENGTH_LONG).show();
                 call.cancel();
             }
         });
