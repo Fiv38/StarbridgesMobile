@@ -408,7 +408,7 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<OLocation> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(CheckInOutDetailActivity.this, "Something went wrong...Please try again!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CheckInOutDetailActivity.this, getString(R.string.error_connection), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -515,7 +515,7 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<Attendence> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(), "Something went wrong...Please try again!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.error_connection), Toast.LENGTH_LONG).show();
                         call.cancel();
                     }
                 });
@@ -554,7 +554,7 @@ public class CheckInOutDetailActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<Attendence> call, Throwable t) {
                     progressDialog.dismiss();
-                    Toast.makeText(getApplicationContext(), "Something went wrong...Please try again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.error_connection), Toast.LENGTH_LONG).show();
                     call.cancel();
                 }
             });

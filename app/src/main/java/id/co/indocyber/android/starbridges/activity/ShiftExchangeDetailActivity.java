@@ -310,7 +310,7 @@ public class ShiftExchangeDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<EditShiftExchange> call, Throwable t) {
-                Toast.makeText(ShiftExchangeDetailActivity.this, "Something went wrong...Please try again!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ShiftExchangeDetailActivity.this, getString(R.string.error_connection), Toast.LENGTH_SHORT).show();
                 initSpinnerEmployee();
                 initSpinnerShift();
                 progressDialog.dismiss();
@@ -388,7 +388,7 @@ public class ShiftExchangeDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ListEmployee> call, Throwable t) {
-                Toast.makeText(ShiftExchangeDetailActivity.this, "Something went wrong...Please try again!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ShiftExchangeDetailActivity.this, getString(R.string.error_connection), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -464,7 +464,7 @@ public class ShiftExchangeDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ListShift> call, Throwable t) {
-                Toast.makeText(ShiftExchangeDetailActivity.this, "Something went wrong...Please try again!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ShiftExchangeDetailActivity.this, getString(R.string.error_connection), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -526,7 +526,7 @@ public class ShiftExchangeDetailActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<SaveShiftExchange> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Something went wrong...Please try again!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.error_connection), Toast.LENGTH_LONG).show();
                 call.cancel();
             }
         });

@@ -524,7 +524,7 @@ public class CorrectionDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<CorrectionDetail> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Something went wrong...Please try again!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.error_connection), Toast.LENGTH_LONG).show();
                 initSpinnerLoc();
                 call.cancel();
             }
@@ -571,7 +571,7 @@ public class CorrectionDetailActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<MessageReturn> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Something went wrong...Please try again!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.error_connection), Toast.LENGTH_LONG).show();
                 call.cancel();
             }
         });
@@ -646,7 +646,7 @@ public class CorrectionDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<OLocation> call, Throwable t) {
-                Toast.makeText(CorrectionDetailActivity.this, "Something went wrong...Please try again!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CorrectionDetailActivity.this, getString(R.string.error_connection), Toast.LENGTH_SHORT).show();
 
             }
         });
