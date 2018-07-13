@@ -28,11 +28,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.RegisterActivity"
@@ -219,11 +215,21 @@
             android:configChanges="orientation"
             android:parentActivityName=".activity.HomeActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.CorrectionFilterActivity"
+        <activity
+            android:name=".activity.CorrectionFilterActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.HomeActivity"
-            android:theme="@style/TranslucentTheme"
-            ></activity>
+            android:theme="@style/TranslucentTheme"></activity>
+
+        <activity android:name=".activity.SplashScreenActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
     </application>
 
 </manifest>
