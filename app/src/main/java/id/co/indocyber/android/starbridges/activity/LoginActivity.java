@@ -560,24 +560,32 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Versioning> call, Response<Versioning> response) {
 //                Versioning data = response.body();
-                String versionCodeAPi = response.body().getReturnValue().getVersionCode().toString();
-                String versionNameApi = response.body().getReturnValue().getVersionName().toString();
-                if (versionCodeAPi.equalsIgnoreCase(String.valueOf(finalVersionCode)) &&
-                        versionNameApi.equalsIgnoreCase(finalVersionName)) {
-                    versionEqual = true;
-                } else {
-                    versionEqual = false;
+                if(response.isSuccessful())
+                {
+                    String versionCodeAPi = response.body().getReturnValue().getVersionCode().toString();
+                    String versionNameApi = response.body().getReturnValue().getVersionName().toString();
+                    if (versionCodeAPi.equalsIgnoreCase(String.valueOf(finalVersionCode)) &&
+                            versionNameApi.equalsIgnoreCase(finalVersionName)) {
+                        versionEqual = true;
+                    } else {
+                        versionEqual = false;
+                    }
+
+                    if (versionEqual != false) {
+                        if (session.isLoggedIn()) {
+                            startActivity(new Intent(LoginActivity.this, HomeActivity.class)
+                                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                            finish();
+                        }
+                    } else {
+                        alertNotif("", "your version is out of date please update ");
+                    }
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Something went wrong...Please try again!", Toast.LENGTH_LONG).show();
                 }
 
-                if (versionEqual != false) {
-                    if (session.isLoggedIn()) {
-                        startActivity(new Intent(LoginActivity.this, HomeActivity.class)
-                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-                        finish();
-                    }
-                } else {
-                    alertNotif("", "your version is out of date please update ");
-                }
             }
 
             @Override
