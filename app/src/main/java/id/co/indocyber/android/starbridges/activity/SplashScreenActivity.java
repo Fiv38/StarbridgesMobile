@@ -38,7 +38,7 @@ public class SplashScreenActivity extends AppCompatActivity{
                 session = new SessionManagement(getApplicationContext());
                 checkAppVersion();
             }
-        }, 2000);
+        }, 900);
 
     }
     private void checkAppVersion() {
