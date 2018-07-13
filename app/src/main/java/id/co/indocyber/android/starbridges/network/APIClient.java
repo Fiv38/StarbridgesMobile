@@ -16,11 +16,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class APIClient {
-   public static String BASE_URL ="http://116.254.100.222:7000/"; // test
-    //public static String BASE_URL ="https://starbridges.indocyber.co.id/ESS/"; // production
+    //   public static String BASE_URL ="http://116.254.100.222:7000/"; // test
+    public static String BASE_URL = "https://starbridges.indocyber.co.id/ESS/"; // production
     private static Retrofit retrofit = null;
 
-    public static Retrofit getClient(){
+    public static Retrofit getClient() {
 
         Interceptor interceptor = new Interceptor() {
             @Override
@@ -29,7 +29,6 @@ public class APIClient {
                 return chain.proceed(newRequest);
             }
         };
-
 
 
         //RequestBody body = RequestBody.create(okhttp3.MediaType.parse("text/plain; charset=utf-8"),"grant_type=password&username=handri.fajar&password=Pass1234.&client_id=ngAuthApp");
@@ -54,7 +53,7 @@ public class APIClient {
 
     }
 
-    public static Retrofit inputAbsence(final String token){
+    public static Retrofit inputAbsence(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -84,7 +83,7 @@ public class APIClient {
     }
 
     // used for get History
-    public static Retrofit getHistory(final String token){
+    public static Retrofit getHistory(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -114,7 +113,7 @@ public class APIClient {
     }
 
     // used for get Location
-    public static Retrofit getLocationValue(final String token){
+    public static Retrofit getLocationValue(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -144,7 +143,7 @@ public class APIClient {
     }
 
     //used from list correction
-    public static Retrofit getListAttendanceCorrection(final String token){
+    public static Retrofit getListAttendanceCorrection(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -174,7 +173,7 @@ public class APIClient {
     }
 
     //used for get detail attendanceCorrection
-    public static Retrofit getDetailAttendanceCorrection(final String token){
+    public static Retrofit getDetailAttendanceCorrection(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -204,7 +203,7 @@ public class APIClient {
     }
 
     // used for get Location
-    public static Retrofit getImage(final String token){
+    public static Retrofit getImage(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -234,7 +233,7 @@ public class APIClient {
     }
 
     //used for save or sabmit correction
-    public static Retrofit asveSubmitAttendanceCorrection(final String token){
+    public static Retrofit asveSubmitAttendanceCorrection(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -265,7 +264,7 @@ public class APIClient {
 
 
     //used for get list draft correction
-    public static Retrofit getListDraftCorrection(final String token){
+    public static Retrofit getListDraftCorrection(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -295,7 +294,7 @@ public class APIClient {
     }
 
 
-    public static Retrofit deleteDraftCorrection(final String token){
+    public static Retrofit deleteDraftCorrection(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -324,7 +323,7 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Retrofit getDecisionNumber(final String token){
+    public static Retrofit getDecisionNumber(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -353,7 +352,7 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Retrofit getLeaveCancelation(final String token){
+    public static Retrofit getLeaveCancelation(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -382,7 +381,7 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Retrofit getListOvertime(final String token){
+    public static Retrofit getListOvertime(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -411,7 +410,7 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Retrofit getListDraftOvertime(final String token){
+    public static Retrofit getListDraftOvertime(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -440,7 +439,7 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Retrofit getListLeaveRequest(final String token){
+    public static Retrofit getListLeaveRequest(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -469,7 +468,7 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Retrofit getRequestType(final String token){
+    public static Retrofit getRequestType(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -498,7 +497,7 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Retrofit getBalanceType(final String token){
+    public static Retrofit getBalanceType(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -527,7 +526,7 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Retrofit saveLeaveRequest(final String token){
+    public static Retrofit saveLeaveRequest(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -556,7 +555,7 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Retrofit requestConfirmation(final String token){
+    public static Retrofit requestConfirmation(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -585,7 +584,7 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Retrofit getListDraftLeaveRequest(final String token){
+    public static Retrofit getListDraftLeaveRequest(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -614,7 +613,7 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Retrofit editLeaveRequest(final String token){
+    public static Retrofit editLeaveRequest(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -643,7 +642,7 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Retrofit deleteLeaveRequest(final String token){
+    public static Retrofit deleteLeaveRequest(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -672,7 +671,7 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Retrofit getListDraftLeaveCancelation(final String token){
+    public static Retrofit getListDraftLeaveCancelation(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -701,7 +700,7 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Retrofit saveLeaveCancelation(final String token){
+    public static Retrofit saveLeaveCancelation(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -730,7 +729,7 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Retrofit editDraftLeaveCancelation(final String token){
+    public static Retrofit editDraftLeaveCancelation(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -759,7 +758,7 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Retrofit deleteDraftCancelation(final String token){
+    public static Retrofit deleteDraftCancelation(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -788,7 +787,7 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Retrofit detailRequestConfirmationCancelation(final String token){
+    public static Retrofit detailRequestConfirmationCancelation(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -817,7 +816,7 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Retrofit getClient(final String token){
+    public static Retrofit getClient(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -841,36 +840,7 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Retrofit getReimburse(final String token){
-        Interceptor interceptor = new Interceptor() {
-            @Override
-            public okhttp3.Response intercept(Chain chain) throws IOException {
-                Request newRequest = chain
-                        .request()
-                        .newBuilder()
-                        .addHeader("Authorization", token)
-                        .build();
-                return chain.proceed(newRequest);
-            }
-        };
-
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-
-//        GsonBuilder gb = new GsonBuilder();
-//        gb.registerTypeAdapter(String.class, new StringConverter());
-//        gb.serializeNulls();
-//        Gson gson = gb.create();
-
-        retrofit = new Retrofit.Builder()
-                .baseUrl(APIClient.BASE_URL)
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        return retrofit;
-    }
-
-    public static Retrofit getReimbursementType(final String token){
+    public static Retrofit getReimburse(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -899,7 +869,36 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Retrofit getListDraftReimbursement(final String token){
+    public static Retrofit getReimbursementType(final String token) {
+        Interceptor interceptor = new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request newRequest = chain
+                        .request()
+                        .newBuilder()
+                        .addHeader("Authorization", token)
+                        .build();
+                return chain.proceed(newRequest);
+            }
+        };
+
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+//        GsonBuilder gb = new GsonBuilder();
+//        gb.registerTypeAdapter(String.class, new StringConverter());
+//        gb.serializeNulls();
+//        Gson gson = gb.create();
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(APIClient.BASE_URL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        return retrofit;
+    }
+
+    public static Retrofit getListDraftReimbursement(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -929,7 +928,7 @@ public class APIClient {
     }
 
 
-    public static Retrofit getListShiftExchange(final String token){
+    public static Retrofit getListShiftExchange(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -958,7 +957,7 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Retrofit getListDraftShiftExchange(final String token){
+    public static Retrofit getListDraftShiftExchange(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -987,7 +986,7 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Retrofit getListShift(final String token){
+    public static Retrofit getListShift(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -1016,7 +1015,7 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Retrofit getListEmployee(final String token){
+    public static Retrofit getListEmployee(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -1045,7 +1044,7 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Retrofit saveShiftExchange(final String token){
+    public static Retrofit saveShiftExchange(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -1074,7 +1073,7 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Retrofit editShiftExchange(final String token){
+    public static Retrofit editShiftExchange(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -1103,7 +1102,7 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Retrofit deleteShiftExchange(final String token){
+    public static Retrofit deleteShiftExchange(final String token) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {

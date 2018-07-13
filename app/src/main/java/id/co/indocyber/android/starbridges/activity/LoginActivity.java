@@ -6,14 +6,17 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -34,12 +37,14 @@ import id.co.indocyber.android.starbridges.R;
 import id.co.indocyber.android.starbridges.model.Authentication;
 import id.co.indocyber.android.starbridges.model.MessageReturn.MessageReturn;
 import id.co.indocyber.android.starbridges.model.OPost;
+import id.co.indocyber.android.starbridges.model.versioning.Versioning;
 import id.co.indocyber.android.starbridges.network.APIClient;
 import id.co.indocyber.android.starbridges.network.APIInterfaceRest;
 import id.co.indocyber.android.starbridges.reminder.alarmManager.AlarmManagerMasuk;
 import id.co.indocyber.android.starbridges.reminder.alarmManager.AlarmManagerPulang;
 import id.co.indocyber.android.starbridges.utility.GlobalVar;
 import id.co.indocyber.android.starbridges.utility.SessionManagement;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -73,6 +78,7 @@ public class LoginActivity extends AppCompatActivity {
     private View mProgressView;
     private View mLoginFormView;
     private String IMEI;
+    public Boolean versionEqual;
     //Location references
     protected static final String TAG = "LocationOnOff";
     final static int REQUEST_LOCATION = 199;
@@ -80,8 +86,6 @@ public class LoginActivity extends AppCompatActivity {
     SessionManagement session;
     SharedPreferences pref;
     TextView txtFooter;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,25 +95,23 @@ public class LoginActivity extends AppCompatActivity {
         // Set up the login form.
         mUsernameView = (EditText) findViewById(R.id.txt_username);
         mPasswordView = (EditText) findViewById(R.id.txt_password);
-        txtFooter=(TextView)findViewById(R.id.txtFooter);
+        txtFooter = (TextView) findViewById(R.id.txtFooter);
 
-        Date date= new Date();
+        Date date = new Date();
 
-        DateFormat df=new SimpleDateFormat("yyyy");
-        String year="";
-        try{
-            year=df.format(date);
+        DateFormat df = new SimpleDateFormat("yyyy");
+        String year = "";
+        try {
+            year = df.format(date);
 
-        }catch (Exception e)
-        {
-            year="2017";
+        } catch (Exception e) {
+            year = "2017";
         }
-
 
 //        txtFooter.setText("Copyright " + year + " PT. Indocyber Global Teknologi\nAll Right Reserved");
 
 //        alarmManager.start(getApplicationContext());
-
+        checkAppVersion();
 
         session = new SessionManagement(getApplicationContext());
 
@@ -140,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
         // Todo Location Already on  ... start
         final LocationManager manager = (LocationManager) LoginActivity.this.getSystemService(Context.LOCATION_SERVICE);
         if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER) && hasGPSDevice(LoginActivity.this)) {
-            Toast.makeText(LoginActivity.this, "Gps already enabled", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(LoginActivity.this, "Gps already enabled", Toast.LENGTH_SHORT).show();
 
         }
         // Todo Location Already on  ... end
@@ -158,14 +160,8 @@ public class LoginActivity extends AppCompatActivity {
             //Toast.makeText(LoginActivity.this, "Gps already enabled", Toast.LENGTH_SHORT).show();
         }
 
-        if (session.isLoggedIn()){
-            startActivity(new Intent(LoginActivity.this, HomeActivity.class)
-                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-            finish();
-        }
-             setAlarmMasukPulang(getApplicationContext());
-        }
-
+        setAlarmMasukPulang(getApplicationContext());
+    }
 
     private boolean hasGPSDevice(Context context) {
         final LocationManager mgr = (LocationManager) context
@@ -178,16 +174,15 @@ public class LoginActivity extends AppCompatActivity {
         return providers.contains(LocationManager.GPS_PROVIDER);
     }
 
-    private void setAlarmMasukPulang(Context context){
+    private void setAlarmMasukPulang(Context context) {
         boolean isAlarmMasuk = (PendingIntent.getBroadcast(context, 0,
                 new Intent("id.co.indocyber.android.starbridges.ACTION_NOTIFY_MASUK"),
                 PendingIntent.FLAG_NO_CREATE) != null);
 
-        if (isAlarmMasuk)
-        {
+        if (isAlarmMasuk) {
             Log.d("myTag", "Alarm Masuk is already active");
 //            Toast.makeText(context, "Alarm Masuk is already active", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             AlarmManagerMasuk.start(context);
             Log.d("myTag", "AlarmMasuk is Created");
 //            Toast.makeText(context, "AlarmMasuk is Created", Toast.LENGTH_SHORT).show();
@@ -197,11 +192,10 @@ public class LoginActivity extends AppCompatActivity {
                 new Intent("id.co.indocyber.android.starbridges.ACTION_NOTIFY_PULANG"),
                 PendingIntent.FLAG_NO_CREATE) != null);
 
-        if (isAlarmKeluar)
-        {
+        if (isAlarmKeluar) {
             Log.d("myTag", "AlarmPulang is already active");
 //            Toast.makeText(context, "Alarm Pulang is already active", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             AlarmManagerPulang.start(context);
             Log.d("myTag", "AlarmPulang is Created");
 //            Toast.makeText(context, "AlarmPulang is Created", Toast.LENGTH_SHORT).show();
@@ -229,7 +223,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onConnectionFailed(ConnectionResult connectionResult) {
 
-                            Log.d("Location error","Location error " + connectionResult.getErrorCode());
+                            Log.d("Location error", "Location error " + connectionResult.getErrorCode());
                         }
                     }).build();
             googleApiClient.connect();
@@ -263,7 +257,8 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
             });
-        }}
+        }
+    }
 
     private void registerIMEI() {
         mUsernameView.setError(null);
@@ -320,7 +315,8 @@ public class LoginActivity extends AppCompatActivity {
             });
         }
     }
-     /**
+
+    /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
@@ -339,16 +335,16 @@ public class LoginActivity extends AppCompatActivity {
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-            if (TextUtils.isEmpty(username)) {
-                mUsernameView.setError(getString(R.string.error_field_required));
-                focusView = mUsernameView;
-                cancel = true;
+        if (TextUtils.isEmpty(username)) {
+            mUsernameView.setError(getString(R.string.error_field_required));
+            focusView = mUsernameView;
+            cancel = true;
         }
 
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-                mPasswordView.setError(getString(R.string.error_invalid_password));
-                focusView = mPasswordView;
-                cancel = true;
+            mPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mPasswordView;
+            cancel = true;
         }
         if (cancel) {
             focusView.requestFocus();
@@ -367,16 +363,16 @@ public class LoginActivity extends AppCompatActivity {
 
                         String loginName_sp = response.body().getLoginName();
                         String fullName_sp = response.body().getFullName();
-                        String token_sp = response.body().getTokenType()+" "+ response.body().getAccessToken();
+                        String token_sp = response.body().getTokenType() + " " + response.body().getAccessToken();
                         String expires_sp = response.body().getExpires();
                         String nik_sp = response.body().getNik();
-                        String employee_id= response.body().getEmployeeID();
-                        String locationId=response.body().getLocationID();
-                        String locationName=response.body().getLocation();
-                        String attendancePrivilege=response.body().getAttendancePrivilege();
+                        String employee_id = response.body().getEmployeeID();
+                        String locationId = response.body().getLocationID();
+                        String locationName = response.body().getLocation();
+                        String attendancePrivilege = response.body().getAttendancePrivilege();
                         //String employee_id_sp =
 
-                        session.createLoginSession(loginName_sp,fullName_sp,token_sp,expires_sp, nik_sp, employee_id, locationName, locationId,attendancePrivilege);
+                        session.createLoginSession(loginName_sp, fullName_sp, token_sp, expires_sp, nik_sp, employee_id, locationName, locationId, attendancePrivilege);
 
                         GlobalVar.setToken(token_sp);
                         GlobalVar.setLoginName(loginName_sp);
@@ -404,8 +400,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void validateLogin()
-    {
+    private void validateLogin() {
         mUsernameView.setError(null);
         mPasswordView.setError(null);
 
@@ -428,7 +423,7 @@ public class LoginActivity extends AppCompatActivity {
             mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
             cancel = true;
-        }else{
+        } else {
             if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
                 mPasswordView.setError(getString(R.string.error_invalid_password));
                 focusView = mPasswordView;
@@ -443,7 +438,7 @@ public class LoginActivity extends AppCompatActivity {
             showProgress(true);
             //checkIMEIPermission();
             APIInterfaceRest loginService = APIClient.getClient().create(APIInterfaceRest.class);
-            Call<MessageReturn> call = loginService.getValidation( username, password,  IMEI);
+            Call<MessageReturn> call = loginService.getValidation(username, password, IMEI);
             call.enqueue(new Callback<MessageReturn>() {
                 @Override
                 public void onResponse(Call<MessageReturn> call, Response<MessageReturn> response) {
@@ -469,7 +464,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean isPasswordValid(String password) {
 
-        if (password.length()<4){
+        if (password.length() < 4) {
             return false;
         }
         return true;
@@ -512,13 +507,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @SuppressLint("MissingPermission")
-    public void getIMEI (Activity activity){
+    public void getIMEI(Activity activity) {
         TelephonyManager telephonyManager = (TelephonyManager) activity
                 .getSystemService(Context.TELEPHONY_SERVICE);
-        IMEI= telephonyManager.getDeviceId();
+        IMEI = telephonyManager.getDeviceId();
 //        IMEI="352875087316146";// maryuri
 //        IMEI="865684032897881";
-        IMEI="863263034362087"; // Dhaba
+//        IMEI="863263034362087"; // Dhaba
 //        IMEI="868042031440079";// Dhaba new
 //        IMEI="866941024390260";// Pak rio
 
@@ -545,21 +540,73 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void checkAppVersion(){
+    private void checkAppVersion() {
         String versionName = "";
-        int versionCode = -1;
+        String versionCode = "";
+//        Boolean versionEqual = false;
         try {
             PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
             versionName = packageInfo.versionName;
-            versionCode = packageInfo.versionCode;
+            versionCode = String.valueOf(packageInfo.versionCode);
 
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+        final APIInterfaceRest apiInterface = APIClient.getClient().create(APIInterfaceRest.class);
+        final Call<Versioning> call3 = apiInterface.checkAppVerion();
+        final String finalVersionCode = versionCode;
+        final String finalVersionName = versionName;
+        call3.enqueue(new Callback<Versioning>() {
+            @Override
+            public void onResponse(Call<Versioning> call, Response<Versioning> response) {
+//                Versioning data = response.body();
+                String versionCodeAPi = response.body().getReturnValue().getVersionCode().toString();
+                String versionNameApi = response.body().getReturnValue().getVersionName().toString();
+                if (versionCodeAPi.equalsIgnoreCase(String.valueOf(finalVersionCode)) &&
+                        versionNameApi.equalsIgnoreCase(finalVersionName)) {
+                    versionEqual = true;
+                } else {
+                    versionEqual = false;
+                }
 
+                if (versionEqual != false) {
+                    if (session.isLoggedIn()) {
+                        startActivity(new Intent(LoginActivity.this, HomeActivity.class)
+                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                        finish();
+                    }
+                } else {
+                    alertNotif("", "your version is out of date please update ");
+                }
+            }
 
-
+            @Override
+            public void onFailure(Call<Versioning> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Something went wrong...Please try again!", Toast.LENGTH_LONG).show();
+                call.cancel();
+            }
+        });
     }
 
+    private void alertNotif(String title, String message) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle(title);
+        alert.setMessage(message);
+        alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Uri starBridges = Uri.parse("https://play.google.com/store/apps/details?id=id.co.indocyber.android.starbridges");
+                Intent intent = new Intent(Intent.ACTION_VIEW, starBridges);
+                startActivity(intent);
+            }
+        });
+        alert.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                finish();
+            }
+        });
+        alert.show();
+    }
 }
 

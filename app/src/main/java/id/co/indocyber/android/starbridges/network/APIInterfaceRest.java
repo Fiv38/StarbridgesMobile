@@ -50,6 +50,7 @@ import id.co.indocyber.android.starbridges.model.medicalsavedetail.MedicalSaveDe
 import id.co.indocyber.android.starbridges.model.requestconfirmation.RequestConfirmation;
 import id.co.indocyber.android.starbridges.model.requesttype.RequestType;
 import id.co.indocyber.android.starbridges.model.saveLeaveRequest.SaveLeaveRequest;
+import id.co.indocyber.android.starbridges.model.versioning.Versioning;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -458,4 +459,7 @@ public interface APIInterfaceRest {
 
     @POST("api/ShiftExchange/DeleteDraft")
     Call<DeleteShiftExchange> deleteShiftExchange(@Body RequestBody body);
+
+    @GET("api/Attendance/GetAppVersion")
+    Call<Versioning>checkAppVerion();
 }
