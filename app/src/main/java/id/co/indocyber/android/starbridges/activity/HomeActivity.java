@@ -39,7 +39,7 @@ public class HomeActivity extends AppCompatActivity {
     APIInterfaceRest apiInterface;
     CircleImageView imageView;
     private TextView mUsernameView;
-    private String attendancePrivilege;
+    private String attendancePrivilege="";
     SessionManagement session;
     Button btnSignOut;
     Button AttendanceButton;
@@ -85,7 +85,7 @@ public class HomeActivity extends AppCompatActivity {
         mUsernameView=(TextView) findViewById(R.id.lbl_username);
         mUsernameView.setText("Hello,\n"+fullname);
 
-        loadingImage();
+//        loadingImage();
 
     }
 
@@ -135,7 +135,7 @@ public class HomeActivity extends AppCompatActivity {
         }
 
     public void showStartEndDate(View view) {
-        if (attendancePrivilege.equals("False")){
+        if (attendancePrivilege.equals("False")&&attendancePrivilege!=null){
             AlertDialog.Builder alert = new AlertDialog.Builder(HomeActivity.this);
             alert.setTitle("Alert");
             alert.setTitle("You do not have privilege to access this menu");
@@ -154,7 +154,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void showCheckInOut(View view) {
-        if (attendancePrivilege.equals("False")){
+        if (attendancePrivilege.equals("False")&&attendancePrivilege!=null){
             AlertDialog.Builder alert = new AlertDialog.Builder(HomeActivity.this);
             alert.setTitle("Alert");
             alert.setTitle("You do not have privilege to access this menu");
