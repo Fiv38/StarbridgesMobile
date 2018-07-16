@@ -108,7 +108,7 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<GetImage> call, Response<GetImage> response) {
-                progressDialog.dismiss();
+
                 GetImage data = response.body();
 
                 if (data != null && data.getIsSucceed()) {
@@ -128,11 +128,13 @@ public class HomeActivity extends AppCompatActivity {
 //                    session.logoutUser();
 //                    finish();
                 }
+                progressDialog.dismiss();
             }
 
             @Override
             public void onFailure(Call<GetImage> call, Throwable t) {
                 Toast.makeText(HomeActivity.this, getString(R.string.error_connection), Toast.LENGTH_LONG).show();
+                progressDialog.dismiss();
 //                session.logoutUser();
 //                finish();
             }

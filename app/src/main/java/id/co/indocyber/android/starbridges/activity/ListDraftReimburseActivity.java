@@ -213,7 +213,7 @@ public class ListDraftReimburseActivity extends AppCompatActivity implements Ada
 
                     }
                 }
-                 else {
+                else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         Toast.makeText(ListDraftReimburseActivity.this, jObjError.toString(), Toast.LENGTH_LONG).show();
@@ -227,7 +227,7 @@ public class ListDraftReimburseActivity extends AppCompatActivity implements Ada
             @Override
             public void onFailure(Call<ListDraftReimbursement> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Maaf koneksi bermasalah", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.error_connection), Toast.LENGTH_LONG).show();
                 call.cancel();
             }
         });
