@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import id.co.indocyber.android.starbridges.R;
 
+import java.net.Inet4Address;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -65,9 +66,13 @@ public class HomeActivity extends AppCompatActivity {
         Date tokenExpired;
         try{
             tokenExpired =  df.parse(tokenExpiredDate);
-            if(tokenExpired.compareTo(new Date()) < 0)
+            Date checkDate = new Date();
+            if(checkDate.after(tokenExpired))
             {
-                btnSignOut.performClick();
+                session.logoutUser();
+                Intent intent=new Intent(HomeActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
             }
         } catch (Exception e)
         {
@@ -85,7 +90,7 @@ public class HomeActivity extends AppCompatActivity {
         mUsernameView=(TextView) findViewById(R.id.lbl_username);
         mUsernameView.setText("Hello,\n"+fullname);
 
-//        loadingImage();
+        loadingImage();
 
     }
 
@@ -120,16 +125,16 @@ public class HomeActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         Toast.makeText(HomeActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
-                    session.logoutUser();
-                    finish();
+//                    session.logoutUser();
+//                    finish();
                 }
             }
 
             @Override
             public void onFailure(Call<GetImage> call, Throwable t) {
                 Toast.makeText(HomeActivity.this, getString(R.string.error_connection), Toast.LENGTH_LONG).show();
-                session.logoutUser();
-                finish();
+//                session.logoutUser();
+//                finish();
             }
         });
         }
