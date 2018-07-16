@@ -449,7 +449,10 @@ public class ReimburseDetailActivity extends AppCompatActivity {
                 if(reimbursementType.getValue()==editReimbursement.getReimbursementTypeID()) break;
                 counter++;
             }
-            spnTypeReimburseDetail.setSelection(counter);
+            if(counter>=lstReimbursementType.size())
+                spnTypeReimburseDetail.setSelection(0);
+            else
+                spnTypeReimburseDetail.setSelection(counter);
         }
 
         if(progressDialog.isShowing())

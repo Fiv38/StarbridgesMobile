@@ -497,7 +497,7 @@ public class ShiftExchangeDetailActivity extends AppCompatActivity {
             }
 
             paramObject.put("Date", transactionDate);
-            paramObject.put("TransactionStatusID", null);
+            paramObject.put("TransactionStatusID", transactionStatus);
             paramObject.put("AttachmentFile", photo);
             paramObject.put("AttachmentID", null);
 
@@ -518,7 +518,7 @@ public class ShiftExchangeDetailActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), data.getMessage(), Toast.LENGTH_LONG).show();
 
                 } else
-                    Toast.makeText(getApplicationContext(), "no data", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), data.getMessage(), Toast.LENGTH_LONG).show();
                 finish();
 
             }
