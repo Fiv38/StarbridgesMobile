@@ -315,22 +315,25 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
             {
                 mLocationNameView.setError("Please fill the location");
             }
-            sLocationName = mLocationNameView.getText().toString();
-            sLocationAddress = null;
-            sLocationID=null;
-            Geocoder geocoder;
-            List<Address> addresses;
-            geocoder = new Geocoder(this, Locale.getDefault());
-
-            try{
-                addresses = geocoder.getFromLocation(Double.parseDouble(sLatitude),Double.parseDouble(sLongitude) , 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-
-                sLocationAddress = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-
-            }catch (Exception e)
+            else
             {
-                sLocationAddress=null;
+                sLocationName = mLocationNameView.getText().toString();
+                sLocationID=null;
+                Geocoder geocoder;
+                List<Address> addresses;
+                geocoder = new Geocoder(this, Locale.getDefault());
+
+                try{
+                    addresses = geocoder.getFromLocation(Double.parseDouble(sLatitude),Double.parseDouble(sLongitude) , 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+
+                    sLocationAddress = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+
+                }catch (Exception e)
+                {
+
+                }
             }
+
         }
 
         if((mLocationNameView.isEnabled()&&!mLocationNameView.getText().toString().matches(""))||!mLocationSpinner.getSelectedItem().toString().matches(""))
