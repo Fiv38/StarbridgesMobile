@@ -668,9 +668,9 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
             paramObject.put("CancelTo", cancelTo);
             paramObject.put("Notes", txtNotesCancelDetail.getText().toString());
             paramObject.put("AttachmentFile", photo);
-            paramObject.put("AttachmentID", 1);
-            paramObject.put("AdditionalBalance", 15);
-            paramObject.put("TransactionStatusID", 16);
+            paramObject.put("AttachmentID", null);
+            paramObject.put("AdditionalBalance", null);
+            paramObject.put("TransactionStatusID", null);
             paramObject.put("TotalUnitReduce", 17);
             paramObject.put("TransactionStatusSaveOrSubmit", "Submit");
             paramObject.put("FullAccess", fullAccess);
