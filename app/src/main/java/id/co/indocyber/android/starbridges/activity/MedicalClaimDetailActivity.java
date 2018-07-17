@@ -856,7 +856,7 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
         Call<MedicalSaveDetail> call3 = apiInterface.medicalSaveDetail(
                 employeeID,ID, medicalSupportID, medicalSupportName, medicalPolicyID,
                 medicalPolicyTypeID, medicalPolicyName, remainingBalance, employeeFamilyID, employeeFamilyName,
-                medicalClaimPolicyID, totalClaim, totalReimbursement, attachmentFile, attachmentID,
+                medicalClaimPolicyID, totalClaim, totalReimbursement, attachmentFile, null,
                 receiptDate, decisionNumber, transactionStatusID, approvedDate, claim,
                 transactionStatusSaveOrSubmit, fullAccess, exclusionFields, accessibilityAttribute);
         call3.enqueue(new Callback<MedicalSaveDetail>() {
