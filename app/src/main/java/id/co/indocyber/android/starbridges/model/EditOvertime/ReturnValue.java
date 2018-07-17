@@ -45,7 +45,7 @@ public class ReturnValue implements Serializable, Parcelable
     private String notes;
     @SerializedName("AttachmentID")
     @Expose
-    private int attachmentID;
+    private Integer attachmentID;
     @SerializedName("AttachmentFile")
     @Expose
     private String attachmentFile;
@@ -322,15 +322,15 @@ public class ReturnValue implements Serializable, Parcelable
         return this;
     }
 
-    public int getAttachmentID() {
+    public Integer getAttachmentID() {
         return attachmentID;
     }
 
-    public void setAttachmentID(int attachmentID) {
+    public void setAttachmentID(Integer attachmentID) {
         this.attachmentID = attachmentID;
     }
 
-    public ReturnValue withAttachmentID(int attachmentID) {
+    public ReturnValue withAttachmentID(Integer attachmentID) {
         this.attachmentID = attachmentID;
         return this;
     }
