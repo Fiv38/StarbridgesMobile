@@ -320,11 +320,11 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
                 tools:layout_editor_absoluteX="0dp"
-                android:visibility="gone"
                 tools:layout_editor_absoluteY="232dp">
 
 

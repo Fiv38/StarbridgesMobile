@@ -436,7 +436,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                                 if (validasiTime(leaveAt, returnAt) == true) {
                                     alertNotif("Request Confirmation", "Kolom return at harus setelah leave at");
                                 } else {
-                                    transactionStatus = "Save";
+                                    transactionStatus = "Submit";
                                     // call method
                                     requestConfirmation();
                                 }
@@ -599,8 +599,8 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         try {
             Date a = sdf.parse(startLeave);
             Date b = sdf.parse(endLeave);
-            String timeA = leaveAt;
-            String timeB = returnAt;
+//            String timeA = leaveAt;
+//            String timeB = returnAt;
             String dateA = sdf2.format(a);
             String dateB = sdf2.format(b);
 
@@ -608,15 +608,16 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 //                leave = dateA+"T00:00";
                 leave = dateA;
             } else {
-                leave = dateA+"T"+timeA;
+//                leave = dateA+"T"+timeA;
+                leave = dateA+"T"+leaveAt;
             }
 
             if (returnAt.isEmpty()) {
                 returN = dateB;
 
             } else {
-
-                returN = dateB + "T" + timeB;
+//                returN = dateB + "T" + timeB;
+                returN = dateB + "T" + returnAt;
             }
             startLeave = leave;
             endLeave = returN;
@@ -626,16 +627,24 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                     leaveRequestType.equalsIgnoreCase("ijin keluar dan kembali")) {
                 leaveAt = leave;
                 returnAt = returN;
-            } else {
-                leaveAt = leave;
-                returnAt = returN;
             }
+//            else {
+//                leaveAt = leave;
+//                returnAt = returN;
+//            }
 
 //            leaveAt = sdf2.format(a)+"T"+leaveAt+":00";
 //            returnAt = sdf2.format(b)+"T"+returnAt+":00";
             System.out.println("a");
         } catch (Exception e) {
         }
+
+//        byte[] decodedString = Base64.decode(attachmentFile, Base64.DEFAULT);
+//        Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+////        int width = bitmap.getWidth();
+////        int height = bitmap.getHeight();
+////        int a = bitmap.getByteCount();
+//        attachmentFile = encodeImage(bitmap,80);
 
         Call<RequestConfirmation> call3 = apiInterface.requestConfirmation(
                 transactionStatus, id, employeeID, roster, requestDate, employeeNIK, employeeName, leaveRequestRuleID, leaveRequestType,
@@ -681,6 +690,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                     notesStr = requestConfirmation.getNotes();
                     attachmentFile = requestConfirmation.getAttachmentFile();
                     attachmentID = requestConfirmation.getAttachmentID();
+//                    attachmentID = null;
                     decisionNumber = requestConfirmation.getDecisionNumber();
                     transactionStatusID = requestConfirmation.getTransactionStatusID().toString();
                     approveDate = requestConfirmation.getApprovedDate();
@@ -741,6 +751,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         progressDialog.setTitle("Loading");
         progressDialog.show();
 
+
         //apiInterface = APIClient.editLeaveRequest(GlobalVar.getToken()).create(APIInterfaceRest.class);
         Call<EditLeaveRequest> call3 = apiInterface.editLeaveRequst(ids);
         call3.enqueue(new Callback<EditLeaveRequest>() {
@@ -782,6 +793,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                     notesStr = editLeaveRequest.getNotes();
                     attachmentFile = editLeaveRequest.getAttachmentFile();
                     attachmentID = editLeaveRequest.getAttachmentID();
+//                    attachmentID = null;
                     decisionNumber = editLeaveRequest.getDecisionNumber();
                     transactionStatusID = editLeaveRequest.getTransactionStatusID().toString();
                     approveDate = editLeaveRequest.getApprovedDate();
@@ -856,8 +868,8 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         try {
             Date a = sdf.parse(startLeave);
             Date b = sdf.parse(endLeave);
-            String timeA = leaveAt;
-            String timeB = returnAt;
+//            String timeA = leaveAt;
+//            String timeB = returnAt;
             String dateA = sdf2.format(a);
             String dateB = sdf2.format(b);
 
@@ -865,7 +877,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                 leave = dateA;
 
             } else {
-                leave = dateA + "T" + timeA;
+                leave = dateA + "T" + leaveAt;
             }
 
             if (returnAt.isEmpty()) {
@@ -873,7 +885,7 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
 
             } else {
 
-                returN = dateB + "T" + timeB;
+                returN = dateB + "T" + returnAt;
             }
             startLeave = leave;
             endLeave = returN;
@@ -883,14 +895,15 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                     leaveRequestType.equalsIgnoreCase("ijin keluar dan kembali")) {
                 leaveAt = leave;
                 returnAt = returN;
-            } else {
-                leaveAt = leave;
-                returnAt = returN;
             }
+//            else {
+//                leaveAt = leave;
+//                returnAt = returN;
+//            }
 
 //            leaveAt = sdf2.format(a)+"T"+leaveAt+":00";
 //            returnAt = sdf2.format(b)+"T"+returnAt+":00";
-            System.out.println("a");
+
         } catch (Exception e) {
         }
 
@@ -1135,9 +1148,8 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
                 final Uri imageUri = data.getData();
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-
                 imageView.setImageBitmap(selectedImage);
-                attachmentFile = encodeImage(selectedImage);
+                attachmentFile = encodeImage(selectedImage,100);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 Toast.makeText(LeaveRequestDetailActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
@@ -1147,9 +1159,9 @@ public class LeaveRequestDetailActivity extends AppCompatActivity {
         }
     }
 
-    private String encodeImage(Bitmap bm) {
+    private String encodeImage(Bitmap bm,int quality) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        bm.compress(Bitmap.CompressFormat.JPEG, quality, baos);
         byte[] b = baos.toByteArray();
         String encImage = Base64.encodeToString(b, Base64.DEFAULT);
 

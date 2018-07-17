@@ -61,7 +61,8 @@ public class OvertimeDetailActivity extends AppCompatActivity {
     APIInterfaceRest apiInterface;
     ProgressDialog progressDialog;
     Calendar myCalendar = Calendar.getInstance();
-    String photo, id2 = "";
+    String photo, id2 ;
+    String attachmentID;
     TextView txtShiftOvertimeDetail, txtOvertimeStartOvertimeDetail, txtOvertimeEndOvertimeDetail;
     private static final int MY_GALLERY_REQUEST_CODE = 100;
     private static final int PICK_IMAGE = 999;
@@ -347,6 +348,7 @@ public class OvertimeDetailActivity extends AppCompatActivity {
 
                 if (response.body().isIsSucceed()) {
                     editOvertime = response.body().getReturnValue();
+                    attachmentID = String.valueOf(editOvertime.getAttachmentID());
                     id2 = response.body().getReturnValue().getID();
                     ovStart.setText(editOvertime.getFrom().substring(11, 16));
                     ovEnd.setText(editOvertime.getTo().substring(11, 16));
@@ -491,7 +493,7 @@ public class OvertimeDetailActivity extends AppCompatActivity {
             paramObject.put("From", ovStart.getText().toString());
             paramObject.put("To", ovEnd.getText().toString());
             paramObject.put("Notes", notes.getText().toString());
-            paramObject.put("AttachmentID", "11");
+            paramObject.put("AttachmentID", attachmentID);
             paramObject.put("AttachmentFile", photo);
 
             paramObject.put("TransactionStatusID", personalOvertime.getTransactionStatusID() + "");
@@ -522,6 +524,7 @@ public class OvertimeDetailActivity extends AppCompatActivity {
                 MessageReturn data = response.body();
                 if (data != null) {
                     Toast.makeText(getApplicationContext(), data.getMessage(), Toast.LENGTH_LONG).show();
+
 
                 } else
                     Toast.makeText(getApplicationContext(), "no data", Toast.LENGTH_LONG).show();
@@ -575,7 +578,7 @@ public class OvertimeDetailActivity extends AppCompatActivity {
             paramObject.put("From", ovStart.getText().toString());
             paramObject.put("To", ovEnd.getText().toString());
             paramObject.put("Notes", notes.getText().toString());
-            paramObject.put("AttachmentID", "11");
+            paramObject.put("AttachmentID", attachmentID);
             paramObject.put("AttachmentFile", photo);
 
             paramObject.put("TransactionStatusID", personalOvertime.getTransactionStatusID() + "");
