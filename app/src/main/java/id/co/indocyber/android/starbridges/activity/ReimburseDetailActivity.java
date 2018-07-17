@@ -492,7 +492,7 @@ public class ReimburseDetailActivity extends AppCompatActivity {
             paramObject.put("TransactionStatusID",10);
             paramObject.put("DecisionNumber",null);
             paramObject.put("AttachmentFile",photo);
-            paramObject.put("AttachmentID",null);
+            paramObject.put("AttachmentID",editReimbursement==null?null:editReimbursement.getAttachmentID());
             paramObject.put("Message",null);
             paramObject.put("FullAccess",true);
             paramObject.put("ExclusiveFields",exclusiveFields);

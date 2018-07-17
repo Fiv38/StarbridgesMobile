@@ -24,12 +24,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import id.co.indocyber.android.starbridges.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -45,6 +50,7 @@ import id.co.indocyber.android.starbridges.network.APIClient;
 import id.co.indocyber.android.starbridges.network.APIInterfaceRest;
 import id.co.indocyber.android.starbridges.utility.GlobalVar;
 import id.co.indocyber.android.starbridges.utility.SessionManagement;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -685,12 +691,43 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
         claim = claimEditText.getText().toString();
         totalClaim = claimEditText.getText().toString();
 
-        Call<MedicalRequestConfirmation> call3 = apiInterface.medicalRequestConfirmation(
-                transactionStatus, employeeID,ID, medicalSupportID, medicalSupportName, medicalPolicyID,
-                medicalPolicyTypeID, medicalPolicyName, remainingBalance, employeeFamilyID, employeeFamilyName,
-                medicalClaimPolicyID, totalClaim, totalReimbursement, attachmentFile, attachmentID,
-                receiptDate, decisionNumber, transactionStatusID, approvedDate, claim,
-                transactionStatusSaveOrSubmit, fullAccess, exclusionFields, accessibilityAttribute);
+        JSONObject paramObject= new JSONObject();
+        try {
+
+            paramObject.put("EmployeeID", GlobalVar.getEmployeeId());
+            paramObject.put("ID",id);
+            paramObject.put("MedicalSupportID", medicalSupportID);
+            paramObject.put("MedicalSupportName",medicalSupportName);
+            paramObject.put("MedicalPolicyID",medicalPolicyID);
+            paramObject.put("PolicyTypeID",medicalPolicyTypeID);
+            paramObject.put("MedicalPolicyName",medicalPolicyName);
+            paramObject.put("RemainingBalance", remainingBalance);
+            paramObject.put("EmployeeFamilyID",employeeFamilyID);
+            paramObject.put("EmployeeFamilyName",employeeFamilyName);
+            paramObject.put("MedicalClaimPolicyID",medicalClaimPolicyID);
+            paramObject.put("TotalClaim", totalClaim);
+            paramObject.put("TotalReimbursement", totalReimbursement);
+            paramObject.put("AttachmentFile", attachmentFile);
+            paramObject.put("AttachmentID", attachmentID);
+            paramObject.put("ReceiptDate", receiptDate);
+            paramObject.put("DecisionNumber", decisionNumber);
+            paramObject.put("TransactionStatusID", transactionStatusID);
+            paramObject.put("ApprovedDate", approvedDate);
+            paramObject.put("Claim", claim);
+            paramObject.put("TransactionStatusSaveOrSubmit", transactionStatusSaveOrSubmit);
+            paramObject.put("FullAccess", fullAccess);
+            paramObject.put("ExclusionFields", exclusionFields);
+            paramObject.put("AccessibilityAttribute",accessibilityAttribute);
+
+        }catch (Exception e)
+        {
+
+        }
+
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),paramObject.toString());
+
+        Call<MedicalRequestConfirmation> call3 = apiInterface.medicalRequestConfirmation2(
+                transactionStatus, body);
         call3.enqueue(new Callback<MedicalRequestConfirmation>() {
 
             @Override
@@ -702,26 +739,26 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
 
                     employeeID = data.getReturnValue().getEmployeeID();
                     ID = (data.getReturnValue().getID() == null) ? "" : data.getReturnValue().getID();
-                    medicalSupportID = (data.getReturnValue().getMedicalSupportID() == null) ? "" : data.getReturnValue().getMedicalSupportID().toString();
+                    medicalSupportID = (data.getReturnValue().getMedicalSupportID() == 0) ? "" : data.getReturnValue().getMedicalSupportID()+"";
                     medicalSupportName = data.getReturnValue().getMedicalSupportName();
-                    medicalPolicyID = data.getReturnValue().getMedicalPolicyID().toString();
+                    medicalPolicyID = data.getReturnValue().getMedicalPolicyID()+"";
                     medicalPolicyTypeID = data.getReturnValue().getPolicyTypeID();
                     medicalPolicyName = data.getReturnValue().getMedicalPolicyName();
-                    remainingBalance = (data.getReturnValue().getRemainingBalance() == null) ? "" : data.getReturnValue().getRemainingBalance().toString();
+                    remainingBalance = (data.getReturnValue().getRemainingBalance() == 0) ? "" : data.getReturnValue().getRemainingBalance()+"";
                     employeeFamilyID = (data.getReturnValue().getEmployeeFamilyID() == null) ? "" : data.getReturnValue().getEmployeeFamilyID().toString();
                     employeeFamilyName = data.getReturnValue().getEmployeeFamilyName();
-                    medicalClaimPolicyID = (data.getReturnValue().getMedicalClaimPolicyID() == null) ? "" : data.getReturnValue().getMedicalClaimPolicyID().toString();
-                    totalClaim = (data.getReturnValue().getTotalClaim() == null) ? "" : data.getReturnValue().getTotalClaim().toString();
-                    totalReimbursement = (data.getReturnValue().getTotalReimbursement() == null) ? "" : data.getReturnValue().getTotalReimbursement().toString();
-                    attachmentFile = data.getReturnValue().getAttachmentFile();
-                    attachmentID = (data.getReturnValue().getAttachmentID() == null) ? "" : data.getReturnValue().getAttachmentID().toString();
+                    medicalClaimPolicyID = (data.getReturnValue().getMedicalClaimPolicyID() == 0) ? "" : data.getReturnValue().getMedicalClaimPolicyID()+"";
+                    totalClaim = (data.getReturnValue().getTotalClaim() == 0) ? "" : data.getReturnValue().getTotalClaim()+"";
+                    totalReimbursement = (data.getReturnValue().getTotalReimbursement() == 0) ? "" : data.getReturnValue().getTotalReimbursement()+"";
+//                    attachmentFile = data.getReturnValue().getAttachmentFile().toString();
+                    attachmentID = (data.getReturnValue().getAttachmentID() == null) ? null : data.getReturnValue().getAttachmentID().toString();
                     receiptDate = data.getReturnValue().getReceiptDate();
-                    decisionNumber = data.getReturnValue().getDecisionNumber();
-                    transactionStatusID = (data.getReturnValue().getTransactionStatusID() == null) ? "" : data.getReturnValue().getTransactionStatusID().toString();
+//                    decisionNumber = data.getReturnValue().getDecisionNumber().toString();
+                    transactionStatusID = (data.getReturnValue().getTransactionStatusID() == 0) ? "" : data.getReturnValue().getTransactionStatusID()+"";
                     approvedDate = (data.getReturnValue().getApprovedDate() == null) ? "" : data.getReturnValue().getApprovedDate().toString();
-                    claim = (data.getReturnValue().getClaim() == null) ? "" : data.getReturnValue().getClaim().toString();
+                    claim = (data.getReturnValue().getClaim() == 0) ? "" : data.getReturnValue().getClaim()+"";
                     transactionStatusSaveOrSubmit = data.getReturnValue().getTransactionStatusSaveOrSubmit();
-                    fullAccess = (data.getReturnValue().getFullAccess() == null) ? "" : data.getReturnValue().getFullAccess().toString();
+                    fullAccess = data.getReturnValue().isFullAccess()+"";
                     exclusionFields  = data.getReturnValue().getExclusionFields();
                     accessibilityAttribute = data.getReturnValue().getAccessibilityAttribute();
 
@@ -796,7 +833,7 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
                     totalClaim = (data.getReturnValue().getTotalClaim() == null) ? "" : data.getReturnValue().getTotalClaim().toString();
                     totalReimbursement = (data.getReturnValue().getTotalReimbursement() == null) ? "" : data.getReturnValue().getTotalReimbursement().toString();
                     attachmentFile = data.getReturnValue().getAttachmentFile();
-                    attachmentID = (data.getReturnValue().getAttachmentID() == null) ? "" : data.getReturnValue().getAttachmentID().toString();
+                    attachmentID = (data.getReturnValue().getAttachmentID() == null) ? null : data.getReturnValue().getAttachmentID().toString();
                     receiptDate = data.getReturnValue().getReceiptDate();
                     decisionNumber = data.getReturnValue().getDecisionNumber();
                     transactionStatusID = (data.getReturnValue().getTransactionStatusID() == null) ? "" : data.getReturnValue().getTransactionStatusID().toString();

@@ -1,14 +1,13 @@
 
-package id.co.indocyber.android.starbridges.model.EditLeaveCancelation;
-
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+package id.co.indocyber.android.starbridges.model.LeaveCancelationTransaction;
 
 import java.io.Serializable;
 import java.util.List;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.os.Parcelable.Creator;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class ReturnValue implements Serializable, Parcelable
 {
@@ -24,13 +23,13 @@ public class ReturnValue implements Serializable, Parcelable
     private int requestorID;
     @SerializedName("LeaveRequestDecisionNumber")
     @Expose
-    private Object leaveRequestDecisionNumber;
+    private String leaveRequestDecisionNumber;
     @SerializedName("LeaveRequestTransactionID")
     @Expose
     private String leaveRequestTransactionID;
     @SerializedName("LeaveRequestType")
     @Expose
-    private Object leaveRequestType;
+    private String leaveRequestType;
     @SerializedName("LeaveRequestRuleID")
     @Expose
     private int leaveRequestRuleID;
@@ -54,10 +53,10 @@ public class ReturnValue implements Serializable, Parcelable
     private String notes;
     @SerializedName("AttachmentFile")
     @Expose
-    private String attachmentFile;
+    private Object attachmentFile;
     @SerializedName("AttachmentID")
     @Expose
-    private Integer attachmentID;
+    private int attachmentID;
     @SerializedName("AdditionalBalance")
     @Expose
     private int additionalBalance;
@@ -69,7 +68,7 @@ public class ReturnValue implements Serializable, Parcelable
     private int totalUnitReduce;
     @SerializedName("TransactionStatusSaveOrSubmit")
     @Expose
-    private Object transactionStatusSaveOrSubmit;
+    private String transactionStatusSaveOrSubmit;
     @SerializedName("FullAccess")
     @Expose
     private boolean fullAccess;
@@ -95,15 +94,15 @@ public class ReturnValue implements Serializable, Parcelable
 
     }
     ;
-    private final static long serialVersionUID = 2556011504863695638L;
+    private final static long serialVersionUID = -3559623400417149850L;
 
     protected ReturnValue(Parcel in) {
         this.iD = ((String) in.readValue((String.class.getClassLoader())));
         this.employeeID = ((String) in.readValue((String.class.getClassLoader())));
         this.requestorID = ((int) in.readValue((int.class.getClassLoader())));
-        this.leaveRequestDecisionNumber = ((Object) in.readValue((Object.class.getClassLoader())));
+        this.leaveRequestDecisionNumber = ((String) in.readValue((String.class.getClassLoader())));
         this.leaveRequestTransactionID = ((String) in.readValue((String.class.getClassLoader())));
-        this.leaveRequestType = ((Object) in.readValue((Object.class.getClassLoader())));
+        this.leaveRequestType = ((String) in.readValue((String.class.getClassLoader())));
         this.leaveRequestRuleID = ((int) in.readValue((int.class.getClassLoader())));
         this.requestDate = ((String) in.readValue((String.class.getClassLoader())));
         this.leaveFrom = ((String) in.readValue((String.class.getClassLoader())));
@@ -111,12 +110,12 @@ public class ReturnValue implements Serializable, Parcelable
         this.cancelFrom = ((String) in.readValue((String.class.getClassLoader())));
         this.cancelTo = ((String) in.readValue((String.class.getClassLoader())));
         this.notes = ((String) in.readValue((String.class.getClassLoader())));
-        this.attachmentFile = ((String) in.readValue((String.class.getClassLoader())));
+        this.attachmentFile = ((Object) in.readValue((Object.class.getClassLoader())));
         this.attachmentID = ((int) in.readValue((int.class.getClassLoader())));
         this.additionalBalance = ((int) in.readValue((int.class.getClassLoader())));
         this.transactionStatusID = ((int) in.readValue((int.class.getClassLoader())));
         this.totalUnitReduce = ((int) in.readValue((int.class.getClassLoader())));
-        this.transactionStatusSaveOrSubmit = ((Object) in.readValue((Object.class.getClassLoader())));
+        this.transactionStatusSaveOrSubmit = ((String) in.readValue((String.class.getClassLoader())));
         this.fullAccess = ((boolean) in.readValue((boolean.class.getClassLoader())));
         in.readList(this.exclusionFields, (Object.class.getClassLoader()));
         this.accessibilityAttribute = ((String) in.readValue((String.class.getClassLoader())));
@@ -154,7 +153,7 @@ public class ReturnValue implements Serializable, Parcelable
      * @param transactionStatusID
      * @param requestorID
      */
-    public ReturnValue(String iD, String employeeID, int requestorID, Object leaveRequestDecisionNumber, String leaveRequestTransactionID, Object leaveRequestType, int leaveRequestRuleID, String requestDate, String leaveFrom, String leaveTo, String cancelFrom, String cancelTo, String notes, String attachmentFile, int attachmentID, int additionalBalance, int transactionStatusID, int totalUnitReduce, Object transactionStatusSaveOrSubmit, boolean fullAccess, List<Object> exclusionFields, String accessibilityAttribute) {
+    public ReturnValue(String iD, String employeeID, int requestorID, String leaveRequestDecisionNumber, String leaveRequestTransactionID, String leaveRequestType, int leaveRequestRuleID, String requestDate, String leaveFrom, String leaveTo, String cancelFrom, String cancelTo, String notes, Object attachmentFile, int attachmentID, int additionalBalance, int transactionStatusID, int totalUnitReduce, String transactionStatusSaveOrSubmit, boolean fullAccess, List<Object> exclusionFields, String accessibilityAttribute) {
         super();
         this.iD = iD;
         this.employeeID = employeeID;
@@ -219,15 +218,15 @@ public class ReturnValue implements Serializable, Parcelable
         return this;
     }
 
-    public Object getLeaveRequestDecisionNumber() {
+    public String getLeaveRequestDecisionNumber() {
         return leaveRequestDecisionNumber;
     }
 
-    public void setLeaveRequestDecisionNumber(Object leaveRequestDecisionNumber) {
+    public void setLeaveRequestDecisionNumber(String leaveRequestDecisionNumber) {
         this.leaveRequestDecisionNumber = leaveRequestDecisionNumber;
     }
 
-    public ReturnValue withLeaveRequestDecisionNumber(Object leaveRequestDecisionNumber) {
+    public ReturnValue withLeaveRequestDecisionNumber(String leaveRequestDecisionNumber) {
         this.leaveRequestDecisionNumber = leaveRequestDecisionNumber;
         return this;
     }
@@ -245,15 +244,15 @@ public class ReturnValue implements Serializable, Parcelable
         return this;
     }
 
-    public Object getLeaveRequestType() {
+    public String getLeaveRequestType() {
         return leaveRequestType;
     }
 
-    public void setLeaveRequestType(Object leaveRequestType) {
+    public void setLeaveRequestType(String leaveRequestType) {
         this.leaveRequestType = leaveRequestType;
     }
 
-    public ReturnValue withLeaveRequestType(Object leaveRequestType) {
+    public ReturnValue withLeaveRequestType(String leaveRequestType) {
         this.leaveRequestType = leaveRequestType;
         return this;
     }
@@ -349,15 +348,15 @@ public class ReturnValue implements Serializable, Parcelable
         return this;
     }
 
-    public String getAttachmentFile() {
+    public Object getAttachmentFile() {
         return attachmentFile;
     }
 
-    public void setAttachmentFile(String attachmentFile) {
+    public void setAttachmentFile(Object attachmentFile) {
         this.attachmentFile = attachmentFile;
     }
 
-    public ReturnValue withAttachmentFile(String attachmentFile) {
+    public ReturnValue withAttachmentFile(Object attachmentFile) {
         this.attachmentFile = attachmentFile;
         return this;
     }
@@ -414,15 +413,15 @@ public class ReturnValue implements Serializable, Parcelable
         return this;
     }
 
-    public Object getTransactionStatusSaveOrSubmit() {
+    public String getTransactionStatusSaveOrSubmit() {
         return transactionStatusSaveOrSubmit;
     }
 
-    public void setTransactionStatusSaveOrSubmit(Object transactionStatusSaveOrSubmit) {
+    public void setTransactionStatusSaveOrSubmit(String transactionStatusSaveOrSubmit) {
         this.transactionStatusSaveOrSubmit = transactionStatusSaveOrSubmit;
     }
 
-    public ReturnValue withTransactionStatusSaveOrSubmit(Object transactionStatusSaveOrSubmit) {
+    public ReturnValue withTransactionStatusSaveOrSubmit(String transactionStatusSaveOrSubmit) {
         this.transactionStatusSaveOrSubmit = transactionStatusSaveOrSubmit;
         return this;
     }

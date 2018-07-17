@@ -40,6 +40,7 @@ import java.util.List;
 import id.co.indocyber.android.starbridges.model.DecisionNumber.DecisionNumber;
 import id.co.indocyber.android.starbridges.model.DecisionNumber.ReturnValue;
 import id.co.indocyber.android.starbridges.model.EditLeaveCancelation.EditLeaveCancelation;
+import id.co.indocyber.android.starbridges.model.LeaveCancelationTransaction.LeaveCancelationTransaction;
 import id.co.indocyber.android.starbridges.model.MessageReturn.MessageReturn;
 import id.co.indocyber.android.starbridges.network.APIClient;
 import id.co.indocyber.android.starbridges.network.APIInterfaceRest;
@@ -83,6 +84,8 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
             myCalendar.set(Calendar.DAY_OF_MONTH, i2);
         }
     };
+
+    id.co.indocyber.android.starbridges.model.LeaveCancelationTransaction.ReturnValue leaveCancelationTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -220,31 +223,7 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(LeaveCancelationDetailActivity.this);
-                    alert.setTitle("Request Confirmation");
-                    alert.setMessage("Request Type\n" +
-                            "\t"+requestType+"" +
-                            "\nLeave\n" +
-                            "\t"+ leaveFrom +" - "+leaveTo+"" +
-                            "\nCancelation\n" +
-                            "\t"+cancelFrom+" - "+cancelTo+"" +
-                            "\nNotes\n" +
-                            "\t"+txtNotesCancelDetail.getText().toString()+"\n\n" +
-                            "This information will be saved in draft");
-                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            saveLeaveCollection();
-                        }
-                    });
-
-                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                        }
-                    });
-                    alert.show();
+                    requestConfirmation("Save");
                 }
             }
         });
@@ -289,30 +268,7 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(LeaveCancelationDetailActivity.this);
-                    alert.setTitle("Request Confirmation");
-                    alert.setMessage("Request Type\n" +
-                            "\t"+requestType+"" +
-                            "\nLeave\n" +
-                            "\t"+ leaveFrom +" - "+leaveTo+"" +
-                            "\nCancelation\n" +
-                            "\t"+cancelFrom+" - "+cancelTo+"" +
-                            "\nNotes\n" +
-                            "\t"+txtNotesCancelDetail.getText().toString());
-                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            submitLeaveCollection();
-                        }
-                    });
-
-                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                        }
-                    });
-                    alert.show();
+                    requestConfirmation("Submit");
 
                 }
             }
@@ -523,8 +479,8 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
         return encImage;
     }
 
-    public void saveLeaveCollection() {
-
+    public void requestConfirmation(final String requestConfirmationType)
+    {
         progressDialog = new ProgressDialog(LeaveCancelationDetailActivity.this);
         progressDialog.setTitle("Loading");
         progressDialog.show();
@@ -577,7 +533,7 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
             paramObject.put("AdditionalBalance", null);
             paramObject.put("TransactionStatusID", null);
             paramObject.put("TotalUnitReduce", 17);
-            paramObject.put("TransactionStatusSaveOrSubmit", "Save");
+            paramObject.put("TransactionStatusSaveOrSubmit", requestConfirmationType);
             paramObject.put("FullAccess", fullAccess);
             paramObject.put("ExclusiveFields", exclusiveFields);
             paramObject.put("AccessibilityAttribute", accessibilityAttribute);
@@ -589,7 +545,177 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
 
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),paramObject.toString());
         final APIInterfaceRest apiInterface = APIClient.saveLeaveCancelation(GlobalVar.getToken()).create(APIInterfaceRest.class);
-        Call<MessageReturn> call3 = apiInterface.saveLeaveCancelation(body, "Save");
+        Call<LeaveCancelationTransaction> call3 = apiInterface.detailRequestConfirmationCancelation(body, "Save");
+
+        call3.enqueue(new Callback<LeaveCancelationTransaction>() {
+            @Override
+            public void onResponse(Call<LeaveCancelationTransaction> call, Response<LeaveCancelationTransaction> response) {
+                progressDialog.dismiss();
+                LeaveCancelationTransaction data = response.body();
+                leaveCancelationTransaction=response.body().getReturnValue();
+                if (data.isIsSucceed()) {
+
+                    DateFormat df = new SimpleDateFormat("dd MMMM yyyy");
+                    DateFormat sdf = new SimpleDateFormat("dd/MM/yyy");
+                    String leaveFrom = "";
+                    String leaveTo = "";
+                    String cancelFrom="";
+                    String cancelTo="";
+
+                    Date convertDateLeaveFrom, convertDateLeaveTo, convertDateCancelFrom=new Date(), convertDateCancelTo=new Date();
+                    try{
+                        convertDateLeaveFrom =  sdf.parse(txtLeaveFromCancelDetail.getText().toString());
+                        leaveFrom=df.format(convertDateLeaveFrom);
+                        convertDateLeaveTo =  sdf.parse(txtLeaveToCancelDetail.getText().toString());
+                        leaveTo=df.format(convertDateLeaveTo);
+                        convertDateCancelFrom=sdf.parse(txtCancelFromCancelDetail.getText().toString());
+                        cancelFrom=df.format(convertDateCancelFrom);
+                        convertDateCancelTo=sdf.parse(txtCancelToCancelDetail.getText().toString());
+                        cancelTo=df.format(convertDateCancelTo);
+                    }catch (Exception e)
+                    {
+
+                    }
+
+                    if(requestConfirmationType.matches("Save"))
+                    {
+                        AlertDialog.Builder alert = new AlertDialog.Builder(LeaveCancelationDetailActivity.this);
+                        alert.setTitle("Request Confirmation");
+                        alert.setMessage("Request Type\n" +
+                                "\t"+requestType+"" +
+                                "\nLeave\n" +
+                                "\t"+ leaveFrom +" - "+leaveTo+"" +
+                                "\nCancelation\n" +
+                                "\t"+cancelFrom+" - "+cancelTo+"" +
+                                "\nNotes\n" +
+                                "\t"+txtNotesCancelDetail.getText().toString()+"\n\n" +
+                                "This information will be saved in draft");
+                        alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                saveLeaveCollection("Save");
+                            }
+                        });
+
+                        alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+                        alert.show();
+                    }
+                    else if(requestConfirmationType.matches("Submit"))
+                    {
+                        AlertDialog.Builder alert = new AlertDialog.Builder(LeaveCancelationDetailActivity.this);
+                        alert.setTitle("Request Confirmation");
+                        alert.setMessage("Request Type\n" +
+                                "\t"+requestType+"" +
+                                "\nLeave\n" +
+                                "\t"+ leaveFrom +" - "+leaveTo+"" +
+                                "\nCancelation\n" +
+                                "\t"+cancelFrom+" - "+cancelTo+"" +
+                                "\nNotes\n" +
+                                "\t"+txtNotesCancelDetail.getText().toString());
+                        alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                saveLeaveCollection("Submit");
+                            }
+                        });
+
+                        alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+                        alert.show();
+                    }
+
+
+                }
+                else
+                    Toast.makeText(getApplicationContext(), "no data", Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onFailure(Call<LeaveCancelationTransaction> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(getApplicationContext(), getString(R.string.error_connection), Toast.LENGTH_LONG).show();
+                call.cancel();
+            }
+        });
+    }
+
+    public void saveLeaveCollection(String transactionType) {
+
+        progressDialog = new ProgressDialog(LeaveCancelationDetailActivity.this);
+        progressDialog.setTitle("Loading");
+        progressDialog.show();
+
+        JSONObject paramObject= new JSONObject();
+        try {
+
+            paramObject.put("ID",id);
+            paramObject.put("EmployeeID", GlobalVar.getEmployeeId());
+            paramObject.put("RequestorID",3);
+            paramObject.put("LeaveRequestDecisionNumber",spnDecisionNumberCancelDetail.getSelectedItem().toString());
+            paramObject.put("LeaveRequestTransactionID",leaveRequestTransactionID);
+            paramObject.put("LeaveRequestType",requestType);
+            paramObject.put("LeaveRequestRuleID", leaveRequestRuleID);
+
+
+            Date date=new Date();
+            String patternSQLServer = "yyyy-MM-dd'T'HH:mm:ss.sssssZ";
+            SimpleDateFormat formatTimeSQLServer = new SimpleDateFormat(patternSQLServer);
+
+            paramObject.put("RequestDate",formatTimeSQLServer.format(date).toString());
+
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+            DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String leaveFrom = "";
+            String leaveTo = "";
+            String cancelFrom="";
+            String cancelTo="";
+            Date convertDateLeaveFrom, convertDateLeaveTo, convertDateCancelFrom, convertDateCancelTo;
+            try{
+                convertDateLeaveFrom =  sdf.parse(txtLeaveFromCancelDetail.getText().toString());
+                leaveFrom=df.format(convertDateLeaveFrom);
+                convertDateLeaveTo =  sdf.parse(txtLeaveToCancelDetail.getText().toString());
+                leaveTo=df.format(convertDateLeaveTo);
+                convertDateCancelFrom=sdf.parse(txtCancelFromCancelDetail.getText().toString());
+                cancelFrom=df.format(convertDateCancelFrom);
+                convertDateCancelTo=sdf.parse(txtCancelToCancelDetail.getText().toString());
+                cancelTo=df.format(convertDateCancelTo);
+            }catch (Exception e)
+            {
+
+            }
+            paramObject.put("LeaveFrom",leaveFrom);
+            paramObject.put("LeaveTo",leaveTo);
+            paramObject.put("CancelFrom",cancelFrom);
+            paramObject.put("CancelTo", cancelTo);
+            paramObject.put("Notes", txtNotesCancelDetail.getText().toString());
+            paramObject.put("AttachmentFile", photo);
+            paramObject.put("AttachmentID", editLeaveCancelation==null?null:editLeaveCancelation.getAttachmentID());
+            paramObject.put("AdditionalBalance", null);
+            paramObject.put("TransactionStatusID", null);
+            paramObject.put("TotalUnitReduce", 17);
+            paramObject.put("TransactionStatusSaveOrSubmit", transactionType);
+            paramObject.put("FullAccess", fullAccess);
+            paramObject.put("ExclusiveFields", exclusiveFields);
+            paramObject.put("AccessibilityAttribute", accessibilityAttribute);
+
+        }catch (Exception e)
+        {
+
+        }
+
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),paramObject.toString());
+        final APIInterfaceRest apiInterface = APIClient.saveLeaveCancelation(GlobalVar.getToken()).create(APIInterfaceRest.class);
+        Call<MessageReturn> call3 = apiInterface.saveLeaveCancelation(body, transactionType);
 
         call3.enqueue(new Callback<MessageReturn>() {
             @Override
@@ -668,7 +794,7 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
             paramObject.put("CancelTo", cancelTo);
             paramObject.put("Notes", txtNotesCancelDetail.getText().toString());
             paramObject.put("AttachmentFile", photo);
-            paramObject.put("AttachmentID", null);
+            paramObject.put("AttachmentID", editLeaveCancelation.getAttachmentID());
             paramObject.put("AdditionalBalance", null);
             paramObject.put("TransactionStatusID", null);
             paramObject.put("TotalUnitReduce", 17);

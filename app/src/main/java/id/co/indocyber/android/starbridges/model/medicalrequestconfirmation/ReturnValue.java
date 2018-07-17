@@ -1,14 +1,13 @@
 
 package id.co.indocyber.android.starbridges.model.medicalrequestconfirmation;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 import java.util.List;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.os.Parcelable.Creator;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class ReturnValue implements Serializable, Parcelable
 {
@@ -21,13 +20,13 @@ public class ReturnValue implements Serializable, Parcelable
     private String iD;
     @SerializedName("MedicalSupportID")
     @Expose
-    private Integer medicalSupportID;
+    private int medicalSupportID;
     @SerializedName("MedicalSupportName")
     @Expose
     private String medicalSupportName;
     @SerializedName("MedicalPolicyID")
     @Expose
-    private Integer medicalPolicyID;
+    private int medicalPolicyID;
     @SerializedName("PolicyTypeID")
     @Expose
     private String policyTypeID;
@@ -36,60 +35,60 @@ public class ReturnValue implements Serializable, Parcelable
     private String medicalPolicyName;
     @SerializedName("RemainingBalance")
     @Expose
-    private Integer remainingBalance;
+    private int remainingBalance;
     @SerializedName("EmployeeFamilyID")
     @Expose
-    private Integer employeeFamilyID;
+    private Object employeeFamilyID;
     @SerializedName("EmployeeFamilyName")
     @Expose
     private String employeeFamilyName;
     @SerializedName("MedicalClaimPolicyID")
     @Expose
-    private Integer medicalClaimPolicyID;
+    private int medicalClaimPolicyID;
     @SerializedName("TotalClaim")
     @Expose
-    private Integer totalClaim;
+    private int totalClaim;
     @SerializedName("TotalReimbursement")
     @Expose
-    private Integer totalReimbursement;
+    private float totalReimbursement;
     @SerializedName("AttachmentFile")
     @Expose
-    private String attachmentFile;
+    private Object attachmentFile;
     @SerializedName("AttachmentID")
     @Expose
-    private Integer attachmentID;
+    private Object attachmentID;
     @SerializedName("ReceiptDate")
     @Expose
     private String receiptDate;
     @SerializedName("DecisionNumber")
     @Expose
-    private String decisionNumber;
+    private Object decisionNumber;
     @SerializedName("TransactionStatusID")
     @Expose
-    private Integer transactionStatusID;
+    private int transactionStatusID;
     @SerializedName("ApprovedDate")
     @Expose
     private Object approvedDate;
     @SerializedName("Claim")
     @Expose
-    private Integer claim;
+    private int claim;
     @SerializedName("TransactionStatusSaveOrSubmit")
     @Expose
     private String transactionStatusSaveOrSubmit;
     @SerializedName("FullAccess")
     @Expose
-    private Boolean fullAccess;
+    private boolean fullAccess;
     @SerializedName("ExclusionFields")
     @Expose
     private List<String> exclusionFields = null;
     @SerializedName("AccessibilityAttribute")
     @Expose
     private String accessibilityAttribute;
-    public final static Creator<ReturnValue> CREATOR = new Creator<ReturnValue>() {
+    public final static Parcelable.Creator<ReturnValue> CREATOR = new Creator<ReturnValue>() {
 
 
         @SuppressWarnings({
-            "unchecked"
+                "unchecked"
         })
         public ReturnValue createFromParcel(Parcel in) {
             return new ReturnValue(in);
@@ -100,45 +99,45 @@ public class ReturnValue implements Serializable, Parcelable
         }
 
     }
-    ;
-    private final static long serialVersionUID = -588617675563920981L;
+            ;
+    private final static long serialVersionUID = 8630384195772350531L;
 
     protected ReturnValue(Parcel in) {
         this.employeeID = ((String) in.readValue((String.class.getClassLoader())));
         this.iD = ((String) in.readValue((String.class.getClassLoader())));
-        this.medicalSupportID = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.medicalSupportID = ((int) in.readValue((int.class.getClassLoader())));
         this.medicalSupportName = ((String) in.readValue((String.class.getClassLoader())));
-        this.medicalPolicyID = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.medicalPolicyID = ((int) in.readValue((int.class.getClassLoader())));
         this.policyTypeID = ((String) in.readValue((String.class.getClassLoader())));
         this.medicalPolicyName = ((String) in.readValue((String.class.getClassLoader())));
-        this.remainingBalance = ((Integer) in.readValue((Integer.class.getClassLoader())));
-        this.employeeFamilyID = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.remainingBalance = ((int) in.readValue((int.class.getClassLoader())));
+        this.employeeFamilyID = ((Object) in.readValue((Object.class.getClassLoader())));
         this.employeeFamilyName = ((String) in.readValue((String.class.getClassLoader())));
-        this.medicalClaimPolicyID = ((Integer) in.readValue((Integer.class.getClassLoader())));
-        this.totalClaim = ((Integer) in.readValue((Integer.class.getClassLoader())));
-        this.totalReimbursement = ((Integer) in.readValue((Integer.class.getClassLoader())));
-        this.attachmentFile = ((String) in.readValue((String.class.getClassLoader())));
-        this.attachmentID = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.medicalClaimPolicyID = ((int) in.readValue((int.class.getClassLoader())));
+        this.totalClaim = ((int) in.readValue((int.class.getClassLoader())));
+        this.totalReimbursement = ((float) in.readValue((float.class.getClassLoader())));
+        this.attachmentFile = ((Object) in.readValue((Object.class.getClassLoader())));
+        this.attachmentID = ((Object) in.readValue((Object.class.getClassLoader())));
         this.receiptDate = ((String) in.readValue((String.class.getClassLoader())));
-        this.decisionNumber = ((String) in.readValue((String.class.getClassLoader())));
-        this.transactionStatusID = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.decisionNumber = ((Object) in.readValue((Object.class.getClassLoader())));
+        this.transactionStatusID = ((int) in.readValue((int.class.getClassLoader())));
         this.approvedDate = ((Object) in.readValue((Object.class.getClassLoader())));
-        this.claim = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.claim = ((int) in.readValue((int.class.getClassLoader())));
         this.transactionStatusSaveOrSubmit = ((String) in.readValue((String.class.getClassLoader())));
-        this.fullAccess = ((Boolean) in.readValue((Boolean.class.getClassLoader())));
-        in.readList(this.exclusionFields, (String.class.getClassLoader()));
+        this.fullAccess = ((boolean) in.readValue((boolean.class.getClassLoader())));
+        in.readList(this.exclusionFields, (java.lang.Object.class.getClassLoader()));
         this.accessibilityAttribute = ((String) in.readValue((String.class.getClassLoader())));
     }
 
     /**
      * No args constructor for use in serialization
-     * 
+     *
      */
     public ReturnValue() {
     }
 
     /**
-     * 
+     *
      * @param medicalSupportID
      * @param employeeFamilyName
      * @param accessibilityAttribute
@@ -164,7 +163,7 @@ public class ReturnValue implements Serializable, Parcelable
      * @param transactionStatusID
      * @param employeeFamilyID
      */
-    public ReturnValue(String employeeID, String iD, Integer medicalSupportID, String medicalSupportName, Integer medicalPolicyID, String policyTypeID, String medicalPolicyName, Integer remainingBalance, Integer employeeFamilyID, String employeeFamilyName, Integer medicalClaimPolicyID, Integer totalClaim, Integer totalReimbursement, String attachmentFile, Integer attachmentID, String receiptDate, String decisionNumber, Integer transactionStatusID, Object approvedDate, Integer claim, String transactionStatusSaveOrSubmit, Boolean fullAccess, List<String> exclusionFields, String accessibilityAttribute) {
+    public ReturnValue(String employeeID, String iD, int medicalSupportID, String medicalSupportName, int medicalPolicyID, String policyTypeID, String medicalPolicyName, int remainingBalance, Object employeeFamilyID, String employeeFamilyName, int medicalClaimPolicyID, int totalClaim, float totalReimbursement, Object attachmentFile, Object attachmentID, String receiptDate, Object decisionNumber, int transactionStatusID, Object approvedDate, int claim, String transactionStatusSaveOrSubmit, boolean fullAccess, List<String> exclusionFields, String accessibilityAttribute) {
         super();
         this.employeeID = employeeID;
         this.iD = iD;
@@ -200,6 +199,11 @@ public class ReturnValue implements Serializable, Parcelable
         this.employeeID = employeeID;
     }
 
+    public ReturnValue withEmployeeID(String employeeID) {
+        this.employeeID = employeeID;
+        return this;
+    }
+
     public String getID() {
         return iD;
     }
@@ -208,12 +212,22 @@ public class ReturnValue implements Serializable, Parcelable
         this.iD = iD;
     }
 
-    public Integer getMedicalSupportID() {
+    public ReturnValue withID(String iD) {
+        this.iD = iD;
+        return this;
+    }
+
+    public int getMedicalSupportID() {
         return medicalSupportID;
     }
 
-    public void setMedicalSupportID(Integer medicalSupportID) {
+    public void setMedicalSupportID(int medicalSupportID) {
         this.medicalSupportID = medicalSupportID;
+    }
+
+    public ReturnValue withMedicalSupportID(int medicalSupportID) {
+        this.medicalSupportID = medicalSupportID;
+        return this;
     }
 
     public String getMedicalSupportName() {
@@ -224,12 +238,22 @@ public class ReturnValue implements Serializable, Parcelable
         this.medicalSupportName = medicalSupportName;
     }
 
-    public Integer getMedicalPolicyID() {
+    public ReturnValue withMedicalSupportName(String medicalSupportName) {
+        this.medicalSupportName = medicalSupportName;
+        return this;
+    }
+
+    public int getMedicalPolicyID() {
         return medicalPolicyID;
     }
 
-    public void setMedicalPolicyID(Integer medicalPolicyID) {
+    public void setMedicalPolicyID(int medicalPolicyID) {
         this.medicalPolicyID = medicalPolicyID;
+    }
+
+    public ReturnValue withMedicalPolicyID(int medicalPolicyID) {
+        this.medicalPolicyID = medicalPolicyID;
+        return this;
     }
 
     public String getPolicyTypeID() {
@@ -240,6 +264,11 @@ public class ReturnValue implements Serializable, Parcelable
         this.policyTypeID = policyTypeID;
     }
 
+    public ReturnValue withPolicyTypeID(String policyTypeID) {
+        this.policyTypeID = policyTypeID;
+        return this;
+    }
+
     public String getMedicalPolicyName() {
         return medicalPolicyName;
     }
@@ -248,20 +277,35 @@ public class ReturnValue implements Serializable, Parcelable
         this.medicalPolicyName = medicalPolicyName;
     }
 
-    public Integer getRemainingBalance() {
+    public ReturnValue withMedicalPolicyName(String medicalPolicyName) {
+        this.medicalPolicyName = medicalPolicyName;
+        return this;
+    }
+
+    public int getRemainingBalance() {
         return remainingBalance;
     }
 
-    public void setRemainingBalance(Integer remainingBalance) {
+    public void setRemainingBalance(int remainingBalance) {
         this.remainingBalance = remainingBalance;
     }
 
-    public Integer getEmployeeFamilyID() {
+    public ReturnValue withRemainingBalance(int remainingBalance) {
+        this.remainingBalance = remainingBalance;
+        return this;
+    }
+
+    public Object getEmployeeFamilyID() {
         return employeeFamilyID;
     }
 
-    public void setEmployeeFamilyID(Integer employeeFamilyID) {
+    public void setEmployeeFamilyID(Object employeeFamilyID) {
         this.employeeFamilyID = employeeFamilyID;
+    }
+
+    public ReturnValue withEmployeeFamilyID(Object employeeFamilyID) {
+        this.employeeFamilyID = employeeFamilyID;
+        return this;
     }
 
     public String getEmployeeFamilyName() {
@@ -272,44 +316,74 @@ public class ReturnValue implements Serializable, Parcelable
         this.employeeFamilyName = employeeFamilyName;
     }
 
-    public Integer getMedicalClaimPolicyID() {
+    public ReturnValue withEmployeeFamilyName(String employeeFamilyName) {
+        this.employeeFamilyName = employeeFamilyName;
+        return this;
+    }
+
+    public int getMedicalClaimPolicyID() {
         return medicalClaimPolicyID;
     }
 
-    public void setMedicalClaimPolicyID(Integer medicalClaimPolicyID) {
+    public void setMedicalClaimPolicyID(int medicalClaimPolicyID) {
         this.medicalClaimPolicyID = medicalClaimPolicyID;
     }
 
-    public Integer getTotalClaim() {
+    public ReturnValue withMedicalClaimPolicyID(int medicalClaimPolicyID) {
+        this.medicalClaimPolicyID = medicalClaimPolicyID;
+        return this;
+    }
+
+    public int getTotalClaim() {
         return totalClaim;
     }
 
-    public void setTotalClaim(Integer totalClaim) {
+    public void setTotalClaim(int totalClaim) {
         this.totalClaim = totalClaim;
     }
 
-    public Integer getTotalReimbursement() {
+    public ReturnValue withTotalClaim(int totalClaim) {
+        this.totalClaim = totalClaim;
+        return this;
+    }
+
+    public float getTotalReimbursement() {
         return totalReimbursement;
     }
 
-    public void setTotalReimbursement(Integer totalReimbursement) {
+    public void setTotalReimbursement(float totalReimbursement) {
         this.totalReimbursement = totalReimbursement;
     }
 
-    public String getAttachmentFile() {
+    public ReturnValue withTotalReimbursement(float totalReimbursement) {
+        this.totalReimbursement = totalReimbursement;
+        return this;
+    }
+
+    public Object getAttachmentFile() {
         return attachmentFile;
     }
 
-    public void setAttachmentFile(String attachmentFile) {
+    public void setAttachmentFile(Object attachmentFile) {
         this.attachmentFile = attachmentFile;
     }
 
-    public Integer getAttachmentID() {
+    public ReturnValue withAttachmentFile(Object attachmentFile) {
+        this.attachmentFile = attachmentFile;
+        return this;
+    }
+
+    public Object getAttachmentID() {
         return attachmentID;
     }
 
-    public void setAttachmentID(Integer attachmentID) {
+    public void setAttachmentID(Object attachmentID) {
         this.attachmentID = attachmentID;
+    }
+
+    public ReturnValue withAttachmentID(Object attachmentID) {
+        this.attachmentID = attachmentID;
+        return this;
     }
 
     public String getReceiptDate() {
@@ -320,20 +394,35 @@ public class ReturnValue implements Serializable, Parcelable
         this.receiptDate = receiptDate;
     }
 
-    public String getDecisionNumber() {
+    public ReturnValue withReceiptDate(String receiptDate) {
+        this.receiptDate = receiptDate;
+        return this;
+    }
+
+    public Object getDecisionNumber() {
         return decisionNumber;
     }
 
-    public void setDecisionNumber(String decisionNumber) {
+    public void setDecisionNumber(Object decisionNumber) {
         this.decisionNumber = decisionNumber;
     }
 
-    public Integer getTransactionStatusID() {
+    public ReturnValue withDecisionNumber(Object decisionNumber) {
+        this.decisionNumber = decisionNumber;
+        return this;
+    }
+
+    public int getTransactionStatusID() {
         return transactionStatusID;
     }
 
-    public void setTransactionStatusID(Integer transactionStatusID) {
+    public void setTransactionStatusID(int transactionStatusID) {
         this.transactionStatusID = transactionStatusID;
+    }
+
+    public ReturnValue withTransactionStatusID(int transactionStatusID) {
+        this.transactionStatusID = transactionStatusID;
+        return this;
     }
 
     public Object getApprovedDate() {
@@ -344,12 +433,22 @@ public class ReturnValue implements Serializable, Parcelable
         this.approvedDate = approvedDate;
     }
 
-    public Integer getClaim() {
+    public ReturnValue withApprovedDate(Object approvedDate) {
+        this.approvedDate = approvedDate;
+        return this;
+    }
+
+    public int getClaim() {
         return claim;
     }
 
-    public void setClaim(Integer claim) {
+    public void setClaim(int claim) {
         this.claim = claim;
+    }
+
+    public ReturnValue withClaim(int claim) {
+        this.claim = claim;
+        return this;
     }
 
     public String getTransactionStatusSaveOrSubmit() {
@@ -360,12 +459,22 @@ public class ReturnValue implements Serializable, Parcelable
         this.transactionStatusSaveOrSubmit = transactionStatusSaveOrSubmit;
     }
 
-    public Boolean getFullAccess() {
+    public ReturnValue withTransactionStatusSaveOrSubmit(String transactionStatusSaveOrSubmit) {
+        this.transactionStatusSaveOrSubmit = transactionStatusSaveOrSubmit;
+        return this;
+    }
+
+    public boolean isFullAccess() {
         return fullAccess;
     }
 
-    public void setFullAccess(Boolean fullAccess) {
+    public void setFullAccess(boolean fullAccess) {
         this.fullAccess = fullAccess;
+    }
+
+    public ReturnValue withFullAccess(boolean fullAccess) {
+        this.fullAccess = fullAccess;
+        return this;
     }
 
     public List<String> getExclusionFields() {
@@ -376,12 +485,22 @@ public class ReturnValue implements Serializable, Parcelable
         this.exclusionFields = exclusionFields;
     }
 
+    public ReturnValue withExclusionFields(List<String> exclusionFields) {
+        this.exclusionFields = exclusionFields;
+        return this;
+    }
+
     public String getAccessibilityAttribute() {
         return accessibilityAttribute;
     }
 
     public void setAccessibilityAttribute(String accessibilityAttribute) {
         this.accessibilityAttribute = accessibilityAttribute;
+    }
+
+    public ReturnValue withAccessibilityAttribute(String accessibilityAttribute) {
+        this.accessibilityAttribute = accessibilityAttribute;
+        return this;
     }
 
     public void writeToParcel(Parcel dest, int flags) {

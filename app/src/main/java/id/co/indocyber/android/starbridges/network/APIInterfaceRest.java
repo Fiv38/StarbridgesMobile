@@ -11,6 +11,7 @@ import id.co.indocyber.android.starbridges.model.EditLeaveCancelation.EditLeaveC
 import id.co.indocyber.android.starbridges.model.EditOvertime.EditOvertime;
 import id.co.indocyber.android.starbridges.model.EditReimbursement.EditReimbursement;
 import id.co.indocyber.android.starbridges.model.EditShiftExchange.EditShiftExchange;
+import id.co.indocyber.android.starbridges.model.LeaveCancelationTransaction.LeaveCancelationTransaction;
 import id.co.indocyber.android.starbridges.model.ListAttendanceCorrection.ListAttendanceCorrection;
 import id.co.indocyber.android.starbridges.model.ListDraftCorrection.ListDraftCorrection;
 import id.co.indocyber.android.starbridges.model.ListDraftLeaveCancelation.ListDraftLeaveCancelation;
@@ -351,6 +352,11 @@ public interface APIInterfaceRest {
             @Field("ExclusionFields") List<String> ExclusionFields,
             @Field("AccessibilityAttribute") String AccessibilityAttribute);
 
+    @POST("api/MedicalClaim/DetailRequestConfirmation")
+    Call<MedicalRequestConfirmation> medicalRequestConfirmation2(
+            @Query("transactionStatus") String transactionStatus,
+            @Body RequestBody body);
+
     @FormUrlEncoded
     @POST("api/MedicalClaim/SaveDetail")
     Call<MedicalSaveDetail> medicalSaveDetail(
@@ -426,7 +432,7 @@ public interface APIInterfaceRest {
     Call<MessageReturn> deleteDraftCancelation(@Body RequestBody body);
 
     @POST("api/LeaveCancelation/DetailRequestConfirmation")
-    Call<MessageReturn> detailRequestConfirmationCancelation(@Body RequestBody body, @Query("TransactionStatusSaveOrSubmit") String transactionStatusSaveOrSubmit);
+    Call<LeaveCancelationTransaction> detailRequestConfirmationCancelation(@Body RequestBody body, @Query("TransactionStatusSaveOrSubmit") String transactionStatusSaveOrSubmit);
 
     @GET("api/ShiftExchange/ListShiftExchange")
     Call<ListShiftExchange> getListShiftExchange();

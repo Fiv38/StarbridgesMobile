@@ -1,10 +1,16 @@
 package id.co.indocyber.android.starbridges.activity;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,12 +21,20 @@ import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 import id.co.indocyber.android.starbridges.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 import id.co.indocyber.android.starbridges.adapter.HistoryAdapter;
+import id.co.indocyber.android.starbridges.model.Attendence;
+import id.co.indocyber.android.starbridges.model.OLocation.OLocation;
 import id.co.indocyber.android.starbridges.model.history.History;
 import id.co.indocyber.android.starbridges.model.history.ReturnValue;
 import id.co.indocyber.android.starbridges.network.APIClient;
@@ -42,6 +56,12 @@ public class StartEndDayActivity extends AppCompatActivity {
     private HistoryAdapter viewAdapter;
     private String dateString, dateString2;
 
+    private ReturnValue latestReturnValue;
+    List<id.co.indocyber.android.starbridges.model.OLocation.ReturnValue> listReturnValueLocation = new ArrayList<>();;
+    String sLocationID, sLocationName, sLocationAddress, sLatitude, sLongitude;
+    private FusedLocationProviderClient client;
+
+    static final int REQUEST_ACCESS_LOCATION = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,9 +110,24 @@ public class StartEndDayActivity extends AppCompatActivity {
                         ||isAppInstalled("com.fake.gps.location")
                         ||isAppInstalled("org.hola.gpslocation")
                         ){
-                    //Toast.makeText(CheckInOutActivity.this,"Terdeteksi",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(StartEndDayActivity.this,"Terdeteksi",Toast.LENGTH_SHORT).show();
                     AlertDialogManager alertDialogManager = new AlertDialogManager();
                     alertDialogManager.showAlertDialog(StartEndDayActivity.this, "Warning","Please Uninstall your Fake GPS Apps",false);
+                }
+                else if(mShowDetail.getText().toString().matches("End Day"))
+                {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(StartEndDayActivity.this);
+                    alert.setTitle("Are you sure want to end day?");
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            getLocation();
+                        }
+                    });
+
+                    alert.show();
+
+
                 }
                 else
                     showDetail();
@@ -100,6 +135,147 @@ public class StartEndDayActivity extends AppCompatActivity {
         });
 
         //getAttendaceLog(dateString2, dateString2);
+    }
+
+    public void getLocation() {
+
+        progressDialog = new ProgressDialog(StartEndDayActivity.this);
+        progressDialog.setTitle("Loading");
+        progressDialog.show();
+
+        id.co.indocyber.android.starbridges.model.OLocation.ReturnValue returnValue=new id.co.indocyber.android.starbridges.model.OLocation.ReturnValue();
+        returnValue.setID("");
+        returnValue.setAddress("");
+        returnValue.setCode("");
+        returnValue.setDescription("");
+        returnValue.setName("");
+        listReturnValueLocation.add(returnValue);
+
+        apiInterface = APIClient.getLocationValue(GlobalVar.getToken()).create(APIInterfaceRest.class);
+        apiInterface.postLocation().enqueue(new Callback<OLocation>() {
+            @Override
+            public void onResponse(Call<OLocation> call, Response<OLocation> response) {
+
+                if (response.isSuccessful()) {
+
+                    listReturnValueLocation.addAll(response.body().getReturnValue());
+
+                } else {
+
+                    Toast.makeText(StartEndDayActivity.this, response.message(), Toast.LENGTH_SHORT).show();
+                }
+
+
+                progressDialog.dismiss();
+
+                checkLatestLocation();
+            }
+
+            @Override
+            public void onFailure(Call<OLocation> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(StartEndDayActivity.this, getString(R.string.error_connection), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+    }
+
+    public void checkPermissionLocation()
+    {
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_ACCESS_LOCATION);
+        }
+    }
+
+    public void getCoordinate()
+    {
+        checkPermissionLocation();
+
+        client = LocationServices.getFusedLocationProviderClient(this);
+        client.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    sLatitude = String.valueOf(location.getLatitude());
+                    sLongitude = String.valueOf(location.getLongitude());
+
+
+
+                }
+
+                callInputAbsence();
+
+            }
+        });
+
+
+    }
+
+    public void callInputAbsence()
+    {
+
+        String sUsername = GlobalVar.loginName();
+        String sEmployeeID = null;
+        String sBussinessGroupID = null;
+        String sBeaconID = null;
+
+        long date = System.currentTimeMillis();
+
+        String sEvent = null;
+        String sNotes = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        String dateString = sdf.format(date);
+        String sTime = mTimeView.getText().toString();
+
+        TimeZone timezone = TimeZone.getDefault();
+        int timeZoneOffset = timezone.getRawOffset()/(60 * 60 * 1000);
+
+
+
+        Call<Attendence> call3 = apiInterface.inputAbsence(sUsername, sEmployeeID, sBussinessGroupID, dateString, sTime, sBeaconID, sLocationID, sLocationName, sLocationAddress, sLongitude, sLatitude, "End Day", null, sNotes, sEvent, timeZoneOffset);
+        call3.enqueue(new Callback<Attendence>() {
+            @Override
+            public void onResponse(Call<Attendence> call, Response<Attendence> response) {
+                Attendence data = response.body();
+
+                if (data != null && data.getIsSucceed()) {
+                    Toast.makeText(StartEndDayActivity.this, "Data Submitted", Toast.LENGTH_LONG).show();
+                    finish();
+                    startActivity(getIntent());
+                } else if(data != null && data.getMessage() =="Please Check Your Time And Date Settings"){
+                    Toast.makeText(StartEndDayActivity.this, data.getMessage(), Toast.LENGTH_LONG).show();
+
+                }else {
+                    try {
+                        //JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        Toast.makeText(StartEndDayActivity.this, "Failed to Submit", Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        Toast.makeText(StartEndDayActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Attendence> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), getString(R.string.error_connection), Toast.LENGTH_LONG).show();
+                call.cancel();
+            }
+        });
+    }
+
+    public void checkLatestLocation()
+    {
+        for(id.co.indocyber.android.starbridges.model.OLocation.ReturnValue location:listReturnValueLocation)
+        {
+            if(location.getName().matches(latestReturnValue.getLocationName().toString()))
+            {
+                sLocationID=location.getID();
+            }
+        }
+        getCoordinate();
     }
 
     public boolean isAppInstalled(String packageName) {
@@ -150,6 +326,13 @@ public class StartEndDayActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 History data = response.body();
                 if (data != null && data.getIsSucceed()) {
+                    if(data.getReturnValue().size()>0)
+                    {
+                        latestReturnValue=data.getReturnValue().get(0);
+                        sLocationName=latestReturnValue.getLocationName().toString();
+                        sLocationAddress=latestReturnValue.getLocationAddress().toString();
+                    }
+
                     for(ReturnValue x: data.getReturnValue())
                     {
                         if(x.getLogType().equals("End Day"))
@@ -157,6 +340,7 @@ public class StartEndDayActivity extends AppCompatActivity {
                             mShowDetail.setEnabled(false);
                         }else if (x.getLogType().equals("Start Day")){
                             mShowDetail.setText("End Day");
+
                             //mShowDetail.setEnabled(false);
                         }
                     }

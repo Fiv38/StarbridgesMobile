@@ -1,11 +1,14 @@
 package id.co.indocyber.android.starbridges.activity;
 
+import android.Manifest;
 import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.app.AppOpsManager;
 import android.app.ProgressDialog;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -16,34 +19,46 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderApi;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 import id.co.indocyber.android.starbridges.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.SortedMap;
+import java.util.TimeZone;
 import java.util.TreeMap;
 
 import id.co.indocyber.android.starbridges.adapter.HistoryAdapter;
+import id.co.indocyber.android.starbridges.model.Attendence;
+import id.co.indocyber.android.starbridges.model.OLocation.OLocation;
 import id.co.indocyber.android.starbridges.model.history.History;
 import id.co.indocyber.android.starbridges.model.history.ReturnValue;
 import id.co.indocyber.android.starbridges.network.APIClient;
 import id.co.indocyber.android.starbridges.network.APIInterfaceRest;
 import id.co.indocyber.android.starbridges.utility.AlertDialogManager;
 import id.co.indocyber.android.starbridges.utility.GlobalVar;
+import id.co.indocyber.android.starbridges.utility.SessionManagement;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -61,6 +76,12 @@ public class CheckInOutActivity extends AppCompatActivity {
     private String dateString;
     private String dateString2;
     private boolean checkStartDay=false;
+    private ReturnValue latestReturnValue;
+    List<id.co.indocyber.android.starbridges.model.OLocation.ReturnValue> listReturnValueLocation = new ArrayList<>();;
+    String sLocationID, sLocationName, sLocationAddress, sLatitude, sLongitude;
+    private FusedLocationProviderClient client;
+
+    static final int REQUEST_ACCESS_LOCATION = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +148,21 @@ public class CheckInOutActivity extends AppCompatActivity {
                     AlertDialogManager alertDialogManager = new AlertDialogManager();
                     alertDialogManager.showAlertDialog(CheckInOutActivity.this, "Warning","Please Uninstall your Fake GPS Apps",false);
                 }
+                else if(mShowDetail.getText().toString().matches("Check Out"))
+                {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(CheckInOutActivity.this);
+                    alert.setTitle("Are you sure want to check out?");
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            getLocation();
+                        }
+                    });
+
+                    alert.show();
+
+
+                }
                 else
                     showDetail();
             }
@@ -144,6 +180,147 @@ public class CheckInOutActivity extends AppCompatActivity {
 
         Log.d("cekMock", isMockLocationOn(location, CheckInOutActivity.this)+"");
         Log.d("cekMockList", getListOfFakeLocationApps(CheckInOutActivity.this)+"");
+    }
+
+    public void getLocation() {
+
+        progressDialog = new ProgressDialog(CheckInOutActivity.this);
+        progressDialog.setTitle("Loading");
+        progressDialog.show();
+
+        id.co.indocyber.android.starbridges.model.OLocation.ReturnValue returnValue=new id.co.indocyber.android.starbridges.model.OLocation.ReturnValue();
+        returnValue.setID("");
+        returnValue.setAddress("");
+        returnValue.setCode("");
+        returnValue.setDescription("");
+        returnValue.setName("");
+        listReturnValueLocation.add(returnValue);
+
+        apiInterface = APIClient.getLocationValue(GlobalVar.getToken()).create(APIInterfaceRest.class);
+        apiInterface.postLocation().enqueue(new Callback<OLocation>() {
+            @Override
+            public void onResponse(Call<OLocation> call, Response<OLocation> response) {
+
+                if (response.isSuccessful()) {
+
+                    listReturnValueLocation.addAll(response.body().getReturnValue());
+
+                } else {
+
+                    Toast.makeText(CheckInOutActivity.this, response.message(), Toast.LENGTH_SHORT).show();
+                }
+
+
+                progressDialog.dismiss();
+
+                checkLatestLocation();
+            }
+
+            @Override
+            public void onFailure(Call<OLocation> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(CheckInOutActivity.this, getString(R.string.error_connection), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+    }
+
+    public void checkPermissionLocation()
+    {
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_ACCESS_LOCATION);
+        }
+    }
+
+    public void getCoordinate()
+    {
+        checkPermissionLocation();
+
+        client = LocationServices.getFusedLocationProviderClient(this);
+        client.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    sLatitude = String.valueOf(location.getLatitude());
+                    sLongitude = String.valueOf(location.getLongitude());
+
+
+
+                }
+
+                callInputAbsence();
+
+            }
+        });
+
+
+    }
+
+    public void callInputAbsence()
+    {
+
+        String sUsername = GlobalVar.loginName();
+        String sEmployeeID = null;
+        String sBussinessGroupID = null;
+        String sBeaconID = null;
+
+        long date = System.currentTimeMillis();
+
+        String sEvent = null;
+        String sNotes = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        String dateString = sdf.format(date);
+        String sTime = mTimeView.getText().toString();
+
+        TimeZone timezone = TimeZone.getDefault();
+        int timeZoneOffset = timezone.getRawOffset()/(60 * 60 * 1000);
+
+
+
+        Call<Attendence> call3 = apiInterface.inputAbsence(sUsername, sEmployeeID, sBussinessGroupID, dateString, sTime, sBeaconID, sLocationID, sLocationName, sLocationAddress, sLongitude, sLatitude, "Check Out", null, sNotes, sEvent, timeZoneOffset);
+        call3.enqueue(new Callback<Attendence>() {
+            @Override
+            public void onResponse(Call<Attendence> call, Response<Attendence> response) {
+                Attendence data = response.body();
+
+                if (data != null && data.getIsSucceed()) {
+                    Toast.makeText(CheckInOutActivity.this, "Data Submitted", Toast.LENGTH_LONG).show();
+                    finish();
+                    startActivity(getIntent());
+                } else if(data != null && data.getMessage() =="Please Check Your Time And Date Settings"){
+                    Toast.makeText(CheckInOutActivity.this, data.getMessage(), Toast.LENGTH_LONG).show();
+
+                }else {
+                    try {
+                        //JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        Toast.makeText(CheckInOutActivity.this, "Failed to Submit", Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        Toast.makeText(CheckInOutActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Attendence> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), getString(R.string.error_connection), Toast.LENGTH_LONG).show();
+                call.cancel();
+            }
+        });
+    }
+
+    public void checkLatestLocation()
+    {
+        for(id.co.indocyber.android.starbridges.model.OLocation.ReturnValue location:listReturnValueLocation)
+        {
+            if(location.getName().matches(latestReturnValue.getLocationName().toString()))
+            {
+                sLocationID=location.getID();
+            }
+        }
+        getCoordinate();
     }
 
     public static boolean isMockLocationOn(Location location, Context context) {
@@ -336,6 +513,8 @@ public class CheckInOutActivity extends AppCompatActivity {
         dateValue = mDateView.getText().toString();
         logType = mShowDetail.getText().toString();
 
+
+
         Intent intent = new Intent(this, CheckInOutDetailActivity.class);
         intent.putExtra("time",timeValue);
         intent.putExtra("date",dateValue);
@@ -371,9 +550,13 @@ public class CheckInOutActivity extends AppCompatActivity {
                     {
 //                        int dataSize=data.getReturnValue().size()-1;
                         lastLogType=data.getReturnValue().get(0).getLogType();
+                        latestReturnValue=data.getReturnValue().get(0);
+                        sLocationName=latestReturnValue.getLocationName().toString();
+                        sLocationAddress=latestReturnValue.getLocationAddress().toString();
                     }
                     if (lastLogType.equals("Check In") ) {
                         mShowDetail.setText("Check Out");
+
                     } else if (lastLogType.equals("End Day")) {
                         mShowDetail.setText("Check Out");
                         mShowDetail.setEnabled(false);
