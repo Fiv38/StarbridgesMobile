@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseBooleanArray;
@@ -279,5 +280,10 @@ public class ListDraftOvertimeActivity extends AppCompatActivity implements Adap
         Intent intent = new Intent(ListDraftOvertimeActivity.this, OvertimeDetailActivity.class);
         intent.putExtra("id", data.getReturnValue().get(position).getID());
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        NavUtils.navigateUpFromSameTask(this);
     }
 }

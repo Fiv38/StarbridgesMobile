@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,6 +41,7 @@ public class ReimburseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reimburse);
+
         setTitle("Reimbursement");
 
 
@@ -67,6 +69,13 @@ public class ReimburseActivity extends AppCompatActivity {
         GlobalVar.setEmployeeId(employee_sp);
 
         getReimbursementLog();
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        NavUtils.navigateUpFromSameTask(this);
     }
 
     @Override
@@ -86,7 +95,6 @@ public class ReimburseActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
-
 
         return super.onOptionsItemSelected(item);
     }
@@ -125,4 +133,6 @@ public class ReimburseActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

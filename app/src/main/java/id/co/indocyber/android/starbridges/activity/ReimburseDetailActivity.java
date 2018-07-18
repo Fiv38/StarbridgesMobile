@@ -10,8 +10,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -492,7 +494,7 @@ public class ReimburseDetailActivity extends AppCompatActivity {
             paramObject.put("TransactionStatusID",10);
             paramObject.put("DecisionNumber",null);
             paramObject.put("AttachmentFile",photo);
-            paramObject.put("AttachmentID",editReimbursement==null?null:editReimbursement.getAttachmentID());
+            paramObject.put("AttachmentID",editReimbursement.getAttachmentID()==null?null:editReimbursement.getAttachmentID());
             paramObject.put("Message",null);
             paramObject.put("FullAccess",true);
             paramObject.put("ExclusiveFields",exclusiveFields);
@@ -541,5 +543,11 @@ public class ReimburseDetailActivity extends AppCompatActivity {
         String result = format.format(Integer.parseInt(number));
         return result;
     }
+
+    @Override
+    public void onBackPressed() {
+        NavUtils.navigateUpFromSameTask(this);
+    }
+
 
 }

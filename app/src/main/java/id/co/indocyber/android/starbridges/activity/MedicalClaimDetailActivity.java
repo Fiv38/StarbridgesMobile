@@ -770,7 +770,7 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
                                     "\nFamily : \n" + employeeFamilyName +
                                     "\nRemaining Balance : \n" + remainingBalance +
                                     "\nClaim : \n" + totalClaim +
-                                    "\nReimbursement : \n" + Integer.valueOf(totalReimbursement.intValue())
+                                    "\nReimbursement : \n" + totalReimbursement.toBigInteger()
                     );
                     alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
@@ -894,7 +894,7 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
         Call<MedicalSaveDetail> call3 = apiInterface.medicalSaveDetail(
                 employeeID,ID, medicalSupportID, medicalSupportName, medicalPolicyID,
                 medicalPolicyTypeID, medicalPolicyName, remainingBalance, employeeFamilyID, employeeFamilyName,
-                medicalClaimPolicyID, totalClaim, Integer.valueOf(totalReimbursement.intValue()), attachmentFile, attachmentID,
+                medicalClaimPolicyID, totalClaim, totalReimbursement.toBigInteger(), attachmentFile, attachmentID,
                 receiptDate, decisionNumber, transactionStatusID, approvedDate, claim,
                 transactionStatusSaveOrSubmit, fullAccess, exclusionFields, accessibilityAttribute);
         call3.enqueue(new Callback<MedicalSaveDetail>() {

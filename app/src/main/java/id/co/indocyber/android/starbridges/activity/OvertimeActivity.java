@@ -3,6 +3,7 @@ package id.co.indocyber.android.starbridges.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -162,5 +163,10 @@ public class OvertimeActivity extends AppCompatActivity {
     public void addOvertime(View view) {
         Intent intent = new Intent(OvertimeActivity.this,OvertimeDetailActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        NavUtils.navigateUpFromSameTask(this);
     }
 }

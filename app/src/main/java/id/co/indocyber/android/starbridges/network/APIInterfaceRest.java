@@ -1,6 +1,7 @@
 package id.co.indocyber.android.starbridges.network;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 
 import id.co.indocyber.android.starbridges.model.Attendence;
@@ -373,7 +374,7 @@ public interface APIInterfaceRest {
             @Field("EmployeeFamilyName") String EmployeeFamilyName,
             @Field("MedicalClaimPolicyID") String MedicalClaimPolicyID,
             @Field("TotalClaim") String TotalClaim,
-            @Field("TotalReimbursement") int TotalReimbursement,
+            @Field("TotalReimbursement") BigInteger TotalReimbursement,
             @Field("AttachmentFile") String AttachmentFile,
             @Field("AttachmentID") String AttachmentID,
             @Field("ReceiptDate") String ReceiptDate,
