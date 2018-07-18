@@ -2,6 +2,7 @@
 package id.co.indocyber.android.starbridges.model.medicalrequestconfirmation;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -50,7 +51,7 @@ public class ReturnValue implements Serializable, Parcelable
     private int totalClaim;
     @SerializedName("TotalReimbursement")
     @Expose
-    private float totalReimbursement;
+    private BigDecimal totalReimbursement;
     @SerializedName("AttachmentFile")
     @Expose
     private Object attachmentFile;
@@ -115,7 +116,7 @@ public class ReturnValue implements Serializable, Parcelable
         this.employeeFamilyName = ((String) in.readValue((String.class.getClassLoader())));
         this.medicalClaimPolicyID = ((int) in.readValue((int.class.getClassLoader())));
         this.totalClaim = ((int) in.readValue((int.class.getClassLoader())));
-        this.totalReimbursement = ((float) in.readValue((float.class.getClassLoader())));
+        this.totalReimbursement = ((BigDecimal) in.readValue((float.class.getClassLoader())));
         this.attachmentFile = ((Object) in.readValue((Object.class.getClassLoader())));
         this.attachmentID = ((Object) in.readValue((Object.class.getClassLoader())));
         this.receiptDate = ((String) in.readValue((String.class.getClassLoader())));
@@ -163,7 +164,7 @@ public class ReturnValue implements Serializable, Parcelable
      * @param transactionStatusID
      * @param employeeFamilyID
      */
-    public ReturnValue(String employeeID, String iD, int medicalSupportID, String medicalSupportName, int medicalPolicyID, String policyTypeID, String medicalPolicyName, int remainingBalance, Object employeeFamilyID, String employeeFamilyName, int medicalClaimPolicyID, int totalClaim, float totalReimbursement, Object attachmentFile, Object attachmentID, String receiptDate, Object decisionNumber, int transactionStatusID, Object approvedDate, int claim, String transactionStatusSaveOrSubmit, boolean fullAccess, List<String> exclusionFields, String accessibilityAttribute) {
+    public ReturnValue(String employeeID, String iD, int medicalSupportID, String medicalSupportName, int medicalPolicyID, String policyTypeID, String medicalPolicyName, int remainingBalance, Object employeeFamilyID, String employeeFamilyName, int medicalClaimPolicyID, int totalClaim, BigDecimal totalReimbursement, Object attachmentFile, Object attachmentID, String receiptDate, Object decisionNumber, int transactionStatusID, Object approvedDate, int claim, String transactionStatusSaveOrSubmit, boolean fullAccess, List<String> exclusionFields, String accessibilityAttribute) {
         super();
         this.employeeID = employeeID;
         this.iD = iD;
@@ -347,15 +348,15 @@ public class ReturnValue implements Serializable, Parcelable
         return this;
     }
 
-    public float getTotalReimbursement() {
+    public BigDecimal getTotalReimbursement() {
         return totalReimbursement;
     }
 
-    public void setTotalReimbursement(float totalReimbursement) {
+    public void setTotalReimbursement(BigDecimal totalReimbursement) {
         this.totalReimbursement = totalReimbursement;
     }
 
-    public ReturnValue withTotalReimbursement(float totalReimbursement) {
+    public ReturnValue withTotalReimbursement(BigDecimal totalReimbursement) {
         this.totalReimbursement = totalReimbursement;
         return this;
     }

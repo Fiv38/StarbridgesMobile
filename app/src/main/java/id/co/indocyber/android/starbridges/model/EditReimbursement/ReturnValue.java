@@ -45,7 +45,7 @@ public class ReturnValue implements Serializable, Parcelable
     private String attachmentFile;
     @SerializedName("AttachmentID")
     @Expose
-    private int attachmentID;
+    private Integer attachmentID;
     @SerializedName("Message")
     @Expose
     private Object message;
@@ -119,7 +119,7 @@ public class ReturnValue implements Serializable, Parcelable
      * @param attachmentID
      * @param transactionStatusID
      */
-    public ReturnValue(String iD, String employeeID, String description, int amount, int reimbursementTypeID, boolean isPreProcess, String transactionDate, int transactionStatusID, Object decisionNumber, String attachmentFile, int attachmentID, Object message, boolean fullAccess, List<Object> exclusionFields, String accessibilityAttribute) {
+    public ReturnValue(String iD, String employeeID, String description, int amount, int reimbursementTypeID, boolean isPreProcess, String transactionDate, int transactionStatusID, Object decisionNumber, String attachmentFile, Integer attachmentID, Object message, boolean fullAccess, List<Object> exclusionFields, String accessibilityAttribute) {
         super();
         this.iD = iD;
         this.employeeID = employeeID;
@@ -268,15 +268,15 @@ public class ReturnValue implements Serializable, Parcelable
         return this;
     }
 
-    public int getAttachmentID() {
+    public Integer getAttachmentID() {
         return attachmentID;
     }
 
-    public void setAttachmentID(int attachmentID) {
+    public void setAttachmentID(Integer attachmentID) {
         this.attachmentID = attachmentID;
     }
 
-    public ReturnValue withAttachmentID(int attachmentID) {
+    public ReturnValue withAttachmentID(Integer attachmentID) {
         this.attachmentID = attachmentID;
         return this;
     }

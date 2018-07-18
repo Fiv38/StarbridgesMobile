@@ -35,6 +35,7 @@ import android.widget.Toast;
 
 import id.co.indocyber.android.starbridges.R;
 import id.co.indocyber.android.starbridges.model.Authentication;
+import id.co.indocyber.android.starbridges.model.AuthenticationError.AuthenticationError;
 import id.co.indocyber.android.starbridges.model.MessageReturn.MessageReturn;
 import id.co.indocyber.android.starbridges.model.OPost;
 import id.co.indocyber.android.starbridges.model.versioning.Versioning;
@@ -55,14 +56,23 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.text.Annotation;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Converter;
 import retrofit2.Response;
 
 /**
@@ -384,8 +394,32 @@ public class LoginActivity extends AppCompatActivity {
 
                         startActivity(home);
                         finish();
-                    } else {
+                    }
+                    else  if (response.errorBody() != null ) {
                         showProgress(false);
+
+                        try{
+                            JSONObject jObjError = new JSONObject(response.errorBody().string());
+                            Gson gson=new Gson();
+
+                            JsonParser parser = new JsonParser();
+                            JsonElement mJson =  parser.parse(jObjError+"");
+
+                            AuthenticationError authenticationError=gson.fromJson(mJson, AuthenticationError.class);
+                            Toast.makeText(LoginActivity.this, authenticationError.getErrorDescription(), Toast.LENGTH_SHORT).show();
+                        }
+                        catch (Exception e)
+                        {
+                            Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+
+
+
+                    }
+                    else
+                    {
+                        showProgress(false);
+
                         Toast.makeText(LoginActivity.this, "Invalid Username", Toast.LENGTH_SHORT).show();
                     }
 

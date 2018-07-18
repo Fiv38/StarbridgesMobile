@@ -31,6 +31,7 @@ import id.co.indocyber.android.starbridges.R;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -85,7 +86,7 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
     private String employeeFamilyName = "";
     private String medicalClaimPolicyID = "";
     private String totalClaim = "";
-    private String totalReimbursement = "";
+    private BigDecimal totalReimbursement = new BigDecimal(0);
     private String attachmentFile = "";
     private String attachmentID = "";
     private String receiptDate = "";
@@ -749,7 +750,7 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
                     employeeFamilyName = data.getReturnValue().getEmployeeFamilyName();
                     medicalClaimPolicyID = (data.getReturnValue().getMedicalClaimPolicyID() == 0) ? "" : data.getReturnValue().getMedicalClaimPolicyID()+"";
                     totalClaim = (data.getReturnValue().getTotalClaim() == 0) ? "" : data.getReturnValue().getTotalClaim()+"";
-                    totalReimbursement = (data.getReturnValue().getTotalReimbursement() == 0) ? "" : data.getReturnValue().getTotalReimbursement()+"";
+                    totalReimbursement = (data.getReturnValue().getTotalReimbursement() == new BigDecimal(0)) ? new BigDecimal(0) : data.getReturnValue().getTotalReimbursement();
 //                    attachmentFile = data.getReturnValue().getAttachmentFile().toString();
                     attachmentID = (data.getReturnValue().getAttachmentID() == null) ? null : data.getReturnValue().getAttachmentID().toString();
                     receiptDate = data.getReturnValue().getReceiptDate();
@@ -769,7 +770,7 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
                                     "\nFamily : \n" + employeeFamilyName +
                                     "\nRemaining Balance : \n" + remainingBalance +
                                     "\nClaim : \n" + totalClaim +
-                                    "\nReimbursement : \n" + totalReimbursement
+                                    "\nReimbursement : \n" + Integer.valueOf(totalReimbursement.intValue())
                     );
                     alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
@@ -831,7 +832,7 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
                     employeeFamilyName = data.getReturnValue().getEmployeeFamilyName();
                     medicalClaimPolicyID = (data.getReturnValue().getMedicalClaimPolicyID() == null) ? "" : data.getReturnValue().getMedicalClaimPolicyID().toString();
                     totalClaim = (data.getReturnValue().getTotalClaim() == null) ? "" : data.getReturnValue().getTotalClaim().toString();
-                    totalReimbursement = (data.getReturnValue().getTotalReimbursement() == null) ? "" : data.getReturnValue().getTotalReimbursement().toString();
+                    totalReimbursement = (data.getReturnValue().getTotalReimbursement() == new BigDecimal(0)) ? new BigDecimal(0) : data.getReturnValue().getTotalReimbursement();
                     attachmentFile = data.getReturnValue().getAttachmentFile();
                     attachmentID = (data.getReturnValue().getAttachmentID() == null) ? null : data.getReturnValue().getAttachmentID().toString();
                     receiptDate = data.getReturnValue().getReceiptDate();
@@ -893,7 +894,7 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
         Call<MedicalSaveDetail> call3 = apiInterface.medicalSaveDetail(
                 employeeID,ID, medicalSupportID, medicalSupportName, medicalPolicyID,
                 medicalPolicyTypeID, medicalPolicyName, remainingBalance, employeeFamilyID, employeeFamilyName,
-                medicalClaimPolicyID, totalClaim, totalReimbursement, attachmentFile, null,
+                medicalClaimPolicyID, totalClaim, Integer.valueOf(totalReimbursement.intValue()), attachmentFile, attachmentID,
                 receiptDate, decisionNumber, transactionStatusID, approvedDate, claim,
                 transactionStatusSaveOrSubmit, fullAccess, exclusionFields, accessibilityAttribute);
         call3.enqueue(new Callback<MedicalSaveDetail>() {

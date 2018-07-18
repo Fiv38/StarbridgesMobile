@@ -319,6 +319,7 @@ public class StartEndDayDetailActivity extends AppCompatActivity {
             {
                 sLocationName = mLocationNameView.getText().toString();
                 sLocationID=null;
+                sLocationAddress=null;
                 Geocoder geocoder;
                 List<Address> addresses;
                 geocoder = new Geocoder(this, Locale.getDefault());

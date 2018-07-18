@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -30,6 +32,7 @@ import id.co.indocyber.android.starbridges.R;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import id.co.indocyber.android.starbridges.adapter.HistoryAdapter;
@@ -233,6 +236,22 @@ public class StartEndDayActivity extends AppCompatActivity {
         int timeZoneOffset = timezone.getRawOffset()/(60 * 60 * 1000);
 
 
+        if(sLocationID==null)
+        {
+            Geocoder geocoder;
+            List<Address> addresses;
+            geocoder = new Geocoder(this, Locale.getDefault());
+
+            try{
+                addresses = geocoder.getFromLocation(Double.parseDouble(sLatitude),Double.parseDouble(sLongitude) , 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+
+                sLocationAddress = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+
+            }catch (Exception e)
+            {
+
+            }
+        }
 
         Call<Attendence> call3 = apiInterface.inputAbsence(sUsername, sEmployeeID, sBussinessGroupID, dateString, sTime, sBeaconID, sLocationID, sLocationName, sLocationAddress, sLongitude, sLatitude, "End Day", null, sNotes, sEvent, timeZoneOffset);
         call3.enqueue(new Callback<Attendence>() {
@@ -270,7 +289,7 @@ public class StartEndDayActivity extends AppCompatActivity {
     {
         for(id.co.indocyber.android.starbridges.model.OLocation.ReturnValue location:listReturnValueLocation)
         {
-            if(location.getName().matches(latestReturnValue.getLocationName().toString()))
+            if(location.getName().equals(latestReturnValue.getLocationName()+""))
             {
                 sLocationID=location.getID();
             }
