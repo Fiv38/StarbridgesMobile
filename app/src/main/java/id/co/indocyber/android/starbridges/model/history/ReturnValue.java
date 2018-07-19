@@ -23,7 +23,7 @@ public class ReturnValue implements Serializable, Parcelable
     private Object locationName;
     @SerializedName("LocationAddress")
     @Expose
-    private Object locationAddress;
+    private String locationAddress;
     @SerializedName("LogType")
     @Expose
     private String logType;
@@ -61,7 +61,7 @@ public class ReturnValue implements Serializable, Parcelable
         this.logDate = ((String) in.readValue((String.class.getClassLoader())));
         this.logTime = ((String) in.readValue((String.class.getClassLoader())));
         this.locationName = ((Object) in.readValue((Object.class.getClassLoader())));
-        this.locationAddress = ((Object) in.readValue((Object.class.getClassLoader())));
+        this.locationAddress = ((String) in.readValue((Object.class.getClassLoader())));
         this.logType = ((String) in.readValue((String.class.getClassLoader())));
         this.displayDate = ((String) in.readValue((String.class.getClassLoader())));
         this.displayTime = ((String) in.readValue((String.class.getClassLoader())));
@@ -88,7 +88,7 @@ public class ReturnValue implements Serializable, Parcelable
      * @param logType
      * @param locationAddress
      */
-    public ReturnValue(String logDate, String logTime, Object locationName, Object locationAddress, String logType, String displayDate, String displayTime, String latitude, String longitude) {
+    public ReturnValue(String logDate, String logTime, Object locationName, String locationAddress, String logType, String displayDate, String displayTime, String latitude, String longitude) {
         super();
         this.logDate = logDate;
         this.logTime = logTime;
@@ -140,15 +140,15 @@ public class ReturnValue implements Serializable, Parcelable
         return this;
     }
 
-    public Object getLocationAddress() {
+    public String getLocationAddress() {
         return locationAddress;
     }
 
-    public void setLocationAddress(Object locationAddress) {
+    public void setLocationAddress(String locationAddress) {
         this.locationAddress = locationAddress;
     }
 
-    public ReturnValue withLocationAddress(Object locationAddress) {
+    public ReturnValue withLocationAddress(String locationAddress) {
         this.locationAddress = locationAddress;
         return this;
     }

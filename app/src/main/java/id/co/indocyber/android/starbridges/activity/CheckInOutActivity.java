@@ -162,6 +162,12 @@ public class CheckInOutActivity extends AppCompatActivity {
                             getLocation();
                         }
                     });
+                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
 
                     alert.show();
 
@@ -573,7 +579,7 @@ public class CheckInOutActivity extends AppCompatActivity {
                         lastLogType=data.getReturnValue().get(0).getLogType();
                         latestReturnValue=data.getReturnValue().get(0);
                         sLocationName=latestReturnValue.getLocationName().toString();
-                        sLocationAddress=latestReturnValue.getLocationAddress().toString();
+                        sLocationAddress=latestReturnValue.getLocationAddress();
                     }
                     if (lastLogType.equals("Check In") ) {
                         mShowDetail.setText("Check Out");

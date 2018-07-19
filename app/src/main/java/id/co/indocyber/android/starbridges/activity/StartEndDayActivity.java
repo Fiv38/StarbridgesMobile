@@ -127,6 +127,12 @@ public class StartEndDayActivity extends AppCompatActivity {
                             getLocation();
                         }
                     });
+                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
 
                     alert.show();
 
@@ -349,7 +355,7 @@ public class StartEndDayActivity extends AppCompatActivity {
                     {
                         latestReturnValue=data.getReturnValue().get(0);
                         sLocationName=latestReturnValue.getLocationName().toString();
-                        sLocationAddress=latestReturnValue.getLocationAddress().toString();
+                        sLocationAddress=latestReturnValue.getLocationAddress();
                     }
 
                     for(ReturnValue x: data.getReturnValue())
