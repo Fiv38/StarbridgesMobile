@@ -8,11 +8,25 @@
     android:orientation="vertical"
     android:padding="20dp">
 
-    <TextView
-        android:id="@+id/lblEmployee"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Employee" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/lblEmployee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="Employee" />
+
+        <TextView
+            android:id="@+id/txtEmployeeErrorShiftEx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right" />
+    </LinearLayout>
 
     <Spinner
         android:id="@+id/spEmployeeShiftEx"
@@ -47,11 +61,25 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/lblShift"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Shift" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/lblShift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="Shift" />
+
+        <TextView
+            android:id="@+id/txtShiftErrorShiftEx"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right" />
+    </LinearLayout>
 
     <Spinner
         android:id="@+id/spShift"

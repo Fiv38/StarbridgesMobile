@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import id.co.indocyber.android.starbridges.R;
@@ -59,6 +61,8 @@ public class ShiftExchangeDetailActivity extends AppCompatActivity {
     Button btnUploadShiftExDetail, btnSubmitShiftExDetail, btnSaveShiftExDetail, btnCancelShiftExDetail;
     Spinner mEmployeeSpinner, mShiftSpinner;
     ImageView imgDateShiftExDetail, imgShiftExDetail;
+
+    TextView txtEmployeeErrorShiftEx, txtShiftErrorShiftEx;
 
     APIInterfaceRest apiInterface;
     ProgressDialog progressDialog;
@@ -107,6 +111,9 @@ public class ShiftExchangeDetailActivity extends AppCompatActivity {
         btnCancelShiftExDetail = (Button) findViewById(R.id.btnCancelShiftEx);
         imgDateShiftExDetail = (ImageView) findViewById(R.id.imgDateShiftEx);
         imgShiftExDetail = (ImageView) findViewById(R.id.imageUploadShiftEx);
+
+        txtEmployeeErrorShiftEx=(TextView)findViewById(R.id.txtEmployeeErrorShiftEx);
+        txtShiftErrorShiftEx=(TextView)findViewById(R.id.txtShiftErrorShiftEx);
 
         mEmployeeSpinner = (Spinner) findViewById(R.id.spEmployeeShiftEx);
         mShiftSpinner = (Spinner) findViewById(R.id.spShift);
@@ -165,35 +172,39 @@ public class ShiftExchangeDetailActivity extends AppCompatActivity {
             }
         });
 
+
+
         btnSaveShiftExDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(ShiftExchangeDetailActivity.this);
-                alert.setTitle("Shift Exchange Confirmation");
-                alert.setMessage("Employee\n" +
-                        "\t" + mEmployeeSpinner.getSelectedItem().toString() + "" +
-                        "\nDate\n" +
-                        "\t" + dateFormat2(txtDateShiftEx.getText().toString()) + "" +
-                        "\nShift\n" +
-                        "\t" + mShiftSpinner.getSelectedItem().toString() + "" +
-                        "\nNotes\n" +
-                        "\t" + txtNotesShiftEx.getText().toString() + "\n\n" +
-                        "This information will be saved in draft");
-                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        saveSubmitShiftEx("Save");
-                    }
-                });
 
-                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                if(checkValidation()) {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(ShiftExchangeDetailActivity.this);
+                    alert.setTitle("Shift Exchange Confirmation");
+                    alert.setMessage("Employee\n" +
+                            "\t" + mEmployeeSpinner.getSelectedItem().toString() + "" +
+                            "\nDate\n" +
+                            "\t" + dateFormat2(txtDateShiftEx.getText().toString()) + "" +
+                            "\nShift\n" +
+                            "\t" + mShiftSpinner.getSelectedItem().toString() + "" +
+                            "\nNotes\n" +
+                            "\t" + txtNotesShiftEx.getText().toString() + "\n\n" +
+                            "This information will be saved in draft");
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            saveSubmitShiftEx("Save");
+                        }
+                    });
 
-                    }
-                });
-                alert.show();
+                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
+                        }
+                    });
+                    alert.show();
+                }
 
             }
         });
@@ -201,30 +212,34 @@ public class ShiftExchangeDetailActivity extends AppCompatActivity {
         btnSubmitShiftExDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(ShiftExchangeDetailActivity.this);
-                alert.setTitle("Shift Exchange Confirmation");
-                alert.setMessage("Employee\n" +
-                        "\t" + mEmployeeSpinner.getSelectedItem().toString() + "" +
-                        "\nDate\n" +
-                        "\t" + dateFormat2(txtDateShiftEx.getText().toString()) + "" +
-                        "\nShift\n" +
-                        "\t" + mShiftSpinner.getSelectedItem().toString() + "" +
-                        "\nNotes\n" +
-                        "\t" + txtNotesShiftEx.getText().toString() + "\n\n");
-                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        saveSubmitShiftEx("Submit");
-                    }
-                });
 
-                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                if(checkValidation())
+                {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(ShiftExchangeDetailActivity.this);
+                    alert.setTitle("Shift Exchange Confirmation");
+                    alert.setMessage("Employee\n" +
+                            "\t" + mEmployeeSpinner.getSelectedItem().toString() + "" +
+                            "\nDate\n" +
+                            "\t" + dateFormat2(txtDateShiftEx.getText().toString()) + "" +
+                            "\nShift\n" +
+                            "\t" + mShiftSpinner.getSelectedItem().toString() + "" +
+                            "\nNotes\n" +
+                            "\t" + txtNotesShiftEx.getText().toString() + "\n\n");
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            saveSubmitShiftEx("Submit");
+                        }
+                    });
 
-                    }
-                });
-                alert.show();
+                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                    alert.show();
+                }
             }
         });
 
@@ -258,6 +273,29 @@ public class ShiftExchangeDetailActivity extends AppCompatActivity {
                 alert.show();
             }
         });
+    }
+    public boolean checkValidation()
+    {
+        if(mEmployeeSpinner.getSelectedItem().toString().matches(""))
+        {
+            txtEmployeeErrorShiftEx.setError("");
+            txtEmployeeErrorShiftEx.setTextColor(Color.RED);//just to highlight that this is an error
+            txtEmployeeErrorShiftEx.setText(" Please select employee ");//changes the selected item text to this
+            return false;
+        }
+        else if(txtDateShiftEx.getText().toString().matches(""))
+        {
+            txtDateShiftEx.setError("Please fill shift date");
+            return false;
+        }
+        else if(mShiftSpinner.getSelectedItem().toString().matches(""))
+        {
+            txtShiftErrorShiftEx.setError("");
+            txtShiftErrorShiftEx.setTextColor(Color.RED);//just to highlight that this is an error
+            txtShiftErrorShiftEx.setText(" Please select shift ");//changes the selected item text to this
+            return false;
+        }
+        return true;
     }
 
     public void getData(String id) {
@@ -499,7 +537,7 @@ public class ShiftExchangeDetailActivity extends AppCompatActivity {
             paramObject.put("Date", transactionDate);
             paramObject.put("TransactionStatusID", transactionStatus);
             paramObject.put("AttachmentFile", photo);
-            paramObject.put("AttachmentID", null);
+            paramObject.put("AttachmentID", editShiftChange.getAttachmentID()==null?null:editShiftChange.getAttachmentID());
 
         } catch (Exception e) {
 

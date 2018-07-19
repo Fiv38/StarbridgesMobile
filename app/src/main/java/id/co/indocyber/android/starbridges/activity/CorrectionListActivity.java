@@ -30,6 +30,7 @@ import id.co.indocyber.android.starbridges.network.APIClient;
 import id.co.indocyber.android.starbridges.network.APIInterfaceRest;
 import id.co.indocyber.android.starbridges.utility.GlobalVar;
 import id.co.indocyber.android.starbridges.utility.SessionManagement;
+import id.co.indocyber.android.starbridges.utility.SharedPreferenceUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -100,6 +101,21 @@ public class CorrectionListActivity extends AppCompatActivity implements Adapter
         Intent intent = getIntent();
         String sDateFrom = intent.getStringExtra("from");
         String sDateTo = intent.getStringExtra("to");
+
+        if(sDateFrom==null||sDateFrom=="")
+        {
+            sDateFrom= SharedPreferenceUtils.getSetting(getApplicationContext(), "fromDate", "");
+        }
+        else
+            SharedPreferenceUtils.setSetting(getApplicationContext(),"fromDate", sDateFrom);
+
+
+        if(sDateTo==null||sDateTo=="")
+        {
+            sDateTo= SharedPreferenceUtils.getSetting(getApplicationContext(), "toDate", "");
+        }
+        else
+            SharedPreferenceUtils.setSetting(getApplicationContext(),"toDate", sDateTo);
 
         try{
             DateFormat df= new SimpleDateFormat("MM/dd/yyyy");

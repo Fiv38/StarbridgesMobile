@@ -38,7 +38,7 @@ public class ReturnValue implements Serializable, Parcelable
     private Object attachmentFile;
     @SerializedName("AttachmentID")
     @Expose
-    private Object attachmentID;
+    private Integer attachmentID;
     public final static Creator<ReturnValue> CREATOR = new Creator<ReturnValue>() {
 
 
@@ -66,7 +66,7 @@ public class ReturnValue implements Serializable, Parcelable
         this.notes = ((String) in.readValue((String.class.getClassLoader())));
         this.transactionStatusID = ((Integer) in.readValue((Integer.class.getClassLoader())));
         this.attachmentFile = ((Object) in.readValue((Object.class.getClassLoader())));
-        this.attachmentID = ((Object) in.readValue((Object.class.getClassLoader())));
+        this.attachmentID = ((Integer) in.readValue((Object.class.getClassLoader())));
     }
 
     /**
@@ -88,7 +88,7 @@ public class ReturnValue implements Serializable, Parcelable
      * @param iD
      * @param transactionStatusID
      */
-    public ReturnValue(String iD, String employeeID, String date, String shiftID, String shiftName, String notes, Integer transactionStatusID, Object attachmentFile, Object attachmentID) {
+    public ReturnValue(String iD, String employeeID, String date, String shiftID, String shiftName, String notes, Integer transactionStatusID, Object attachmentFile, Integer attachmentID) {
         super();
         this.iD = iD;
         this.employeeID = employeeID;
@@ -161,15 +161,15 @@ public class ReturnValue implements Serializable, Parcelable
         return attachmentFile;
     }
 
-    public void setAttachmentFile(Object attachmentFile) {
+    public void setAttachmentFile(Integer attachmentFile) {
         this.attachmentFile = attachmentFile;
     }
 
-    public Object getAttachmentID() {
+    public Integer getAttachmentID() {
         return attachmentID;
     }
 
-    public void setAttachmentID(Object attachmentID) {
+    public void setAttachmentID(Integer attachmentID) {
         this.attachmentID = attachmentID;
     }
 
