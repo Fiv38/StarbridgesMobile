@@ -368,37 +368,7 @@ public class CorrectionDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(txtLogInCDetails.getText().toString().matches(""))
-                {
-                    txtLogInCDetails.setError("Please fill the blank");
-                }
-                else if(txtLogOutCDetails.getText().toString().matches(""))
-                {
-                    txtLogOutCDetails.setError("Please fill the blank");
-                }
-                else if(spnLocationCDetails.getSelectedItem().toString().matches(""))
-                {
-                    lblLocationErrorCDetails.setError("");
-                    lblLocationErrorCDetails.setTextColor(Color.RED);//just to highlight that this is an error
-                    lblLocationErrorCDetails.setText(" Please choose location ");//changes the selected item text to this
-                }
-                else if(txtNotesCDetails.getText().toString().matches(""))
-                {
-                    txtNotesCDetails.setError("Please fill notes");
-                }
-                else if(Double.parseDouble(txtLogOutCDetails.getText().toString().substring(0,2)+"."+txtLogOutCDetails.getText().toString().substring(3,5))<Double.parseDouble(txtLogInCDetails.getText().toString().substring(0,2)+"."+txtLogInCDetails.getText().toString().substring(3,5)))
-                {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(CorrectionDetailActivity.this);
-                    alert.setTitle("Please make sure log out > log in");
-                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                        }
-                    });
-                    alert.show();
-                }
-                else
+                if(checkValidation())
                 {
                     AlertDialog.Builder alert = new AlertDialog.Builder(CorrectionDetailActivity.this);
                     alert.setTitle("Confirmation");
@@ -426,54 +396,26 @@ public class CorrectionDetailActivity extends AppCompatActivity {
         btnSubmitCDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+            if(checkValidation())
+            {
+                AlertDialog.Builder alert = new AlertDialog.Builder(CorrectionDetailActivity.this);
+                alert.setTitle("Confirmation");
+                alert.setTitle("This information will be send and wait for approval");
+                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        saveSubmitAttendanceCorrection("Submit");
+                    }
+                });
 
-                if(txtLogInCDetails.getText().toString().matches(""))
-                {
-                    txtLogInCDetails.setError("Please fill the blank");
-                }
-                else if(txtLogOutCDetails.getText().toString().matches(""))
-                {
-                    txtLogOutCDetails.setError("Please fill the blank");
-                }
-                else if(spnLocationCDetails.getSelectedItem().toString().matches(""))
-                {
-                    lblLocationErrorCDetails.setError(" Please choose location ");
-                }
-                else if(txtNotesCDetails.getText().toString().matches(""))
-                {
-                    txtNotesCDetails.setError("Please fill notes");
-                }
-                else if(Double.parseDouble(txtLogOutCDetails.getText().toString().substring(0,2)+"."+txtLogOutCDetails.getText().toString().substring(3,5))<Double.parseDouble(txtLogInCDetails.getText().toString().substring(0,2)+"."+txtLogInCDetails.getText().toString().substring(3,5)))
-                {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(CorrectionDetailActivity.this);
-                    alert.setTitle("Please make sure log out > log in");
-                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
+                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
-                        }
-                    });
-                    alert.show();
-                }
-                else {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(CorrectionDetailActivity.this);
-                    alert.setTitle("Confirmation");
-                    alert.setTitle("This information will be send and wait for approval");
-                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            saveSubmitAttendanceCorrection("Submit");
-                        }
-                    });
-
-                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                        }
-                    });
-                    alert.show();
-                }
+                    }
+                });
+                alert.show();
+            }
             }
         });
 
@@ -493,6 +435,46 @@ public class CorrectionDetailActivity extends AppCompatActivity {
 
         initSpinnerLoc();
 
+    }
+
+    public boolean checkValidation()
+    {
+        if(txtLogInCDetails.getText().toString().matches(""))
+        {
+            txtLogInCDetails.setError("Please fill the blank");
+            return false;
+        }
+        else if(txtLogOutCDetails.getText().toString().matches(""))
+        {
+            txtLogOutCDetails.setError("Please fill the blank");
+            return false;
+        }
+        else if(spnLocationCDetails.getSelectedItem().toString().matches(""))
+        {
+            lblLocationErrorCDetails.setError("");
+            lblLocationErrorCDetails.setTextColor(Color.RED);//just to highlight that this is an error
+            lblLocationErrorCDetails.setText(" Please choose location ");//changes the selected item text to this
+            return false;
+        }
+        else if(txtNotesCDetails.getText().toString().matches(""))
+        {
+            txtNotesCDetails.setError("Please fill notes");
+            return false;
+        }
+        else if(Double.parseDouble(txtLogOutCDetails.getText().toString().substring(0,2)+"."+txtLogOutCDetails.getText().toString().substring(3,5))<Double.parseDouble(txtLogInCDetails.getText().toString().substring(0,2)+"."+txtLogInCDetails.getText().toString().substring(3,5)))
+        {
+            AlertDialog.Builder alert = new AlertDialog.Builder(CorrectionDetailActivity.this);
+            alert.setTitle("Please make sure log out > log in");
+            alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+            alert.show();
+            return false;
+        }
+        return true;
     }
 
     public void getAttendaceCorrection(String uid) {

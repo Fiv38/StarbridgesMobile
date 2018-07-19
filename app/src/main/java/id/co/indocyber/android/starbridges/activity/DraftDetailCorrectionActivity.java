@@ -364,40 +364,8 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
         btnSaveCDraftDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if(txtLogInCDraftDetails.getText().toString().matches(""))
+                if(checkValidation())
                 {
-                    txtLogInCDraftDetails.setError("Please fill the blank");
-                }
-                else if(txtLogOutCDraftDetails.getText().toString().matches(""))
-                {
-                    txtLogOutCDraftDetails.setError("Please fill the blank");
-                }
-                else if(spnLocationCDraftDetails.getSelectedItem().toString().matches(""))
-                {
-                    lblLocationCDraftDetails.setError("");
-                    lblLocationCDraftDetails.setTextColor(Color.RED);//just to highlight that this is an error
-                    lblLocationCDraftDetails.setText(" Please choose location ");//changes the selected item text to this
-                }
-                else if(txtNotesCDraftDetails.getText().toString().matches(""))
-                {
-                    txtNotesCDraftDetails.setError("Please fill notes");
-                }
-                else if(Double.parseDouble(txtLogOutCDraftDetails.getText().toString().substring(0,2)+"."+txtLogOutCDraftDetails.getText().toString().substring(3,5))<Double.parseDouble(txtLogInCDraftDetails.getText().toString().substring(0,2)+"."+txtLogInCDraftDetails.getText().toString().substring(3,5)))
-                {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(DraftDetailCorrectionActivity.this);
-                    alert.setTitle("Please make sure log out > log in");
-                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                        }
-                    });
-                    alert.show();
-                }
-                else {
-
-
                     AlertDialog.Builder alert = new AlertDialog.Builder(DraftDetailCorrectionActivity.this);
                     alert.setTitle("Confirmation");
                     alert.setTitle("This information will be saved as draft");
@@ -422,38 +390,8 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
         btnSubmitCDraftDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(txtLogInCDraftDetails.getText().toString().matches(""))
+                if(checkValidation())
                 {
-                    txtLogInCDraftDetails.setError("Please fill the blank");
-                }
-                else if(txtLogOutCDraftDetails.getText().toString().matches(""))
-                {
-                    txtLogOutCDraftDetails.setError("Please fill the blank");
-                }
-                else if(spnLocationCDraftDetails.getSelectedItem().toString().matches(""))
-                {
-                    lblLocationCDraftDetails.setError("");
-                    lblLocationCDraftDetails.setTextColor(Color.RED);//just to highlight that this is an error
-                    lblLocationCDraftDetails.setText(" Please choose location ");//changes the selected item text to this
-                }
-                else if(txtNotesCDraftDetails.getText().toString().matches(""))
-                {
-                    txtNotesCDraftDetails.setError("Please fill notes");
-                }
-                else if(Double.parseDouble(txtLogOutCDraftDetails.getText().toString().substring(0,2)+"."+txtLogOutCDraftDetails.getText().toString().substring(3,5))<Double.parseDouble(txtLogInCDraftDetails.getText().toString().substring(0,2)+"."+txtLogInCDraftDetails.getText().toString().substring(3,5)))
-                {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(DraftDetailCorrectionActivity.this);
-                    alert.setTitle("Please make sure log out > log in");
-                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                        }
-                    });
-                    alert.show();
-                }
-                else {
-
                     AlertDialog.Builder alert = new AlertDialog.Builder(DraftDetailCorrectionActivity.this);
                     alert.setTitle("Confirmation");
                     alert.setTitle("This information will be send and wait for approval");
@@ -491,6 +429,46 @@ public class DraftDetailCorrectionActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
+    }
+
+    public boolean checkValidation()
+    {
+        if(txtLogInCDraftDetails.getText().toString().matches(""))
+        {
+            txtLogInCDraftDetails.setError("Please fill the blank");
+            return false;
+        }
+        else if(txtLogOutCDraftDetails.getText().toString().matches(""))
+        {
+            txtLogOutCDraftDetails.setError("Please fill the blank");
+            return false;
+        }
+        else if(spnLocationCDraftDetails.getSelectedItem().toString().matches(""))
+        {
+            lblLocationCDraftDetails.setError("");
+            lblLocationCDraftDetails.setTextColor(Color.RED);//just to highlight that this is an error
+            lblLocationCDraftDetails.setText(" Please choose location ");//changes the selected item text to this
+            return false;
+        }
+        else if(txtNotesCDraftDetails.getText().toString().matches(""))
+        {
+            txtNotesCDraftDetails.setError("Please fill notes");
+            return false;
+        }
+        else if(Double.parseDouble(txtLogOutCDraftDetails.getText().toString().substring(0,2)+"."+txtLogOutCDraftDetails.getText().toString().substring(3,5))<Double.parseDouble(txtLogInCDraftDetails.getText().toString().substring(0,2)+"."+txtLogInCDraftDetails.getText().toString().substring(3,5)))
+        {
+            AlertDialog.Builder alert = new AlertDialog.Builder(DraftDetailCorrectionActivity.this);
+            alert.setTitle("Please make sure log out > log in");
+            alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+            alert.show();
+            return false;
+        }
+        return true;
     }
 
     public void getAttendaceCorrection(String id) {
