@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+
+    <TextView
+        android:id="@+id/txtNameLoanMainHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Car Ownership Program"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtRemainingLoan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="80.000.000"
+        android:textColor="@color/md_blue_700"
+        android:textSize="13dp" />
+
+    <TextView
+        android:id="@+id/txtRemainingInstallment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="15"
+        android:textColor="@color/md_green_700"
+        android:textSize="13dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingTop="5dp">
+
+        <Button
+            android:id="@+id/btnScheduleLoan"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_btn"
+            android:text="Schedule"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/btnHistoryLoan"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_btn"
+            android:text="History"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+</LinearLayout>

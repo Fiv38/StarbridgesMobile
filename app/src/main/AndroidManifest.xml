@@ -27,9 +27,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="adjustPan">
-
-        </activity>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.RegisterActivity"
             android:configChanges="orientation"
@@ -215,17 +213,26 @@
             android:name=".activity.CorrectionFilterActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activity.HomeActivity"
-            android:theme="@style/TranslucentTheme"></activity>
-
-        <activity android:name=".activity.SplashScreenActivity"
+            android:theme="@style/TranslucentTheme" />
+        <activity
+            android:name=".activity.SplashScreenActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
+        <activity android:name=".activity.LoanMainHistoryActivity" />
+        <activity android:name=".activity.LoanHistoryActivity" />
+        <activity android:name=".activity.LoanScheduleActivity" />
+        <activity
+            android:name=".activity.LoanSelectorActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".activity.HomeActivity"
+            android:theme="@style/TranslucentTheme" />
+        <activity android:name=".activity.LoanTransactionMainActivity" />
+        <activity android:name=".activity.LoanTransactionActivity"></activity>
     </application>
 
 </manifest>

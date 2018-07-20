@@ -1,6 +1,5 @@
 package id.co.indocyber.android.starbridges.network;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -22,9 +21,14 @@ import id.co.indocyber.android.starbridges.model.ListDraftReimbursement.ListDraf
 import id.co.indocyber.android.starbridges.model.ListDraftShiftExchange.ListDraftShiftExchange;
 import id.co.indocyber.android.starbridges.model.ListEmployee.ListEmployee;
 import id.co.indocyber.android.starbridges.model.ListLeaveCancelation.ListLeaveCancelation;
+import id.co.indocyber.android.starbridges.model.ListLoanHistory.ListLoanHistory;
+import id.co.indocyber.android.starbridges.model.ListLoanSchedule.ListLoanSchedule;
+import id.co.indocyber.android.starbridges.model.ListLoanTransaction.ListLoanTransaction;
 import id.co.indocyber.android.starbridges.model.ListOvertime.Overtime;
 import id.co.indocyber.android.starbridges.model.ListShift.ListShift;
 import id.co.indocyber.android.starbridges.model.ListShiftExchange.ListShiftExchange;
+import id.co.indocyber.android.starbridges.model.ListTransactionInformation.ListTransactionInformation;
+import id.co.indocyber.android.starbridges.model.LoanSettingLimit.LoanSettingLimit;
 import id.co.indocyber.android.starbridges.model.MessageReturn.MessageReturn;
 import id.co.indocyber.android.starbridges.model.OLocation.OLocation;
 import id.co.indocyber.android.starbridges.model.OPost;
@@ -470,4 +474,22 @@ public interface APIInterfaceRest {
 
     @GET("api/Attendance/GetAppVersion")
     Call<Versioning>checkAppVerion();
+
+    @GET("api/Loan/GetLoanSettingLimit")
+    Call<LoanSettingLimit> getLoanSettingLimit();
+
+    @POST("api/Loan/ListTransactionInformation")
+    Call<ListTransactionInformation>getListTransactionInformation(@Query("startDate") String startDate, @Query("endDate") String endDate);
+
+    @FormUrlEncoded
+    @POST("api/Loan/ListLoanSchedule")
+    Call<ListLoanSchedule>getListLoanSchedule(@Field("loanBalanceID") String loanBalanceID);
+
+    @FormUrlEncoded
+    @POST("api/Loan/ListLoanHistory")
+    Call<ListLoanHistory>getListLoanHistory(@Field("loanBalanceID") String loanBalanceID);
+
+    @FormUrlEncoded
+    @POST("api/Loan/ListTransaction")
+    Call<ListLoanTransaction>getListLoanTransaction(@Field("loanBalanceID") String loanBalanceID);
 }

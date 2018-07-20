@@ -12,6 +12,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 import id.co.indocyber.android.starbridges.R;
+import id.co.indocyber.android.starbridges.adapter.LoanMainTransactionAdapter;
 import id.co.indocyber.android.starbridges.utility.SharedPreferenceUtils;
 
 import java.text.DateFormat;
@@ -25,6 +26,8 @@ public class HistoryFilterActivity extends AppCompatActivity {
     private Button mShowHistory;
     //private String sFrom, sTo;
     Calendar myCalendar = Calendar.getInstance();
+
+    String destination;
 
     DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
         @Override
@@ -104,7 +107,23 @@ public class HistoryFilterActivity extends AppCompatActivity {
                     alert.show();
                 }
                 else
-                    ShowHistory();
+                {
+                    if(destination==null)
+                    {
+                        showHistory();
+                    }
+                    else if(destination.equals("LoanHistory"))
+                    {
+                        showLoanHistory();
+                    }
+                    else if(destination.equals("LoanTransaction"))
+                    {
+                        showLoanTransaction();
+                    }
+
+
+                }
+
             }
         });
 
@@ -125,10 +144,27 @@ public class HistoryFilterActivity extends AppCompatActivity {
 
         mFromDate.setText(sdf.format(firstDateOfMonth));
         mToDate.setText(sdf.format(dateOfMonth));
+
+        destination = getIntent().getStringExtra("destination");
+
     }
 
-    private void ShowHistory() {
+    private void showHistory() {
         Intent history = new Intent(this, HistoriesActivity.class);
+        history.putExtra("from", mFromDate.getText().toString());
+        history.putExtra("to", mToDate.getText().toString());
+        startActivity(history);
+    }
+
+    private void showLoanHistory() {
+        Intent history = new Intent(this, LoanMainHistoryActivity.class);
+        history.putExtra("from", mFromDate.getText().toString());
+        history.putExtra("to", mToDate.getText().toString());
+        startActivity(history);
+    }
+
+    private void showLoanTransaction() {
+        Intent history = new Intent(this, LoanTransactionMainActivity.class);
         history.putExtra("from", mFromDate.getText().toString());
         history.putExtra("to", mToDate.getText().toString());
         startActivity(history);

@@ -241,4 +241,9 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(shiftExchange);
     }
 
+    public void showLoan(View view){
+        Intent shiftExchange = new Intent(this, LoanSelectorActivity.class);
+        startActivity(shiftExchange);
+    }
+
 }

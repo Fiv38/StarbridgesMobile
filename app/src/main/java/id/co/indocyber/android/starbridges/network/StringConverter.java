@@ -9,6 +9,11 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 import java.lang.reflect.Type;
+import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by user on 5/8/2018.
@@ -27,5 +32,28 @@ public class StringConverter implements JsonSerializer<String>, JsonDeserializer
                               JsonDeserializationContext context)
             throws JsonParseException {
         return json.getAsJsonPrimitive().getAsString();
+    }
+
+    public String numberFormat(String number)
+    {
+        NumberFormat format = NumberFormat.getInstance(Locale.GERMAN);
+        String result = format.format(Integer.parseInt(number));
+        return result;
+    }
+
+    public String dateFormat3(String dateInput)
+    {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+        DateFormat sdf = new SimpleDateFormat("d MMMM yyyy");
+        String dateResult = "";
+        try{
+            Date result =  df.parse(dateInput);
+            dateResult=sdf.format(result);
+        }catch (Exception e)
+        {
+
+        }
+
+        return dateResult;
     }
 }
