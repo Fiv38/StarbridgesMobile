@@ -38,6 +38,7 @@ public class LoanHistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loan_history);
+        setTitle("Loan History");
 
         txtPolicyNameHistoryLoan=(TextView)findViewById(R.id.txtPolicyNameHistoryLoan);
         txtRemainingLoanHistoryLoan=(TextView)findViewById(R.id.txtRemainingLoanHistoryLoan);

@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -39,6 +41,7 @@ public class LoanTransactionMainActivity extends AppCompatActivity implements Ad
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loan_transaction_main);
+        setTitle("Loan Transaction");
 
         lstLoanTransactionMain=(ListView)findViewById(R.id.lstLoanTransactionMain);
 
@@ -108,5 +111,26 @@ public class LoanTransactionMainActivity extends AppCompatActivity implements Ad
 
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_draft, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        // save to draft
+        if(id == R.id.action_item_one ){
+            Intent intent = new Intent(LoanTransactionMainActivity.this, ListDraftLoanTransactionApprovedActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

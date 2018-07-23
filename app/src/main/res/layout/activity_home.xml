@@ -293,8 +293,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="showLoan"
+                    android:visibility="invisible"
                     android:orientation="vertical"
-                    android:visibility="invisible">
+                    >
 
                     <ImageView
                         android:id="@+id/imageView10"
@@ -308,6 +309,7 @@
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:gravity="center"
+
                         android:text="LOAN"
                         android:textColor="@android:color/background_light"
                         android:textStyle="bold" />

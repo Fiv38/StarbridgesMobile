@@ -19,6 +19,8 @@ import id.co.indocyber.android.starbridges.model.ListDraftLeaveCancelation.ListD
 import id.co.indocyber.android.starbridges.model.ListDraftOvertime.ListDraftOvertime;
 import id.co.indocyber.android.starbridges.model.ListDraftReimbursement.ListDraftReimbursement;
 import id.co.indocyber.android.starbridges.model.ListDraftShiftExchange.ListDraftShiftExchange;
+import id.co.indocyber.android.starbridges.model.ListDraftTransactionLoan.ListDraftTransactionLoan;
+import id.co.indocyber.android.starbridges.model.ListDraftTransactionLoanApproved.ListDraftTransactionLoanApproved;
 import id.co.indocyber.android.starbridges.model.ListEmployee.ListEmployee;
 import id.co.indocyber.android.starbridges.model.ListLeaveCancelation.ListLeaveCancelation;
 import id.co.indocyber.android.starbridges.model.ListLoanHistory.ListLoanHistory;
@@ -28,7 +30,9 @@ import id.co.indocyber.android.starbridges.model.ListOvertime.Overtime;
 import id.co.indocyber.android.starbridges.model.ListShift.ListShift;
 import id.co.indocyber.android.starbridges.model.ListShiftExchange.ListShiftExchange;
 import id.co.indocyber.android.starbridges.model.ListTransactionInformation.ListTransactionInformation;
+import id.co.indocyber.android.starbridges.model.LoanSchedule.LoanSchedule;
 import id.co.indocyber.android.starbridges.model.LoanSettingLimit.LoanSettingLimit;
+import id.co.indocyber.android.starbridges.model.LoanTransactionType.LoanTransactionType;
 import id.co.indocyber.android.starbridges.model.MessageReturn.MessageReturn;
 import id.co.indocyber.android.starbridges.model.OLocation.OLocation;
 import id.co.indocyber.android.starbridges.model.OPost;
@@ -492,4 +496,19 @@ public interface APIInterfaceRest {
     @FormUrlEncoded
     @POST("api/Loan/ListTransaction")
     Call<ListLoanTransaction>getListLoanTransaction(@Field("loanBalanceID") String loanBalanceID);
+
+    @GET("api/Loan/ListDraft")
+    Call<ListDraftTransactionLoanApproved> getListDraftLoanTransactionApproved();
+
+    @FormUrlEncoded
+    @POST("api/Loan/ListDraftTransaction")
+    Call<ListDraftTransactionLoan>getListDraftLoanTransaction(@Field("loanBalanceID") String loanBalanceID);
+
+    @GET("api/Loan/GetTransactionType")
+    Call<LoanTransactionType> getLoanTransactionType();
+
+    @FormUrlEncoded
+    @POST("api/Loan/GetSchedule")
+    Call<LoanSchedule>getLoanSchedule(@Field("loanBalanceID") String loanBalanceID);
+
 }

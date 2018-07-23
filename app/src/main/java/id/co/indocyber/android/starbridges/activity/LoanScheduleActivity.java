@@ -37,6 +37,7 @@ public class LoanScheduleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loan_schedule);
+        setTitle("Loan History Schedule");
 
         txtPolicyNameScheduleLoan=(TextView)findViewById(R.id.txtPolicyNameScheduleLoan);
         txtRemainingLoanScheduleLoan=(TextView)findViewById(R.id.txtRemainingLoanScheduleLoan);

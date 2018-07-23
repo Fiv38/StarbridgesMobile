@@ -232,7 +232,14 @@
             android:parentActivityName=".activity.HomeActivity"
             android:theme="@style/TranslucentTheme" />
         <activity android:name=".activity.LoanTransactionMainActivity" />
-        <activity android:name=".activity.LoanTransactionActivity"></activity>
+        <activity android:name=".activity.LoanTransactionActivity" />
+        <activity android:name=".activity.ListDraftLoanTransactionApprovedActivity" />
+        <activity android:name=".activity.ListDraftLoanTransactionActivity"></activity>
+        <activity android:name=".activity.LoanDetailPostPoneActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".activity.HomeActivity"
+            android:theme="@style/TranslucentTheme"
+            ></activity>
     </application>
 
 </manifest>

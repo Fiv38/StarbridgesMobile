@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txtTransactionTypeTransactionLoan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TransactionType"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtStartDateTransactionLoan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:gravity="right"
+            android:text="Date"
+            android:textColor="@color/wallet_holo_blue_light" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtPolicyTransactionLoan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Policy"
+        android:textSize="14dp" />
+
+    <TextView
+        android:id="@+id/txtAmountTransactionLoan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Amount"
+        android:textSize="13dp" />
+</LinearLayout>

@@ -64,6 +64,7 @@
             android:id="@+id/lstTransactionLoan"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/border"
             android:layout_weight="1" />
 
         <android.support.design.widget.FloatingActionButton

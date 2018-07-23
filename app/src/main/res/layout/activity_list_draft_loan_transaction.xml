@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.LoanScheduleActivity">
-
+    tools:context=".activity.ListDraftLoanTransactionActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,7 +28,7 @@
                 android:text="Policy Name" />
 
             <TextView
-                android:id="@+id/txtPolicyNameScheduleLoan"
+                android:id="@+id/txtPolicyNameTransactionLoan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
@@ -48,7 +47,7 @@
                 android:text="Remaining Loan" />
 
             <TextView
-                android:id="@+id/txtRemainingLoanScheduleLoan"
+                android:id="@+id/txtRemainingLoanTransactionLoan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
@@ -57,10 +56,28 @@
 
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/lstScheduleLoan"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/border"
-        android:layout_weight="1" />
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/lstTransactionLoan"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/border"
+            android:layout_weight="1" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabAddLoanTransactionMain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="15dp"
+            android:clickable="true"
+            app:backgroundTint="@color/wallet_holo_blue_light"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/ic_menu_add" />
+    </RelativeLayout>
+
 </LinearLayout>
