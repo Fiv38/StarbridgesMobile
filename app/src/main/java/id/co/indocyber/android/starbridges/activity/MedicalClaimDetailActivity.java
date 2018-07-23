@@ -412,7 +412,31 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 
                 imageView.setImageBitmap(selectedImage);
-                attachmentFile = encodeImage(selectedImage);
+                if(selectedImage.getHeight()>1000||selectedImage.getWidth()>1000)
+                {
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//                    selectedImage.compress(Bitmap.CompressFormat.JPEG, 30, stream);
+                    int newWidth=0;
+                    int newHeight=0;
+                    int maxPixel=1000;
+                    if(selectedImage.getWidth()>selectedImage.getHeight())
+                    {
+                        newHeight=maxPixel;
+                        newWidth=maxPixel*selectedImage.getWidth()/selectedImage.getHeight();
+                    }
+                    else
+                    {
+                        newWidth=maxPixel;
+                        newHeight=maxPixel*selectedImage.getHeight()/selectedImage.getWidth();
+
+                    }
+//                    selectedImage2.createScaledBitmap(selectedImage, newWidth, newHeight, false);
+                    Bitmap selectedImage2 = Bitmap.createScaledBitmap(selectedImage, newWidth, newHeight, false);
+                    attachmentFile = encodeImage(selectedImage2);
+
+                }
+                else
+                    attachmentFile = encodeImage(selectedImage);
             }catch (FileNotFoundException e){
                 e.printStackTrace();
                 Toast.makeText(MedicalClaimDetailActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
