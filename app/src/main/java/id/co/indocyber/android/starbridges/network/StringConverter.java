@@ -1,5 +1,8 @@
 package id.co.indocyber.android.starbridges.network;
 
+import android.graphics.Bitmap;
+import android.util.Base64;
+
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -8,6 +11,7 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
+import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -55,5 +59,35 @@ public class StringConverter implements JsonSerializer<String>, JsonDeserializer
         }
 
         return dateResult;
+    }
+
+    private String encodeImage(Bitmap bm) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String encImage = Base64.encodeToString(b, Base64.DEFAULT);
+
+        return encImage;
+    }
+
+    public String scalingImage(Bitmap selectedImage)
+    {
+        int newWidth=0;
+        int newHeight=0;
+        int maxPixel=1000;
+        if(selectedImage.getWidth()>selectedImage.getHeight())
+        {
+            newHeight=maxPixel;
+            newWidth=maxPixel*selectedImage.getWidth()/selectedImage.getHeight();
+        }
+        else
+        {
+            newWidth=maxPixel;
+            newHeight=maxPixel*selectedImage.getHeight()/selectedImage.getWidth();
+
+        }
+//                    selectedImage2.createScaledBitmap(selectedImage, newWidth, newHeight, false);
+        Bitmap selectedImage2 = Bitmap.createScaledBitmap(selectedImage, newWidth, newHeight, false);
+        return encodeImage(selectedImage2);
     }
 }

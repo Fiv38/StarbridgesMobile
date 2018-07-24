@@ -190,18 +190,18 @@
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginTop="5dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
                 android:background="@color/cardview_shadow_start_color"
-                android:maxHeight="200dp" />
+                android:maxHeight="200dp"
+                android:scaleType="fitCenter" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="bottom"
                 android:gravity="bottom"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <Button
