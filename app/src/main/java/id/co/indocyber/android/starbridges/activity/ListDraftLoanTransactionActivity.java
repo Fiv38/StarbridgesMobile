@@ -63,6 +63,8 @@ public class ListDraftLoanTransactionActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent=new Intent(ListDraftLoanTransactionActivity.this, LoanDetailPostPoneActivity.class);
                 intent.putExtra("LoanBalanceId", loanBalanceID);
+                intent.putExtra("PolicyName", policyName);
+                intent.putExtra("RemainingLoan", remainingLoan);
                 startActivity(intent);
             }
         });

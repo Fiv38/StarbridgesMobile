@@ -23,6 +23,7 @@ import id.co.indocyber.android.starbridges.network.APIClient;
 import id.co.indocyber.android.starbridges.network.APIInterfaceRest;
 import id.co.indocyber.android.starbridges.network.StringConverter;
 import id.co.indocyber.android.starbridges.utility.GlobalVar;
+import id.co.indocyber.android.starbridges.utility.SharedPreferenceUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -55,16 +56,40 @@ public class LoanTransactionActivity extends AppCompatActivity {
         lstTransactionLoan=(ListView)findViewById(R.id.lstTransactionLoan);
 
         policyName=getIntent().getStringExtra("PolicyName");
-        txtPolicyNameTransactionLoan.setText(policyName);
         remainingLoan=getIntent().getStringExtra("RemainingLoan");
-        txtRemainingLoanTransactionLoan.setText(new StringConverter().numberFormat(remainingLoan));
-
         loanBalanceID= getIntent().getStringExtra("LoanBalanceId");
+
+        if(policyName==null||policyName=="")
+        {
+            policyName= SharedPreferenceUtils.getSetting(getApplicationContext(), "PolicyName", "");
+        }
+        else
+            SharedPreferenceUtils.setSetting(getApplicationContext(),"PolicyName", policyName);
+
+        if(remainingLoan==null||remainingLoan=="")
+        {
+            remainingLoan= SharedPreferenceUtils.getSetting(getApplicationContext(), "RemainingLoan", "");
+        }
+        else
+            SharedPreferenceUtils.setSetting(getApplicationContext(),"RemainingLoan", remainingLoan);
+
+        if(loanBalanceID==null||loanBalanceID=="")
+        {
+            loanBalanceID= SharedPreferenceUtils.getSetting(getApplicationContext(), "LoanBalanceId", "");
+        }
+        else
+            SharedPreferenceUtils.setSetting(getApplicationContext(),"LoanBalanceId", loanBalanceID);
+
+        txtPolicyNameTransactionLoan.setText(policyName);
+        txtRemainingLoanTransactionLoan.setText(new StringConverter().numberFormat(remainingLoan));
 
         fabAddLoanTransactionMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent= new Intent(LoanTransactionActivity.this, LoanDetailPostPoneActivity.class);
+                intent.putExtra("LoanBalanceId", loanBalanceID);
+                intent.putExtra("PolicyName", policyName);
+                intent.putExtra("RemainingLoan", remainingLoan);
                 startActivity(intent);
             }
         });

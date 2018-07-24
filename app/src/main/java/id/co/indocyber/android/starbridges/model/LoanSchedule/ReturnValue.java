@@ -19,7 +19,7 @@ public class ReturnValue implements Serializable, Parcelable
     private Object name;
     @SerializedName("Installment")
     @Expose
-    private Integer installment;
+    private String installment;
     public final static Creator<ReturnValue> CREATOR = new Creator<ReturnValue>() {
 
 
@@ -41,7 +41,7 @@ public class ReturnValue implements Serializable, Parcelable
     protected ReturnValue(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
         this.name = ((Object) in.readValue((Object.class.getClassLoader())));
-        this.installment = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.installment = ((String) in.readValue((String.class.getClassLoader())));
     }
 
     /**
@@ -57,7 +57,9 @@ public class ReturnValue implements Serializable, Parcelable
      * @param id
      * @param name
      */
-    public ReturnValue(Integer id, Object name, Integer installment) {
+
+
+    public ReturnValue(Integer id, Object name, String installment) {
         super();
         this.id = id;
         this.name = name;
@@ -90,15 +92,15 @@ public class ReturnValue implements Serializable, Parcelable
         return this;
     }
 
-    public Integer getInstallment() {
+    public String getInstallment() {
         return installment;
     }
 
-    public void setInstallment(Integer installment) {
+    public void setInstallment(String installment) {
         this.installment = installment;
     }
 
-    public ReturnValue withInstallment(Integer installment) {
+    public ReturnValue withInstallment(String installment) {
         this.installment = installment;
         return this;
     }
@@ -115,6 +117,6 @@ public class ReturnValue implements Serializable, Parcelable
 
     @Override
     public String toString() {
-        return installment+"";
+        return installment;
     }
 }
