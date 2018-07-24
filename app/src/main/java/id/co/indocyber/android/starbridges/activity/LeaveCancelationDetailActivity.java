@@ -462,13 +462,11 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 
                 imgCancelDetail.setImageBitmap(selectedImage);
-                if(selectedImage.getHeight()>1000||selectedImage.getWidth()>1000)
+                if(selectedImage.getHeight()>600||selectedImage.getWidth()>600)
                 {
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//                    selectedImage.compress(Bitmap.CompressFormat.JPEG, 30, stream);
                     int newWidth=0;
                     int newHeight=0;
-                    int maxPixel=1000;
+                    int maxPixel=600;
                     if(selectedImage.getWidth()>selectedImage.getHeight())
                     {
                         newHeight=maxPixel;

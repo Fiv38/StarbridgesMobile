@@ -152,16 +152,19 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
         // set clickable to image
         imageView.setClickable(true);
 
-        progressDialog = new ProgressDialog(MedicalClaimDetailActivity.this);
-        progressDialog.setTitle("Loading");
+
         // load api
-        initMedicalSupport();
+
 
         // Get intent from adapter
         intent = getIntent();
         if(intent.getStringExtra("ID") != null){
             id = intent.getStringExtra("ID");
             editMedical(id);
+        }
+        else
+        {
+            initMedicalSupport();
         }
 
         spinnerMedicalPolicy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -412,13 +415,11 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 
                 imageView.setImageBitmap(selectedImage);
-                if(selectedImage.getHeight()>1000||selectedImage.getWidth()>1000)
+                if(selectedImage.getHeight()>600&&selectedImage.getWidth()>600)
                 {
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//                    selectedImage.compress(Bitmap.CompressFormat.JPEG, 30, stream);
                     int newWidth=0;
                     int newHeight=0;
-                    int maxPixel=1000;
+                    int maxPixel=600;
                     if(selectedImage.getWidth()>selectedImage.getHeight())
                     {
                         newHeight=maxPixel;
@@ -449,9 +450,14 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
     public void initMedicalSupport(){
         // get token
         apiInterface = APIClient.getClient(GlobalVar.getToken()).create(APIInterfaceRest.class);
-        progressDialog = new ProgressDialog(MedicalClaimDetailActivity.this);
-        progressDialog.setTitle("Initialize Medical Support");
-        progressDialog.show();
+
+        if(progressDialog==null|| !progressDialog.isShowing())
+        {
+            progressDialog = new ProgressDialog(MedicalClaimDetailActivity.this);
+            progressDialog.setTitle("Initialize Medical Support");
+            progressDialog.show();
+        }
+
 
         Call<GetMedicalSupport> call3 = apiInterface.getMedicalSupport();
         call3.enqueue(new Callback<GetMedicalSupport>() {
@@ -473,6 +479,7 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                 } else {
                     Toast.makeText(MedicalClaimDetailActivity.this, "Failed to get data", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                     finish();
                 }
             }
@@ -490,8 +497,13 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
 
     // load spinner Claim Policy
     public void initSpinnerClaimPolicy(){
-        progressDialog.setTitle("Initialize Claim Policy");
-        progressDialog.show();
+
+        if(progressDialog!=null&& !progressDialog.isShowing())
+        {
+            progressDialog = new ProgressDialog(MedicalClaimDetailActivity.this);
+            progressDialog.setTitle("Initialize Medical Support");
+            progressDialog.show();
+        }
         listClaimPolicyReturnValue = new ArrayList<>();
         id.co.indocyber.android.starbridges.model.getclaimpolicy.ReturnValue returnValue2 = new id.co.indocyber.android.starbridges.model.getclaimpolicy.ReturnValue();
         returnValue2.setText("");
@@ -579,7 +591,7 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<GetEmployeeFamily> call, Throwable t) {
-                progressDialog.dismiss();
+//                progressDialog.dismiss();
                 Toast.makeText(MedicalClaimDetailActivity.this, "Something went wrong...Please try again!", Toast.LENGTH_SHORT).show();
                 call.cancel();
 
@@ -830,6 +842,9 @@ public class MedicalClaimDetailActivity extends AppCompatActivity {
     }
 
     public void editMedical(String id){
+        progressDialog = new ProgressDialog(MedicalClaimDetailActivity.this);
+        progressDialog.setTitle("Loading");
+        progressDialog.show();
         // get token
         apiInterface = APIClient.getClient(GlobalVar.getToken()).create(APIInterfaceRest.class);
         //progressDialog.show();
