@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
@@ -27,8 +28,10 @@ import id.co.indocyber.android.starbridges.R;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.DateFormat;
@@ -347,6 +350,40 @@ public class LeaveCancelationDetailActivity extends AppCompatActivity {
 
             }
         });
+
+        imgCancelDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                downloadFileFromBase64(photo);
+            }
+        });
+
+
+
+    }
+
+    private void downloadFileFromBase64(String fileContent) {
+        byte[] pdfAsBytes = Base64.decode(fileContent, 0);
+
+        String folder_main = "starbridges";
+
+        File f = new File(Environment.getExternalStorageDirectory(), folder_main);
+        if (!f.exists()) {
+            f.mkdirs();
+        }
+
+        File filePath = new File(Environment.getExternalStorageDirectory()+"/starbridges/save.bmp");
+        FileOutputStream os = null;
+        try {
+            os = new FileOutputStream(filePath, true);
+            os.write(pdfAsBytes);
+            os.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public int getTimeRemaining(Date date1, Date date2)

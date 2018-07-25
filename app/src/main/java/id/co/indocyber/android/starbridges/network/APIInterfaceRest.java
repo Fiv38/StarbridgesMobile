@@ -30,6 +30,7 @@ import id.co.indocyber.android.starbridges.model.ListOvertime.Overtime;
 import id.co.indocyber.android.starbridges.model.ListShift.ListShift;
 import id.co.indocyber.android.starbridges.model.ListShiftExchange.ListShiftExchange;
 import id.co.indocyber.android.starbridges.model.ListTransactionInformation.ListTransactionInformation;
+import id.co.indocyber.android.starbridges.model.LoanPolicy.LoanPolicy;
 import id.co.indocyber.android.starbridges.model.LoanSchedule.LoanSchedule;
 import id.co.indocyber.android.starbridges.model.LoanSettingLimit.LoanSettingLimit;
 import id.co.indocyber.android.starbridges.model.LoanTransactionType.LoanTransactionType;
@@ -513,5 +514,11 @@ public interface APIInterfaceRest {
 
     @POST("api/Loan/SaveExpeditePostpone")
     Call<MessageReturn>saveExpeditePostpone(@Body RequestBody body,@Query("TransactionStatusLoan") String TransactionStatusLoan);
+
+    @GET("api/Loan/GetLoanPolicy")
+    Call<LoanPolicy>getLoanPolicy();
+
+    @POST("api/Loan/SaveLoanRequest")
+    Call<MessageReturn>saveLoanRequest(@Body RequestBody body,@Query("TransactionStatusLoan") String TransactionStatusLoan);
 
 }

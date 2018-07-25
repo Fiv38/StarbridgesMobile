@@ -20,7 +20,7 @@ public class ListDraftLoanTransactionApprovedAdapter extends ArrayAdapter<Return
     private final List<ReturnValue> listTransaction;
 
     public ListDraftLoanTransactionApprovedAdapter(@NonNull Context context, List<ReturnValue> listTransaction) {
-        super(context, R.layout.list_loan_main_transaction, listTransaction);
+        super(context, R.layout.list_draft_loan_main_transaction, listTransaction);
         this.context = context;
         this.listTransaction = listTransaction;
     }
@@ -31,18 +31,29 @@ public class ListDraftLoanTransactionApprovedAdapter extends ArrayAdapter<Return
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         // get rowview from inflater
-        View rowView = inflater.inflate(R.layout.list_loan_main_transaction, parent, false);
+        View rowView = inflater.inflate(R.layout.list_draft_loan_main_transaction, parent, false);
 
         // get the text view from the rowView
-        TextView txtNameLoanMainHistory = (TextView) rowView.findViewById(R.id.txtNameLoanMainHistory);
-        TextView txtRemainingLoan = (TextView) rowView.findViewById(R.id.txtRemainingLoan);
-        TextView txtRemainingInstallment = (TextView) rowView.findViewById(R.id.txtRemainingInstallment);
+        TextView txtPolicyDraftLoan = (TextView) rowView.findViewById(R.id.txtPolicyDraftLoan);
+        TextView txtStartDateDraftLoan = (TextView) rowView.findViewById(R.id.txtStartDateDraftLoan);
+        TextView txtAmountDraftLoan = (TextView) rowView.findViewById(R.id.txtAmountDraftLoan);
+        TextView txtCreditAmountDraftLoan = (TextView) rowView.findViewById(R.id.txtCreditAmountDraftLoan);
 
-        txtNameLoanMainHistory.setText(listTransaction.get(position).getPolicy());
+        txtPolicyDraftLoan.setText(listTransaction.get(position).getPolicy());
 
         StringConverter stringConverter=new StringConverter();
-        txtRemainingLoan.setText("Remaining Loan: "+ stringConverter.numberFormat(listTransaction.get(position).getRemainingLoan()+""));
-        txtRemainingInstallment.setText("Remaining Installment: "+listTransaction.get(position).getRemainingInstallment());
+        try{
+            txtStartDateDraftLoan.setText(stringConverter.dateFormat3(listTransaction.get(position).getStartDate()) );
+            txtAmountDraftLoan.setText("Amount: "+ stringConverter.numberFormat(listTransaction.get(position).getAmount()+""));
+            txtCreditAmountDraftLoan.setText("Credit Amount: "+stringConverter.numberFormat(listTransaction.get(position).getCreditAmount()+""));
+        }
+        catch (Exception e)
+        {
+
+        }
+
+
+
 
         return rowView;
 //        View itemView = convertView;

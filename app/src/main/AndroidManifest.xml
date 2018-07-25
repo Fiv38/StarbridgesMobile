@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -240,6 +242,12 @@
             android:parentActivityName=".activity.HomeActivity"
             android:theme="@style/TranslucentTheme"
             ></activity>
+        <activity android:name=".activity.LoanRequestCreateActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".activity.HomeActivity"
+            android:theme="@style/TranslucentTheme"
+            ></activity>
+
     </application>
 
 </manifest>

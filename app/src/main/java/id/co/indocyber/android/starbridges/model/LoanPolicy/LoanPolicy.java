@@ -1,14 +1,15 @@
 
-package id.co.indocyber.android.starbridges.model.LoanSettingLimit;
+package id.co.indocyber.android.starbridges.model.LoanPolicy;
 
 import java.io.Serializable;
+import java.util.List;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.Parcelable.Creator;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class LoanSettingLimit implements Serializable, Parcelable
+public class LoanPolicy implements Serializable, Parcelable
 {
 
     @SerializedName("CustomField")
@@ -16,34 +17,34 @@ public class LoanSettingLimit implements Serializable, Parcelable
     private CustomField customField;
     @SerializedName("ReturnValue")
     @Expose
-    private ReturnValue returnValue;
+    private List<ReturnValue> returnValue = null;
     @SerializedName("isSucceed")
     @Expose
     private Boolean isSucceed;
     @SerializedName("message")
     @Expose
     private String message;
-    public final static Creator<LoanSettingLimit> CREATOR = new Creator<LoanSettingLimit>() {
+    public final static Creator<LoanPolicy> CREATOR = new Creator<LoanPolicy>() {
 
 
         @SuppressWarnings({
             "unchecked"
         })
-        public LoanSettingLimit createFromParcel(Parcel in) {
-            return new LoanSettingLimit(in);
+        public LoanPolicy createFromParcel(Parcel in) {
+            return new LoanPolicy(in);
         }
 
-        public LoanSettingLimit[] newArray(int size) {
-            return (new LoanSettingLimit[size]);
+        public LoanPolicy[] newArray(int size) {
+            return (new LoanPolicy[size]);
         }
 
     }
     ;
-    private final static long serialVersionUID = 4173817911162675485L;
+    private final static long serialVersionUID = 3497536018828284346L;
 
-    protected LoanSettingLimit(Parcel in) {
+    protected LoanPolicy(Parcel in) {
         this.customField = ((CustomField) in.readValue((CustomField.class.getClassLoader())));
-        this.returnValue = ((ReturnValue) in.readValue((ReturnValue.class.getClassLoader())));
+        in.readList(this.returnValue, (id.co.indocyber.android.starbridges.model.LoanPolicy.ReturnValue.class.getClassLoader()));
         this.isSucceed = ((Boolean) in.readValue((Boolean.class.getClassLoader())));
         this.message = ((String) in.readValue((String.class.getClassLoader())));
     }
@@ -52,7 +53,7 @@ public class LoanSettingLimit implements Serializable, Parcelable
      * No args constructor for use in serialization
      * 
      */
-    public LoanSettingLimit() {
+    public LoanPolicy() {
     }
 
     /**
@@ -62,7 +63,7 @@ public class LoanSettingLimit implements Serializable, Parcelable
      * @param customField
      * @param returnValue
      */
-    public LoanSettingLimit(CustomField customField, ReturnValue returnValue, Boolean isSucceed, String message) {
+    public LoanPolicy(CustomField customField, List<ReturnValue> returnValue, Boolean isSucceed, String message) {
         super();
         this.customField = customField;
         this.returnValue = returnValue;
@@ -78,20 +79,20 @@ public class LoanSettingLimit implements Serializable, Parcelable
         this.customField = customField;
     }
 
-    public LoanSettingLimit withCustomField(CustomField customField) {
+    public LoanPolicy withCustomField(CustomField customField) {
         this.customField = customField;
         return this;
     }
 
-    public ReturnValue getReturnValue() {
+    public List<ReturnValue> getReturnValue() {
         return returnValue;
     }
 
-    public void setReturnValue(ReturnValue returnValue) {
+    public void setReturnValue(List<ReturnValue> returnValue) {
         this.returnValue = returnValue;
     }
 
-    public LoanSettingLimit withReturnValue(ReturnValue returnValue) {
+    public LoanPolicy withReturnValue(List<ReturnValue> returnValue) {
         this.returnValue = returnValue;
         return this;
     }
@@ -104,7 +105,7 @@ public class LoanSettingLimit implements Serializable, Parcelable
         this.isSucceed = isSucceed;
     }
 
-    public LoanSettingLimit withIsSucceed(Boolean isSucceed) {
+    public LoanPolicy withIsSucceed(Boolean isSucceed) {
         this.isSucceed = isSucceed;
         return this;
     }
@@ -117,14 +118,14 @@ public class LoanSettingLimit implements Serializable, Parcelable
         this.message = message;
     }
 
-    public LoanSettingLimit withMessage(String message) {
+    public LoanPolicy withMessage(String message) {
         this.message = message;
         return this;
     }
 
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(customField);
-        dest.writeValue(returnValue);
+        dest.writeList(returnValue);
         dest.writeValue(isSucceed);
         dest.writeValue(message);
     }

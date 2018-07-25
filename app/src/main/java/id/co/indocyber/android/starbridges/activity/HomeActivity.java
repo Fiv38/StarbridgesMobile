@@ -59,6 +59,7 @@ public class HomeActivity extends AppCompatActivity {
         String tokenExpiredDate=user.get(SessionManagement.KEY_EXPIRES);
         String location=user.get(SessionManagement.KEY_LOCATION);
         String locationId=user.get(SessionManagement.KEY_LOCATION_ID);
+        String employeeId=user.get(SessionManagement.KEY_EMPLOYEE_ID);
         attendancePrivilege=user.get(SessionManagement.KEY_ATTENDANCE_PRIVILEGE);
 
                 //Thu, 31 May 2018 01:34:37 GMT
@@ -79,6 +80,7 @@ public class HomeActivity extends AppCompatActivity {
             Log.d("error parse", "error parse");
         }
 
+        GlobalVar.setEmployeeId(employeeId);
         GlobalVar.setToken(token_sp);
         GlobalVar.setLoginName(loginName_sp);
         GlobalVar.setFullname(fullName_sp);

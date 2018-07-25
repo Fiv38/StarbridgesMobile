@@ -79,8 +79,8 @@ public class LoanMainHistoryActivity extends AppCompatActivity {
             public void onResponse(Call<LoanSettingLimit> call, Response<LoanSettingLimit> response) {
 
 
-                if (response.body().isIsSucceed()) {
-                    txtLimitHistoryLoan.setText(response.body().getReturnValue());
+                if (response.body().getIsSucceed()) {
+                    txtLimitHistoryLoan.setText(response.body().getReturnValue().getLimit());
                     getListTransactionInformation();
                 } else {
                     Toast.makeText(LoanMainHistoryActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();

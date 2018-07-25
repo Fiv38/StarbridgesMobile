@@ -1,8 +1,11 @@
 package id.co.indocyber.android.starbridges.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -30,15 +33,27 @@ public class ListDraftLoanTransactionApprovedActivity extends AppCompatActivity 
 
     ListDraftTransactionLoanApproved data;
 
+    FloatingActionButton fabAddLoanTransactionMain;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_draft_transaction_approved_loan);
         setTitle("Draft Loan Transaction");
 
+        fabAddLoanTransactionMain=(FloatingActionButton)findViewById(R.id.fabAddLoanTransactionMain);
+
         lstDraftLoanTransactionMain=(ListView)findViewById(R.id.lstDraftLoanTransactionMain);
 
         getDraft();
+
+        fabAddLoanTransactionMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(ListDraftLoanTransactionApprovedActivity.this, LoanRequestCreateActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void getDraft()

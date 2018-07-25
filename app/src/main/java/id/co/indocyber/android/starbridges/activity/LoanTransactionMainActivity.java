@@ -2,6 +2,7 @@ package id.co.indocyber.android.starbridges.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -37,6 +38,8 @@ public class LoanTransactionMainActivity extends AppCompatActivity implements Ad
 
     ListTransactionInformation data;
 
+    FloatingActionButton fabAddLoanTransactionMain;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +47,7 @@ public class LoanTransactionMainActivity extends AppCompatActivity implements Ad
         setTitle("Loan Transaction");
 
         lstLoanTransactionMain=(ListView)findViewById(R.id.lstLoanTransactionMain);
+        fabAddLoanTransactionMain=(FloatingActionButton)findViewById(R.id.fabAddLoanTransactionMain);
 
         sDateFrom=getIntent().getStringExtra("from");
         sDateTo=getIntent().getStringExtra("to");
@@ -64,6 +68,14 @@ public class LoanTransactionMainActivity extends AppCompatActivity implements Ad
             SharedPreferenceUtils.setSetting(getApplicationContext(),"toDate", sDateTo);
 
         getListTransactionInformation();
+
+        fabAddLoanTransactionMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(LoanTransactionMainActivity.this, LoanRequestCreateActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

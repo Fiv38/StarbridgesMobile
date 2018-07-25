@@ -18,15 +18,24 @@ public class ReturnValue implements Serializable, Parcelable
     @SerializedName("Policy")
     @Expose
     private String policy;
+    @SerializedName("StartDate")
+    @Expose
+    private String startDate;
+    @SerializedName("CreditAmount")
+    @Expose
+    private Integer creditAmount;
+    @SerializedName("Amount")
+    @Expose
+    private Integer amount;
     @SerializedName("RemainingLoan")
     @Expose
-    private Integer remainingLoan;
+    private Object remainingLoan;
     @SerializedName("RemainingInstallment")
     @Expose
-    private Integer remainingInstallment;
+    private Object remainingInstallment;
     @SerializedName("LoanBalanceID")
     @Expose
-    private String loanBalanceID;
+    private Object loanBalanceID;
     @SerializedName("FullAccess")
     @Expose
     private Boolean fullAccess;
@@ -52,14 +61,17 @@ public class ReturnValue implements Serializable, Parcelable
 
     }
     ;
-    private final static long serialVersionUID = -1250088256808815609L;
+    private final static long serialVersionUID = 4157895077308885426L;
 
     protected ReturnValue(Parcel in) {
         this.iD = ((String) in.readValue((String.class.getClassLoader())));
         this.policy = ((String) in.readValue((String.class.getClassLoader())));
-        this.remainingLoan = ((Integer) in.readValue((Integer.class.getClassLoader())));
-        this.remainingInstallment = ((Integer) in.readValue((Integer.class.getClassLoader())));
-        this.loanBalanceID = ((String) in.readValue((String.class.getClassLoader())));
+        this.startDate = ((String) in.readValue((String.class.getClassLoader())));
+        this.creditAmount = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.amount = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.remainingLoan = ((Object) in.readValue((Object.class.getClassLoader())));
+        this.remainingInstallment = ((Object) in.readValue((Object.class.getClassLoader())));
+        this.loanBalanceID = ((Object) in.readValue((Object.class.getClassLoader())));
         this.fullAccess = ((Boolean) in.readValue((Boolean.class.getClassLoader())));
         in.readList(this.exclusionFields, (Object.class.getClassLoader()));
         this.accessibilityAttribute = ((String) in.readValue((String.class.getClassLoader())));
@@ -75,18 +87,24 @@ public class ReturnValue implements Serializable, Parcelable
     /**
      * 
      * @param remainingInstallment
+     * @param amount
+     * @param startDate
      * @param accessibilityAttribute
      * @param fullAccess
+     * @param creditAmount
      * @param remainingLoan
      * @param policy
      * @param loanBalanceID
      * @param iD
      * @param exclusionFields
      */
-    public ReturnValue(String iD, String policy, Integer remainingLoan, Integer remainingInstallment, String loanBalanceID, Boolean fullAccess, List<Object> exclusionFields, String accessibilityAttribute) {
+    public ReturnValue(String iD, String policy, String startDate, Integer creditAmount, Integer amount, Object remainingLoan, Object remainingInstallment, Object loanBalanceID, Boolean fullAccess, List<Object> exclusionFields, String accessibilityAttribute) {
         super();
         this.iD = iD;
         this.policy = policy;
+        this.startDate = startDate;
+        this.creditAmount = creditAmount;
+        this.amount = amount;
         this.remainingLoan = remainingLoan;
         this.remainingInstallment = remainingInstallment;
         this.loanBalanceID = loanBalanceID;
@@ -121,41 +139,80 @@ public class ReturnValue implements Serializable, Parcelable
         return this;
     }
 
-    public Integer getRemainingLoan() {
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public ReturnValue withStartDate(String startDate) {
+        this.startDate = startDate;
+        return this;
+    }
+
+    public Integer getCreditAmount() {
+        return creditAmount;
+    }
+
+    public void setCreditAmount(Integer creditAmount) {
+        this.creditAmount = creditAmount;
+    }
+
+    public ReturnValue withCreditAmount(Integer creditAmount) {
+        this.creditAmount = creditAmount;
+        return this;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public ReturnValue withAmount(Integer amount) {
+        this.amount = amount;
+        return this;
+    }
+
+    public Object getRemainingLoan() {
         return remainingLoan;
     }
 
-    public void setRemainingLoan(Integer remainingLoan) {
+    public void setRemainingLoan(Object remainingLoan) {
         this.remainingLoan = remainingLoan;
     }
 
-    public ReturnValue withRemainingLoan(Integer remainingLoan) {
+    public ReturnValue withRemainingLoan(Object remainingLoan) {
         this.remainingLoan = remainingLoan;
         return this;
     }
 
-    public Integer getRemainingInstallment() {
+    public Object getRemainingInstallment() {
         return remainingInstallment;
     }
 
-    public void setRemainingInstallment(Integer remainingInstallment) {
+    public void setRemainingInstallment(Object remainingInstallment) {
         this.remainingInstallment = remainingInstallment;
     }
 
-    public ReturnValue withRemainingInstallment(Integer remainingInstallment) {
+    public ReturnValue withRemainingInstallment(Object remainingInstallment) {
         this.remainingInstallment = remainingInstallment;
         return this;
     }
 
-    public String getLoanBalanceID() {
+    public Object getLoanBalanceID() {
         return loanBalanceID;
     }
 
-    public void setLoanBalanceID(String loanBalanceID) {
+    public void setLoanBalanceID(Object loanBalanceID) {
         this.loanBalanceID = loanBalanceID;
     }
 
-    public ReturnValue withLoanBalanceID(String loanBalanceID) {
+    public ReturnValue withLoanBalanceID(Object loanBalanceID) {
         this.loanBalanceID = loanBalanceID;
         return this;
     }
@@ -202,6 +259,9 @@ public class ReturnValue implements Serializable, Parcelable
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(iD);
         dest.writeValue(policy);
+        dest.writeValue(startDate);
+        dest.writeValue(creditAmount);
+        dest.writeValue(amount);
         dest.writeValue(remainingLoan);
         dest.writeValue(remainingInstallment);
         dest.writeValue(loanBalanceID);
